@@ -1,0 +1,36 @@
+from django.urls import path
+from CampaignApp.views import *
+
+urlpatterns = [
+    path('vendor/register/',Register.as_view(),name="vendor"),
+    path('vendor/login/',VendorLogin.as_view(),name="vendorlogin"),
+    path('create/',CreateCampaign.as_view(),name="campaign"),
+    path('inflcampaign/create/',InfluencerCampaign.as_view(),name="inflcampaign"),
+    path('active/',ActiveList.as_view(),name="campaignlist"),
+    path('pending/',PendingList.as_view(),name="pending"),
+    path('delete/<int:id>/',DeleteCampaign.as_view(),name="deletecamp"),
+    path('influencer/list/',InfluencerList.as_view(),name="influencer"),
+    path('product/list/',ProductList.as_view(),name="productlist"),
+    path('get/token/',GetToken.as_view(),name="token"),
+    path('update/<int:pk>/',UpdateCampaign.as_view(),name="campaignupdate"),
+    path('count/',CountCampaign.as_view(),name="count"),
+    path('product/url/',ProductUrl.as_view(),name="url"),
+    path('request/',RequestSents.as_view(),name="request"),
+    path('market/list/',MarketplaceList.as_view(),name="market"),
+    path('single/<int:id>/',GetCampaign.as_view(),name="singlecampaign"),  
+    path('profile/<int:id>/',ProfileUpdate.as_view(),name="profile"),
+    path('instagram/',InstagramFollower.as_view(),name="instagram"),   
+    path('user/id/',GetUserId.as_view(),name="userid"),        
+    path('draft/list/',DraftList.as_view(),name="draft"),   
+    path('markdraft/list/',MarketplaceDraftList.as_view(),name="markdraft"), 
+    path('markplace/camp',RequestCampaign.as_view(),name="requestmark"), 
+    path('search/coupon/',SearchCoupon.as_view(),name="search"), 
+    path('draft/update/<int:pk>/',DraftStatusUpdate.as_view(),name="draftupdate"), 
+    path('vendor/accept/<int:id>/<int:pk>/',VendorAccept.as_view(),name="vendoraccept"), 
+    path('vendor/decline/<int:id>/<int:pk>/',DeclineVendor.as_view(),name="vendordecline"), 
+    path("vendor_approval/",VendorApprovalList.as_view(),name="vendorapproval"),
+    path("vendor_decline/",VendorDeclineList.as_view(),name="vendordecline"),
+    path("notification/list/",InfluencerNotification.as_view(),name="Inflnotify"),
+    path("change/status/",ChangeNotifinflStatus.as_view(),name="changenotify"),
+   
+]
