@@ -997,6 +997,9 @@ class StripeConnectAccountView(APIView):
                 "owners_provided": False,
                 "directors_provided":False
             },
+            representative={
+                "first_name":"hritik"
+            },
 
             external_account={
             'object': 'bank_account',
