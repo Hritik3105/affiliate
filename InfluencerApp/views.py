@@ -931,15 +931,16 @@ class StripeConnectAccountView(APIView):
         routing_number=request.data.get("routing_number")
         account_holder_name=request.data.get("account_holder_name")
         secret=request.data.get("secret")
-        
+        vendorids=request.data.get("vendorid")
+        print(vendorids)
         check_data=StripeDetails.objects.all()
         if check_data:
             
             modash_key=ModashInfluencer.objects.filter(influencerid=self.request.user.id).values("id")
-            print(modash_key)
-            
-            match_data=StripeDetails.objects.filter(influencer=modash_key[0]["id"],vendor=22).exists()
            
+            
+            match_data=StripeDetails.objects.filter(influencer=modash_key[0]["id"],vendor=vendorids).exists()
+            print(match_data)
             if match_data == True:
                 return Response({"message":"Account Already exists"},status=status.HTTP_409_CONFLICT)
                 
