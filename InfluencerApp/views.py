@@ -933,95 +933,95 @@ class StripeConnectAccountView(APIView):
         secret=request.data.get("secret")
         
         check_data=StripeDetails.objects.all()
-        # if check_data:
+        if check_data:
             
-        #     modash_key=ModashInfluencer.objects.filter(influencerid=self.request.user.id).values("id")
-        #     print(modash_key)
+            modash_key=ModashInfluencer.objects.filter(influencerid=self.request.user.id).values("id")
+            print(modash_key)
             
-        #     match_data=StripeDetails.objects.filter(influencer=modash_key[0]["id"],vendor=22).exists()
+            match_data=StripeDetails.objects.filter(influencer=modash_key[0]["id"],vendor=22).exists()
            
-        #     if match_data == True:
-        #         return Response({"message":"Account Already exists"},status=status.HTTP_409_CONFLICT)
+            if match_data == True:
+                return Response({"message":"Account Already exists"},status=status.HTTP_409_CONFLICT)
                 
                 
-        # else:
+        else:
             
-            # try:
-            #     stripe.api_key=secret
-            #     account = stripe.Account.create(
-            #     country="US",
-            #     type="custom",
-            #     capabilities={"card_payments": {"requested": True}, "transfers": {"requested": True},"us_bank_account_ach_payments":{"requested":True}},
-            #     business_type="individual",
-            #     business_profile={'mcc':'5734', 'url':'https://www.google.com/'},
+            try:
+                stripe.api_key=secret
+                account = stripe.Account.create(
+                country="US",
+                type="custom",
+                capabilities={"card_payments": {"requested": True}, "transfers": {"requested": True},"us_bank_account_ach_payments":{"requested":True}},
+                business_type="individual",
+                business_profile={'mcc':'5734', 'url':'https://www.google.com/'},
 
-            #     individual ={'first_name':"sood",
-            #     'last_name':"hritik",
-            #     'email': "test@gmail.com",
-            #     'phone':"+15555551234",
-            #     'ssn_last_4':"0000",
-            #     'address':{'city':"NY", 'state':"New York", 'postal_code':10017, 'country': 'US', 'line1':"609 5th Ave"},
-            #     'dob':{'day':11 , 'month':11 , 'year' :1999},
+                individual ={'first_name':"sood",
+                'last_name':"hritik",
+                'email': "test@gmail.com",
+                'phone':"+15555551234",
+                'ssn_last_4':"0000",
+                'address':{'city':"NY", 'state':"New York", 'postal_code':10017, 'country': 'US', 'line1':"609 5th Ave"},
+                'dob':{'day':11 , 'month':11 , 'year' :1999},
 
-            #     },
+                },
 
-            #     external_account = {'object':'bank_account',
-            #     'country': 'US','currency': 'USD', 
-            #     'account_number': "000123456789",
-            #     'routing_number': "110000000",
-            #     'account_holder_name' : "test",
-            #     'account_holder_type': "individual"
-            #     },
+                external_account = {'object':'bank_account',
+                'country': 'US','currency': 'USD', 
+                'account_number': "000123456789",
+                'routing_number': "110000000",
+                'account_holder_name' : "test",
+                'account_holder_type': "individual"
+                },
                 
-            #     tos_acceptance={"date": 1609798905, "ip": "8.8.8.8"}
-            #        )
+                tos_acceptance={"date": 1609798905, "ip": "8.8.8.8"}
+                   )
      
-        try:
+        # try:
            
-            account = stripe.Account.create(
-            country="AE",
-            type="custom",
-            capabilities={"card_payments": {"requested": True}, "transfers": {"requested": True}},
-            business_type="company",
-            business_profile={'mcc':'5734', 'url':'https://www.google.com/',
-                                "support_phone":"55-798-4597",
-                                "product_description":"hello"},
+        #     account = stripe.Account.create(
+        #     country="AE",
+        #     type="custom",
+        #     capabilities={"card_payments": {"requested": True}, "transfers": {"requested": True}},
+        #     business_type="company",
+        #     business_profile={'mcc':'5734', 'url':'https://www.google.com/',
+        #                         "support_phone":"55-798-4597",
+        #                         "product_description":"hello"},
 
-            tos_acceptance={"date": 1609798905, "ip": "8.8.8.8"},
-            company={
-                "structure": "sole_establishment",
-                "name": "hell334o",
-                "phone": "555-123-4567",
-                "tax_id": "1234",
-                "executives_provided": False,
-                "owners_provided": False,
-                "directors_provided":False
-            },
-            representative={
-                "first_name":"hritik"
-            },
+        #     tos_acceptance={"date": 1609798905, "ip": "8.8.8.8"},
+        #     company={
+        #         "structure": "sole_establishment",
+        #         "name": "hell334o",
+        #         "phone": "555-123-4567",
+        #         "tax_id": "1234",
+        #         "executives_provided": False,
+        #         "owners_provided": False,
+        #         "directors_provided":False
+        #     },
+        #     representative={
+        #         "first_name":"hritik"
+        #     },
 
-            external_account={
-            'object': 'bank_account',
-            'country': 'AE',
-            'currency': 'AED',
-            'account_number': 'AE070331234567890123456',
-            'account_holder_name': 'test',
-            'account_holder_type': 'individual'
-        }
-        )
+        #     external_account={
+        #     'object': 'bank_account',
+        #     'country': 'AE',
+        #     'currency': 'AED',
+        #     'account_number': 'AE070331234567890123456',
+        #     'account_holder_name': 'test',
+        #     'account_holder_type': 'individual'
+        # }
+        # )
             
-            print(account)
+        #     print(account)
             
-            val=ModashInfluencer.objects.filter(influencerid=self.request.user.id).values("id")
+                val=ModashInfluencer.objects.filter(influencerid=self.request.user.id).values("id")
 
-            stripe_details=StripeDetails()
-            stripe_details.vendor_id=22
-            stripe_details.influencer_id=val[0]["id"]
-            stripe_details.account_id=account["id"]
-            stripe_details.save()
-        except stripe.error.StripeError as e:
-            return Response({"error":e.user_message},status=status.HTTP_400_BAD_REQUEST)
+                stripe_details=StripeDetails()
+                stripe_details.vendor_id=22
+                stripe_details.influencer_id=val[0]["id"]
+                stripe_details.account_id=account["id"]
+                stripe_details.save()
+            except stripe.error.StripeError as e:
+                return Response({"error":e.user_message},status=status.HTTP_400_BAD_REQUEST)
                 
         return Response({"message":"Account Created",'account_id': account},status=status.HTTP_201_CREATED)
         
