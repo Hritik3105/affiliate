@@ -1814,6 +1814,7 @@ class TranferMoney(APIView):
         account=request.data.get("account_id")
         influencer=request.data.get("influencer")
         amount=request.data.get("amount")
+        campaignids=request.data.get("camp_id")
         print("account",account)
         print("influencer_id",influencer)
         print("amount",amount)
@@ -1880,8 +1881,10 @@ class TranferMoney(APIView):
                 transfer_obj.amount=transfer1["amount"]
                 transfer_obj.destination=transfer1["destination"]
                 transfer_obj.save()
-
-                PaymentDetails.objects.filter(campaign=244,influencer=7,vendor=self.request.user.id).update(amountpaid=transfer1["amount"])
+                
+                pay_value=PaymentDetails.objects.filter(campaign=campaignids,influencer=influencer,vendor=self.request.user.id).values("sales","amount")
+                trsamt=int(pay_value["amout"])-transfer1["amount"]
+                PaymentDetails.objects.filter(campaign=244,influencer=7,vendor=self.request.user.id).update(amountpaid=transfer1["amount"],amount=trsamt)
                 
                 
             except stripe.error.StripeError as e:
