@@ -2078,7 +2078,8 @@ class InfluencerCampSale(APIView):
                         details_obj.offer=i["offer"]
                         details_obj.campaign_id=i["campaign_detail"]
                         details_obj.save()
-                
+                upd_data=PaymentDetails.objects.all()
+               
                 return Response({"sale_details":data_max},status=status.HTTP_200_OK)
             return Response({"error":response.json()},status=status.HTTP_400_BAD_REQUEST)
         

@@ -109,6 +109,7 @@ class PaymentDetails(models.Model):
   influencerfee=models.FloatField(blank=True,null=True)
   offer=models.CharField(max_length=200,blank=True,null=True)
   campaign=models.ForeignKey(Campaign,on_delete=models.CASCADE,blank=True,null=True)
+  account_id=models.CharField(max_length=200,blank=True,null=True)
   
   
 class transferdetails(models.Model):
