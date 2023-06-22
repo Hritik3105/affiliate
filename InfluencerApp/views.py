@@ -975,7 +975,8 @@ class StripeConnectAccountView(APIView):
                 
             #     tos_acceptance={"date": 1609798905, "ip": "8.8.8.8"}
             #        )
-        print("jghfghfgh")     
+        print("jghfghfgh")  
+        print("hello")   
         try:
             stripe.api_key=secret
             account = stripe.Account.create(
