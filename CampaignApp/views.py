@@ -2027,7 +2027,7 @@ class InfluencerCampSale(APIView):
                             lst_data.append(infl_dict)  
                         else:
                             if  check[0]["offer"] == "percentage":
-                                amount=i["sales"] / check[0]["influencer_fee"] 
+                                amount=int(i["sales"])  / check[0]["influencer_fee"] 
                             
                             else:
                                 amount=i["sales"] - check[0]["influencer_fee"] 
@@ -2078,7 +2078,8 @@ class InfluencerCampSale(APIView):
                             PaymentDetails.objects.filter(vendor=self.request.user.id,campaign=i["campaign_detail"],influencer=i["influencer"]).update(sales=cal_amt,influencerfee=i["influener_fee"],offer=i["offer"],amount=i["amount"])
                         else:
                             PaymentDetails.objects.filter(vendor=self.request.user.id,campaign=i["campaign_detail"],influencer=i["influencer"]).update(sales=i["sales"],influencerfee=i["influener_fee"],offer=i["offer"],amount=i["amount"])
-
+                  
+                    
                 else:
                     for i in data_max:
                         details_obj=PaymentDetails()
@@ -2107,8 +2108,8 @@ class InfluencerCampSale(APIView):
                         
                     }
                     upd_lst.append(upd_dict)
-                print(upd_lst)
-                return Response({"sale_details":data_max},status=status.HTTP_200_OK)
+               
+                return Response({"sale_details":upd_lst},status=status.HTTP_200_OK)
             return Response({"error":response.json()},status=status.HTTP_400_BAD_REQUEST)
         
 
