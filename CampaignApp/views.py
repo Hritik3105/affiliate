@@ -1818,7 +1818,7 @@ class TranferMoney(APIView):
         salesdone=request.data.get("sales")
         print("account",account)
         print("influencer_id",influencer)
-        print("amount",amount)
+        print("salesdone",salesdone)
         get_account=StripeDetails.objects.filter(vendor_id=self.request.user.id).values("account_id","influencer_id")
         
 
