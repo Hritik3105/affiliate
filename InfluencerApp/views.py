@@ -946,69 +946,69 @@ class StripeConnectAccountView(APIView):
                 
         # else:
             
+            # try:
+            #     stripe.api_key=secret
+            #     account = stripe.Account.create(
+            #     country="US",
+            #     type="custom",
+            #     capabilities={"card_payments": {"requested": True}, "transfers": {"requested": True},"us_bank_account_ach_payments":{"requested":True}},
+            #     business_type="individual",
+            #     business_profile={'mcc':'5734', 'url':'https://www.google.com/'},
+
+            #     individual ={'first_name':"sood",
+            #     'last_name':"hritik",
+            #     'email': "test@gmail.com",
+            #     'phone':"+15555551234",
+            #     'ssn_last_4':"0000",
+            #     'address':{'city':"NY", 'state':"New York", 'postal_code':10017, 'country': 'US', 'line1':"609 5th Ave"},
+            #     'dob':{'day':11 , 'month':11 , 'year' :1999},
+
+            #     },
+
+            #     external_account = {'object':'bank_account',
+            #     'country': 'US','currency': 'USD', 
+            #     'account_number': "000123456789",
+            #     'routing_number': "110000000",
+            #     'account_holder_name' : "test",
+            #     'account_holder_type': "individual"
+            #     },
+                
+            #     tos_acceptance={"date": 1609798905, "ip": "8.8.8.8"}
+            #        )
+     
         try:
-            stripe.api_key=secret
-            account = stripe.Account.create(
-            country="US",
-            type="custom",
-            capabilities={"card_payments": {"requested": True}, "transfers": {"requested": True},"us_bank_account_ach_payments":{"requested":True}},
-            business_type="individual",
-            business_profile={'mcc':'5734', 'url':'https://www.google.com/'},
-
-            individual ={'first_name':"sood",
-            'last_name':"hritik",
-            'email': "test@gmail.com",
-            'phone':"+15555551234",
-            'ssn_last_4':"0000",
-            'address':{'city':"NY", 'state':"New York", 'postal_code':10017, 'country': 'US', 'line1':"609 5th Ave"},
-            'dob':{'day':11 , 'month':11 , 'year' :1999},
-
-            },
-
-            external_account = {'object':'bank_account',
-            'country': 'US','currency': 'USD', 
-            'account_number': "000123456789",
-            'routing_number': "110000000",
-            'account_holder_name' : "test",
-            'account_holder_type': "individual"
-            },
-            
-            tos_acceptance={"date": 1609798905, "ip": "8.8.8.8"}
-                )
-    
-        # try:
            
-        #     account = stripe.Account.create(
-        #     country="AE",
-        #     type="custom",
-        #     capabilities={"card_payments": {"requested": True}, "transfers": {"requested": True}},
-        #     business_type="company",
-        #     business_profile={'mcc':'5734', 'url':'https://www.google.com/',
-        #                         "support_phone":"55-798-4597",
-        #                         "product_description":"hello"},
+            account = stripe.Account.create(
+            country="AE",
+            type="custom",
+            capabilities={"card_payments": {"requested": True}, "transfers": {"requested": True}},
+            business_type="company",
+            business_profile={'mcc':'5734', 'url':'https://www.google.com/',
+                                "support_phone":"55-798-4597",
+                                "product_description":"hello"},
 
-        #     tos_acceptance={"date": 1609798905, "ip": "8.8.8.8"},
-        #     company={
-        #         "structure": "sole_establishment",
-        #         "name": "hello",
-        #         "phone": "555-123-4567",
-        #         "tax_id": "1234",
-        #         "executives_provided": False,
-        #         "owners_provided": False,
-        #         "directors_provided":False
-        #     },
+            tos_acceptance={"date": 1609798905, "ip": "8.8.8.8"},
+            company={
+                "structure": "sole_establishment",
+                "name": "hell334o",
+                "phone": "555-123-4567",
+                "tax_id": "1234",
+                "executives_provided": False,
+                "owners_provided": False,
+                "directors_provided":False
+            },
 
-        #     external_account={
-        #     'object': 'bank_account',
-        #     'country': 'AE',
-        #     'currency': 'AED',
-        #     'account_number': 'AE070331234567890123456',
-        #     'account_holder_name': 'test',
-        #     'account_holder_type': 'individual'
-        # }
-        # )
+            external_account={
+            'object': 'bank_account',
+            'country': 'AE',
+            'currency': 'AED',
+            'account_number': 'AE070331234567890123456',
+            'account_holder_name': 'test',
+            'account_holder_type': 'individual'
+        }
+        )
             
-        #     print(account)
+            print(account)
             
             val=ModashInfluencer.objects.filter(influencerid=self.request.user.id).values("id")
 
