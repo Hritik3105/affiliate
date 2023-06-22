@@ -15,7 +15,7 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
 from django.urls import reverse
-from .utils import account_activation_token,VerificationView
+from .utils import account_activation_token,VerificationView,createaccount
 from django.db.models import Q
 from django.core.mail import send_mail as sm
 import stripe
@@ -947,84 +947,56 @@ class StripeConnectAccountView(APIView):
                 
             else:
                 
-                try:
-                    print("i am hererer")
-                    account=stripe.api_key=secret
-                    account = stripe.Account.create(
-                    country="US",
-                    type="custom",
-                    capabilities={"card_payments": {"requested": True}, "transfers": {"requested": True},"us_bank_account_ach_payments":{"requested":True}},
-                    business_type="individual",
-                    business_profile={'mcc':'5734', 'url':'https://www.google.com/'},
+                # try:
+                #     print("i am hererer")
+                #     account=stripe.api_key=secret
+                #     account = stripe.Account.create(
+                #     country="US",
+                #     type="custom",
+                #     capabilities={"card_payments": {"requested": True}, "transfers": {"requested": True},"us_bank_account_ach_payments":{"requested":True}},
+                #     business_type="individual",
+                #     business_profile={'mcc':'5734', 'url':'https://www.google.com/'},
 
-                    individual ={'first_name':"sood",
-                    'last_name':"hritik",
-                    'email': "test@gmail.com",
-                    'phone':"+15555551234",
-                    'ssn_last_4':"0000",
-                    'address':{'city':"NY", 'state':"New York", 'postal_code':10017, 'country': 'US', 'line1':"609 5th Ave"},
-                    'dob':{'day':11 , 'month':11 , 'year' :1999},
+                #     individual ={'first_name':"sood",
+                #     'last_name':"hritik",
+                #     'email': "test@gmail.com",
+                #     'phone':"+15555551234",
+                #     'ssn_last_4':"0000",
+                #     'address':{'city':"NY", 'state':"New York", 'postal_code':10017, 'country': 'US', 'line1':"609 5th Ave"},
+                #     'dob':{'day':11 , 'month':11 , 'year' :1999},
 
-                    },
+                #     },
 
-                    external_account = {'object':'bank_account',
-                    'country': 'US','currency': 'USD', 
-                    'account_number': "000123456789",
-                    'routing_number': "110000000",
-                    'account_holder_name' : "test",
-                    'account_holder_type': "individual"
-                    },
+                #     external_account = {'object':'bank_account',
+                #     'country': 'US','currency': 'USD', 
+                #     'account_number': "000123456789",
+                #     'routing_number': "110000000",
+                #     'account_holder_name' : "test",
+                #     'account_holder_type': "individual"
+                #     },
                     
-                    tos_acceptance={"date": 1609798905, "ip": "8.8.8.8"}
-                    )
+                #     tos_acceptance={"date": 1609798905, "ip": "8.8.8.8"}
+                #     )
        
-       
+                zx=createaccount(secret)
+                print(zx)
             
-                    val=ModashInfluencer.objects.filter(influencerid=self.request.user.id).values("id")
+                val=ModashInfluencer.objects.filter(influencerid=self.request.user.id).values("id")
 
-                    stripe_details=StripeDetails()
-                    stripe_details.vendor_id=22
-                    stripe_details.influencer_id=val[0]["id"]
-                    stripe_details.account_id=account["id"]
-                    stripe_details.save()
-                except stripe.error.StripeError as e:
-                    print("not heeter")
-                    return Response({"error":e.user_message},status=status.HTTP_400_BAD_REQUEST)
+                stripe_details=StripeDetails()
+                stripe_details.vendor_id=22
+                stripe_details.influencer_id=val[0]["id"]
+                # stripe_details.account_id=account["id"]
+                # stripe_details.save()
+                # except stripe.error.StripeError as e:
+                #     print("not heeter")
+                #     return Response({"error":e.user_message},status=status.HTTP_400_BAD_REQUEST)
                 
-                return Response({"message":"Account Created",'account_id': account},status=status.HTTP_201_CREATED)
+                return Response({"message":"Account Created",'account_id': "account"},status=status.HTTP_201_CREATED)
         
-        try:
-            account=stripe.api_key=secret
-            account = stripe.Account.create(
-            country="US",
-            type="custom",
-            capabilities={"card_payments": {"requested": True}, "transfers": {"requested": True},"us_bank_account_ach_payments":{"requested":True}},
-            business_type="individual",
-            business_profile={'mcc':'5734', 'url':'https://www.google.com/'},
-
-            individual ={'first_name':"sood",
-            'last_name':"hritik",
-            'email': "test@gmail.com",
-            'phone':"+15555551234",
-            'ssn_last_4':"0000",
-            'address':{'city':"NY", 'state':"New York", 'postal_code':10017, 'country': 'US', 'line1':"609 5th Ave"},
-            'dob':{'day':11 , 'month':11 , 'year' :1999},
-
-            },
-
-            external_account = {'object':'bank_account',
-            'country': 'US','currency': 'USD', 
-            'account_number': "000123456789",
-            'routing_number': "110000000",
-            'account_holder_name' : "test",
-            'account_holder_type': "individual"
-            },
-            
-            tos_acceptance={"date": 1609798905, "ip": "8.8.8.8"}
-            )
-        except stripe.error.StripeError as e:
-            return Response({"error":e.user_message},status=status.HTTP_400_BAD_REQUEST)
-        return Response({"message":"Account Created",'account_id': account},status=status.HTTP_201_CREATED)
+        zz=createaccount(secret)
+        print(zz)
+        return Response({"message":"Account Created",'account_id': "account"},status=status.HTTP_201_CREATED)
 
 
 class CustomerCreate(APIView):
