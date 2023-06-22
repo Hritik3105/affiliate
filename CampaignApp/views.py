@@ -2032,7 +2032,7 @@ class InfluencerCampSale(APIView):
                             else:
                                 amount=i["sales"] - check[0]["influencer_fee"] 
                             
-                                
+                            print(i["sales"])    
                             infl_dict={
                                 "campaing_id":check[0]["campaign_name"],
                                 "sales":i["sales"],
@@ -2071,11 +2071,12 @@ class InfluencerCampSale(APIView):
                     for i in data_max:
                         sales_done=PaymentDetails.objects.filter(vendor=self.request.user.id,campaign=i["campaign_detail"],influencer=i["influencer"]).values("salespaid","sales")
                         print(sales_done)
+                        
                         if sales_done[0]["salespaid"]:
                             print("helo",sales_done[0]["salespaid"])
                             cal_amt=int(sales_done[0]["salespaid"])-int(sales_done[0]["sales"])
                             print("dfsdfds",cal_amt)
-                            PaymentDetails.objects.filter(vendor=self.request.user.id,campaign=i["campaign_detail"],influencer=i["influencer"]).update(sales=i["sales"],influencerfee=i["influener_fee"],offer=i["offer"],amount=i["amount"])
+                            PaymentDetails.objects.filter(vendor=self.request.user.id,campaign=i["campaign_detail"],influencer=i["influencer"]).update(sales=cal_amt,influencerfee=i["influener_fee"],offer=i["offer"],amount=i["amount"])
                         # else:
                         #     print("helloqwwwwwwwwwww")
                         #     print(sales_done)
