@@ -978,24 +978,33 @@ class StripeConnectAccountView(APIView):
                 #     tos_acceptance={"date": 1609798905, "ip": "8.8.8.8"}
                 #     )
                 try:
-                    zx=createaccount(secret)
-                    print("sdfdsfdf",zx)
+                    acc_data=createaccount(secret)
+                   
 
                     val=ModashInfluencer.objects.filter(influencerid=self.request.user.id).values("id")
 
                     stripe_details=StripeDetails()
                     stripe_details.vendor_id=22
                     stripe_details.influencer_id=val[0]["id"]
-                    # stripe_details.account_id=account["id"]
-                    # stripe_details.save()
+                    stripe_details.account_id=acc_data["id"]
+                    stripe_details.save()
                 except stripe.error.StripeError as e:
-                    print("not heeter")
+                   
                     return Response({"error":e.user_message},status=status.HTTP_400_BAD_REQUEST)
                 
                 return Response({"message":"Account Created",'account_id': "account"},status=status.HTTP_201_CREATED)
-        
-        zz=createaccount(secret)
-        print(zz)
+        try:
+            acc_data=createaccount(secret)
+            
+            val=ModashInfluencer.objects.filter(influencerid=self.request.user.id).values("id")
+
+            stripe_details=StripeDetails()
+            stripe_details.vendor_id=22
+            stripe_details.influencer_id=val[0]["id"]
+            stripe_details.account_id=acc_data["id"]
+            stripe_details.save()
+        except stripe.error.StripeError as e:          
+            return Response({"error":e.user_message},status=status.HTTP_400_BAD_REQUEST)
         return Response({"message":"Account Created",'account_id': "account"},status=status.HTTP_201_CREATED)
 
 
