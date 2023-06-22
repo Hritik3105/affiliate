@@ -2086,12 +2086,12 @@ class InfluencerCampSale(APIView):
                         "campaing_id":pay.campaign.campaign_name,
                         "sales":pay.sales,
                         "account":pay.account_id,
-                        "influencer":pay.influencer,
+                        "influencer":pay.influencer.id,
                         "influener_fee":pay.influencerfee,
                         "offer":pay.offer,
                         "amount":pay.amount,  
                         "amount_paid":pay.amountpaid,
-                        "campaign_detail":pay.campaign      
+                        "campaign_detail":pay.campaign.id      
                         
                     }
                     upd_lst.append(upd_dict)
