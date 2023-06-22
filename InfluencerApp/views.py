@@ -931,6 +931,7 @@ class StripeConnectAccountView(APIView):
         routing_number=request.data.get("routing_number")
         account_holder_name=request.data.get("account_holder_name")
         secret=request.data.get("secret")
+        print(secret)
         vendorids=request.data.get("vendorid")
         print(vendorids)
         check_data=StripeDetails.objects.all()
@@ -984,7 +985,7 @@ class StripeConnectAccountView(APIView):
                     val=ModashInfluencer.objects.filter(influencerid=self.request.user.id).values("id")
 
                     stripe_details=StripeDetails()
-                    stripe_details.vendor_id=22
+                    stripe_details.vendor_id=vendorids
                     stripe_details.influencer_id=val[0]["id"]
                     stripe_details.account_id=acc_data["id"]
                     stripe_details.save()
@@ -999,7 +1000,7 @@ class StripeConnectAccountView(APIView):
             val=ModashInfluencer.objects.filter(influencerid=self.request.user.id).values("id")
 
             stripe_details=StripeDetails()
-            stripe_details.vendor_id=22
+            stripe_details.vendor_id=vendorids
             stripe_details.influencer_id=val[0]["id"]
             stripe_details.account_id=acc_data["id"]
             stripe_details.save()

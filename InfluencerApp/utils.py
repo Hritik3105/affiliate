@@ -29,7 +29,7 @@ class VerificationView(generics.GenericAPIView):
         
         
 def createaccount(secret):
-  
+        print(secret)
         account=stripe.api_key=secret
         account = stripe.Account.create(
         country="US",
