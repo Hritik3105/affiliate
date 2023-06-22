@@ -1886,7 +1886,7 @@ class TranferMoney(APIView):
                 pay_value=PaymentDetails.objects.filter(campaign=campaignids,influencer=influencer,vendor=self.request.user.id).values("sales","amount")
                 # trsamt=int(pay_value[0]["amount"])-transfer1["amount"]
                 
-                PaymentDetails.objects.filter(campaign=campaignids,influencer=influencer,vendor=self.request.user.id).update(amountpaid=transfer1["amount"],sales=salesdone)
+                PaymentDetails.objects.filter(campaign=campaignids,influencer=influencer,vendor=self.request.user.id).update(amountpaid=transfer1["amount"],salespaid=salesdone)
                 
                 
             except stripe.error.StripeError as e:
