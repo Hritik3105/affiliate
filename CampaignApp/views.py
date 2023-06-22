@@ -1881,7 +1881,7 @@ class TranferMoney(APIView):
                 transfer_obj.destination=transfer1["destination"]
                 transfer_obj.save()
 
-                PaymentDetails.objects.filter(camapign=244,influencer=7,vendor=self.request.user.id).update(amount_paid=transfer1["amount"])
+                PaymentDetails.objects.filter(campaign=244,influencer=7,vendor=self.request.user.id).update(amount_paid=transfer1["amount"])
                 
                 
             except stripe.error.StripeError as e:
