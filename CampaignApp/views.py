@@ -1884,6 +1884,7 @@ class TranferMoney(APIView):
                 
                 pay_value=PaymentDetails.objects.filter(campaign=campaignids,influencer=influencer,vendor=self.request.user.id).values("sales","amount")
                 trsamt=int(pay_value[0]["amount"])-transfer1["amount"]
+                print(trsamt)
                 PaymentDetails.objects.filter(campaign=campaignids,influencer=influencer,vendor=self.request.user.id).update(amountpaid=transfer1["amount"],amount=trsamt)
                 
                 

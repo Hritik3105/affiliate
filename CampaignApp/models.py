@@ -110,6 +110,7 @@ class PaymentDetails(models.Model):
   offer=models.CharField(max_length=200,blank=True,null=True)
   campaign=models.ForeignKey(Campaign,on_delete=models.CASCADE,blank=True,null=True)
   account_id=models.CharField(max_length=200,blank=True,null=True)
+  salespaid=models.FloatField(blank=True,null=True)
   
   
 class transferdetails(models.Model):
