@@ -948,6 +948,7 @@ class StripeConnectAccountView(APIView):
         else:
             
             try:
+                print("i am hererer")
                 account=stripe.api_key=secret
                 account = stripe.Account.create(
                 country="US",
@@ -1022,6 +1023,7 @@ class StripeConnectAccountView(APIView):
                 stripe_details.account_id=account["id"]
                 stripe_details.save()
             except stripe.error.StripeError as e:
+                print("not heeter")
                 return Response({"error":e.user_message},status=status.HTTP_400_BAD_REQUEST)
                 
             return Response({"message":"Account Created",'account_id': account},status=status.HTTP_201_CREATED)
