@@ -975,8 +975,7 @@ class StripeConnectAccountView(APIView):
                 
             #     tos_acceptance={"date": 1609798905, "ip": "8.8.8.8"}
             #        )
-        print("jghfghfgh")  
-        print("hello")   
+     
         try:
             stripe.api_key=secret
             account = stripe.Account.create(
@@ -996,19 +995,7 @@ class StripeConnectAccountView(APIView):
                 "tax_id": "1234",
                 "executives_provided": False,
                 "owners_provided": False,
-                "representative": {
-                    "first_name": "",
-                    "last_name": "",
-                    "dob": {
-                        "day": "",
-                        "month": "",
-                        "year": ""
-                    },
-                    "email": "",
-                    "phone": "",
-                    "id_number": "",
-                    "nationality": ""
-                }
+                "directors_provided":False
             },
 
             external_account={
