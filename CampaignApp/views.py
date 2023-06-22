@@ -1815,6 +1815,7 @@ class TranferMoney(APIView):
         influencer=request.data.get("influencer")
         amount=request.data.get("amount")
         campaignids=request.data.get("camp_id")
+        salesdone=request.data.get("sales")
         print("account",account)
         print("influencer_id",influencer)
         print("amount",amount)
@@ -1862,8 +1863,7 @@ class TranferMoney(APIView):
             
             
       
-        # if intent.status == 'requires_payment_method':
-        #     return Response({"error":"Please select payment method"},status=status.HTTP_400_BAD_REQUEST)
+       
 
         if confim.status == 'succeeded':
             try:
@@ -1880,12 +1880,13 @@ class TranferMoney(APIView):
                 transfer_obj.transferid=transfer1["id"]
                 transfer_obj.amount=transfer1["amount"]
                 transfer_obj.destination=transfer1["destination"]
+                
                 transfer_obj.save()
                 
                 pay_value=PaymentDetails.objects.filter(campaign=campaignids,influencer=influencer,vendor=self.request.user.id).values("sales","amount")
-                trsamt=int(pay_value[0]["amount"])-transfer1["amount"]
-                print(trsamt)
-                PaymentDetails.objects.filter(campaign=campaignids,influencer=influencer,vendor=self.request.user.id).update(amountpaid=transfer1["amount"],amount=trsamt)
+                # trsamt=int(pay_value[0]["amount"])-transfer1["amount"]
+                
+                PaymentDetails.objects.filter(campaign=campaignids,influencer=influencer,vendor=self.request.user.id).update(amountpaid=transfer1["amount"],sales=salesdone)
                 
                 
             except stripe.error.StripeError as e:
@@ -2068,7 +2069,9 @@ class InfluencerCampSale(APIView):
                 emp_check=PaymentDetails.objects.all()
                 if emp_check:
                     for i in data_max:
-                        PaymentDetails.objects.filter(vendor=self.request.user.id,campaign=i["campaign_detail"],influencer=i["influencer"]).update(sales=i["sales"],influencerfee=i["influener_fee"],offer=i["offer"],amount=i["amount"])
+                        sales_done=PaymentDetails.objects.filter(vendor=self.request.user.id,campaign=i["campaign_detail"],influencer=i["influencer"]).values("salespaid",sales)
+                        cal_amt=sales_done[0]["salespaid"]-sales_done[0]["sales"]
+                        PaymentDetails.objects.filter(vendor=self.request.user.id,campaign=i["campaign_detail"],influencer=i["influencer"]).update(sales=cal_amt,influencerfee=i["influener_fee"],offer=i["offer"],amount=i["amount"])
                 else:
                     for i in data_max:
                         details_obj=PaymentDetails()
