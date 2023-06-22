@@ -29,7 +29,7 @@ class VerificationView(generics.GenericAPIView):
         
         
 def createaccount(secret):
-    try:
+  
         account=stripe.api_key=secret
         account = stripe.Account.create(
         country="US",
@@ -58,5 +58,6 @@ def createaccount(secret):
         
         tos_acceptance={"date": 1609798905, "ip": "8.8.8.8"}
         )
-    except stripe.error.StripeError as e:
-        return Response({"error":e.user_message},status=status.HTTP_400_BAD_REQUEST)
+        return account
+    # except stripe.error.StripeError as e:
+    #     return Response({"error":e.user_message},status=status.HTTP_400_BAD_REQUEST)
