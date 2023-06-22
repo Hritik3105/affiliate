@@ -1024,7 +1024,7 @@ class StripeConnectAccountView(APIView):
             except stripe.error.StripeError as e:
                 return Response({"error":e.user_message},status=status.HTTP_400_BAD_REQUEST)
                 
-        return Response({"message":"Account Created",'account_id': account},status=status.HTTP_201_CREATED)
+            return Response({"message":"Account Created",'account_id': account},status=status.HTTP_201_CREATED)
         
 
 
