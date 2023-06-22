@@ -2077,6 +2077,7 @@ class InfluencerCampSale(APIView):
                             print("dfsdfds",cal_amt)
                             PaymentDetails.objects.filter(vendor=self.request.user.id,campaign=i["campaign_detail"],influencer=i["influencer"]).update(sales=cal_amt,influencerfee=i["influener_fee"],offer=i["offer"],amount=i["amount"])
                         else:
+                            print("helloqwwwwwwwwwww")
                             PaymentDetails.objects.filter(vendor=self.request.user.id,campaign=i["campaign_detail"],influencer=i["influencer"]).update(sales=i["sales"],influencerfee=i["influener_fee"],offer=i["offer"],amount=i["amount"])
                   
                     
@@ -2108,10 +2109,8 @@ class InfluencerCampSale(APIView):
                         
                     }
                     upd_lst.append(upd_dict)
-               
+                print(upd_lst)
                 return Response({"sale_details":upd_lst},status=status.HTTP_200_OK)
             return Response({"error":response.json()},status=status.HTTP_400_BAD_REQUEST)
         
 
-        
-print("dgfdggfhdfgdsdfggffddgdffgf")
