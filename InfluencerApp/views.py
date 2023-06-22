@@ -981,7 +981,7 @@ class StripeConnectAccountView(APIView):
             account = stripe.Account.create(
             country="AE",
             type="custom",
-            capabilities={"card_payments": {"requested": True}, "transfers": {"requested": True},"us_bank_account_ach_payments":{"requested":True}},
+            capabilities={"card_payments": {"requested": True}, "transfers": {"requested": True}},
             business_type="company",
             business_profile={'mcc':'5734', 'url':'https://www.google.com/',
                                 "support_phone":"55-798-4597",
