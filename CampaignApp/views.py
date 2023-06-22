@@ -2070,8 +2070,12 @@ class InfluencerCampSale(APIView):
                 if emp_check:
                     for i in data_max:
                         sales_done=PaymentDetails.objects.filter(vendor=self.request.user.id,campaign=i["campaign_detail"],influencer=i["influencer"]).values("salespaid","sales")
-                        cal_amt=sales_done[0]["salespaid"]-sales_done[0]["sales"]
-                        PaymentDetails.objects.filter(vendor=self.request.user.id,campaign=i["campaign_detail"],influencer=i["influencer"]).update(sales=cal_amt,influencerfee=i["influener_fee"],offer=i["offer"],amount=i["amount"])
+                        print(sales_done)
+                        if sales_done[0]["salespaid"]:
+                            cal_amt=int(sales_done[0]["salespaid"])-sales_done[0]["sales"]
+                            PaymentDetails.objects.filter(vendor=self.request.user.id,campaign=i["campaign_detail"],influencer=i["influencer"]).update(sales=cal_amt,influencerfee=i["influener_fee"],offer=i["offer"],amount=i["amount"])
+                        PaymentDetails.objects.filter(vendor=self.request.user.id,campaign=i["campaign_detail"],influencer=i["influencer"]).update(sales=i["sales"],influencerfee=i["influener_fee"],offer=i["offer"],amount=i["amount"])
+
                 else:
                     for i in data_max:
                         details_obj=PaymentDetails()
