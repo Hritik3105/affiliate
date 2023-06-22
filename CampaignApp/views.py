@@ -2080,7 +2080,22 @@ class InfluencerCampSale(APIView):
                         details_obj.account_id=i["account"]
                         details_obj.save()
                 upd_data=PaymentDetails.objects.all()
-               
+                upd_lst=[]
+                for pay in upd_data:
+                    upd_dict={
+                        "campaing_id":pay.campaign.campaign_name,
+                        "sales":pay.sales,
+                        "account":pay.account_id,
+                        "influencer":pay.influencer,
+                        "influener_fee":pay.influencerfee,
+                        "offer":pay.offer,
+                        "amount":pay.amount,  
+                        "amount_paid":pay.amountpaid,
+                        "campaign_detail":pay.campaign      
+                        
+                    }
+                    upd_lst.append(upd_dict)
+                print(upd_lst)
                 return Response({"sale_details":data_max},status=status.HTTP_200_OK)
             return Response({"error":response.json()},status=status.HTTP_400_BAD_REQUEST)
         
