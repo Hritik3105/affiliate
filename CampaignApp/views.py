@@ -2077,6 +2077,7 @@ class InfluencerCampSale(APIView):
                         details_obj.influencerfee=i["influener_fee"]
                         details_obj.offer=i["offer"]
                         details_obj.campaign_id=i["campaign_detail"]
+                        details_obj.account_id=i["account"]
                         details_obj.save()
                 upd_data=PaymentDetails.objects.all()
                
