@@ -1997,30 +1997,51 @@ class InfluencerCampSale(APIView):
                 lst_data=[]
                
                 for key in influencer_sales_for_campaign:
-                    print(len(key))
+                   
                     for i in influencer_sales_for_campaign[key]:
                         str_detail=StripeDetails.objects.filter(influencer=key,vendor=self.request.user.id).values("account_id")
-                        print("helllooddd",len(str_detail))
-                        check=Campaign.objects.filter(id=i["campaign_id"]).values("influencer_fee","offer","campaign_name")
-                        if  check[0]["offer"] == "percentage":
-                            amount=i["sales"] / check[0]["influencer_fee"] 
-                         
-                        else:
-                            amount=i["sales"] - check[0]["influencer_fee"] 
-                          
+                        print("helllooddd",str_detail)
+                        if str_detail:
+                            check=Campaign.objects.filter(id=i["campaign_id"]).values("influencer_fee","offer","campaign_name")
+                            if  check[0]["offer"] == "percentage":
+                                amount=i["sales"] / check[0]["influencer_fee"] 
                             
-                        infl_dict={
-                            "campaing_id":check[0]["campaign_name"],
-                            "sales":i["sales"],
-                            "account":str_detail[0]["account_id"],
-                            "influencer":key,
-                            "influener_fee":check[0]["influencer_fee"],
-                            "offer":check[0]["offer"],
-                            "amount":amount,  
-                            "campaign_detail":i["campaign_id"]        
-                        }
-                        
-                        lst_data.append(infl_dict)  
+                            else:
+                                amount=i["sales"] - check[0]["influencer_fee"] 
+                            
+                                
+                            infl_dict={
+                                "campaing_id":check[0]["campaign_name"],
+                                "sales":i["sales"],
+                                "account":str_detail[0]["account_id"],
+                                "influencer":key,
+                                "influener_fee":check[0]["influencer_fee"],
+                                "offer":check[0]["offer"],
+                                "amount":amount,  
+                                "campaign_detail":i["campaign_id"]        
+                            }
+                            
+                            lst_data.append(infl_dict)  
+                        else:
+                            if  check[0]["offer"] == "percentage":
+                                amount=i["sales"] / check[0]["influencer_fee"] 
+                            
+                            else:
+                                amount=i["sales"] - check[0]["influencer_fee"] 
+                            
+                                
+                            infl_dict={
+                                "campaing_id":check[0]["campaign_name"],
+                                "sales":i["sales"],
+                                "account":"",
+                                "influencer":key,
+                                "influener_fee":check[0]["influencer_fee"],
+                                "offer":check[0]["offer"],
+                                "amount":amount,  
+                                "campaign_detail":i["campaign_id"]        
+                            }
+                            
+                            lst_data.append(infl_dict)  
                 campaign_totals = {}
                 for entry in lst_data:
                     campaign_id = entry["campaing_id"]
