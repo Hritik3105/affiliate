@@ -1820,9 +1820,7 @@ class TranferMoney(APIView):
         get_account=StripeDetails.objects.filter(vendor_id=self.request.user.id).values("account_id","influencer_id")
         
 
-            # amount =1000
-        
-            # recipient1_amount = int(amount * 0.7)
+            
         
         stripe.api_key = settings.STRIPE_API_KEY  
         
@@ -1883,7 +1881,7 @@ class TranferMoney(APIView):
                 transfer_obj.destination=transfer1["destination"]
                 transfer_obj.save()
 
-                PaymentDetails.objects.filter(camapign_id=244,influencer=7,vendor=self.request.user.id)
+                PaymentDetails.objects.filter(camapign_id=244,influencer=7,vendor=self.request.user.id).update(amount_paid=transfer1["amount"])
                 
                 
             except stripe.error.StripeError as e:
