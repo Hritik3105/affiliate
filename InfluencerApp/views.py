@@ -979,7 +979,7 @@ class StripeConnectAccountView(APIView):
                 #     )
                 try:
                     zx=createaccount(secret)
-                    print(zx)
+                    print("sdfdsfdf",zx)
 
                     val=ModashInfluencer.objects.filter(influencerid=self.request.user.id).values("id")
 
