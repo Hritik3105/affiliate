@@ -2012,7 +2012,7 @@ class InfluencerCampSale(APIView):
                             else:
                                 amount=i["sales"] - check[0]["influencer_fee"] 
                             
-                                
+                            print('sdfsdf',i["sales"])    
                             infl_dict={
                                 "campaing_id":check[0]["campaign_name"],
                                 "sales":i["sales"],
@@ -2032,7 +2032,7 @@ class InfluencerCampSale(APIView):
                             else:
                                 amount=i["sales"] - check[0]["influencer_fee"] 
                             
-                            print(i["sales"])    
+                              
                             infl_dict={
                                 "campaing_id":check[0]["campaign_name"],
                                 "sales":i["sales"],
