@@ -979,8 +979,8 @@ class StripeConnectAccountView(APIView):
                 #     )
        
                 zx=createaccount(secret)
-                print(zx)
-            
+                print(zx.data)
+
                 val=ModashInfluencer.objects.filter(influencerid=self.request.user.id).values("id")
 
                 stripe_details=StripeDetails()
