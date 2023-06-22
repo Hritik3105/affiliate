@@ -1997,16 +1997,17 @@ class InfluencerCampSale(APIView):
                 lst_data=[]
                
                 for key in influencer_sales_for_campaign:
-                    print("keyssss",key)
+                    print(len(key))
                     for i in influencer_sales_for_campaign[key]:
                         str_detail=StripeDetails.objects.filter(influencer=key,vendor=self.request.user.id).values("account_id")
-                        print("helllooddd",str_detail)
+                        print("helllooddd",len(str_detail))
                         check=Campaign.objects.filter(id=i["campaign_id"]).values("influencer_fee","offer","campaign_name")
                         if  check[0]["offer"] == "percentage":
                             amount=i["sales"] / check[0]["influencer_fee"] 
                          
                         else:
                             amount=i["sales"] - check[0]["influencer_fee"] 
+                          
                             
                         infl_dict={
                             "campaing_id":check[0]["campaign_name"],
