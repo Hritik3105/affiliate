@@ -948,7 +948,7 @@ class StripeConnectAccountView(APIView):
         else:
             
             try:
-                stripe.api_key=secret
+                account=stripe.api_key=secret
                 account = stripe.Account.create(
                 country="US",
                 type="custom",
