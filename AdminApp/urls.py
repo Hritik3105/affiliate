@@ -41,4 +41,6 @@ urlpatterns = [
     path('split-payment/', split_payment, name='split_payment'),
     path('stripe/', stripe_data, name='stripe'),
     path('commission/', charge_commission, name='commission'),
+    path('get-coupon/', get_coupon_codes, name='get-coupon'),
+
 ]

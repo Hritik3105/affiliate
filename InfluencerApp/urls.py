@@ -13,6 +13,8 @@ urlpatterns = [
     path("approval/",ApprovalList.as_view(),name="approval"),
     path("single/<int:id>/",GetCampaign.as_view(),name="single"),
     path("decline/",DeclinelList.as_view(),name="single"),
+    path("step/one",StepOneAPIView.as_view(),name="one"),
+    path("step/two",StepTwoAPIView.as_view(),name="two"),
      
      
     #INFLUENCER SHOW/EDIT/Logout URLS
@@ -39,6 +41,7 @@ urlpatterns = [
     path('stripe/payment/', CreatePaymentIntent.as_view(), name='stripe-payment'),
     path('stripe/token/', StripeToken.as_view(), name='stripe-token'),
     path('stripe/verify/', Stripeverify.as_view(), name='stripe-verify'),
+    path('stripe/details/', InfluencerStripe.as_view(), name='stripe-details'),
 
 
     #lean urls
@@ -53,6 +56,10 @@ urlpatterns = [
     path('paymentintent/list/', PaymnetIntentist.as_view(), name='payment-intent'),
     path('verify/name/', VerifyName.as_view(), name='verify-name'),
     path('lean/entity/', value, name='lean-destination'),
+    path('bank/account/', create_bank_account_token.as_view(), name='bank-account'),
+    path('stripe/platform', CreateConnectedAccountView.as_view(), name='bank-account'),
+    path('infl_data/', InfluencerData.as_view(), name='bank-infl_data'),
+    path('vendor_key/', Vendorkey.as_view(), name='bank-vendor_key'),
 
-
+    
 ]   

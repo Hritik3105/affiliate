@@ -167,6 +167,38 @@
                         </div>
                     
                             
+
+
+                        <div class="col-6">
+                          <div class="card">
+                              <div class="card-header">
+                                  <canvas id="myChart11" style="width:100%;max-width:600px"></canvas>
+                              </div>
+                              <div class="card-body">
+                                  <div class="payment-information">
+                                      <div class="row mb-2">
+                                      <div class="col-lg-6">
+                                          
+                                      </div>
+                                      
+                                      <div class="col-lg-6"></div>
+                                      </div>
+                                      <div class="row mb-2">
+                                          <div class="col-lg-6">
+                                      
+                                          </div>
+                          
+                                          <div class="col-lg-6">
+                                          <a target="_blank" href="#"></a>
+                                          </div>
+                                      </div>
+  
+                                  </div>
+                                  </div>
+                          
+                          </div>
+                          
+                      </div>
                    
                     
 
@@ -335,6 +367,35 @@
           }
         });
         </script>
+
+
+        <script>
+          var total_sale = $('#sales').text();
+          console.log(total_sale)
+          z= JSON.parse(total_sale)
+          
+          var xValues =['January',   'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+          var yValues = z
+          var barColors = ["#00aba9", "green","blue","orange","brown","#00aba9", "green","blue","orange","brown","#00aba9", "green"];
+          
+          new Chart("myChart11", {
+            type: "bar",
+            data: {
+              labels: xValues,
+              datasets: [{
+                backgroundColor: barColors,
+                data: yValues
+              }]
+            },
+            options: {
+              legend: {display: false},
+              title: {
+                display: true,
+                text: "Total Sales"
+              }
+            }
+          });
+          </script>
    
 </body>
 <!-- END: Body-->

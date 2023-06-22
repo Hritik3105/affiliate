@@ -86,15 +86,24 @@ class CampaignSerializer(serializers.ModelSerializer):
   
    class Meta:
         model=Campaign
-        fields = ['id','campaign_name',"offer","date","description","influencer_visit","influencer_fee","campaign_name"]
+        fields = ['id','campaign_name',"offer","date","description","influencer_visit","influencer_fee","campaign_name","end_date",]
         extra_kwargs = {
                 'campaign_name': {'required': True},
                 'date': {'required': True},
+                'end_date': {'required': True},
                 #'influencer_name': {'required': True},
                 'offer': {'required': False},
                 "influencer_fee":{'required': False},
             
             }
+ 
+   def validate_influencer_fee(self,influencer_fee):
+       
+        offer = self.initial_data.get('offer')
+       
+        if influencer_fee >100 and offer=="percentage":
+            raise serializers.ValidationError("Influencer fee must be less than or equal to 100.")
+        return influencer_fee
 
     
     
@@ -104,18 +113,26 @@ class InflCampSerializer(serializers.ModelSerializer):
 #    product_discount=CommaSeparatedField()
    class Meta:
         model=Campaign
-        fields = ['id', 'campaign_name',"influencer_name","date","influencer_visit","offer","description","influencer_fee"]
+        fields = ['id', 'campaign_name',"influencer_name","date","influencer_visit","offer","description","influencer_fee","end_date"]
         extra_kwargs = {
                 'campaign_name': {'required': True},
                 'influencer_visit': {'required': True},
                 'offer': {'required': True},
                 'influencer_name': {'required': True},
                 'date': {'required': True},
+                'end_date': {'required': True},
                  "influencer_fee":{'required': False},
                 
                 
             }
 
+   def validate_influencer_fee(self,influencer_fee):
+        
+        offer = self.initial_data.get('offer')
+        
+        if influencer_fee >100 and offer=="percentage":
+            raise serializers.ValidationError("Influencer fee must be less than or equal to 100.")
+        return influencer_fee
 
 
 class CampaignUpdateSerializer(serializers.ModelSerializer):
@@ -123,17 +140,25 @@ class CampaignUpdateSerializer(serializers.ModelSerializer):
    influencer_name= CommaSeparatedField(required=False) 
    class Meta:
         model=Campaign
-        fields = ["id",'campaign_name','influencer_visit',"offer","date","description","influencer_name","influencer_fee","campaign_status"]
+        fields = ["id",'campaign_name','influencer_visit',"offer","date","description","influencer_name","influencer_fee","campaign_status","end_date"]
         extra_kwargs = {
         'campaign_name': {'required': False},
         'influencer_visit': {'required': False},
         'offer': {'required': False},
         'description': {'required': False},
         'influencer_name': {'required': False},
-        'date': {'required': False},     
+        'date': {'required': False},  
+        'end_date': {'required': False},    
         'influencer_fee': {'required': False},   
     }
 
+
+   def validate_influencer_fee(self,influencer_fee):
+        offer = self.initial_data.get('offer')
+       
+        if influencer_fee >100 and offer=="percentage":
+            raise serializers.ValidationError("Influencer fee must be less than or equal to 100.")
+        return influencer_fee
 
 
 
@@ -222,3 +247,15 @@ class InfluencerFollower(serializers.ModelSerializer):
     class Meta:
         model = ModashInfluencer
         fields="__all__"
+
+
+class VendorStripeSerializer(serializers.ModelSerializer):
+   
+    class Meta:
+        model=VendorStripeDetails
+        fields="__all__"
+        extra_kwargs = {
+            'publishable_key': {'required': True},
+            'secret_key': {'required': True},
+            
+        }

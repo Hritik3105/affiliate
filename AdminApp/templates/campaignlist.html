@@ -188,6 +188,7 @@
                                             <th>Offer</th>
                                             <th>Influencer</th>
                                             <th>Influencer Fee</th>
+                                            <th>Sale</th>
                                           
                                         </tr>
                                     </thead>
@@ -203,8 +204,9 @@
                                             {% comment %} <td>{% for k in i.influencer_id %}<a class="influencer_name" data-bs-toggle="modal" data-bs-target="#myModal" href="#"  data-id="{{k}}"  onclick="openModal({{k}})" >{% endfor %} {% for j in i.influencer_name %}<br>{{j}}</br>{%endfor%}</a></td> {% endcomment %}
                                             <td><a href="" data-bs-toggle="modal" data-bs-target="#myModal" data-id={{i.id}} class="influencer"><button class="btn btn-primary btn-sm w-100 mb-75 waves-effect waves-float waves-light" disabled="" style="background-image: linear-gradient(to right, #14bdad , #14bdad);border:1px solid #14bdad !important">View</button></a></td>
                                             <td>{{i.influencer_fee}}</td>
+                                            <td>{{i.sale}}</td>
                                             
-                                            </td>
+                                            
                                         </tr>  
                                     {% endfor %}
                                     </tbody>

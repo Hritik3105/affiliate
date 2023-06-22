@@ -42,9 +42,10 @@
         
           <li class=" nav-item  {% active_link 'commission' 'active' %}"><a class="d-flex align-items-center" href="{% url 'commission' %}"><i data-feather='percent'></i><span class="menu-title text-truncate" data-i18n="Email">Commission</span></a>            
           </li>
-           {% comment %}   <li class=" nav-item"><a class="d-flex align-items-center" href="app-calendar.html"><i data-feather="calendar"></i><span class="menu-title text-truncate" data-i18n="Calendar">Calendar</span></a>
-            </li>
-            <li class=" nav-item"><a class="d-flex align-items-center" href="app-kanban.html"><i data-feather="grid"></i><span class="menu-title text-truncate" data-i18n="Kanban">Kanban</span></a>
+          
+          <li class=" nav-item  {% active_link 'get-coupon' 'active' %}"><a class="d-flex align-items-center" href="{% url 'get-coupon' %}"><i data-feather='percent'></i><span class="menu-title text-truncate" data-i18n="Email">Commission</span></a>            
+          </li>
+            {% comment %} <li class=" nav-item"><a class="d-flex align-items-center" href="app-kanban.html"><i data-feather="grid"></i><span class="menu-title text-truncate" data-i18n="Kanban">Kanban</span></a> 
             </li>
             <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i data-feather="file-text"></i><span class="menu-title text-truncate" data-i18n="Invoice">Invoice</span></a>
                 <ul class="menu-content">

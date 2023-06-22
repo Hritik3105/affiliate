@@ -1,23 +1,24 @@
 from CampaignApp.models import *
 from StoreApp.models import *
+from rest_framework.response import Response
 
 def product_details(self,request,val_lst,req_id):
-    print("_-------------------",val_lst)
+   
     for i in range(len(val_lst)):
-        print("-------------------",i)
-        product=Product_information()
-        product.vendor_id=self.request.user.id
-        product.campaignid_id=req_id.id
-        product.product_name=val_lst[i]["product_name"]
-        product.product_id=val_lst[i]["product_id"]
-        product.coupon_name=val_lst[i]["name"]
-        product.amount=val_lst[i]["amount"]
-        product.save()
-       
+        
+            product=Product_information()
+            product.vendor_id=self.request.user.id
+            product.campaignid_id=req_id.id
+            product.product_name=val_lst[i]["product_name"]
+            product.product_id=val_lst[i]["product_id"]
+            product.coupon_name=val_lst[i]["name"]
+            product.amount=val_lst[i]["amount"]
+            product.save()
+     
        
                     
 def product_name(self,request,req_id,arg,arg_id):
-    
+    print(arg)
     for i in  range(len(arg)):
     
         product=Product_information()

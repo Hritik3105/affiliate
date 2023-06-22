@@ -18,6 +18,19 @@ class StrCommaSeparatedField(serializers.CharField):
 class InfluencerSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
     confirm_password = serializers.CharField(write_only=True,required=True)
+    email = serializers.EmailField()
+
+    def validate_email(self, value):
+     
+        if User.objects.filter(email=value).exists():
+            raise serializers.ValidationError("This email is already registered.")
+        return value
+
+    def create(self, validated_data):
+   
+        user = User.objects.create(email=validated_data['email'])
+    
+        return user
     
 
     def create(self, validated_data):
@@ -118,8 +131,51 @@ class StepTwoSerializer(serializers.ModelSerializer):
         }
         
         
+class StripeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=StripeDetails
+        fields="__all__"
+        extra_kwargs = {
+            'publishable_key': {'required': True},
+            'secret_key': {'required': True},
+            
+        }
     
 
+class CreateConnectedAccountSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    bank_account_token = serializers.CharField()
+    platform_account_id = serializers.CharField()
+    
+
+    def validate_email(self, value):
+        if not value:
+            raise serializers.ValidationError("Email is required.")
+        return value
+
+    def validate_bank_account_token(self, value):
+        if not value:
+            raise serializers.ValidationError("Bank account token is required.")
+        return value
+
+    # def validate_platform_account_id(self, value):
+    #     if not value:
+    #         raise serializers.ValidationError("Platform account ID is required.")
+    #     return value
     
     
     
+class BankAccountSerializer(serializers.Serializer):
+    account_number = serializers.CharField()
+    routing_number = serializers.CharField()
+    
+    
+    def validate_account_number(self, value):
+        if not value:
+            raise serializers.ValidationError("Account number is required.")
+        return value
+
+    def validate_routing_number(self, value):
+        if not value:
+            raise serializers.ValidationError("Routing number is required.")
+        return value

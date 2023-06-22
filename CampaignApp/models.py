@@ -27,6 +27,8 @@ class Campaign(models.Model):
   campaign_status= models.IntegerField(default=0,choices=CAMP_CHOICES) 
   draft_status=models.BooleanField(default=0)
   influencer_fee=models.FloatField(blank=True,null=True)
+  campaign_exp=models.BooleanField(default=True)
+  end_date=models.DateField(null=True)
   
   
 class Productdetails(models.Model):
@@ -90,3 +92,28 @@ class Notification(models.Model):
   created_at = models.DateTimeField(auto_now_add=True,null=True)
 
   
+  
+class VendorStripeDetails(models.Model):
+    vendor=models.ForeignKey(User,on_delete=models.CASCADE,blank=True,null=True)
+    publishable_key=models.CharField(max_length=255,blank=True)
+    secret_key=models.CharField(max_length=255,blank=True)
+    
+   
+  
+class PaymentDetails(models.Model):
+  amount=models.FloatField(blank=True,null=True)
+  amountpaid=models.FloatField(blank=True,null=True)
+  influencer=models.ForeignKey(ModashInfluencer,on_delete=models.CASCADE,blank=True,null=True)
+  vendor=models.ForeignKey(User,on_delete=models.CASCADE,blank=True,null=True)
+  sales=models.FloatField(blank=True,null=True)
+  influencerfee=models.FloatField(blank=True,null=True)
+  offer=models.CharField(max_length=200,blank=True,null=True)
+  campaign=models.ForeignKey(Campaign,on_delete=models.CASCADE,blank=True,null=True)
+  
+  
+class transferdetails(models.Model):
+  transferid=models.CharField(max_length=200,blank=True,null=True)
+  influencer=models.ForeignKey(ModashInfluencer,on_delete=models.CASCADE,blank=True,null=True)
+  vendor=models.ForeignKey(User,on_delete=models.CASCADE,blank=True,null=True)
+  amount=models.IntegerField(blank=True,null=True)
+  destination=models.CharField(max_length=255,blank=True,null=True)

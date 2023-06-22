@@ -36,6 +36,7 @@ ALLOWED_HOSTS = ["13.50.106.134","myrefera.com","api.myrefera.com","admin.myrefe
 # Application definition
 
 INSTALLED_APPS = [
+    'django_crontab',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -43,14 +44,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'corsheaders',
+    'rest_framework.authtoken',
+    'active_link',
     'AdminApp',
     'InfluencerApp',
     'CampaignApp',
     'ShopifyApp',
     'StoreApp',
-    'corsheaders',
-    'rest_framework.authtoken',
-    'active_link',
 ]
 
 
@@ -107,6 +108,15 @@ TEMPLATES = [
 WSGI_APPLICATION = 'Affilate_Marketing.wsgi.application'
 
 
+CRONJOBS = [
+    ('*/1 * * * *', 'CampaignApp.cron.update_campaign_status')
+]
+
+
+
+# CRONJOBS = [
+#     ('0 0 * * *', 'CampaignApp.cron.update_campaign_status')
+# ]
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
