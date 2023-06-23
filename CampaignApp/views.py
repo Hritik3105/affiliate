@@ -2070,7 +2070,7 @@ class InfluencerCampSale(APIView):
                 if emp_check:
                     for i in data_max:
                         sales_done=PaymentDetails.objects.filter(vendor=self.request.user.id,campaign=i["campaign_detail"],influencer=i["influencer"]).values("salespaid","sales","influencerfee")
-                        print("sales_doneeee",sales_done[0]["salespaid"])
+                        print("sales_doneeee",sales_done)
                         
                         if sales_done[0]["salespaid"]:
                             print("helo saless",sales_done[0]["sales"])
@@ -2084,15 +2084,10 @@ class InfluencerCampSale(APIView):
                                 amount_to_paid=cal_amt/sales_done[0]["influencerfee"]
                                 print(amount_to_paid)
                             PaymentDetails.objects.filter(vendor=self.request.user.id,campaign=i["campaign_detail"],influencer=i["influencer"]).update(sales=cal_amt,influencerfee=i["influener_fee"],offer=i["offer"],amount=amount_to_paid)
-                        else:
-                            print((sales_done[0]["salespaid"]))
-                            print((i["sales"]))
-                            cal_amt=int(sales_done[0]["salespaid"])-int(i["sales"])
-                            print("addd",cal_amt)
-                            amount_to_paid=cal_amt/sales_done[0]["influencerfee"]
-                            print(amount_to_paid)
-                           
-                            PaymentDetails.objects.filter(vendor=self.request.user.id,campaign=i["campaign_detail"],influencer=i["influencer"]).update(sales=cal_amt,influencerfee=i["influener_fee"],offer=i["offer"],amount=amount_to_paid)
+                        # else:
+                        #     print("helloqwwwwwwwwwww")
+                        #     print(sales_done)
+                        #     PaymentDetails.objects.filter(vendor=self.request.user.id,campaign=i["campaign_detail"],influencer=i["influencer"]).update(sales=i["sales"],influencerfee=i["influener_fee"],offer=i["offer"],amount=i["amount"])
                   
                     
                 else:
