@@ -1372,24 +1372,24 @@ class Click_analytics(APIView):
         
         response=requests.post(url,headers=headers2,json=dict)
         print(response.json())
-        # if response.status_code==200:
-        #     followers=response.json()["data"]["statistics"]["total"]["followers"]
-        #     following=response.json()["data"]["statistics"]["total"]["following"]
-        #     engagement_rate=response.json()["data"]["statistics"]["total"]["engagement_rate"]
-        #     username=response.json()["data"]["id"]["display_name"]
-        #     handle_name=response.json()["data"]["id"]["username"]
-        #     profile_pic=response.json()["data"]["general"]["branding"]["avatar"]
-        #     verified=response.json()["data"]["misc"]["sb_verified"]
+        if response.status_code==200:
+            followers=response.json()["data"]["user_profile"]["followers"]
+            engagement_rate=response.json()["data"]["user_profile"]["engagement_rate"]
+            engagement=response.json()["data"]["user_profile"]["engagements"]
+            username=response.json()["data"]["user_profile"]["fullname"]
+            handle_name=response.json()["data"]["user_profile"]["username"]
+            profile_pic=response.json()["data"]["user_profile"]["picture"]
+            verified=response.json()["data"]["user_profile"]["is_verified"]
         
         
-        #     instagram_data={
-        #         "profile_pic":profile_pic,
-        #         "username":username,
-        #         "handle_name":handle_name,
-        #         "followers":followers,
-        #         "following":following,
-        #         "engagement_rate":engagement_rate,
-        #         "verified":verified,
-        #     }
-        return Response({"data":response.json()},status=status.HTTP_200_OK)
-        # return Response({"error":response.json()},status=status.HTTP_400_BAD_REQUEST)
+            instagram_data={
+                "profile_pic":profile_pic,
+                "username":username,
+                "handle_name":handle_name,
+                "followers":followers,
+                
+                "engagement_rate":engagement_rate,
+                "verified":verified,
+            }
+            return Response({"data":instagram_data},status=status.HTTP_200_OK)
+        return Response({"error":response.json()},status=status.HTTP_400_BAD_REQUEST)
