@@ -1373,13 +1373,13 @@ class Click_analytics(APIView):
         response=requests.post(url,headers=headers2,json=dict)
         print(response.json())
         if response.status_code==200:
-            followers=response.json()["data"]["user_profile"]["followers"]
-            engagement_rate=response.json()["data"]["user_profile"]["engagement_rate"]
-            engagement=response.json()["data"]["user_profile"]["engagements"]
-            username=response.json()["data"]["user_profile"]["fullname"]
-            handle_name=response.json()["data"]["user_profile"]["username"]
-            profile_pic=response.json()["data"]["user_profile"]["picture"]
-            verified=response.json()["data"]["user_profile"]["is_verified"]
+            followers=response.json()["user_profile"]["followers"]
+            engagement_rate=response.json()["user_profile"]["engagement_rate"]
+            engagement=response.json()["user_profile"]["engagements"]
+            username=response.json()["user_profile"]["fullname"]
+            handle_name=response.json()["user_profile"]["username"]
+            profile_pic=response.json()["user_profile"]["picture"]
+            verified=response.json()["user_profile"]["is_verified"]
         
         
             instagram_data={
