@@ -2071,7 +2071,7 @@ class InfluencerCampSale(APIView):
                     for i in data_max:
                         sales_done=PaymentDetails.objects.filter(vendor=self.request.user.id,campaign=i["campaign_detail"],influencer=i["influencer"]).values("salespaid","sales","influencerfee")
                         print("sales_doneeee",sales_done[0]["salespaid"])
-                        
+                        print("helloooo")
                         if sales_done[0]["salespaid"] !=None:
                             print("hello")
                         #     print("helo saless",sales_done[0]["sales"])
