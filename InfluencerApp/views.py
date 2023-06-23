@@ -1387,7 +1387,7 @@ class Click_analytics(APIView):
                 "username":username,
                 "handle_name":handle_name,
                 "followers":followers,
-                
+                "engagement":engagement,
                 "engagement_rate":engagement_rate,
                 "verified":verified,
             }
