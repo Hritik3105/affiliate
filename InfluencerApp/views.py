@@ -1371,7 +1371,7 @@ class Click_analytics(APIView):
         url="https://app.clickanalytic.com/api/v2/analysis"
         
         response=requests.post(url,headers=headers2,json=dict)
-        print(response)
+        print(response.json())
         # if response.status_code==200:
         #     followers=response.json()["data"]["statistics"]["total"]["followers"]
         #     following=response.json()["data"]["statistics"]["total"]["following"]
@@ -1391,5 +1391,5 @@ class Click_analytics(APIView):
         #         "engagement_rate":engagement_rate,
         #         "verified":verified,
         #     }
-        return Response({"data":response},status=status.HTTP_200_OK)
+        return Response({"data":response.json()},status=status.HTTP_200_OK)
         # return Response({"error":response.json()},status=status.HTTP_400_BAD_REQUEST)
