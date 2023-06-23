@@ -2085,7 +2085,7 @@ class InfluencerCampSale(APIView):
                                 amount_to_paid=cal_amt/sales_done[0]["influencerfee"]
                                 
                             
-                            PaymentDetails.objects.filter(vendor=self.request.user.id,campaign=i["campaign_detail"],influencer=i["influencer"]).update(sales=cal_amt,influencerfee=amount_to_paid,offer=i["offer"],amount=i["amount"])
+                            PaymentDetails.objects.filter(vendor=self.request.user.id,campaign=i["campaign_detail"],influencer=i["influencer"]).update(sales=cal_amt,influencerfee=i["influener_fee"],offer=i["offer"],amount=amount_to_paid)
                         # else:
                         #     print("helloqwwwwwwwwwww")
                         #     print(sales_done)
