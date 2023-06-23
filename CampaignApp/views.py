@@ -2071,20 +2071,21 @@ class InfluencerCampSale(APIView):
                     for i in data_max:
                         sales_done=PaymentDetails.objects.filter(vendor=self.request.user.id,campaign=i["campaign_detail"],influencer=i["influencer"]).values("salespaid","sales","influencerfee")
                         print("sales_doneeee",sales_done[0]["sales"])
-                        print("helloooo")
-                        if int(sales_done[0]["sales"])==0:
-                            print("hello")
+                     
+                        if int(sales_done[0]["sales"])!=0:
+                            print("not qual to zero")
                         #     print("helo saless",sales_done[0]["sales"])
                         #     if int(sales_done[0]["sales"]) != 0:
-                        #         cal_amt=int(sales_done[0]["salespaid"])-int(sales_done[0]["sales"])
-                        #     else:
+                            cal_amt=int(sales_done[0]["salespaid"])-int(sales_done[0]["sales"])
+                        else:
+                            print("wqual to zero")
                         #         print("checkffgggg",int(sales_done[0]["salespaid"]))
                         #         print(int(i["sales"]))
-                        #         cal_amt=int(sales_done[0]["salespaid"])-int(i["sales"])
+                            cal_amt=int(sales_done[0]["salespaid"])-int(i["sales"])
                         #         print("addd",cal_amt)
                         #         amount_to_paid=cal_amt/sales_done[0]["influencerfee"]
                         #         print(amount_to_paid)
-                        PaymentDetails.objects.filter(vendor=self.request.user.id,campaign=i["campaign_detail"],influencer=i["influencer"]).update(sales=0,influencerfee=i["influener_fee"],offer=i["offer"],amount=i["amount"])
+                        PaymentDetails.objects.filter(vendor=self.request.user.id,campaign=i["campaign_detail"],influencer=i["influencer"]).update(sales=cal_amt,influencerfee=i["influener_fee"],offer=i["offer"],amount=i["amount"])
                         # else:
                         #     print("helloqwwwwwwwwwww")
                         #     print(sales_done)
