@@ -2076,7 +2076,8 @@ class InfluencerCampSale(APIView):
                             print("not qual to zero")
                         #     print("helo saless",sales_done[0]["sales"])
                         #     if int(sales_done[0]["sales"]) != 0:
-                            cal_amt=int(sales_done[0]["salespaid"])-int(sales_done[0]["sales"])
+                            if sales_done[0]["salespaid"]!= None:
+                                cal_amt=int(sales_done[0]["salespaid"])-int(sales_done[0]["sales"])
                         else:
                             print("wqual to zero")
                         #         print("checkffgggg",int(sales_done[0]["salespaid"]))
