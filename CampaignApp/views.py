@@ -2081,7 +2081,8 @@ class InfluencerCampSale(APIView):
                             print("wqual to zero")
                         #         print("checkffgggg",int(sales_done[0]["salespaid"]))
                         #         print(int(i["sales"]))
-                            cal_amt=int(sales_done[0]["salespaid"])-int(i["sales"])
+                            if sales_done[0]["salespaid"]!= None:
+                                cal_amt=int(sales_done[0]["salespaid"])-int(i["sales"])
                         #         print("addd",cal_amt)
                         #         amount_to_paid=cal_amt/sales_done[0]["influencerfee"]
                         #         print(amount_to_paid)
