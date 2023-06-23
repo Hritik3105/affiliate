@@ -2077,7 +2077,7 @@ class InfluencerCampSale(APIView):
                             if int(sales_done[0]["sales"]) != 0:
                                 cal_amt=int(sales_done[0]["salespaid"])-int(sales_done[0]["sales"])
                             else:
-                                cal_amt=int(sales_done[0]["salespaid"])-int(i[sales])
+                                cal_amt=int(sales_done[0]["salespaid"])-int(i["sales"])
 
                             print("dfsdfds",cal_amt)
                             PaymentDetails.objects.filter(vendor=self.request.user.id,campaign=i["campaign_detail"],influencer=i["influencer"]).update(sales=cal_amt,influencerfee=i["influener_fee"],offer=i["offer"],amount=i["amount"])
