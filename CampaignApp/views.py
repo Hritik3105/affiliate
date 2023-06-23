@@ -2003,7 +2003,7 @@ class InfluencerCampSale(APIView):
                    
                     for i in influencer_sales_for_campaign[key]:
                         str_detail=StripeDetails.objects.filter(influencer=key,vendor=self.request.user.id).values("account_id")
-                        print("helllooddd",str_detail)
+                      
                         if str_detail:
                             check=Campaign.objects.filter(id=i["campaign_id"]).values("influencer_fee","offer","campaign_name")
                             if  check[0]["offer"] == "percentage":
@@ -2012,7 +2012,7 @@ class InfluencerCampSale(APIView):
                             else:
                                 amount=i["sales"] - check[0]["influencer_fee"] 
                             
-                            print('sdfsdf',i["sales"])    
+                            
                             infl_dict={
                                 "campaing_id":check[0]["campaign_name"],
                                 "sales":i["sales"],
@@ -2078,6 +2078,8 @@ class InfluencerCampSale(APIView):
                                 cal_amt=int(sales_done[0]["salespaid"])-int(sales_done[0]["sales"])
                             else:
                                 print("i am here")
+                                print("checkffgggg",int(sales_done[0]["salespaid"]))
+                                print(int(i["sales"]))
                                 cal_amt=int(sales_done[0]["salespaid"])-int(i["sales"])
                                 print("addd",cal_amt)
                             print("dfsdfds",cal_amt)
