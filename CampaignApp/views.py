@@ -2072,7 +2072,8 @@ class InfluencerCampSale(APIView):
                         sales_done=PaymentDetails.objects.filter(vendor=self.request.user.id,campaign=i["campaign_detail"],influencer=i["influencer"]).values("salespaid","sales","influencerfee")
                         print("sales_doneeee",sales_done[0]["salespaid"])
                         
-                        # if sales_done[0]["salespaid"]:
+                        if sales_done[0]["salespaid"] !=None:
+                            print("hello")
                         #     print("helo saless",sales_done[0]["sales"])
                         #     if int(sales_done[0]["sales"]) != 0:
                         #         cal_amt=int(sales_done[0]["salespaid"])-int(sales_done[0]["sales"])
