@@ -1369,7 +1369,8 @@ class Click_analytics(APIView):
         "influencer_id": influencer_id
         }
        
-        url=f"https://app.clickanalytic.com/api/v2"
+       
+        url="https://app.clickanalytic.com/api/v2/analysis"
         
         response=requests.post(url,headers=headers2,json=dict)
         print(response)
