@@ -2071,7 +2071,7 @@ class InfluencerCampSale(APIView):
                     for i in data_max:
                         sales_done=PaymentDetails.objects.filter(vendor=self.request.user.id,campaign=i["campaign_detail"],influencer=i["influencer"]).values("salespaid","sales")
                         print(sales_done)
-                        
+                        print("helooo")
                         if sales_done[0]["salespaid"]:
                             print("helo",sales_done[0]["salespaid"])
                             cal_amt=int(sales_done[0]["salespaid"])-int(sales_done[0]["sales"])
