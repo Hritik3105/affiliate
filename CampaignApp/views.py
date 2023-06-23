@@ -2072,7 +2072,7 @@ class InfluencerCampSale(APIView):
                         sales_done=PaymentDetails.objects.filter(vendor=self.request.user.id,campaign=i["campaign_detail"],influencer=i["influencer"]).values("salespaid","sales","influencerfee")
                         print("sales_doneeee",sales_done[0]["sales"])
                         print("helloooo")
-                        if sales_done[0]["sales"] !=None:
+                        if int(sales_done[0]["sales"])==0:
                             print("hello")
                         #     print("helo saless",sales_done[0]["sales"])
                         #     if int(sales_done[0]["sales"]) != 0:
