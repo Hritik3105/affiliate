@@ -2069,7 +2069,7 @@ class InfluencerCampSale(APIView):
                 emp_check=PaymentDetails.objects.all()
                 if emp_check:
                     for i in data_max:
-                        sales_done=PaymentDetails.objects.filter(vendor=self.request.user.id,campaign=i["campaign_detail"],influencer=i["influencer"]).values("salespaid","sales")
+                        sales_done=PaymentDetails.objects.filter(vendor=self.request.user.id,campaign=i["campaign_detail"],influencer=i["influencer"]).values("salespaid","sales","influencerfee")
                         print(sales_done)
                         
                         if sales_done[0]["salespaid"]:
@@ -2077,13 +2077,15 @@ class InfluencerCampSale(APIView):
                             if int(sales_done[0]["sales"]) != 0:
                                 cal_amt=int(sales_done[0]["salespaid"])-int(sales_done[0]["sales"])
                             else:
-                                print("i am here")
+                                
                                 print("checkffgggg",int(sales_done[0]["salespaid"]))
                                 print(int(i["sales"]))
                                 cal_amt=int(sales_done[0]["salespaid"])-int(i["sales"])
                                 print("addd",cal_amt)
-                            print("dfsdfds",cal_amt)
-                            PaymentDetails.objects.filter(vendor=self.request.user.id,campaign=i["campaign_detail"],influencer=i["influencer"]).update(sales=cal_amt,influencerfee=i["influener_fee"],offer=i["offer"],amount=i["amount"])
+                                amount_to_paid=cal_amt/sales_done[0]["influencerfee"]
+                                
+                            
+                            PaymentDetails.objects.filter(vendor=self.request.user.id,campaign=i["campaign_detail"],influencer=i["influencer"]).update(sales=cal_amt,influencerfee=amount_to_paid,offer=i["offer"],amount=i["amount"])
                         # else:
                         #     print("helloqwwwwwwwwwww")
                         #     print(sales_done)
