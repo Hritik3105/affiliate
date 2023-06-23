@@ -1358,7 +1358,7 @@ class Click_analytics(APIView):
     authentication_classes=[TokenAuthentication]
     permission_classes = [IsAuthenticated] 
     def get(self,request):
-        headers2={"Authorization":"Bearer 1m5vdEGduXxmd4QpwpL48Xj8FiA1jxrLPwQPO0W5"}
+        headers2={"Authorization": "Bearer 1m5vdEGduXxmd4QpwpL48Xj8FiA1jxrLPwQPO0W5"}
         platform=request.data.get("platform")
         print(platform)
         influencer_id=request.data.get("influencer_id")
