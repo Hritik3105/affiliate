@@ -1352,3 +1352,43 @@ class Vendorkey(APIView):
         # )
             
         #     print(account)
+        
+        
+class Click_analytics(APIView):
+    authentication_classes=[TokenAuthentication]
+    permission_classes = [IsAuthenticated] 
+    def get(self,request):
+        headers={"Authorization":"Bearer 1m5vdEGduXxmd4QpwpL48Xj8FiA1jxrLPwQPO0W5"}
+        platform=request.data.get("platform")
+        influencer_id=request.data.get("influencer_id")
+        
+        dict={
+        "platform": platform,
+        "influencer_id": influencer_id
+        }
+       
+        url=f"https://app.clickanalytic.com/api/v2"
+        
+        response=requests.post(url,headers=headers,data=dict)
+        print(response)
+        # if response.status_code==200:
+        #     followers=response.json()["data"]["statistics"]["total"]["followers"]
+        #     following=response.json()["data"]["statistics"]["total"]["following"]
+        #     engagement_rate=response.json()["data"]["statistics"]["total"]["engagement_rate"]
+        #     username=response.json()["data"]["id"]["display_name"]
+        #     handle_name=response.json()["data"]["id"]["username"]
+        #     profile_pic=response.json()["data"]["general"]["branding"]["avatar"]
+        #     verified=response.json()["data"]["misc"]["sb_verified"]
+        
+        
+        #     instagram_data={
+        #         "profile_pic":profile_pic,
+        #         "username":username,
+        #         "handle_name":handle_name,
+        #         "followers":followers,
+        #         "following":following,
+        #         "engagement_rate":engagement_rate,
+        #         "verified":verified,
+        #     }
+        return Response({"data":response},status=status.HTTP_200_OK)
+        # return Response({"error":response.json()},status=status.HTTP_400_BAD_REQUEST)

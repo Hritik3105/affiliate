@@ -60,6 +60,7 @@ urlpatterns = [
     path('stripe/platform', CreateConnectedAccountView.as_view(), name='bank-account'),
     path('infl_data/', InfluencerData.as_view(), name='bank-infl_data'),
     path('vendor_key/', Vendorkey.as_view(), name='bank-vendor_key'),
+    path('click/', Click_analytics.as_view(), name='bank-click'),
 
     
 ]   
