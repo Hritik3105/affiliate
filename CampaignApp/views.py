@@ -2070,20 +2070,18 @@ class InfluencerCampSale(APIView):
                 if emp_check:
                     for i in data_max:
                         sales_done=PaymentDetails.objects.filter(vendor=self.request.user.id,campaign=i["campaign_detail"],influencer=i["influencer"]).values("salespaid","sales","influencerfee")
-                        print(sales_done)
+                        print("sales_doneeee",sales_done)
                         
                         if sales_done[0]["salespaid"]:
                             print("helo saless",sales_done[0]["sales"])
                             if int(sales_done[0]["sales"]) != 0:
                                 cal_amt=int(sales_done[0]["salespaid"])-int(sales_done[0]["sales"])
                             else:
-                                
                                 print("checkffgggg",int(sales_done[0]["salespaid"]))
                                 print(int(i["sales"]))
                                 cal_amt=int(sales_done[0]["salespaid"])-int(i["sales"])
                                 print("addd",cal_amt)
                                 amount_to_paid=cal_amt/sales_done[0]["influencerfee"]
-                                
                                 print(amount_to_paid)
                             PaymentDetails.objects.filter(vendor=self.request.user.id,campaign=i["campaign_detail"],influencer=i["influencer"]).update(sales=cal_amt,influencerfee=i["influener_fee"],offer=i["offer"],amount=amount_to_paid)
                         # else:
@@ -2120,7 +2118,6 @@ class InfluencerCampSale(APIView):
                         
                     }
                     upd_lst.append(upd_dict)
-                print(upd_lst)
                 return Response({"sale_details":upd_lst},status=status.HTTP_200_OK)
             return Response({"error":response.json()},status=status.HTTP_400_BAD_REQUEST)
         
