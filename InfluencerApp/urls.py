@@ -62,6 +62,8 @@ urlpatterns = [
     path('vendor_key/', Vendorkey.as_view(), name='bank-vendor_key'),
     path('click/', Click_analytics.as_view(), name='bank-click'),
     path('dubai/', Dubaiaccount.as_view(), name='dubai'),
+    path('admindec/', Admindecision.as_view(), name='admindec'),
+    
 
     
 ]   

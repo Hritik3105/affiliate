@@ -2,7 +2,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.shortcuts import redirect
 import requests
-
+import calendar
 import json
 from Affilate_Marketing.settings import base_url ,headers ,SHOPIFY_API_KEY,SHOPIFY_API_SECRET,API_VERSION
 from rest_framework import status
@@ -867,10 +867,8 @@ import requests
 #             return Response({"error": "Failed to retrieve sales data."}, status=response.status_code)
 
 
-from rest_framework.views import APIView
-from rest_framework.response import Response
-import requests
-import calendar
+
+
 
 class SalesReportAPIView(APIView):
     authentication_classes=[TokenAuthentication]
@@ -932,3 +930,9 @@ class ShopifyCouponView(APIView):
             return Response(coupons_without_entitlement)
 
         return Response("Failed to retrieve coupons", status=response.status_code)
+    
+    
+
+
+        
+        

@@ -1475,3 +1475,15 @@ class Dubaiaccount(APIView):
         print(data)
         return Response({"detais":account})
         
+        
+class Admindecision(APIView):
+    authentication_classes=[TokenAuthentication]
+    permission_classes = [IsAuthenticated] 
+    def get(self,request):
+        accept_infl=ModashInfluencer.objects.filter(influencerid=self.request.user.id,admin_approved=1)
+        
+        if accept_infl:
+            dict={"message": "Admin Approved your Profile"}
+        else:
+            dict={"message": "Admin Declined your Profile"}
+        return Response(dict)
