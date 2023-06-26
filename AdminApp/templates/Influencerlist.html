@@ -145,11 +145,15 @@
                                             <td>{{i.follower}}</td>
                                             <td>{{i.engagements}}</td>
                                             <td>{{i.engagement_rate}}%</td>
-                                            <td> <a href="{% url 'campaign-accept' i.id %}" class="btn text-secondary px-0">
+                                            <td>{% if i.admin_approved == 0 %} 
+                                               
+                                                <a href="{% url 'campaign-accept' i.id %}" class="btn text-secondary px-0">
                                                 <i class="fa fa-check" style="color: #216ae8;"></i>
-                                           
+                                                {% endif %}
+                                                {% if i.admin_approved == 1 %} 
                                                 <a href="{% url 'campaign-decline' i.id %}" class="btn text-secondary px-0" style="margin-left:6px">
                                                     <i class="fa fa-close" style="color: #216ae8;"></i>
+                                                {% endif %}
                                             </td>
                                             
                                         </tr>
