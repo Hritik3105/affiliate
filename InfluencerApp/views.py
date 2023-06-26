@@ -204,6 +204,7 @@ class Register(APIView):
                 
                 influencer_obj = ModashInfluencer()
                 influencer_obj.follower=122
+                influencer_obj.engagement_rate=12.45
                 # dict={
                 # "platform": "instagram",
                 # "influencer_id": influencer_id
