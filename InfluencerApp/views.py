@@ -222,7 +222,7 @@ class Register(APIView):
 
                     influencer_obj.save()
                 else:
-                    return Response({"error": response.json()},status=status.HTTP_201_CREATED)
+                    return Response({"error": response.json()},status=status.HTTP_400_BAD_REQUEST)
                 serializer2.save(influencerid_id=serializer.data["id"])
             
                 uid64=urlsafe_base64_encode(force_bytes(serializer.data["id"]))
@@ -1393,3 +1393,73 @@ class Click_analytics(APIView):
             }
             return Response({"data":instagram_data},status=status.HTTP_200_OK)
         return Response({"error":response.json()},status=status.HTTP_400_BAD_REQUEST)
+    
+    
+    
+class Dubaiaccount(APIView):
+    def post(self,request):
+           
+        account = stripe.Account.create(
+        country="AE",
+        type="custom",
+        capabilities={"card_payments": {"requested": True}, "transfers": {"requested": True}},
+        business_type="company",
+        business_profile={'mcc':'5734', 'url':'https://www.google.com/',
+                            "support_phone":"55-798-4597",
+                            "product_description":"hello"},
+
+        tos_acceptance={"date": 1609798905, "ip": "8.8.8.8"},
+        company={
+            "structure": "sole_establishment",
+            "name": "hritrrrrrrr333r44444444444444444rik",
+            "phone": "555-123-4567",
+            "tax_id": "1234",
+            # "executives_provided": False,
+            # "owners_provided": True,
+            # "directors_provided":False,    
+            "address": {
+            "line1": "123 Main St",
+            "city": "Dubai",
+            "state": "Dubai",
+            "postal_code": "12345",
+            "country": "AE"
+             },
+            
+              
+        },
+        
+       
+
+        # representative={
+        #     "first_name":"hritik"
+        # },
+        
+        
+        external_account={
+        'object': 'bank_account',
+        'country': 'AE',
+        'currency': 'AED',
+        'account_number': 'AE070331234567890123456',
+        'account_holder_name': 'test',
+        'account_holder_type': 'company'
+        }
+        )
+        
+        person=stripe.Account.create_person(
+        account.id,
+        first_name="Jane",
+        last_name="Diaz",
+        )
+            
+        print(person)   
+        
+         
+        data=stripe.Account.modify_person(
+        account.id,
+        person.id,
+        relationship={"representative": True,"owner":True},
+        
+        )
+        print(data)
+        return Response({"detais":account})
+        
