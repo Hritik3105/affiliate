@@ -534,9 +534,9 @@ class PendingList(APIView):
         res=[]
         res2=[]    
         value=ModashInfluencer.objects.filter(influencerid_id=self.request.user.id).values_list("id",flat=True)[0]
-        print(value)
+        print("valuess",value)
         vendor_codes=VendorCampaign.objects.filter(influencerid_id=value,campaign_status=0)
-            
+        print(vendor_codes)
         if vendor_codes.exists():
             res.append(vendor_codes)
         else:
