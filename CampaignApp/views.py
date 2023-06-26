@@ -94,7 +94,7 @@ class VendorLogin(APIView):
                             user_key=Token.objects.filter(user_id=token_id).values_list("key",flat=True)[0]
                             if shop2:
                                 store_name=usr_ins.shopify_url.split(".")[0]
-                                return Response({'Success':"Login Successfully",'Token':str(user_key),"shop_url":usr_ins.shopify_url,"admin_dahboard":f"https://admin.shopify.com/store/{store_name}/apps/marketplace-49"}, status=status.HTTP_200_OK)
+                                return Response({'Success':"Login Successfully",'Token':str(user_key),"shop_url":usr_ins.shopify_url,"admin_dahboard":f"https://admin.shopify.com/store/{store_name}/apps/marketplace-54"}, status=status.HTTP_200_OK)
                             
                             return Response({'Success':"Login Successfully",'Token':str(user_key),"shop_url":usr_ins.shopify_url}, status=status.HTTP_200_OK)
                     else:
@@ -123,7 +123,7 @@ class VendorLogin(APIView):
                             shop4=Store.objects.filter(store_name=shop2)
                             if shop4:
                                 store_name=user.shopify_url.split(".")[0]
-                                return Response({'Success':"Login Successfully",'Token':str(user_token),"shop_url":user.shopify_url,"admin_dahboard":f"https://admin.shopify.com/store/{store_name}/apps/marketplace-49"}, status=status.HTTP_200_OK)
+                                return Response({'Success':"Login Successfully",'Token':str(user_token),"shop_url":user.shopify_url,"admin_dahboard":f"https://admin.shopify.com/store/{store_name}/apps/marketplace-54"}, status=status.HTTP_200_OK)
                     
                             return Response({'Success':"Login Successfully",'Token':str(user_token),"shop_url":user.shopify_url}, status=status.HTTP_200_OK)
                     else:

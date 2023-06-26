@@ -283,7 +283,7 @@
             }
         })
         $(".dropdown-mobile").on('change', function(){
-          
+            
      
             var selectedOption = $(this).find('option:selected');
             var backgroundColor = selectedOption.text() === 'Active' ? '#31CE36' : '#F25961';
@@ -291,6 +291,8 @@
             $(this).css('background-color', backgroundColor);
             selectedOption.css('background-color', backgroundColor);
         
+            
+
             $.ajax({
                 type:'GET',
                 url:'/isadmin/status/',
