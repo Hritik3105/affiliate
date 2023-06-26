@@ -870,41 +870,41 @@ import requests
 
 
 
-class SalesReportAPIView(APIView):
-    authentication_classes=[TokenAuthentication]
-    permission_classes = [IsAuthenticated] 
-    def get(self, request):
-        acc_tok=access_token(self,request)
+# class SalesReportAPIView(APIView):
+#     authentication_classes=[TokenAuthentication]
+#     permission_classes = [IsAuthenticated] 
+#     def get(self, request):
+#         acc_tok=access_token(self,request)
         
-        headers= {"X-Shopify-Access-Token": acc_tok[0]}
+#         headers= {"X-Shopify-Access-Token": acc_tok[0]}
 
     
-        url = f"https://{acc_tok[1]}/admin/api/2023-01/orders.json?status=any"
+#         url = f"https://{acc_tok[1]}/admin/api/2023-01/orders.json?status=any"
    
-        response = requests.get(url, headers=headers)
+#         response = requests.get(url, headers=headers)
 
-        if response.status_code == 200:
-            sales_data = response.json()['orders']
-            sales_report = {}
+#         if response.status_code == 200:
+#             sales_data = response.json()['orders']
+#             sales_report = {}
             
-            for month_number in range(1, 13):
-                month_name = calendar.month_name[month_number]
-                sales_report[month_name] = 0
+#             for month_number in range(1, 13):
+#                 month_name = calendar.month_name[month_number]
+#                 sales_report[month_name] = 0
 
-            for order in sales_data:
-                created_at = order['created_at']
-                month_number = int(created_at.split('-')[1])
-                month_name = calendar.month_name[month_number]
-                total_price = float(order['total_price'])
-                sales_report[month_name] += total_price
+#             for order in sales_data:
+#                 created_at = order['created_at']
+#                 month_number = int(created_at.split('-')[1])
+#                 month_name = calendar.month_name[month_number]
+#                 total_price = float(order['total_price'])
+#                 sales_report[month_name] += total_price
                 
                
 
-            return Response(sales_report)
-        else:
+#             return Response(sales_report)
+#         else:
 
         
-            return Response({"error": "Failed to retrieve sales data."}, status=response.status_code)
+#             return Response({"error": "Failed to retrieve sales data."}, status=response.status_code)
 
 
 
