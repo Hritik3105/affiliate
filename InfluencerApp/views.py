@@ -224,6 +224,7 @@ class Register(APIView):
                 #     influencer_obj.isverified=response.json()["user_profile"]["is_verified"]
         
                 influencer_obj.save()
+                print("i am herer")
                 print(influencer_obj)
                 save_obj=serializer.save(user_type =2)
                 print(save_obj.id)
