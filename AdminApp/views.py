@@ -796,98 +796,98 @@ def charge_commission(request):
 
 
 
-# def get_coupon_codes(request):
-#     user=User.objects.filter(id=22).values("shopify_url")
+def get_coupon_codes(request):
+    user=User.objects.filter(id=22).values("shopify_url")
     
-#     get_tok=Store.objects.filter(store_name=user[0]["shopify_url"]).values("access_token")
+    get_tok=Store.objects.filter(store_name=user[0]["shopify_url"]).values("access_token")
     
-#     shopify_store = user[0]["shopify_url"]
-#     headers= {"X-Shopify-Access-Token": get_tok[0]["access_token"]}
-#     url = f'https://{shopify_store}/admin/api/{API_VERSION}/price_rules.json?status=active'
+    shopify_store = user[0]["shopify_url"]
+    headers= {"X-Shopify-Access-Token": get_tok[0]["access_token"]}
+    url = f'https://{shopify_store}/admin/api/{API_VERSION}/price_rules.json?status=active'
         
-#     response = requests.get(url, headers=headers)
-#     if response.status_code == 200:
-#         price_rules = response.json().get('price_rules', [])
-#         discount_list=[]
-#         orders=[]
-#         for rule in price_rules:
-#             price_rule_id = rule['id']
-#             discount_codes_url = f"https://{shopify_store}/admin/api/2023-01/price_rules/{price_rule_id}/discount_codes.json"
-#             discount_codes_response = requests.get(discount_codes_url, headers=headers)
+    response = requests.get(url, headers=headers)
+    if response.status_code == 200:
+        price_rules = response.json().get('price_rules', [])
+        discount_list=[]
+        orders=[]
+        for rule in price_rules:
+            price_rule_id = rule['id']
+            discount_codes_url = f"https://{shopify_store}/admin/api/2023-01/price_rules/{price_rule_id}/discount_codes.json"
+            discount_codes_response = requests.get(discount_codes_url, headers=headers)
            
-#             if discount_codes_response.status_code == 200:
+            if discount_codes_response.status_code == 200:
                 
-#                 discount_codes = discount_codes_response.json().get('discount_codes', [])
-#                 for code in discount_codes:
-#                     discount_code = code['code']
-#                     discount_list.append(discount_code)
+                discount_codes = discount_codes_response.json().get('discount_codes', [])
+                for code in discount_codes:
+                    discount_code = code['code']
+                    discount_list.append(discount_code)
          
          
-#         url = f'https://{shopify_store}/admin/api/2023-01/orders.json?status=any&code={discount_list}'
+        url = f'https://{shopify_store}/admin/api/2023-01/orders.json?status=any&code={discount_list}'
 
 
-#         response = requests.get(url,headers=headers)
+        response = requests.get(url,headers=headers)
         
-#         sales_by_coupon = {}
+        sales_by_coupon = {}
     
-#         if response.status_code == 200:
-#             orders1 = response.json().get('orders', [])
+        if response.status_code == 200:
+            orders1 = response.json().get('orders', [])
             
             
-#             for order in orders1:
-#                 line_items = order.get('discount_codes', [])
-#                 line_items3 = order.get('id', [])
-#                 total_price = order.get('total_price')
+            for order in orders1:
+                line_items = order.get('discount_codes', [])
+                line_items3 = order.get('id', [])
+                total_price = order.get('total_price')
                 
 
 
-#                 if line_items:
-#                     coupon_code = line_items[0].get('code')
-#                     id = line_items3
-#                     sales_by_coupon["id"]=id
+                if line_items:
+                    coupon_code = line_items[0].get('code')
+                    id = line_items3
+                    sales_by_coupon["id"]=id
                 
-#                     if coupon_code in sales_by_coupon:
-#                         sales_by_coupon[coupon_code] += float(total_price)
+                    if coupon_code in sales_by_coupon:
+                        sales_by_coupon[coupon_code] += float(total_price)
                         
-#                     else:
-#                         sales_by_coupon[coupon_code] = float(total_price)
+                    else:
+                        sales_by_coupon[coupon_code] = float(total_price)
                                 
                     
-#         sale=list(sales_by_coupon.keys())
-#         amount=list(sales_by_coupon.values())
-#         coup_dict={}
-#         for  i in sale:    
-#                 check=Product_information.objects.filter(coupon_name__contains=i).values("campaignid","coupon_name")
+        sale=list(sales_by_coupon.keys())
+        amount=list(sales_by_coupon.values())
+        coup_dict={}
+        for  i in sale:    
+                check=Product_information.objects.filter(coupon_name__contains=i).values("campaignid","coupon_name")
                
-#                 for z in check:
-#                     if "coupon_name" in z:
-#                         list_value = eval(z["coupon_name"])
+                for z in check:
+                    if "coupon_name" in z:
+                        list_value = eval(z["coupon_name"])
             
-#                         campaign_id = z["campaignid"]
-#                         if campaign_id in coup_dict:
-#                             coup_dict[campaign_id].extend(list_value)
-#                         else:
-#                             coup_dict[campaign_id] = list_value
+                        campaign_id = z["campaignid"]
+                        if campaign_id in coup_dict:
+                            coup_dict[campaign_id].extend(list_value)
+                        else:
+                            coup_dict[campaign_id] = list_value
 
-#         dict_lst = [coup_dict]
+        dict_lst = [coup_dict]
         
-#         sale_by_id = {}
+        sale_by_id = {}
 
-#         for campaign_id, coupon_names in coup_dict.items():
-#             sale = 0.0
+        for campaign_id, coupon_names in coup_dict.items():
+            sale = 0.0
             
-#             for coupon_name in set(coupon_names):
-#                 if coupon_name in sales_by_coupon:
-#                     sale += sales_by_coupon[coupon_name]
-#             sale_by_id[campaign_id] = sale
+            for coupon_name in set(coupon_names):
+                if coupon_name in sales_by_coupon:
+                    sale += sales_by_coupon[coupon_name]
+            sale_by_id[campaign_id] = sale
 
-#             campaign_name = Campaign.objects.filter(id=campaign_id).values_list('campaign_name', flat=True).first() 
-#             sale_by_id[campaign_id] = [sale, campaign_name]
+            campaign_name = Campaign.objects.filter(id=campaign_id).values_list('campaign_name', flat=True).first() 
+            sale_by_id[campaign_id] = [sale, campaign_name]
             
-#         print(sale_by_id)             
-#         return HttpResponse(orders)
-#     else:
-#         return HttpResponse("error")
+        print(sale_by_id)             
+        return HttpResponse(orders)
+    else:
+        return HttpResponse("error")
     
     
 def influenceraccept(request,id):
