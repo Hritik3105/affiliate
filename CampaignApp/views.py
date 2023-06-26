@@ -1523,58 +1523,58 @@ class Analytics(APIView):
             return Response({'error':response.text},status=status.HTTP_400_BAD_REQUEST)
         
         
-# class SalesRecord(APIView):
-#     authentication_classes=[TokenAuthentication]
-#     permission_classes = [IsAuthenticated]
+class SalesRecord(APIView):
+    authentication_classes=[TokenAuthentication]
+    permission_classes = [IsAuthenticated]
         
-#     def get(self,request):
-#         acc_tok=access_token(self,request)
-#         store_url = acc_tok[1]
-#         api_token = acc_tok[0]
+    def get(self,request):
+        acc_tok=access_token(self,request)
+        store_url = acc_tok[1]
+        api_token = acc_tok[0]
 
-#         end_date = datetime.now().date()
-#         start_date_7_days_ago = end_date - timedelta(days=7)
-#         start_date_30_days_ago = end_date - timedelta(days=30)
-#         start_date_year_ago = end_date.replace(year=end_date.year-1, month=1, day=1)
+        end_date = datetime.now().date()
+        start_date_7_days_ago = end_date - timedelta(days=7)
+        start_date_30_days_ago = end_date - timedelta(days=30)
+        start_date_year_ago = end_date.replace(year=end_date.year-1, month=1, day=1)
 
 
-#         start_date_7_days_ago_str = start_date_7_days_ago.isoformat()
-#         start_date_30_days_ago_str = start_date_30_days_ago.isoformat()
-#         start_date_year_ago_str = start_date_year_ago.isoformat()
-#         end_date_str = end_date.isoformat()
+        start_date_7_days_ago_str = start_date_7_days_ago.isoformat()
+        start_date_30_days_ago_str = start_date_30_days_ago.isoformat()
+        start_date_year_ago_str = start_date_year_ago.isoformat()
+        end_date_str = end_date.isoformat()
 
       
-#         url = f"https://{store_url}/admin/api/2021-07/orders.json?status=active&created_at_min={start_date_year_ago_str}&created_at_max={end_date_str}"
+        url = f"https://{store_url}/admin/api/2021-07/orders.json?status=active&created_at_min={start_date_year_ago_str}&created_at_max={end_date_str}"
 
 
-#         headers = {
-#             'X-Shopify-Access-Token': api_token
-#         }
-#         response = requests.get(url, headers=headers)
-#         if response.status_code == 200:
-#             data = response.json()
+        headers = {
+            'X-Shopify-Access-Token': api_token
+        }
+        response = requests.get(url, headers=headers)
+        if response.status_code == 200:
+            data = response.json()
 
 
-#             sales_7_days = 0
-#             sales_30_days = 0
-#             sales_year = 0
+            sales_7_days = 0
+            sales_30_days = 0
+            sales_year = 0
 
-#             for order in data['orders']:
-#                 created_at = datetime.strptime(order['created_at'], "%Y-%m-%dT%H:%M:%S%z").date()
-#                 if start_date_7_days_ago <= created_at <= end_date:
-#                     sales_7_days += float(order['total_price'])
-#                 if start_date_30_days_ago <= created_at <= end_date:
-#                     sales_30_days += float(order['total_price'])
-#                 if start_date_year_ago <= created_at <= end_date:
-#                     sales_year += float(order['total_price'])
+            for order in data['orders']:
+                created_at = datetime.strptime(order['created_at'], "%Y-%m-%dT%H:%M:%S%z").date()
+                if start_date_7_days_ago <= created_at <= end_date:
+                    sales_7_days += float(order['total_price'])
+                if start_date_30_days_ago <= created_at <= end_date:
+                    sales_30_days += float(order['total_price'])
+                if start_date_year_ago <= created_at <= end_date:
+                    sales_year += float(order['total_price'])
 
         
-#             print("Sales in the last 7 days: $", sales_7_days)
-#             print("Sales in the last 30 days: $", sales_30_days)
-#             print("Sales in the last year: $", sales_year)
-#             return Response({"seven_days":sales_7_days,"thirty_days":sales_30_days,"year":sales_year})
-#         else:
-#             return Response({"error":response.text})
+            print("Sales in the last 7 days: $", sales_7_days)
+            print("Sales in the last 30 days: $", sales_30_days)
+            print("Sales in the last year: $", sales_year)
+            return Response({"seven_days":sales_7_days,"thirty_days":sales_30_days,"year":sales_year})
+        else:
+            return Response({"error":response.text})
 
 
 
