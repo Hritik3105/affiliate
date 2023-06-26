@@ -1079,6 +1079,7 @@ class GetCampaign(APIView):
                     "influencer_visit": k.campaignid.influencer_visit ,
                     "offer": k.campaignid.offer ,
                     "date": k.campaignid.date ,
+                    "end_data":k.campaignid.end_date,
                     "description": k.campaignid.description,
                     "influencer_fee": k.campaignid.influencer_fee,
                     "campaign_status":k.campaignid.campaign_status,
