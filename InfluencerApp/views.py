@@ -202,10 +202,6 @@ class Register(APIView):
           
             if serializer2.is_valid(raise_exception=True):
                 
-                # save_obj=serializer.save(user_type =2)
-                # infl_id=serializer.data["id"]
-                # request.session["id"]=infl_id
-                # handle=serializer.data["user_handle"]
                 influencer_obj = ModashInfluencer()
                 dict={
                 "platform": "instagram",
@@ -222,7 +218,7 @@ class Register(APIView):
                     influencer_obj.engagements=response.json()["user_profile"]["engagements"]
                     influencer_obj.fullname=response.json()["user_profile"]["fullname"]
                     influencer_obj.username=response.json()["user_profile"]["username"]
-                    influencer_obj.engagements=response.json()["user_profile"]["picture"]
+                    influencer_obj.image=response.json()["user_profile"]["picture"]
                     influencer_obj.isverified=response.json()["user_profile"]["is_verified"]
         
                     influencer_obj.save()
