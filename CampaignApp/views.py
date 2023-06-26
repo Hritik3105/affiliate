@@ -837,7 +837,7 @@ class InfluencerList(APIView):
     permission_classes = [IsAuthenticated]
     
     def get(self,request):
-        influ_list = ModashInfluencer.objects.all().values() 
+        influ_list = ModashInfluencer.objects.filter(admin_approved=1).values() 
        
         return Response({"data":influ_list},status=status.HTTP_200_OK) 
     

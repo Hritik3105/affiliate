@@ -888,3 +888,19 @@ def get_coupon_codes(request):
         return HttpResponse(orders)
     else:
         return HttpResponse("error")
+    
+    
+def influenceraccept(request,id):
+    ModashInfluencer.objects.filter(id=id).update(admin_approved=1)
+    Influencer=ModashInfluencer.objects.filter().values()
+
+    messages.success(request,"Influener accepted")
+    return render(request,"Influencerlist.html",{"influencer":Influencer})
+    
+    
+def influencerdecline(request,id):
+    ModashInfluencer.objects.filter(id=id).update(admin_approved=0)
+    Influencer=ModashInfluencer.objects.filter().values()
+
+    messages.error(request,"Influencer declined")
+    return render(request,"Influencerlist.html",{"influencer":Influencer})

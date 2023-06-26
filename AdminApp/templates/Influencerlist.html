@@ -74,7 +74,23 @@
 
     <!-- BEGIN: Content-->
     
+
+          
     <div class="app-content content ">
+        <div class="col-12">
+            {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                    <div class="success-msg  col-md-5" >
+
+                    <li  {% if message.tags %} style=" color: #270;background-color: #DFF2BF; margin: 5px 0;
+                    padding: 10px;
+                    border-radius: 3px 3px 3px 3px;" {% endif %} >{{ message }}</li>
+                    {% endfor %}
+                </div>
+                </ul>
+            {% endif %}
+        </div>
         <h5 id="message"></h5>
         <div class="content-overlay"></div>
         <div class="header-navbar-shadow"></div>
@@ -112,6 +128,7 @@
                                             <th>Followers</th>
                                             <th>Engagement</th>
                                             <th>Engagement Rate</th>
+                                            <th>Action</th>
                                           
                                             
                                         </tr>
@@ -128,6 +145,12 @@
                                             <td>{{i.follower}}</td>
                                             <td>{{i.engagements}}</td>
                                             <td>{{i.engagement_rate}}%</td>
+                                            <td> <a href="{% url 'campaign-accept' i.id %}" class="btn text-secondary px-0">
+                                                <i class="fa fa-check" style="color: #216ae8;"></i>
+                                           
+                                                <a href="{% url 'campaign-decline' i.id %}" class="btn text-secondary px-0" style="margin-left:6px">
+                                                    <i class="fa fa-close" style="color: #216ae8;"></i>
+                                            </td>
                                             
                                         </tr>
                                     {% endfor %}
