@@ -205,37 +205,36 @@ class Register(APIView):
                 influencer_obj = ModashInfluencer()
                 influencer_obj.follower=122
                 influencer_obj.engagement_rate=12.45
-                # dict={
-                # "platform": "instagram",
-                # "influencer_id": influencer_id
-                # }
-                # headers2={"Authorization": "Bearer 1m5vdEGduXxmd4QpwpL48Xj8FiA1jxrLPwQPO0W5"}
+                dict={
+                "platform": "instagram",
+                "influencer_id": influencer_id
+                }
+                headers2={"Authorization": "Bearer 1m5vdEGduXxmd4QpwpL48Xj8FiA1jxrLPwQPO0W5"}
 
-                # base_url="https://app.clickanalytic.com/api/v2/analysis"
-                # response=requests.post(base_url,headers=headers2,json=dict)
-                # print(response.json())
-                # if response.status_code==200:
-                #     influencer_obj.follower=response.json()["user_profile"]["followers"]
-                #     influencer_obj.engagement_rate=response.json()["user_profile"]["engagement_rate"]
-                #     influencer_obj.engagements=response.json()["user_profile"]["engagements"]
-                #     influencer_obj.fullname=response.json()["user_profile"]["fullname"]
-                #     influencer_obj.username=response.json()["user_profile"]["username"]
-                #     influencer_obj.image=response.json()["user_profile"]["picture"]
-                #     influencer_obj.isverified=response.json()["user_profile"]["is_verified"]
-        
-                influencer_obj.save()
-                print("i am herer")
-                print(influencer_obj.id)
-                save_obj=serializer.save(user_type =2)
-                print(save_obj.id)
-                infl_id=serializer.data["id"]
-                print("idddddd",infl_id)
-                # ModashInfluencer.objects.filter(id=inf_obj).update(influencerid=infl_id)
+                base_url="https://app.clickanalytic.com/api/v2/analysis"
+                response=requests.post(base_url,headers=headers2,json=dict)
+                print(response.json())
+                if response.status_code==200:
+                    influencer_obj.follower=response.json()["user_profile"]["followers"]
+                    influencer_obj.engagement_rate=response.json()["user_profile"]["engagement_rate"]
+                    influencer_obj.engagements=response.json()["user_profile"]["engagements"]
+                    influencer_obj.fullname=response.json()["user_profile"]["fullname"]
+                    influencer_obj.username=response.json()["user_profile"]["username"]
+                    influencer_obj.image=response.json()["user_profile"]["picture"]
+                    influencer_obj.isverified=response.json()["user_profile"]["is_verified"]
+            
+                    influencer_obj.save()
+                   
+                    save_obj=serializer.save(user_type =2)
+                    print(save_obj.id)
+                    infl_id=serializer.data["id"]
+                    print("idddddd",infl_id)
+                    ModashInfluencer.objects.filter(id=influencer_obj.id).update(influencerid=infl_id)
 
 
                     
-                # else:
-                #     return Response({"error": response.json()},status=status.HTTP_400_BAD_REQUEST)
+                else:
+                    return Response({"error": response.json()},status=status.HTTP_400_BAD_REQUEST)
                 serializer2.save(influencerid_id=serializer.data["id"])
             
                 uid64=urlsafe_base64_encode(force_bytes(serializer.data["id"]))
@@ -256,7 +255,7 @@ class Register(APIView):
             
                 email.send()  
                 # User.objects.filter(id=serializer.data["id"]).update(verify_email=1)         
-                return Response({"Success":" response.json()","token":account_activation_token.make_token(save_obj),"id":serializer.data["id"]},status=status.HTTP_201_CREATED)
+                return Response({"Success":response.json(),"token":account_activation_token.make_token(save_obj),"id":serializer.data["id"]},status=status.HTTP_201_CREATED)
          
 
             return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
