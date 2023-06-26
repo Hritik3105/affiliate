@@ -269,203 +269,203 @@ def Single_camp(request,id):
     return render(request,"singlecamp.html",context)
  
  
-# @login_required
-# def Single_Vendor(request,id):
+@login_required
+def Single_Vendor(request,id):
     
-#     single_obj=User.objects.filter(id=id).values()
-#     print(id)
-#     camp_obj=Campaign.objects.filter(vendorid_id=id,draft_status=0,status=2).values()
+    single_obj=User.objects.filter(id=id).values()
+    print(id)
+    camp_obj=Campaign.objects.filter(vendorid_id=id,draft_status=0,status=2).values()
    
-#     lst1=[]
-#     for i in camp_obj:
-#         if i["influencer_name"]:
-#             val=ast.literal_eval(i["influencer_name"])
-#             z=ModashInfluencer.objects.filter(id__in=val).values()
-#             for k in range(len(z)):
-#                 name=z[k]["username"]
-#                 ids=z[k]["id"]
+    lst1=[]
+    for i in camp_obj:
+        if i["influencer_name"]:
+            val=ast.literal_eval(i["influencer_name"])
+            z=ModashInfluencer.objects.filter(id__in=val).values()
+            for k in range(len(z)):
+                name=z[k]["username"]
+                ids=z[k]["id"]
                 
-#                 if i["vendorid_id"]==id:
-#                     dict1={
-#                         "influencer_name":name,
-#                         "id":i["id"],
-#                         "influencer_id":ids
-#                     }
-#                     lst1.append(dict1)
+                if i["vendorid_id"]==id:
+                    dict1={
+                        "influencer_name":name,
+                        "id":i["id"],
+                        "influencer_id":ids
+                    }
+                    lst1.append(dict1)
                 
    
-#     product_data1=Product_information.objects.filter(vendor_id=id,campaignid_id__draft_status=0,campaignid_id__status=2)
+    product_data1=Product_information.objects.filter(vendor_id=id,campaignid_id__draft_status=0,campaignid_id__status=2)
    
-#     vendor_campaign=Campaign.objects.filter(vendorid_id=id,draft_status=0,status=2)
-#     lst=[]
-#     for i in vendor_campaign:
-#         dict={
-#             "campaign_name":i.campaign_name,
-#             "description":i.description,
-#             "offer":i.offer,
-#             "influencer_fee":i.influencer_fee, 
-#             "product_name":[],
-#             "amount":[],
-#             "influencer_name":[],
-#             "influencer_id":[],
-#             "id":i.id,    
-#             "sale":""
-#         }
-#         lst.append(dict)
+    vendor_campaign=Campaign.objects.filter(vendorid_id=id,draft_status=0,status=2)
+    lst=[]
+    for i in vendor_campaign:
+        dict={
+            "campaign_name":i.campaign_name,
+            "description":i.description,
+            "offer":i.offer,
+            "influencer_fee":i.influencer_fee, 
+            "product_name":[],
+            "amount":[],
+            "influencer_name":[],
+            "influencer_id":[],
+            "id":i.id,    
+            "sale":""
+        }
+        lst.append(dict)
   
-#     vendor_campaign1=Campaign.objects.filter(vendorid_id=id,draft_status=0,status=2).values("id")
-#     result = list(chain(product_data1.values("product_name","campaignid","amount")))
+    vendor_campaign1=Campaign.objects.filter(vendorid_id=id,draft_status=0,status=2).values("id")
+    result = list(chain(product_data1.values("product_name","campaignid","amount")))
    
-#     combined_data = []
+    combined_data = []
     
-#     campaign_ids = set(item['campaignid'] for item in result)
-#     for campaign_id in campaign_ids:
+    campaign_ids = set(item['campaignid'] for item in result)
+    for campaign_id in campaign_ids:
         
-#         product_names = [item['product_name'] for item in result if item['campaignid'] == campaign_id]
-#         for item in result: 
-#             if item['campaignid'] == campaign_id:
-#                 print(item["amount"])
+        product_names = [item['product_name'] for item in result if item['campaignid'] == campaign_id]
+        for item in result: 
+            if item['campaignid'] == campaign_id:
+                print(item["amount"])
                 
-#         combined_data.append({'product_name': product_names,"id":campaign_id})
+        combined_data.append({'product_name': product_names,"id":campaign_id})
         
         
       
-#     combined_data1 = []
+    combined_data1 = []
     
-#     campaign_ids1 = set(item['id'] for item in lst1)
+    campaign_ids1 = set(item['id'] for item in lst1)
   
-#     for campaign_id in campaign_ids1:
-#         product_names = [item['influencer_name'] for item in lst1 if item['id'] == campaign_id]      
-#         influencer_id = [item['influencer_id'] for item in lst1 if item['id'] == campaign_id]  
+    for campaign_id in campaign_ids1:
+        product_names = [item['influencer_name'] for item in lst1 if item['id'] == campaign_id]      
+        influencer_id = [item['influencer_id'] for item in lst1 if item['id'] == campaign_id]  
      
-#         combined_data1.append({'influencer_name': product_names,"id":campaign_id,"influencer_id":influencer_id})
+        combined_data1.append({'influencer_name': product_names,"id":campaign_id,"influencer_id":influencer_id})
  
     
       
-#     for i in combined_data1:
-#         for j in lst:
-#             if j["id"]== i["id"]:   
-#                 j["influencer_name"]=i["influencer_name"]
-#                 j["influencer_id"]=i["influencer_id"]
+    for i in combined_data1:
+        for j in lst:
+            if j["id"]== i["id"]:   
+                j["influencer_name"]=i["influencer_name"]
+                j["influencer_id"]=i["influencer_id"]
                 
     
-#     for i in combined_data:
-#         for j in lst:
-#             if j["id"]== i["id"]:   
-#                 j["product_name"]=i["product_name"]
+    for i in combined_data:
+        for j in lst:
+            if j["id"]== i["id"]:   
+                j["product_name"]=i["product_name"]
                 
 
       
-#     final_lst1=[] 
-#     campaign_obj2=VendorCampaign.objects.filter(campaign_status=2,vendor_id=id) 
+    final_lst1=[] 
+    campaign_obj2=VendorCampaign.objects.filter(campaign_status=2,vendor_id=id) 
                 
-#     for i in campaign_obj2:
-#             dict1={
-#                 "campaignid_id":i.campaignid.id,
-#                 "campaign_name": i.campaignid.campaign_name,
-#                 "influencer_name":i.influencerid.id,
+    for i in campaign_obj2:
+            dict1={
+                "campaignid_id":i.campaignid.id,
+                "campaign_name": i.campaignid.campaign_name,
+                "influencer_name":i.influencerid.id,
                 
-#             }
+            }
         
         
-#             final_lst1.append(dict1)
+            final_lst1.append(dict1)
     
     
 
-#     user=User.objects.filter(id=id).values("shopify_url")
+    user=User.objects.filter(id=id).values("shopify_url")
     
-#     get_tok=Store.objects.filter(store_name=user[0]["shopify_url"]).values("access_token")
+    get_tok=Store.objects.filter(store_name=user[0]["shopify_url"]).values("access_token")
     
-#     shopify_store = user[0]["shopify_url"]
-#     headers= {"X-Shopify-Access-Token": get_tok[0]["access_token"]}
-#     url = f'https://{shopify_store}/admin/api/{API_VERSION}/price_rules.json?status=active'
+    shopify_store = user[0]["shopify_url"]
+    headers= {"X-Shopify-Access-Token": get_tok[0]["access_token"]}
+    url = f'https://{shopify_store}/admin/api/{API_VERSION}/price_rules.json?status=active'
         
-#     response = requests.get(url, headers=headers)
-#     if response.status_code == 200:
-#         price_rules = response.json().get('price_rules', [])
-#         discount_list=[]
+    response = requests.get(url, headers=headers)
+    if response.status_code == 200:
+        price_rules = response.json().get('price_rules', [])
+        discount_list=[]
        
-#         for rule in price_rules:
-#             price_rule_id = rule['id']
-#             discount_codes_url = f"https://{shopify_store}/admin/api/2023-01/price_rules/{price_rule_id}/discount_codes.json"
-#             discount_codes_response = requests.get(discount_codes_url, headers=headers)
+        for rule in price_rules:
+            price_rule_id = rule['id']
+            discount_codes_url = f"https://{shopify_store}/admin/api/2023-01/price_rules/{price_rule_id}/discount_codes.json"
+            discount_codes_response = requests.get(discount_codes_url, headers=headers)
            
-#             if discount_codes_response.status_code == 200:
+            if discount_codes_response.status_code == 200:
                 
-#                 discount_codes = discount_codes_response.json().get('discount_codes', [])
-#                 for code in discount_codes:
-#                     discount_code = code['code']
-#                     discount_list.append(discount_code)
-#         url = f'https://{shopify_store}/admin/api/2023-01/orders.json?status=any&code={discount_list}'
+                discount_codes = discount_codes_response.json().get('discount_codes', [])
+                for code in discount_codes:
+                    discount_code = code['code']
+                    discount_list.append(discount_code)
+        url = f'https://{shopify_store}/admin/api/2023-01/orders.json?status=any&code={discount_list}'
 
 
-#         response = requests.get(url,headers=headers)
+        response = requests.get(url,headers=headers)
         
-#         sales_by_coupon = {}
+        sales_by_coupon = {}
     
-#         if response.status_code == 200:
-#             orders1 = response.json().get('orders', [])
+        if response.status_code == 200:
+            orders1 = response.json().get('orders', [])
             
             
-#             for order in orders1:
-#                 line_items = order.get('discount_codes', [])
-#                 line_items3 = order.get('id', [])
-#                 total_price = order.get('total_price')
+            for order in orders1:
+                line_items = order.get('discount_codes', [])
+                line_items3 = order.get('id', [])
+                total_price = order.get('total_price')
                 
 
 
-#                 if line_items:
-#                     coupon_code = line_items[0].get('code')
-#                     id = line_items3
-#                     sales_by_coupon["id"]=id
+                if line_items:
+                    coupon_code = line_items[0].get('code')
+                    id = line_items3
+                    sales_by_coupon["id"]=id
                 
-#                     if coupon_code in sales_by_coupon:
-#                         sales_by_coupon[coupon_code] += float(total_price)
+                    if coupon_code in sales_by_coupon:
+                        sales_by_coupon[coupon_code] += float(total_price)
                         
-#                     else:
-#                         sales_by_coupon[coupon_code] = float(total_price)
+                    else:
+                        sales_by_coupon[coupon_code] = float(total_price)
                                 
               
-#         sale=list(sales_by_coupon.keys())
-#         amount=list(sales_by_coupon.values())
-#         coup_dict={}
-#         coup_lst=[]
-#         for  i in sale:    
-#                 check=Product_information.objects.filter(coupon_name__contains=i).values("campaignid","coupon_name")
+        sale=list(sales_by_coupon.keys())
+        amount=list(sales_by_coupon.values())
+        coup_dict={}
+        coup_lst=[]
+        for  i in sale:    
+                check=Product_information.objects.filter(coupon_name__contains=i).values("campaignid","coupon_name")
                
-#                 for z in check:
-#                     if "coupon_name" in z:
-#                         list_value = eval(z["coupon_name"])
+                for z in check:
+                    if "coupon_name" in z:
+                        list_value = eval(z["coupon_name"])
             
-#                         campaign_id = z["campaignid"]
-#                         if campaign_id in coup_dict:
-#                             coup_dict[campaign_id].extend(list_value)
-#                         else:
-#                             coup_dict[campaign_id] = list_value
+                        campaign_id = z["campaignid"]
+                        if campaign_id in coup_dict:
+                            coup_dict[campaign_id].extend(list_value)
+                        else:
+                            coup_dict[campaign_id] = list_value
 
-#         dict_lst = [coup_dict]
+        dict_lst = [coup_dict]
    
-#         sale_by_id = {}
+        sale_by_id = {}
     
-#         for campaign_id, coupon_names in coup_dict.items():
-#             sale = 0.0
+        for campaign_id, coupon_names in coup_dict.items():
+            sale = 0.0
             
-#             for coupon_name in set(coupon_names):
-#                 if coupon_name in sales_by_coupon:
-#                     sale += sales_by_coupon[coupon_name]
-#             sale_by_id[campaign_id] = sale
+            for coupon_name in set(coupon_names):
+                if coupon_name in sales_by_coupon:
+                    sale += sales_by_coupon[coupon_name]
+            sale_by_id[campaign_id] = sale
            
-#             campaign_name = Campaign.objects.filter(id=campaign_id).values_list('campaign_name', flat=True).first() 
-#             sale_by_id[campaign_id] = sale
+            campaign_name = Campaign.objects.filter(id=campaign_id).values_list('campaign_name', flat=True).first() 
+            sale_by_id[campaign_id] = sale
      
-#         for sale in lst:
-#             sale_id = sale['id']
-#             sale_value = sale_by_id.get(sale_id, 0)
-#             sale_by_id[sale_id] = sale_value
-#             sale['sale'] = sale_value
+        for sale in lst:
+            sale_id = sale['id']
+            sale_value = sale_by_id.get(sale_id, 0)
+            sale_by_id[sale_id] = sale_value
+            sale['sale'] = sale_value
         
-#         return render(request,"campaignlist.html",{"vendor":vendor_campaign,"vendor_campaign":lst,"product_data":combined_data,"single_vendor":single_obj,"final_list":final_lst1})
-#     return render(request,"campaignlist.html",{"vendor":vendor_campaign,"vendor_campaign":lst,"product_data":combined_data,"single_vendor":single_obj,"final_list":final_lst1})
+        return render(request,"campaignlist.html",{"vendor":vendor_campaign,"vendor_campaign":lst,"product_data":combined_data,"single_vendor":single_obj,"final_list":final_lst1})
+    return render(request,"campaignlist.html",{"vendor":vendor_campaign,"vendor_campaign":lst,"product_data":combined_data,"single_vendor":single_obj,"final_list":final_lst1})
 
 
 @login_required
