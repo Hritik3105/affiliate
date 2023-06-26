@@ -595,7 +595,7 @@ class  ActiveList(APIView):
     permission_classes = [IsAuthenticated]
     def get(self,request):
         final_lst1=[] 
-        campaign_obj2=VendorCampaign.objects.filter(campaign_status=2,vendor_id=self.request.user.id,campaign_exp=1)
+        campaign_obj2=VendorCampaign.objects.filter(campaign_status=2,vendor_id=self.request.user.id,campaignid__campaign_exp=1)
         influencerid=campaign_obj2.values_list("influencerid",flat=True)
         camp=Product_information.objects.filter(vendor_id=self.request.user.id).values()
    
