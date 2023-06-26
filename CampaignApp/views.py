@@ -2070,7 +2070,8 @@ class InfluencerCampSale(APIView):
                 emp_check=PaymentDetails.objects.all()
                 if emp_check:
                     print("hello")
-                    # for i in data_max:
+                    for i in data_max:
+                        print(i)
                     #     sales_done=PaymentDetails.objects.filter(vendor=self.request.user.id,campaign=i["campaign_detail"],influencer=i["influencer"]).values("salespaid","sales","influencerfee")
                     #     print("sales",sales_done)
                         
@@ -2085,7 +2086,7 @@ class InfluencerCampSale(APIView):
                     #             print("addd",cal_amt)
                     #             amount_to_paid=cal_amt/sales_done[0]["influencerfee"]
                     #             print(amount_to_paid)
-                    PaymentDetails.objects.filter(vendor=self.request.user.id,campaign=i["campaign_detail"],influencer=i["influencer"]).update(sales=i["sales"],influencerfee=i["influener_fee"],offer=i["offer"],amount=i["amount"])
+                        PaymentDetails.objects.filter(vendor=self.request.user.id,campaign=i["campaign_detail"],influencer=i["influencer"]).update(sales=i["sales"],influencerfee=i["influener_fee"],offer=i["offer"],amount=i["amount"])
                         # else:
                         #     print("helloqwwwwwwwwwww")
                         #     print(sales_done)
