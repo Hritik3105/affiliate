@@ -225,7 +225,7 @@ class Register(APIView):
         
                 influencer_obj.save()
                 print("i am herer")
-                print(influencer_obj)
+                print(influencer_obj.id)
                 save_obj=serializer.save(user_type =2)
                 print(save_obj.id)
                 infl_id=serializer.data["id"]
