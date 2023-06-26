@@ -41,4 +41,6 @@ urlpatterns = [
     path("infl_stripe",InfluencerStripeDetail.as_view(),name="infl_stripe"),
     path("transfer_money/",TranferMoney.as_view(),name="transfer_money"),
     path("influecercamsale/",InfluencerCampSale.as_view(),name="influecercamsale"),
+    path("campaignexp/",CampaignExpList.as_view(),name="campaignexp"),
+    path("marketcampaignexp/",MarketplaceExpList.as_view(),name="marketcampaignexp"),
 ]

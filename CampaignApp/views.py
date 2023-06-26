@@ -527,7 +527,7 @@ class PendingList(APIView):
         lst=[]
         final_lst=[]
 
-        campaign_obj=Campaign.objects.filter(Q(campaign_status=0),draft_status=0,vendorid_id=self.request.user.id,status=2)
+        campaign_obj=Campaign.objects.filter(Q(campaign_status=0),draft_status=0,vendorid_id=self.request.user.id,status=2,campaign_exp=1)
         if campaign_obj:
             z=(campaign_obj.values("id"))
             for i in z:
@@ -595,7 +595,7 @@ class  ActiveList(APIView):
     permission_classes = [IsAuthenticated]
     def get(self,request):
         final_lst1=[] 
-        campaign_obj2=VendorCampaign.objects.filter(campaign_status=2,vendor_id=self.request.user.id)
+        campaign_obj2=VendorCampaign.objects.filter(campaign_status=2,vendor_id=self.request.user.id,campaign_exp=1)
         influencerid=campaign_obj2.values_list("influencerid",flat=True)
         camp=Product_information.objects.filter(vendor_id=self.request.user.id).values()
    
@@ -627,7 +627,7 @@ class  DraftList(APIView):
     def get(self,request):
         lst=[]
         final_lst=[]  
-        campaign_obj=Campaign.objects.filter(vendorid_id=self.request.user.id,status=2,draft_status=1)
+        campaign_obj=Campaign.objects.filter(vendorid_id=self.request.user.id,status=2,draft_status=1,campaign_exp=1)
         if campaign_obj:
             z=(campaign_obj.values("id"))
             for i in z:
@@ -699,7 +699,7 @@ class  MarketplaceList(APIView):
         final_lst=[]
    
         
-        campaign_obj=Campaign.objects.filter(vendorid_id=self.request.user.id,status=1,draft_status=0)
+        campaign_obj=Campaign.objects.filter(vendorid_id=self.request.user.id,status=1,draft_status=0,campaign_exp=1)
         if campaign_obj:
             z=(campaign_obj.values("id"))
             for i in z:
@@ -771,7 +771,7 @@ class  MarketplaceDraftList(APIView):
         lst=[]
         markdraft_lst=[]
         
-        campaign_obj=Campaign.objects.filter(vendorid_id=self.request.user.id,status=1,draft_status=1)
+        campaign_obj=Campaign.objects.filter(vendorid_id=self.request.user.id,status=1,draft_status=1,campaign_exp=1)
         if campaign_obj:
             z=(campaign_obj.values("id"))
             for i in z:
@@ -1358,7 +1358,7 @@ class VendorApprovalList(APIView):
         
         final_lst1=[] 
       
-        campaign_obj2=VendorCampaign.objects.filter(campaign_status=1,vendor_id=self.request.user.id)
+        campaign_obj2=VendorCampaign.objects.filter(campaign_status=1,vendor_id=self.request.user.id,campaignid__campaign_exp=1)
       
         z=campaign_obj2.values_list("campaignid__id","campaignid__campaign_name")
         influencerid=campaign_obj2.values_list("influencerid",flat=True)
@@ -1383,7 +1383,7 @@ class VendorDeclineList(APIView):
                
         final_lst1=[] 
       
-        campaign_obj2=VendorCampaign.objects.filter(campaign_status=4,vendor_id=self.request.user.id)
+        campaign_obj2=VendorCampaign.objects.filter(campaign_status=4,vendor_id=self.request.user.id,campaignid__campaign_exp=1)
       
         z=campaign_obj2.values_list("campaignid__id","campaignid__campaign_name")
         influencerid=campaign_obj2.values_list("influencerid",flat=True)
@@ -2123,3 +2123,134 @@ class InfluencerCampSale(APIView):
             return Response({"error":response.json()},status=status.HTTP_400_BAD_REQUEST)
         
 
+
+class CampaignExpList(APIView):
+    authentication_classes=[TokenAuthentication]
+    permission_classes = [IsAuthenticated] 
+
+    def get(self,request):
+        lst=[]
+        final_lst=[]  
+        campaign_obj=Campaign.objects.filter(vendorid_id=self.request.user.id,status=2,campaign_exp=1)
+        if campaign_obj:
+            z=(campaign_obj.values("id"))
+            for i in z:
+               
+                lst.append(i['id'])
+        set_data=set(lst)
+     
+        fin_value=list(set_data)
+        for i in fin_value:
+            camp=Product_information.objects.filter(vendor_id=self.request.user.id,campaignid_id=i).values()
+            campaign_obj59=Product_information.objects.filter(vendor_id=self.request.user.id,campaignid_id=i).select_related("campaignid")
+            for k in campaign_obj59:
+               pass
+       
+        
+            for i in range(len(camp)):
+                cop=(camp[i]["coupon_name"])
+                amt=(camp[i]["amount"])
+             
+                if cop:
+                  
+                    couponlst=ast.literal_eval(cop)
+                else:
+                    couponlst=cop
+                    
+                if amt:
+                   
+                    amtlst=ast.literal_eval(amt)
+                else:
+                    amtlst=amt
+                      
+                dict1={
+                    "campaignid_id":camp[i]["campaignid_id"],
+                    "campaign_name": k.campaignid.campaign_name ,
+                    "product":[{
+                    "product_name":camp[i]["product_name"],
+                    "coupon_name":couponlst,
+                    "amount":amtlst,
+                    "product_id": camp[i]["product_id"],
+                }]
+                }
+                final_lst.append(dict1)
+   
+        result={}
+        for i, record in enumerate(final_lst):
+         
+            if record["campaignid_id"] in result:
+                result[record["campaignid_id"]]["product"].append(record["product"][0])
+            else:
+               
+                result[record["campaignid_id"]] = record
+                result[record["campaignid_id"]]["product"] = record["product"]
+
+        val=list(result.values())
+        return Response({"data":val},status=status.HTTP_200_OK)   
+    
+class MarketplaceExpList(APIView):
+    authentication_classes=[TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    def get(self,request):
+        lst=[]
+        final_lst=[]
+   
+        
+        campaign_obj=Campaign.objects.filter(vendorid_id=self.request.user.id,status=1,campaaign_exp=1)
+        if campaign_obj:
+            z=(campaign_obj.values("id"))
+            for i in z:
+              
+                lst.append(i['id'])
+        set_data=set(lst)
+     
+        fin_value=set_data
+        for i in fin_value:
+            camp=Product_information.objects.filter(vendor_id=self.request.user.id,campaignid_id=i).values()
+            campaign_obj59=Product_information.objects.filter(vendor_id=self.request.user.id,campaignid_id=i).select_related("campaignid")
+            for k in campaign_obj59:
+              pass
+
+        
+            for i in range(len(camp)):
+                cop=(camp[i]["coupon_name"])
+                amt=(camp[i]["amount"])
+             
+                if cop:
+                   
+                    couponlst=ast.literal_eval(cop)
+                else:
+                    couponlst=cop
+                    
+                if amt:
+                   
+                    amtlst=ast.literal_eval(amt)
+                else:
+                    amtlst=amt
+                    
+                    
+                dict1={
+                    "campaignid_id":camp[i]["campaignid_id"],
+                    "campaign_name": k.campaignid.campaign_name ,
+                    "product":[{
+                    "product_name":camp[i]["product_name"],
+                    "coupon_name":couponlst,
+                    "amount":amtlst,
+                    "product_id": camp[i]["product_id"],
+                }]
+                }
+    
+                final_lst.append(dict1)
+                
+        result={}
+        for i, record in enumerate(final_lst):
+         
+            if record["campaignid_id"] in result:
+                result[record["campaignid_id"]]["product"].append(record["product"][0])
+            else:
+               
+                result[record["campaignid_id"]] = record
+                result[record["campaignid_id"]]["product"] = record["product"]
+
+        val=list(result.values())
+        return Response({"data":val},status=status.HTTP_200_OK)   
