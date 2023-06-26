@@ -1911,216 +1911,216 @@ class TranferMoney(APIView):
     
     
     
-class InfluencerCampSale(APIView):
-    authentication_classes=[TokenAuthentication]
-    permission_classes = [IsAuthenticated] 
+# class InfluencerCampSale(APIView):
+#     authentication_classes=[TokenAuthentication]
+#     permission_classes = [IsAuthenticated] 
     
     
-    def get(self,request): 
-        acc_tok=access_token(self,request)
-        store_url = acc_tok[1]
-        api_token = acc_tok[0]
-        headers= {"X-Shopify-Access-Token": api_token}
-        url = f'https://{store_url}/admin/api/{API_VERSION}/price_rules.json?status=active'
+#     def get(self,request): 
+#         acc_tok=access_token(self,request)
+#         store_url = acc_tok[1]
+#         api_token = acc_tok[0]
+#         headers= {"X-Shopify-Access-Token": api_token}
+#         url = f'https://{store_url}/admin/api/{API_VERSION}/price_rules.json?status=active'
             
-        response = requests.get(url, headers=headers)
-        if response.status_code == 200:
-            price_rules = response.json().get('price_rules', [])
-            discount_list=[]
+#         response = requests.get(url, headers=headers)
+#         if response.status_code == 200:
+#             price_rules = response.json().get('price_rules', [])
+#             discount_list=[]
           
-            for rule in price_rules:
-                price_rule_id = rule['id']
-                discount_codes_url = f"https://{store_url}/admin/api/2023-01/price_rules/{price_rule_id}/discount_codes.json"
-                discount_codes_response = requests.get(discount_codes_url, headers=headers)
+#             for rule in price_rules:
+#                 price_rule_id = rule['id']
+#                 discount_codes_url = f"https://{store_url}/admin/api/2023-01/price_rules/{price_rule_id}/discount_codes.json"
+#                 discount_codes_response = requests.get(discount_codes_url, headers=headers)
             
-                if discount_codes_response.status_code == 200:
+#                 if discount_codes_response.status_code == 200:
                     
-                    discount_codes = discount_codes_response.json().get('discount_codes', [])
-                    for code in discount_codes:
-                        discount_code = code['code']
-                        discount_list.append(discount_code)
+#                     discount_codes = discount_codes_response.json().get('discount_codes', [])
+#                     for code in discount_codes:
+#                         discount_code = code['code']
+#                         discount_list.append(discount_code)
             
           
-            url = f'https://{store_url}/admin/api/2023-01/orders.json?status=active&code={discount_list}'
+#             url = f'https://{store_url}/admin/api/2023-01/orders.json?status=active&code={discount_list}'
 
             
-            response = requests.get(url,headers=headers)
+#             response = requests.get(url,headers=headers)
            
-            sales_by_coupon = {}
+#             sales_by_coupon = {}
         
-            if response.status_code == 200:
-                orders1 = response.json().get('orders', [])
+#             if response.status_code == 200:
+#                 orders1 = response.json().get('orders', [])
                 
                
-                for order in orders1:
-                    line_items = order.get('discount_codes', [])
+#                 for order in orders1:
+#                     line_items = order.get('discount_codes', [])
                    
                    
-                    total_price = order.get('total_price')
+#                     total_price = order.get('total_price')
                        
-                    if line_items:
-                        coupon_code = line_items[0].get('code')
+#                     if line_items:
+#                         coupon_code = line_items[0].get('code')
                       
                         
                     
-                        if coupon_code in sales_by_coupon:
-                            sales_by_coupon[coupon_code] += float(total_price)
+#                         if coupon_code in sales_by_coupon:
+#                             sales_by_coupon[coupon_code] += float(total_price)
                             
-                        else:
+#                         else:
                             
-                            sales_by_coupon[coupon_code] = float(total_price)
+#                             sales_by_coupon[coupon_code] = float(total_price)
                            
                                     
             
             
-                sale=list(sales_by_coupon.keys())
-                amount=list(sales_by_coupon.values())
+#                 sale=list(sales_by_coupon.keys())
+#                 amount=list(sales_by_coupon.values())
               
             
-                campaign_ids =  Campaign.objects.filter(vendorid=self.request.user.id).values_list('id', flat=True) 
+#                 campaign_ids =  Campaign.objects.filter(vendorid=self.request.user.id).values_list('id', flat=True) 
 
             
-                influencer_sales_for_campaign = {}
+#                 influencer_sales_for_campaign = {}
 
             
 
-                for coupon_name, sales in sales_by_coupon.items():
-                    influencer_ids = influencer_coupon.objects.filter(coupon_name=coupon_name,vendor=self.request.user.id).values("influencer_id", "coupon_name")
-                    for influencer in influencer_ids:
-                        influencer_id = influencer["influencer_id"]
-                        modash_data = Campaign.objects.filter(influencer_name__contains=influencer_id, id__in=campaign_ids,vendorid=self.request.user.id).values_list("id",flat=True)
-                        pro_data=Product_information.objects.filter(coupon_name__contains=coupon_name,campaignid__in=modash_data,vendor=self.request.user.id).values("campaignid")
-                        for modash_entry in pro_data:
-                            campaign_id = modash_entry["campaignid"]
-                            if influencer_id in influencer_sales_for_campaign:
-                                influencer_sales_for_campaign[influencer_id].append({"campaign_id": campaign_id, "sales": sales})
-                            else:
-                                influencer_sales_for_campaign[influencer_id] = [{"campaign_id": campaign_id, "sales": sales}]
+#                 for coupon_name, sales in sales_by_coupon.items():
+#                     influencer_ids = influencer_coupon.objects.filter(coupon_name=coupon_name,vendor=self.request.user.id).values("influencer_id", "coupon_name")
+#                     for influencer in influencer_ids:
+#                         influencer_id = influencer["influencer_id"]
+#                         modash_data = Campaign.objects.filter(influencer_name__contains=influencer_id, id__in=campaign_ids,vendorid=self.request.user.id).values_list("id",flat=True)
+#                         pro_data=Product_information.objects.filter(coupon_name__contains=coupon_name,campaignid__in=modash_data,vendor=self.request.user.id).values("campaignid")
+#                         for modash_entry in pro_data:
+#                             campaign_id = modash_entry["campaignid"]
+#                             if influencer_id in influencer_sales_for_campaign:
+#                                 influencer_sales_for_campaign[influencer_id].append({"campaign_id": campaign_id, "sales": sales})
+#                             else:
+#                                 influencer_sales_for_campaign[influencer_id] = [{"campaign_id": campaign_id, "sales": sales}]
         
           
-                lst_data=[]
+#                 lst_data=[]
                
-                for key in influencer_sales_for_campaign:
+#                 for key in influencer_sales_for_campaign:
                    
-                    for i in influencer_sales_for_campaign[key]:
-                        str_detail=StripeDetails.objects.filter(influencer=key,vendor=self.request.user.id).values("account_id")
+#                     for i in influencer_sales_for_campaign[key]:
+#                         str_detail=StripeDetails.objects.filter(influencer=key,vendor=self.request.user.id).values("account_id")
                       
-                        if str_detail:
-                            check=Campaign.objects.filter(id=i["campaign_id"]).values("influencer_fee","offer","campaign_name")
-                            if  check[0]["offer"] == "percentage":
-                                amount=i["sales"] / check[0]["influencer_fee"] 
+#                         if str_detail:
+#                             check=Campaign.objects.filter(id=i["campaign_id"]).values("influencer_fee","offer","campaign_name")
+#                             if  check[0]["offer"] == "percentage":
+#                                 amount=i["sales"] / check[0]["influencer_fee"] 
                             
-                            else:
-                                amount=i["sales"] - check[0]["influencer_fee"] 
+#                             else:
+#                                 amount=i["sales"] - check[0]["influencer_fee"] 
                             
                             
-                            infl_dict={
-                                "campaing_id":check[0]["campaign_name"],
-                                "sales":i["sales"],
-                                "account":str_detail[0]["account_id"],
-                                "influencer":key,
-                                "influener_fee":check[0]["influencer_fee"],
-                                "offer":check[0]["offer"],
-                                "amount":amount,  
-                                "campaign_detail":i["campaign_id"]        
-                            }
+#                             infl_dict={
+#                                 "campaing_id":check[0]["campaign_name"],
+#                                 "sales":i["sales"],
+#                                 "account":str_detail[0]["account_id"],
+#                                 "influencer":key,
+#                                 "influener_fee":check[0]["influencer_fee"],
+#                                 "offer":check[0]["offer"],
+#                                 "amount":amount,  
+#                                 "campaign_detail":i["campaign_id"]        
+#                             }
                             
-                            lst_data.append(infl_dict)  
-                        else:
-                            if  check[0]["offer"] == "percentage":
-                                amount=int(i["sales"])  / check[0]["influencer_fee"] 
+#                             lst_data.append(infl_dict)  
+#                         else:
+#                             if  check[0]["offer"] == "percentage":
+#                                 amount=int(i["sales"])  / check[0]["influencer_fee"] 
                             
-                            else:
-                                amount=i["sales"] - check[0]["influencer_fee"] 
+#                             else:
+#                                 amount=i["sales"] - check[0]["influencer_fee"] 
                             
                               
-                            infl_dict={
-                                "campaing_id":check[0]["campaign_name"],
-                                "sales":i["sales"],
-                                "account":"",
-                                "influencer":key,
-                                "influener_fee":check[0]["influencer_fee"],
-                                "offer":check[0]["offer"],
-                                "amount":amount,  
-                                "campaign_detail":i["campaign_id"]        
-                            }
+#                             infl_dict={
+#                                 "campaing_id":check[0]["campaign_name"],
+#                                 "sales":i["sales"],
+#                                 "account":"",
+#                                 "influencer":key,
+#                                 "influener_fee":check[0]["influencer_fee"],
+#                                 "offer":check[0]["offer"],
+#                                 "amount":amount,  
+#                                 "campaign_detail":i["campaign_id"]        
+#                             }
                             
-                            lst_data.append(infl_dict)  
-                campaign_totals = {}
-                for entry in lst_data:
-                    campaign_id = entry["campaing_id"]
-                    influencer = entry["influencer"]
-                    sales = entry["sales"]
-                    amount = entry["amount"]
+#                             lst_data.append(infl_dict)  
+#                 campaign_totals = {}
+#                 for entry in lst_data:
+#                     campaign_id = entry["campaing_id"]
+#                     influencer = entry["influencer"]
+#                     sales = entry["sales"]
+#                     amount = entry["amount"]
 
-                    key = (campaign_id, influencer)
-                    if key in campaign_totals:
-                        campaign_totals[key]["sales"] += sales
-                        campaign_totals[key]["amount"] += amount
-                    else:
-                        campaign_totals[key] = entry
+#                     key = (campaign_id, influencer)
+#                     if key in campaign_totals:
+#                         campaign_totals[key]["sales"] += sales
+#                         campaign_totals[key]["amount"] += amount
+#                     else:
+#                         campaign_totals[key] = entry
 
-                combined_sales_list = [value for value in campaign_totals.values()]
-                data_max=[]
-                for sales_entry in combined_sales_list:
+#                 combined_sales_list = [value for value in campaign_totals.values()]
+#                 data_max=[]
+#                 for sales_entry in combined_sales_list:
                     
-                    data_max.append(sales_entry)   
+#                     data_max.append(sales_entry)   
                 
                 
-                emp_check=PaymentDetails.objects.all()
-                if emp_check:
-                    for i in data_max:
-                        sales_done=PaymentDetails.objects.filter(vendor=self.request.user.id,campaign=i["campaign_detail"],influencer=i["influencer"]).values("salespaid","sales","influencerfee")
-                        print("sales",sales_done)
+#                 emp_check=PaymentDetails.objects.all()
+#                 if emp_check:
+#                     for i in data_max:
+#                         sales_done=PaymentDetails.objects.filter(vendor=self.request.user.id,campaign=i["campaign_detail"],influencer=i["influencer"]).values("salespaid","sales","influencerfee")
+#                         print("sales",sales_done)
                         
-                        if sales_done[0]["salespaid"]:
-                            print("helo saless",sales_done[0]["sales"])
-                            if int(sales_done[0]["sales"]) != 0:
-                                cal_amt=int(sales_done[0]["salespaid"])-int(sales_done[0]["sales"])
-                            else:
-                                print("checkffgggg",int(sales_done[0]["salespaid"]))
-                                print(int(i["sales"]))
-                                cal_amt=int(sales_done[0]["salespaid"])-int(i["sales"])
-                                print("addd",cal_amt)
-                                amount_to_paid=cal_amt/sales_done[0]["influencerfee"]
-                                print(amount_to_paid)
-                            PaymentDetails.objects.filter(vendor=self.request.user.id,campaign=i["campaign_detail"],influencer=i["influencer"]).update(sales=cal_amt,influencerfee=i["influener_fee"],offer=i["offer"],amount=i["amount"])
-                        # else:
-                        #     print("helloqwwwwwwwwwww")
-                        #     print(sales_done)
-                        #     PaymentDetails.objects.filter(vendor=self.request.user.id,campaign=i["campaign_detail"],influencer=i["influencer"]).update(sales=i["sales"],influencerfee=i["influener_fee"],offer=i["offer"],amount=i["amount"])
+#                         if sales_done[0]["salespaid"]:
+#                             print("helo saless",sales_done[0]["sales"])
+#                             if int(sales_done[0]["sales"]) != 0:
+#                                 cal_amt=int(sales_done[0]["salespaid"])-int(sales_done[0]["sales"])
+#                             else:
+#                                 print("checkffgggg",int(sales_done[0]["salespaid"]))
+#                                 print(int(i["sales"]))
+#                                 cal_amt=int(sales_done[0]["salespaid"])-int(i["sales"])
+#                                 print("addd",cal_amt)
+#                                 amount_to_paid=cal_amt/sales_done[0]["influencerfee"]
+#                                 print(amount_to_paid)
+#                             PaymentDetails.objects.filter(vendor=self.request.user.id,campaign=i["campaign_detail"],influencer=i["influencer"]).update(sales=cal_amt,influencerfee=i["influener_fee"],offer=i["offer"],amount=i["amount"])
+#                         # else:
+#                         #     print("helloqwwwwwwwwwww")
+#                         #     print(sales_done)
+#                         #     PaymentDetails.objects.filter(vendor=self.request.user.id,campaign=i["campaign_detail"],influencer=i["influencer"]).update(sales=i["sales"],influencerfee=i["influener_fee"],offer=i["offer"],amount=i["amount"])
                   
                     
-                else:
-                    for i in data_max:
-                        details_obj=PaymentDetails()
-                        details_obj.amount=i["amount"]
-                        details_obj.influencer_id=i["influencer"]
-                        details_obj.vendor_id=self.request.user.id
-                        details_obj.sales=i["sales"]
-                        details_obj.influencerfee=i["influener_fee"]
-                        details_obj.offer=i["offer"]
-                        details_obj.campaign_id=i["campaign_detail"]
-                        details_obj.account_id=i["account"]
-                        details_obj.save()
-                upd_data=PaymentDetails.objects.all()
-                upd_lst=[]
-                for pay in upd_data:
-                    upd_dict={
-                        "campaing_id":pay.campaign.campaign_name,
-                        "sales":pay.sales,
-                        "account":pay.account_id,
-                        "influencer":pay.influencer.id,
-                        "influener_fee":pay.influencerfee,
-                        "offer":pay.offer,
-                        "amount":pay.amount,  
-                        "amount_paid":pay.amountpaid,
-                        "campaign_detail":pay.campaign.id      
+#                 else:
+#                     for i in data_max:
+#                         details_obj=PaymentDetails()
+#                         details_obj.amount=i["amount"]
+#                         details_obj.influencer_id=i["influencer"]
+#                         details_obj.vendor_id=self.request.user.id
+#                         details_obj.sales=i["sales"]
+#                         details_obj.influencerfee=i["influener_fee"]
+#                         details_obj.offer=i["offer"]
+#                         details_obj.campaign_id=i["campaign_detail"]
+#                         details_obj.account_id=i["account"]
+#                         details_obj.save()
+#                 upd_data=PaymentDetails.objects.all()
+#                 upd_lst=[]
+#                 for pay in upd_data:
+#                     upd_dict={
+#                         "campaing_id":pay.campaign.campaign_name,
+#                         "sales":pay.sales,
+#                         "account":pay.account_id,
+#                         "influencer":pay.influencer.id,
+#                         "influener_fee":pay.influencerfee,
+#                         "offer":pay.offer,
+#                         "amount":pay.amount,  
+#                         "amount_paid":pay.amountpaid,
+#                         "campaign_detail":pay.campaign.id      
                         
-                    }
-                    upd_lst.append(upd_dict)
-                return Response({"sale_details":upd_lst},status=status.HTTP_200_OK)
-            return Response({"error":response.json()},status=status.HTTP_400_BAD_REQUEST)
+#                     }
+#                     upd_lst.append(upd_dict)
+#                 return Response({"sale_details":upd_lst},status=status.HTTP_200_OK)
+#             return Response({"error":response.json()},status=status.HTTP_400_BAD_REQUEST)
         
 
 
