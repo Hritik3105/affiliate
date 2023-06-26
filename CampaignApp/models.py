@@ -55,6 +55,7 @@ class ModashInfluencer(models.Model):
     fullname = models.CharField(max_length=255,default="")
     isverified = models.BooleanField(null=True)
     influencerid=models.ForeignKey(User,on_delete=models.CASCADE,null=True)
+    admin_approved=models.BooleanField(default=0)
 
     
     
