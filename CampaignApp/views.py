@@ -2131,7 +2131,7 @@ class CampaignExpList(APIView):
     def get(self,request):
         lst=[]
         final_lst=[]  
-        campaign_obj=Campaign.objects.filter(vendorid_id=self.request.user.id,status=2,campaign_exp=1)
+        campaign_obj=Campaign.objects.filter(vendorid_id=self.request.user.id,status=2,campaign_exp=0)
         if campaign_obj:
             z=(campaign_obj.values("id"))
             for i in z:
@@ -2196,7 +2196,7 @@ class MarketplaceExpList(APIView):
         final_lst=[]
    
         
-        campaign_obj=Campaign.objects.filter(vendorid_id=self.request.user.id,status=1,campaign_exp=1)
+        campaign_obj=Campaign.objects.filter(vendorid_id=self.request.user.id,status=1,campaign_exp=0)
         if campaign_obj:
             z=(campaign_obj.values("id"))
             for i in z:
