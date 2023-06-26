@@ -222,12 +222,12 @@ class Register(APIView):
                     influencer_obj.isverified=response.json()["user_profile"]["is_verified"]
         
                     inf_obj=influencer_obj.save()
-                    print(inf_obj.id)
+                    print(inf_obj)
                     save_obj=serializer.save(user_type =2)
                     print(save_obj.id)
                     infl_id=serializer.data["id"]
                     print("idddddd",infl_id)
-                    ModashInfluencer.objects.filter(id=inf_obj.id).update(influencerid=infl_id)
+                    ModashInfluencer.objects.filter(id=inf_obj).update(influencerid=infl_id)
 
 
                     
