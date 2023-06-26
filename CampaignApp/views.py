@@ -1446,135 +1446,135 @@ class ChangeNotifinflStatus(APIView):
         return Response(dict,status=status.HTTP_200_OK)  
     
     
-class Analytics(APIView):
-    authentication_classes=[TokenAuthentication]
-    permission_classes = [IsAuthenticated]
+# class Analytics(APIView):
+#     authentication_classes=[TokenAuthentication]
+#     permission_classes = [IsAuthenticated]
     
-    def get(self,request):
-        acc_tok=access_token(self,request)
-        headers= {"X-Shopify-Access-Token":acc_tok[0]}
-        url = f"https://{acc_tok[1]}/admin/api/2023-01/orders.json?status=active"
+#     def get(self,request):
+#         acc_tok=access_token(self,request)
+#         headers= {"X-Shopify-Access-Token":acc_tok[0]}
+#         url = f"https://{acc_tok[1]}/admin/api/2023-01/orders.json?status=active"
 
-        response = requests.get(url, headers=headers)
+#         response = requests.get(url, headers=headers)
 
 
         
-        if response.status_code == 200:
+#         if response.status_code == 200:
             
             
-            orders3 = response.json().get("orders", [])
-            product_sales = {}
-            for order in orders3:
-                line_items = order.get("line_items", [])
+#             orders3 = response.json().get("orders", [])
+#             product_sales = {}
+#             for order in orders3:
+#                 line_items = order.get("line_items", [])
                 
-                for line_item in line_items:
-                    product_id = line_item.get("title")
-                    price = float(line_item.get("price"))
-                    if product_id in product_sales:
-                        product_sales[product_id] += price
-                    else:
-                        product_sales[product_id] = price
+#                 for line_item in line_items:
+#                     product_id = line_item.get("title")
+#                     price = float(line_item.get("price"))
+#                     if product_id in product_sales:
+#                         product_sales[product_id] += price
+#                     else:
+#                         product_sales[product_id] = price
                         
-            keys=list(product_sales.keys())
+#             keys=list(product_sales.keys())
         
-            values=list(product_sales.values())
+#             values=list(product_sales.values())
           
          
-            order_count = {str(i): 0 for i in range(1, 13)}
-            orders = response.json().get("orders", [])
+#             order_count = {str(i): 0 for i in range(1, 13)}
+#             orders = response.json().get("orders", [])
         
-            for order in orders:
-                created_at = order.get("created_at")
-                month = int(created_at.split("-")[1])
+#             for order in orders:
+#                 created_at = order.get("created_at")
+#                 month = int(created_at.split("-")[1])
             
-                order_count[str(month)] += 1
+#                 order_count[str(month)] += 1
             
 
-            # Prepare the data for the chart
-            data = []
-            for month in range(1, 13):
-                month_name = calendar.month_name[month]
+#             # Prepare the data for the chart
+#             data = []
+#             for month in range(1, 13):
+#                 month_name = calendar.month_name[month]
             
-                count = order_count[str(month)]
-                data.append({"month": month_name, "count": count})
+#                 count = order_count[str(month)]
+#                 data.append({"month": month_name, "count": count})
         
         
         
-            order_list=list(order_count.values())
-            sales_data = response.json()['orders']
-            sales_report = {}
+#             order_list=list(order_count.values())
+#             sales_data = response.json()['orders']
+#             sales_report = {}
             
             
-            for month_number in range(1, 13):
-                month_name = calendar.month_name[month_number]
-                sales_report[month_name] = 0
+#             for month_number in range(1, 13):
+#                 month_name = calendar.month_name[month_number]
+#                 sales_report[month_name] = 0
                 
                 
-            for order in sales_data:
-                created_at = order['created_at']
-                month_number = int(created_at.split('-')[1])
-                month_name = calendar.month_name[month_number]
-                total_price = float(order['total_price'])
-                sales_report[month_name] += total_price
-            sales=list(sales_report.values()) 
+#             for order in sales_data:
+#                 created_at = order['created_at']
+#                 month_number = int(created_at.split('-')[1])
+#                 month_name = calendar.month_name[month_number]
+#                 total_price = float(order['total_price'])
+#                 sales_report[month_name] += total_price
+#             sales=list(sales_report.values()) 
         
-            return Response({'sales_data': sales,"order":order_list,"product_sales":product_sales},status=status.HTTP_200_OK)
-        else:
-            return Response({'error':response.text},status=status.HTTP_400_BAD_REQUEST)
+#             return Response({'sales_data': sales,"order":order_list,"product_sales":product_sales},status=status.HTTP_200_OK)
+#         else:
+#             return Response({'error':response.text},status=status.HTTP_400_BAD_REQUEST)
         
         
-class SalesRecord(APIView):
-    authentication_classes=[TokenAuthentication]
-    permission_classes = [IsAuthenticated]
+# class SalesRecord(APIView):
+#     authentication_classes=[TokenAuthentication]
+#     permission_classes = [IsAuthenticated]
         
-    def get(self,request):
-        acc_tok=access_token(self,request)
-        store_url = acc_tok[1]
-        api_token = acc_tok[0]
+#     def get(self,request):
+#         acc_tok=access_token(self,request)
+#         store_url = acc_tok[1]
+#         api_token = acc_tok[0]
 
-        end_date = datetime.now().date()
-        start_date_7_days_ago = end_date - timedelta(days=7)
-        start_date_30_days_ago = end_date - timedelta(days=30)
-        start_date_year_ago = end_date.replace(year=end_date.year-1, month=1, day=1)
+#         end_date = datetime.now().date()
+#         start_date_7_days_ago = end_date - timedelta(days=7)
+#         start_date_30_days_ago = end_date - timedelta(days=30)
+#         start_date_year_ago = end_date.replace(year=end_date.year-1, month=1, day=1)
 
 
-        start_date_7_days_ago_str = start_date_7_days_ago.isoformat()
-        start_date_30_days_ago_str = start_date_30_days_ago.isoformat()
-        start_date_year_ago_str = start_date_year_ago.isoformat()
-        end_date_str = end_date.isoformat()
+#         start_date_7_days_ago_str = start_date_7_days_ago.isoformat()
+#         start_date_30_days_ago_str = start_date_30_days_ago.isoformat()
+#         start_date_year_ago_str = start_date_year_ago.isoformat()
+#         end_date_str = end_date.isoformat()
 
       
-        url = f"https://{store_url}/admin/api/2021-07/orders.json?status=active&created_at_min={start_date_year_ago_str}&created_at_max={end_date_str}"
+#         url = f"https://{store_url}/admin/api/2021-07/orders.json?status=active&created_at_min={start_date_year_ago_str}&created_at_max={end_date_str}"
 
 
-        headers = {
-            'X-Shopify-Access-Token': api_token
-        }
-        response = requests.get(url, headers=headers)
-        if response.status_code == 200:
-            data = response.json()
+#         headers = {
+#             'X-Shopify-Access-Token': api_token
+#         }
+#         response = requests.get(url, headers=headers)
+#         if response.status_code == 200:
+#             data = response.json()
 
 
-            sales_7_days = 0
-            sales_30_days = 0
-            sales_year = 0
+#             sales_7_days = 0
+#             sales_30_days = 0
+#             sales_year = 0
 
-            for order in data['orders']:
-                created_at = datetime.strptime(order['created_at'], "%Y-%m-%dT%H:%M:%S%z").date()
-                if start_date_7_days_ago <= created_at <= end_date:
-                    sales_7_days += float(order['total_price'])
-                if start_date_30_days_ago <= created_at <= end_date:
-                    sales_30_days += float(order['total_price'])
-                if start_date_year_ago <= created_at <= end_date:
-                    sales_year += float(order['total_price'])
+#             for order in data['orders']:
+#                 created_at = datetime.strptime(order['created_at'], "%Y-%m-%dT%H:%M:%S%z").date()
+#                 if start_date_7_days_ago <= created_at <= end_date:
+#                     sales_7_days += float(order['total_price'])
+#                 if start_date_30_days_ago <= created_at <= end_date:
+#                     sales_30_days += float(order['total_price'])
+#                 if start_date_year_ago <= created_at <= end_date:
+#                     sales_year += float(order['total_price'])
 
         
-            print("Sales in the last 7 days: $", sales_7_days)
-            print("Sales in the last 30 days: $", sales_30_days)
-            print("Sales in the last year: $", sales_year)
-            return Response({"seven_days":sales_7_days,"thirty_days":sales_30_days,"year":sales_year})
-        else:
-            return Response({"error":response.text})
+#             print("Sales in the last 7 days: $", sales_7_days)
+#             print("Sales in the last 30 days: $", sales_30_days)
+#             print("Sales in the last year: $", sales_year)
+#             return Response({"seven_days":sales_7_days,"thirty_days":sales_30_days,"year":sales_year})
+#         else:
+#             return Response({"error":response.text})
 
 
 
