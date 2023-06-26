@@ -192,7 +192,7 @@ class Register(APIView):
 
 class Register(APIView):
     def post(self,request):
-        influencer_id=request.data.get("influencer_id")
+        influencer_id=request.data.get("user_handle")
         print(influencer_id)
         serializer=InfluencerSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
@@ -202,10 +202,10 @@ class Register(APIView):
           
             if serializer2.is_valid(raise_exception=True):
                 
-                save_obj=serializer.save(user_type =2)
-                infl_id=serializer.data["id"]
-                request.session["id"]=infl_id
-                handle=serializer.data["user_handle"]
+                # save_obj=serializer.save(user_type =2)
+                # infl_id=serializer.data["id"]
+                # request.session["id"]=infl_id
+                # handle=serializer.data["user_handle"]
                 influencer_obj = ModashInfluencer()
                 dict={
                 "platform": "instagram",
@@ -226,6 +226,12 @@ class Register(APIView):
                     influencer_obj.isverified=response.json()["user_profile"]["is_verified"]
         
                     influencer_obj.save()
+                    save_obj=serializer.save(user_type =2)
+                    infl_id=serializer.data["id"]
+                    ModashInfluencer.objects.filter(id=serializer.data["id"]).update(influencerid=infl_id)
+
+
+                    
                 else:
                     return Response({"error": response.json()},status=status.HTTP_400_BAD_REQUEST)
                 serializer2.save(influencerid_id=serializer.data["id"])
