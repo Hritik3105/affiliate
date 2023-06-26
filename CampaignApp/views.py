@@ -2069,22 +2069,23 @@ class InfluencerCampSale(APIView):
                 
                 emp_check=PaymentDetails.objects.all()
                 if emp_check:
-                    for i in data_max:
-                        sales_done=PaymentDetails.objects.filter(vendor=self.request.user.id,campaign=i["campaign_detail"],influencer=i["influencer"]).values("salespaid","sales","influencerfee")
-                        print("sales",sales_done)
+                    print("hello")
+                    # for i in data_max:
+                    #     sales_done=PaymentDetails.objects.filter(vendor=self.request.user.id,campaign=i["campaign_detail"],influencer=i["influencer"]).values("salespaid","sales","influencerfee")
+                    #     print("sales",sales_done)
                         
-                        if sales_done[0]["salespaid"]:
-                            print("helo saless",sales_done[0]["sales"])
-                            if int(sales_done[0]["sales"]) != 0:
-                                cal_amt=int(sales_done[0]["salespaid"])-int(sales_done[0]["sales"])
-                            else:
-                                print("checkffgggg",int(sales_done[0]["salespaid"]))
-                                print(int(i["sales"]))
-                                cal_amt=int(sales_done[0]["salespaid"])-int(i["sales"])
-                                print("addd",cal_amt)
-                                amount_to_paid=cal_amt/sales_done[0]["influencerfee"]
-                                print(amount_to_paid)
-                            PaymentDetails.objects.filter(vendor=self.request.user.id,campaign=i["campaign_detail"],influencer=i["influencer"]).update(sales=cal_amt,influencerfee=i["influener_fee"],offer=i["offer"],amount=i["amount"])
+                    #     if sales_done[0]["salespaid"]:
+                    #         print("helo saless",sales_done[0]["sales"])
+                    #         if int(sales_done[0]["sales"]) != 0:
+                    #             cal_amt=int(sales_done[0]["salespaid"])-int(sales_done[0]["sales"])
+                    #         else:
+                    #             print("checkffgggg",int(sales_done[0]["salespaid"]))
+                    #             print(int(i["sales"]))
+                    #             cal_amt=int(sales_done[0]["salespaid"])-int(i["sales"])
+                    #             print("addd",cal_amt)
+                    #             amount_to_paid=cal_amt/sales_done[0]["influencerfee"]
+                    #             print(amount_to_paid)
+                    #         PaymentDetails.objects.filter(vendor=self.request.user.id,campaign=i["campaign_detail"],influencer=i["influencer"]).update(sales=cal_amt,influencerfee=i["influener_fee"],offer=i["offer"],amount=i["amount"])
                         # else:
                         #     print("helloqwwwwwwwwwww")
                         #     print(sales_done)
