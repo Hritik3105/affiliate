@@ -62,7 +62,7 @@ class CallbackView(APIView):
         shop_details=self.details(shop,acc_tok)
  
         shop_name=shop.split(".")[0]
-        return redirect(f"https://admin.shopify.com/store/{shop_name}/apps/marketplace-49?shop="+shop)
+        return redirect(f"https://admin.shopify.com/store/{shop_name}/apps/marketplace-54?shop="+shop)
         # return Response({"success":"app_created","shop_url":f"https://admin.shopify.com/store/{shop_name}/apps/marketplace-49?shop="+shop})
 
 
