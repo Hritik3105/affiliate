@@ -1446,81 +1446,81 @@ class ChangeNotifinflStatus(APIView):
         return Response(dict,status=status.HTTP_200_OK)  
     
     
-# class Analytics(APIView):
-#     authentication_classes=[TokenAuthentication]
-#     permission_classes = [IsAuthenticated]
+class Analytics(APIView):
+    authentication_classes=[TokenAuthentication]
+    permission_classes = [IsAuthenticated]
     
-#     def get(self,request):
-#         acc_tok=access_token(self,request)
-#         headers= {"X-Shopify-Access-Token":acc_tok[0]}
-#         url = f"https://{acc_tok[1]}/admin/api/2023-01/orders.json?status=active"
+    def get(self,request):
+        acc_tok=access_token(self,request)
+        headers= {"X-Shopify-Access-Token":acc_tok[0]}
+        url = f"https://{acc_tok[1]}/admin/api/2023-01/orders.json?status=active"
 
-#         response = requests.get(url, headers=headers)
+        response = requests.get(url, headers=headers)
 
 
         
-#         if response.status_code == 200:
+        if response.status_code == 200:
             
             
-#             orders3 = response.json().get("orders", [])
-#             product_sales = {}
-#             for order in orders3:
-#                 line_items = order.get("line_items", [])
+            orders3 = response.json().get("orders", [])
+            product_sales = {}
+            for order in orders3:
+                line_items = order.get("line_items", [])
                 
-#                 for line_item in line_items:
-#                     product_id = line_item.get("title")
-#                     price = float(line_item.get("price"))
-#                     if product_id in product_sales:
-#                         product_sales[product_id] += price
-#                     else:
-#                         product_sales[product_id] = price
+                for line_item in line_items:
+                    product_id = line_item.get("title")
+                    price = float(line_item.get("price"))
+                    if product_id in product_sales:
+                        product_sales[product_id] += price
+                    else:
+                        product_sales[product_id] = price
                         
-#             keys=list(product_sales.keys())
+            keys=list(product_sales.keys())
         
-#             values=list(product_sales.values())
+            values=list(product_sales.values())
           
          
-#             order_count = {str(i): 0 for i in range(1, 13)}
-#             orders = response.json().get("orders", [])
+            order_count = {str(i): 0 for i in range(1, 13)}
+            orders = response.json().get("orders", [])
         
-#             for order in orders:
-#                 created_at = order.get("created_at")
-#                 month = int(created_at.split("-")[1])
+            for order in orders:
+                created_at = order.get("created_at")
+                month = int(created_at.split("-")[1])
             
-#                 order_count[str(month)] += 1
+                order_count[str(month)] += 1
             
 
-#             # Prepare the data for the chart
-#             data = []
-#             for month in range(1, 13):
-#                 month_name = calendar.month_name[month]
+            # Prepare the data for the chart
+            data = []
+            for month in range(1, 13):
+                month_name = calendar.month_name[month]
             
-#                 count = order_count[str(month)]
-#                 data.append({"month": month_name, "count": count})
+                count = order_count[str(month)]
+                data.append({"month": month_name, "count": count})
         
         
         
-#             order_list=list(order_count.values())
-#             sales_data = response.json()['orders']
-#             sales_report = {}
+            order_list=list(order_count.values())
+            sales_data = response.json()['orders']
+            sales_report = {}
             
             
-#             for month_number in range(1, 13):
-#                 month_name = calendar.month_name[month_number]
-#                 sales_report[month_name] = 0
+            for month_number in range(1, 13):
+                month_name = calendar.month_name[month_number]
+                sales_report[month_name] = 0
                 
                 
-#             for order in sales_data:
-#                 created_at = order['created_at']
-#                 month_number = int(created_at.split('-')[1])
-#                 month_name = calendar.month_name[month_number]
-#                 total_price = float(order['total_price'])
-#                 sales_report[month_name] += total_price
-#             sales=list(sales_report.values()) 
+            for order in sales_data:
+                created_at = order['created_at']
+                month_number = int(created_at.split('-')[1])
+                month_name = calendar.month_name[month_number]
+                total_price = float(order['total_price'])
+                sales_report[month_name] += total_price
+            sales=list(sales_report.values()) 
         
-#             return Response({'sales_data': sales,"order":order_list,"product_sales":product_sales},status=status.HTTP_200_OK)
-#         else:
-#             return Response({'error':response.text},status=status.HTTP_400_BAD_REQUEST)
+            return Response({'sales_data': sales,"order":order_list,"product_sales":product_sales},status=status.HTTP_200_OK)
+        else:
+            return Response({'error':response.text},status=status.HTTP_400_BAD_REQUEST)
         
         
 # class SalesRecord(APIView):
