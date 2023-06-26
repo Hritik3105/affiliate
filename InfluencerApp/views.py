@@ -192,6 +192,8 @@ class Register(APIView):
 
 class Register(APIView):
     def post(self,request):
+        influencer_id=request.data.get("influencer_id")
+        print(influencer_id)
         serializer=InfluencerSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
             
@@ -205,21 +207,24 @@ class Register(APIView):
                 request.session["id"]=infl_id
                 handle=serializer.data["user_handle"]
                 influencer_obj = ModashInfluencer()
-                base_url=f"https://api.modash.io/v1/instagram/profile/@{handle}/report"
-                response = requests.get(base_url, headers=headers)
-                print(response.json())
-                if response.ok:
-                    
-                    influencer_obj.username=response.json()['profile']['profile']['username']
-                    influencer_obj.fullname=response.json()['profile']['profile']['fullname']
-                    influencer_obj.isverified=response.json()['profile']['isVerified']
-                    influencer_obj.follower=response.json()['profile']['profile']['followers']
-                    influencer_obj.image =response.json()['profile']['profile']['picture']
-                    influencer_obj.engagements = response.json()['profile']['profile']['engagements']
-                    engagemente = response.json()['profile']['profile']['engagementRate']
-                    influencer_obj.engagement_rate = round(engagemente,2)
-                    influencer_obj.influencerid_id=serializer.data["id"]
+                dict={
+                "platform": "instagram",
+                "influencer_id": influencer_id
+                }
+                headers2={"Authorization": "Bearer 1m5vdEGduXxmd4QpwpL48Xj8FiA1jxrLPwQPO0W5"}
 
+                base_url="https://app.clickanalytic.com/api/v2/analysis"
+                response=requests.post(base_url,headers=headers2,json=dict)
+                print(response.json())
+                if response.status_code==200:
+                    influencer_obj.follower=response.json()["user_profile"]["followers"]
+                    influencer_obj.engagement_rate=response.json()["user_profile"]["engagement_rate"]
+                    influencer_obj.engagements=response.json()["user_profile"]["engagements"]
+                    influencer_obj.fullname=response.json()["user_profile"]["fullname"]
+                    influencer_obj.username=response.json()["user_profile"]["username"]
+                    influencer_obj.engagements=response.json()["user_profile"]["picture"]
+                    influencer_obj.isverified=response.json()["user_profile"]["is_verified"]
+        
                     influencer_obj.save()
                 else:
                     return Response({"error": response.json()},status=status.HTTP_400_BAD_REQUEST)
