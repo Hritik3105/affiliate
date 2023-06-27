@@ -262,7 +262,7 @@ class Register(APIView):
                 email = EmailMultiAlternatives(  
                             mail_subject, email_body, to=[to_email]  
                 )  
-            
+                email.attach_alternative(html_message, 'text/html')
                 email.send()  
                 # User.objects.filter(id=serializer.data["id"]).update(verify_email=1)         
                 return Response({"Success":"response.json()","token":account_activation_token.make_token(save_obj),"id":serializer.data["id"]},status=status.HTTP_201_CREATED)
