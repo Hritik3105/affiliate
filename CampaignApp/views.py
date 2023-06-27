@@ -2125,6 +2125,7 @@ class InfluencerCampSale(APIView):
                         
                     }
                     upd_lst.append(upd_dict)
+                print("updateeeeeeeee",upd_lst)
                 return Response({"sale_details":upd_lst},status=status.HTTP_200_OK)
             return Response({"error":response.json()},status=status.HTTP_400_BAD_REQUEST)
         
