@@ -1310,7 +1310,7 @@ class ProductUrl(APIView):
                             })
             
        
-        print(new_list)
+        print("new list",new_list)
         return Response({'product_details':new_list,"product_url":handle_lst,"title_list":title_list},status=status.HTTP_200_OK)       
 
 
