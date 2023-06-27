@@ -2049,6 +2049,7 @@ class InfluencerCampSale(APIView):
                             }
                             
                             lst_data.append(infl_dict)  
+                print("list data",lst_data)
                 campaign_totals = {}
                 for entry in lst_data:
                     campaign_id = entry["campaing_id"]
