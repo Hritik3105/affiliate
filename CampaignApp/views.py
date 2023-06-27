@@ -1979,9 +1979,10 @@ class InfluencerCampSale(APIView):
                 amount=list(sales_by_coupon.values())
               
                 print("salesss",sale)
+                print(self.request.user.id)
                 campaign_ids =  Campaign.objects.filter(vendorid=self.request.user.id).values_list('id', flat=True) 
 
-            
+                print(campaign_ids)
                 influencer_sales_for_campaign = {}
 
             
