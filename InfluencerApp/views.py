@@ -216,30 +216,30 @@ class Register(APIView):
                 }
                 headers2={"Authorization": "Bearer 1m5vdEGduXxmd4QpwpL48Xj8FiA1jxrLPwQPO0W5"}
 
-                # base_url="https://app.clickanalytic.com/api/v2/analysis"
-                # response=requests.post(base_url,headers=headers2,json=dict)
-                # print(response.json())
-                # if response.status_code==200:
-                #     influencer_obj.follower=response.json()["user_profile"]["followers"]
-                #     influencer_obj.engagement_rate=response.json()["user_profile"]["engagement_rate"]
-                #     influencer_obj.engagements=response.json()["user_profile"]["engagements"]
-                #     influencer_obj.fullname=response.json()["user_profile"]["fullname"]
-                #     influencer_obj.username=response.json()["user_profile"]["username"]
-                #     influencer_obj.image=response.json()["user_profile"]["picture"]
-                #     influencer_obj.isverified=response.json()["user_profile"]["is_verified"]
+                base_url="https://app.clickanalytic.com/api/v2/analysis"
+                response=requests.post(base_url,headers=headers2,json=dict)
+                print(response.json())
+                if response.status_code==200:
+                    influencer_obj.follower=response.json()["user_profile"]["followers"]
+                    influencer_obj.engagement_rate=response.json()["user_profile"]["engagement_rate"]
+                    influencer_obj.engagements=response.json()["user_profile"]["engagements"]
+                    influencer_obj.fullname=response.json()["user_profile"]["fullname"]
+                    influencer_obj.username=response.json()["user_profile"]["username"]
+                    influencer_obj.image=response.json()["user_profile"]["picture"]
+                    influencer_obj.isverified=response.json()["user_profile"]["is_verified"]
             
-                #     influencer_obj.save()
+                    influencer_obj.save()
                    
-                save_obj=serializer.save(user_type =2)
-                #     print(save_obj.id)
-                #     infl_id=serializer.data["id"]
-                #     print("idddddd",infl_id)
-                #     ModashInfluencer.objects.filter(id=influencer_obj.id).update(influencerid=infl_id)
+                    save_obj=serializer.save(user_type =2)
+                    print(save_obj.id)
+                    infl_id=serializer.data["id"]
+                    print("idddddd",infl_id)
+                    ModashInfluencer.objects.filter(id=influencer_obj.id).update(influencerid=infl_id)
 
 
-                    
-                # else:
-                #     return Response({"error": response.json()},status=status.HTTP_400_BAD_REQUEST)
+                
+                else:
+                    return Response({"error": response.json()},status=status.HTTP_400_BAD_REQUEST)
                 serializer2.save(influencerid_id=serializer.data["id"])
             
                 uid64=urlsafe_base64_encode(force_bytes(serializer.data["id"]))
@@ -264,7 +264,7 @@ class Register(APIView):
                 )  
                 email.attach_alternative(html_message, 'text/html')
                 email.send()  
-                print("dfdf",email)
+            
                 # User.objects.filter(id=serializer.data["id"]).update(verify_email=1)         
                 return Response({"Success":"response.json()","token":account_activation_token.make_token(save_obj),"id":serializer.data["id"]},status=status.HTTP_201_CREATED)
          
@@ -598,6 +598,7 @@ class PendingList(APIView):
                 dict1={
                     "campaignid_id":camp[i]["campaignid_id"],
                     "campaign_name": k.campaignid.campaign_name ,
+                    "offer": k.campaignid.offer ,
                     "status":k.campaignid.campaign_status,
                     "product":[{
                     "product_name":camp[i]["product_name"],
