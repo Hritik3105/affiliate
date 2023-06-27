@@ -264,6 +264,7 @@ class Register(APIView):
                 )  
                 email.attach_alternative(html_message, 'text/html')
                 email.send()  
+                print("dfdf",email)
                 # User.objects.filter(id=serializer.data["id"]).update(verify_email=1)         
                 return Response({"Success":"response.json()","token":account_activation_token.make_token(save_obj),"id":serializer.data["id"]},status=status.HTTP_201_CREATED)
          
