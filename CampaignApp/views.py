@@ -1919,7 +1919,9 @@ class InfluencerCampSale(APIView):
     def get(self,request): 
         acc_tok=access_token(self,request)
         store_url = acc_tok[1]
+        print("store",store_url)
         api_token = acc_tok[0]
+        print("api",api_token)
         headers= {"X-Shopify-Access-Token": api_token}
         url = f'https://{store_url}/admin/api/{API_VERSION}/price_rules.json?status=active'
             
