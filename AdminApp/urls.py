@@ -44,5 +44,6 @@ urlpatterns = [
     path('get-coupon/', get_coupon_codes, name='get-coupon'),
     path('campaign_accept/<int:id>', influenceraccept, name='campaign-accept'),
     path('campaign_decline/<int:id>', influencerdecline, name='campaign-decline'),
+    path('infldec/', admin_decision, name='infldec'),
 
 ]

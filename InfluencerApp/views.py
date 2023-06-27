@@ -20,6 +20,11 @@ from django.db.models import Q
 from django.core.mail import send_mail as sm
 import stripe
 from Affilate_Marketing import settings
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
+from django.urls import reverse
+
 
 
 stripe.api_key = settings.STRIPE_API_KEY
@@ -241,10 +246,15 @@ class Register(APIView):
                 current_site_info = get_current_site(request)  
                 
                 link=reverse('activate',kwargs={"id":serializer.data["id"],'token':account_activation_token.make_token(save_obj)})
-            
+
                 # activate_url=str(current_site_info) + str(link)
                 activate_url="https://myrefera.com/#/verify/"+ account_activation_token.make_token(save_obj)+"/"+ str(serializer.data["id"])
-                email_body= "HI"  +  " "  +  serializer.data["username"] + "please use this link to verify account\n" + activate_url
+                html_message = render_to_string('templates/acc_active_email.html', {
+                'button_text': 'Verify Account',
+                'button_link': activate_url
+                })
+                
+                email_body=  strip_tags(html_message)
                 mail_subject = 'Activate your Account'  
             
         

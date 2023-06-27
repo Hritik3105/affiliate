@@ -1,5 +1,13 @@
-{% autoescape off %}  
-Hi {{ user.username }},  
-Please click on the link to confirm your registration,  
-http://{{ domain }}{% url 'activate' uidb64=uid token=token %}  
-{% endautoescape %}  
+<!DOCTYPE html>
+<html>
+<head>
+    
+</head>
+<body>
+    <h1>Hello!</h1>
+    <p>Please verify your account</p>
+    <a href="{{ button_link }}" target="_blank">
+        <button>{{ button_text }}</button>
+    </a>
+</body>
+</html>

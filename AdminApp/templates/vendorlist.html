@@ -114,6 +114,7 @@
           <i class="fa fa-times-circle"></i>
               Vendor is Deactivate
             </div>
+            
         <div class="content-overlay"></div>
         <div class="header-navbar-shadow"></div>
         <div class="content-wrapper container-xxl p-0">
@@ -167,6 +168,7 @@
                                                     <option value="d{{i.id}}"  data-id="0" {% if i.vendor_status == 0 %} selected class="red"{% endif %}>Inactive</option>
                                                     
                                                 </select>
+                                            </td>
                                             <td> <a href="{% url 'vendordetails' i.id %}" class="btn text-secondary px-0">
                                                 <i class="fa-solid fa-eye fa-lg" style="color: #216ae8;"></i>
                                            
@@ -317,20 +319,12 @@
                         location.reload();
                     }, 5000); **/
                
-                    
-                 
-                    
-
+    
                   }
                   else{
                     $(".success-msg").css("display", "none");
                     $(".error-msg").css("display", "block");
-                    //  console.log(data);
-                    // $("#resultDiv").text("your card number is incorrect");
-                   //setTimeout(function() {
-                       // $(".error-msg").fadeOut();
-                    //    location.reload();
-//}, 5000);
+     
 
                   }
                  

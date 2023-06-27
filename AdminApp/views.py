@@ -912,3 +912,23 @@ def influencerdecline(request,id):
 
     messages.error(request,"Influencer declined")
     return render(request,"Influencerlist.html",{"influencer":Influencer})
+
+
+
+
+def admin_decision(request):
+    if request.method == "GET":
+        value=request.GET.get("status")
+        print("---------------",value)
+      
+        ids=value[1:]
+       
+        if value[0]=="a":
+            
+            ModashInfluencer.objects.filter(id=int(ids)).update(admin_approved=1)
+            return HttpResponse("Influencer accepted")
+        else:
+          
+            ModashInfluencer.objects.filter(id=int(ids)).update(admin_approved=0)
+            return HttpResponse("Influencer Rejected")
+       

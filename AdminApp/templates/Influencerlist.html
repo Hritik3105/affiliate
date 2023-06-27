@@ -62,9 +62,61 @@
         
        
     }
-    .success-message {
-        background-color: #4CAF50;
-        color: #fff;
+    .green{
+        background-color: #31CE36 ;
+        width: 91px;
+        height: 28px;
+        color: white;
+        font-size: 13px;
+        padding-top: 3px;
+        font-weight: bold;
+        padding-left: 6px;
+    }
+    .red{
+        background-color: #F25961;
+        width: 91px;
+        height: 28px;
+        color: white;
+        font-size: 13px;
+        padding-top: 3px;
+        font-weight: bold;
+        padding-left: 6px;
+    }
+    #green{
+        background-color: #31CE36 ;
+        width: 91px;
+        height: 28px;
+        color: white;
+        font-size: 13px;
+        padding-top: 3px;
+        font-weight: bold;
+        padding-left: 6px;
+    }
+    #red{
+        background-color: #F25961;
+        width: 91px;
+        height: 28px;
+        color: white;
+        font-size: 13px;
+        padding-top: 3px;
+        font-weight: bold;
+        padding-left: 6px;
+    }
+
+    #university_table_wrapper {
+        overflow: hidden;
+    }
+
+    .form-select {
+        background-position: right 0.2rem center !important;
+    }
+
+    #university_table_wrapper .row:nth-child(2) .col-sm-12 {
+        overflow-x: scroll;
+    }
+
+    #university_table_wrapper .card .table {
+        background: #fff;
     }
     
 </style>
@@ -80,20 +132,24 @@
     <!-- BEGIN: Content-->
     
 
-          
-    <div class="app-content content" >
-        <div class="col-12" id="mess">
-            {% if messages %}
-                <ul class="messages">
-                    {% for message in messages %}
-                    <div class="success-msg  col-md-5" >
+    <div class="app-content content ">
+        <div class="success-msg col-md-4" style=" color: #270;background-color: #DFF2BF; margin: 10px 0;
+        padding: 10px;display:none;
+        border-radius: 3px 3px 3px 3px;">
+            <i class="fa fa-check"></i>
+            Influencer Accepted
+          </div>
 
-                    <li id="messs">{{ message }}</li>
-                    {% endfor %}
-                </div>
-                </ul>
-            {% endif %}
-        </div>
+          <div class="error-msg  col-md-4" style=" color: #D8000C;
+          background-color: #FFBABA; margin: 10px 0;
+          padding: 10px;display:none;
+          border-radius: 3px 3px 3px 3px;">
+          <i class="fa fa-times-circle"></i>
+          Influencer Rejected
+            </div>     
+
+   
+        
         <h5 id="message"></h5>
         <div class="content-overlay"></div>
         <div class="header-navbar-shadow"></div>
@@ -148,17 +204,14 @@
                                             <td>{{i.follower}}</td>
                                             <td>{{i.engagements}}</td>
                                             <td>{{i.engagement_rate}}%</td>
-                                            <td>{% if i.admin_approved == 0 %} 
-                                               
-                                                <a href="{% url 'campaign-accept' i.id %}" class="btn text-secondary px-0">
-                                                <i class="fa fa-check" style="color: #216ae8;"></i>
-                                                {% endif %}
-                                                {% if i.admin_approved == 1 %} 
-                                                <a href="{% url 'campaign-decline' i.id %}" class="btn text-secondary px-0" style="margin-left:6px">
-                                                    <i class="fa fa-close" style="color: #216ae8;"></i>
-                                                {% endif %}
+                                            <td class ="select"> 
+                                                <select  class="dropdown-mobile form-select" name="select"  {% if i.admin_approved == 1 %} id="green" {% else %} id="red" {% endif %}>        
+                                                    <option value="a{{i.id}}" data-id="1" {% if i.admin_approved == 1 %} selected class="green" {% endif %}>Accepted</option>
+                                                    <option value="d{{i.id}}"  data-id="0" {% if i.admin_approved == 0 %} selected class="red"{% endif %}>Rejected</option>
+                                                    
+                                                </select>
                                             </td>
-                                            
+                                           
                                         </tr>
                                     {% endfor %}
                                     </tbody>
@@ -166,7 +219,7 @@
                             </div>
                         </div>
                     </div>
-                 
+                </section>
                     <!-- Modal to add new record -->
                     <div class="modal modal-slide-in fade" id="modals-slide-in">
                         <div class="modal-dialog sidebar-sm">
@@ -203,7 +256,7 @@
                             </form>
                         </div>
                     </div>
-                </section>
+                
                 <!--/ Basic table -->
 
 
@@ -271,16 +324,16 @@
         })
         $(".dropdown-mobile").on('change', function(){
           
-     
+            
             var selectedOption = $(this).find('option:selected');
-            var backgroundColor = selectedOption.text() === 'Active' ? '#31CE36' : '#F25961';
+            var backgroundColor = selectedOption.text() === 'Accepted' ? '#31CE36' : '#F25961';
         
             $(this).css('background-color', backgroundColor);
             selectedOption.css('background-color', backgroundColor);
         
             $.ajax({
                 type:'GET',
-                url:'/isadmin/status/',
+                url:'/isadmin/infldec/',
                 data:{
                   status:$(this).val(),
 
@@ -290,11 +343,11 @@
                 success:function(res)
                 {
                   console.log('res',res);
-                
-                  if(res == "User is Active"){
                     
-                    $('#message').text(res);
-                    $('#message').css("color", "green");
+                  if(res == "Influencer accepted"){
+                   
+                    $(".success-msg").css("display", "block");
+                    $(".error-msg").css("display", "none");
                
                     
                  
@@ -302,8 +355,8 @@
 
                   }
                   else{
-                    $('#message').text(res);
-                    $('#message').css("color", "red");
+                    $(".success-msg").css("display", "none");
+                    $(".error-msg").css("display", "block");
 
                   }
                  
@@ -320,16 +373,7 @@
         
     </script>
 
-    <script>
-
-        setTimeout(function(){
-            if ($('#messs').length > 0) {
-                $('#messs').remove();
-                $('#messs').css("background-color","black");
-            }
-        }, 2000) 
-           // 2000 millisecond
-    </script>
+   
 </body>
 <!-- END: Body-->
 
