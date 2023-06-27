@@ -379,7 +379,7 @@ class DiscountCodeView(APIView):
             discount_list=[]
             for rule in price_rules:
                 price_rule_id = rule['id']
-                discount_codes_url = f"https://{acc_tok[1]}/admin/api/2023-01/price_rules/{price_rule_id}/discount_codes.json"
+                discount_codes_url = f"https://{acc_tok[1]}/admin/api/{API_VERSION}/price_rules/{price_rule_id}/discount_codes.json"
                 discount_codes_response = requests.get(discount_codes_url, headers=headers)
                 
                 if discount_codes_response.status_code == 200:
@@ -465,7 +465,7 @@ class  ParticularDiscountCodeView(APIView):
             for discount in coupons:   
             
                 
-                coupon_data=requests.get(f'https://{acc_tok[1]}/admin/api/2023-01/price_rules/{discount["id"]}/discount_codes.json',headers=headers)
+                coupon_data=requests.get(f'https://{acc_tok[1]}/admin/api/{API_VERSION}/price_rules/{discount["id"]}/discount_codes.json',headers=headers)
             
                 if coupon_data.json()["discount_codes"]:
                     discount_data = {
@@ -792,7 +792,7 @@ class Analytics(APIView):
         end_date = datetime.now().strftime('%Y-%m-%d')
         start_date = (datetime.now() - timedelta(days=7)).strftime('%Y-%m-%d')
 
-        url = f"https://{acc_tok[1]}/admin/api/2023-01/reports.json"
+        url = f"https://{acc_tok[1]}/admin/api/{API_VERSION}/reports.json"
         headers= {"X-Shopify-Access-Token": acc_tok[0]}
 
         
@@ -915,7 +915,7 @@ class ShopifyCouponView(APIView):
         acc_tok=access_token(self,request)
         
         headers= {"X-Shopify-Access-Token": acc_tok[0]}
-        endpoint = f"https://{acc_tok[1]}/admin/api/2023-01/price_rules.json"
+        endpoint = f"https://{acc_tok[1]}/admin/api/{API_VERSION}/price_rules.json"
       
 
         response = requests.get(endpoint, headers=headers)

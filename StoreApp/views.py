@@ -15,6 +15,7 @@ from urllib.parse import urlencode
 from django.http import HttpResponseRedirect
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
+from Affilate_Marketing.settings import SHOPIFY_API_KEY,SHOPIFY_API_SECRET,API_VERSION
 
 # Create your views here.
 
@@ -95,7 +96,7 @@ class CallbackView(APIView):
     
     def details(self,shop,acc_tok):
         
-        shop_url = f"https://{shop}/admin/api/2023-01/shop.json"
+        shop_url = f"https://{shop}/admin/api/{API_VERSION}/shop.json"
         headers = {'X-Shopify-Access-Token': acc_tok}
         response = requests.get(shop_url, headers=headers)
         if response.status_code == 200:
@@ -109,7 +110,7 @@ class CallbackView(APIView):
 
 class StoreDetails(APIView):
     def post(self,request):
-        shop_url = f"https:///admin/api/2023-01/shop.json"
+        shop_url = f"https:///admin/api/{API_VERSION}/shop.json"
         headers = {'X-Shopify-Access-Token': "shpua_a9e28531b1ea7a90f730438666c922ef"}
         response = requests.get(shop_url, headers=headers)
         if response.status_code == 200:
@@ -173,8 +174,8 @@ class CheckStore(APIView):
     
     def get(self,request):
         input_url = "marketplacee-app.myshopify.com"
-        shop=f"https://{input_url}/admin/api/2023-01/shop.json"
-        response = requests.get(f"https://{input_url}/admin/api/2023-01/shop.json")
+        shop=f"https://{input_url}/admin/api/{API_VERSION}/shop.json"
+        response = requests.get(f"https://{input_url}/admin/api/{API_VERSION}/shop.json")
         print(shop)
         print(response.status_code)
         return response.status_code == 200
