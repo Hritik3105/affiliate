@@ -598,7 +598,7 @@ class PendingList(APIView):
                 dict1={
                     "campaignid_id":camp[i]["campaignid_id"],
                     "campaign_name": k.campaignid.campaign_name ,
-                    "offer": k.campaignid.offer ,
+                    
                     "status":k.campaignid.campaign_status,
                     "product":[{
                     "product_name":camp[i]["product_name"],
