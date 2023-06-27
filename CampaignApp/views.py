@@ -1281,7 +1281,6 @@ class ProductUrl(APIView):
                 if product_id in product_dict:
                     product_dict[product_id]["name"].append(product["name"])
                     product_dict[product_id]["amount"].append(product["amount"])
-                    product_dict[product_id]["discout_type"].append(product["discout_type"])
                 
                 else:
                     print("check",product["influencer_id"])
@@ -1290,7 +1289,7 @@ class ProductUrl(APIView):
                         "product_id":product["product_id"],
                         "name": [product["name"]],
                         "amount": [product["amount"]],
-                        "discout_type":[product["discout_type"]],
+                        "discout_type":product["discout_type"],
                         "influencer_id":product["influencer_id"]
                         }
                              
@@ -1310,7 +1309,7 @@ class ProductUrl(APIView):
                             })
             
        
-        print("new list",new_list)
+        print(new_list)
         return Response({'product_details':new_list,"product_url":handle_lst,"title_list":title_list},status=status.HTTP_200_OK)       
 
 
