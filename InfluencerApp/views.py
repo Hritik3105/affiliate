@@ -253,13 +253,13 @@ class Register(APIView):
                 'button_text': 'Verify Account',
                 'button_link': activate_url
                 })
-                h
+               
                 email_body=  strip_tags(html_message)
                 mail_subject = 'Activate your Account'  
             
         
                 to_email =serializer.data["email"]  
-                email = EmailMessage(  
+                email = EmailMultiAlternatives(  
                             mail_subject, email_body, to=[to_email]  
                 )  
             
