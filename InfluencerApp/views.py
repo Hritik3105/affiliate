@@ -253,8 +253,8 @@ class Register(APIView):
                 'button_text': 'Verify Account',
                 'button_link': activate_url
                 })
-                
-                email_body= (html_message)
+                h
+                email_body=  strip_tags(html_message)
                 mail_subject = 'Activate your Account'  
             
         

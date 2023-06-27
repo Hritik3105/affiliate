@@ -1,11 +1,23 @@
 <!DOCTYPE html>
 <html>
-
+<head>
+    <title>Email Template</title>
+    <style>
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+    </style>
+</head>
 <body>
-    <h1>Hello!</h1>
-    <p>Please verify your account</p>
-    <a href="{{ button_link }}" target="_blank">
-        <button>{{ button_text }}</button>
-    </a>
+    <h1>Hello</h1>
+    <p>Please click the button below to verify your account:</p>
+    <a href="{{ button_link }}" class="button" target="_blank">Verify Account</a>
 </body>
 </html>
+
