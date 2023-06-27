@@ -375,9 +375,9 @@ def Single_Vendor(request,id):
     user=User.objects.filter(id=id).values("shopify_url")
     
     get_tok=Store.objects.filter(store_name=user[0]["shopify_url"]).values("access_token")
-    
-    shopify_store = user[0]["shopify_url"]
-    headers= {"X-Shopify-Access-Token": get_tok[0]["access_token"]}
+    if get_tok:
+        shopify_store = user[0]["shopify_url"]
+        headers= {"X-Shopify-Access-Token": get_tok[0]["access_token"]}
     # url = f'https://{shopify_store}/admin/api/{API_VERSION}/price_rules.json?status=active'
         
     # response = requests.get(url, headers=headers)
