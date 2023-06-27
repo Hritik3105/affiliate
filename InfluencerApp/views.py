@@ -230,7 +230,7 @@ class Register(APIView):
             
                 #     influencer_obj.save()
                    
-                #     save_obj=serializer.save(user_type =2)
+                save_obj=serializer.save(user_type =2)
                 #     print(save_obj.id)
                 #     infl_id=serializer.data["id"]
                 #     print("idddddd",infl_id)
@@ -265,7 +265,7 @@ class Register(APIView):
             
                 email.send()  
                 # User.objects.filter(id=serializer.data["id"]).update(verify_email=1)         
-                return Response({"Success":response.json(),"token":account_activation_token.make_token(save_obj),"id":serializer.data["id"]},status=status.HTTP_201_CREATED)
+                return Response({"Success":"response.json()","token":account_activation_token.make_token(save_obj),"id":serializer.data["id"]},status=status.HTTP_201_CREATED)
          
 
             return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
