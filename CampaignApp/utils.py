@@ -5,7 +5,7 @@ from rest_framework.response import Response
 def product_details(self,request,val_lst,req_id):
     print("oooooooddoooooooo",val_lst)
     for i in range(len(val_lst)):
-            print(i["discount_type"])
+            
             product=Product_information()
             product.vendor_id=self.request.user.id
             product.campaignid_id=req_id.id
@@ -13,6 +13,7 @@ def product_details(self,request,val_lst,req_id):
             product.product_id=val_lst[i]["product_id"]
             product.coupon_name=val_lst[i]["name"]
             product.amount=val_lst[i]["amount"]
+            product.discount_type=val_lst[i]["discout_type"]
             product.save()
      
        

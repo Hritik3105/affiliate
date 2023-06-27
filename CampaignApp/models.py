@@ -66,6 +66,7 @@ class Product_information(models.Model):
   product_id=models.BigIntegerField(null=True)
   coupon_name=models.TextField(blank=True,null=True)
   amount=models.TextField(blank=True)
+  discount_type=models.TextField(blank=True)
   
   
 class Campaign_accept(models.Model):
