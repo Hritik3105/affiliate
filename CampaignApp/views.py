@@ -2109,7 +2109,7 @@ class InfluencerCampSale(APIView):
                         details_obj.campaign_id=i["campaign_detail"]
                         details_obj.account_id=i["account"]
                         details_obj.save()
-                upd_data=PaymentDetails.objects.all()
+                upd_data=PaymentDetails.objects.filter(vendor=self.request.user.id)
                 upd_lst=[]
                 for pay in upd_data:
                     upd_dict={
