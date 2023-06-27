@@ -249,7 +249,7 @@ class Register(APIView):
 
                 # activate_url=str(current_site_info) + str(link)
                 activate_url="https://myrefera.com/#/verify/"+ account_activation_token.make_token(save_obj)+"/"+ str(serializer.data["id"])
-                html_message = render_to_string('templates/acc_active_email.html', {
+                html_message = render_to_string('acc_active_email.html', {
                 'button_text': 'Verify Account',
                 'button_link': activate_url
                 })
