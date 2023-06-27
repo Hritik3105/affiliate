@@ -2070,7 +2070,7 @@ class InfluencerCampSale(APIView):
                     
                     data_max.append(sales_entry)   
                 
-                
+                print("data",data_max)
                 emp_check=PaymentDetails.objects.all()
                 if emp_check:
                     print("hello")
