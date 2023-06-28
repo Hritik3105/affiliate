@@ -554,14 +554,17 @@ def Order_list(request,id):
             
             order_count = {str(i): 0 for i in range(1, 13)}
             orders = response.json().get("orders", [])
-        
+
             for order in orders:
                 created_at = order.get("created_at")
                 month = int(created_at.split("-")[1])
-            
-                order_count[str(month)] += 1
+                discount_codes = order.get("discount_codes", [])
+                
+                if discount_codes:
+                    order_count[str(month)] += 1
             
 
+                
             data = []
             for month in range(1, 13):
                 month_name = calendar.month_name[month]
@@ -578,6 +581,7 @@ def Order_list(request,id):
             for month_number in range(1, 13):
                 month_name = calendar.month_name[month_number]
                 sales_report[month_name] = 0
+
 
             for order in sales_data:
                 created_at = order['created_at']
