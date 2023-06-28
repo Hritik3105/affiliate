@@ -66,7 +66,7 @@ def show(request):
                 sales_reports1.append({"store_name": store_name, "sales_report": sales_report})
     print(sales_reports1)
     print(total_sales)
-    return render(request,'index.html')
+    return render(request,'index.html',{"total":total_sales,"sales_report":sales_reports1})
 
 
 
