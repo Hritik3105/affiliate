@@ -3,7 +3,7 @@ from StoreApp.models import *
 from rest_framework.response import Response
 
 def product_details(self,request,val_lst,req_id):
-    print("oooooooddoooooooo",val_lst)
+   
     for i in range(len(val_lst)):
             
             product=Product_information()
