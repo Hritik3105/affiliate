@@ -5,9 +5,9 @@ urlpatterns = [
 
   
   #SHOPIFY APPS URLS
-  path("createproduct",CreateProduct.as_view(),name="createproduct"),
-  path("product/list",CreateProduct.as_view(),name="product/list"),
-  path("order",OrderList.as_view(),name="order"),
+  # path("createproduct",CreateProduct.as_view(),name="createproduct"),
+  # path("product/list",CreateProduct.as_view(),name="product/list"),
+  # path("order",OrderList.as_view(),name="order"),
   path("create/code/",CreateDiscountCodeView.as_view(),name="discountcode"),
   # path("paricular/",ParticularProduct.as_view(),name="paricular"),
   path("multiple/",DiscountCodeMultiple.as_view(),name="multiple"),
