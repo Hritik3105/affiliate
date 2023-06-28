@@ -1474,6 +1474,7 @@ class Analytics(APIView):
             orders3 = response.json().get("orders", [])
             product_sales = {}
             for order in orders3:
+                print("orderssss",order)
                 line_items = order.get("line_items", [])
                 print("lineeee",line_items)
                 for line_item in line_items:
@@ -1497,9 +1498,6 @@ class Analytics(APIView):
                 month = int(created_at.split("-")[1])
             
                 order_count[str(month)] += 1
-            
-
-            # Prepare the data for the chart
             data = []
             for month in range(1, 13):
                 month_name = calendar.month_name[month]
