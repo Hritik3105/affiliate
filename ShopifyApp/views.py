@@ -362,75 +362,44 @@ def delete_price_rule(price_rule_id, shop, headers):
 class DiscountCodeView(APIView):
     authentication_classes=[TokenAuthentication]
     permission_classes = [IsAuthenticated] 
-    # def get(self, request):
-    #     acc_tok=access_token(self,request)
-    #     headers= {"X-Shopify-Access-Token": acc_tok[0]}
+    def get(self, request):
+        acc_tok=access_token(self,request)
+        headers= {"X-Shopify-Access-Token": acc_tok[0]}
         
         
         
-    #     url = f'https://{acc_tok[1]}/admin/api/{API_VERSION}/price_rules.json?status=active'
+        url = f'https://{acc_tok[1]}/admin/api/{API_VERSION}/price_rules.json?status=active'
         
         
 
        
-    #     response = requests.get(url, headers=headers)
-    #     if response.status_code == 200:
-    #         price_rules = response.json().get('price_rules', [])
-    #         discount_list=[]
-    #         for rule in price_rules:
-    #             price_rule_id = rule['id']
-    #             discount_codes_url = f"https://{acc_tok[1]}/admin/api/{API_VERSION}/price_rules/{price_rule_id}/discount_codes.json"
-    #             discount_codes_response = requests.get(discount_codes_url, headers=headers)
-                
-    #             if discount_codes_response.status_code == 200:
-                   
-    #                 discount_codes = discount_codes_response.json().get('discount_codes', [])
-    #                 for code in discount_codes:
-    #                     discount_code = code['code']
-    #                     discount_data = {
-    #                     'title': code['code'],
-    #                     'id': code['price_rule_id'],
-    #                     "created_at":code["created_at"]
-    #                     }
-    #                     discount_list.append(discount_data)
-
-    #         return Response({'coupon': discount_list},status=status.HTTP_200_OK)
-    #     else:
-    #         print(response.json())   
-    #         return Response({'error': 'Failed to fetch discounts'}, status=500)
-    def get(self, request):
-        acc_tok = access_token(self, request)
-        headers = {"X-Shopify-Access-Token": acc_tok[0]}
-
-        price_rules_url = f'https://{acc_tok[1]}/admin/api/{API_VERSION}/price_rules.json?status=active'
-        discount_codes_url = f"https://{acc_tok[1]}/admin/api/{API_VERSION}/discount_codes.json"
-
-        response = requests.get(price_rules_url, headers=headers)
-
+        response = requests.get(url, headers=headers)
+        print("response",response)
         if response.status_code == 200:
             price_rules = response.json().get('price_rules', [])
-            discount_list = []
-
+            discount_list=[]
             for rule in price_rules:
                 price_rule_id = rule['id']
-                created_at = rule["created_at"]
-
-                discount_codes_response = requests.get(f"{discount_codes_url}?price_rule_id={price_rule_id}", headers=headers)
+                discount_codes_url = f"https://{acc_tok[1]}/admin/api/{API_VERSION}/price_rules/{price_rule_id}/discount_codes.json"
+                discount_codes_response = requests.get(discount_codes_url, headers=headers)
+                
                 if discount_codes_response.status_code == 200:
+                   
                     discount_codes = discount_codes_response.json().get('discount_codes', [])
-
                     for code in discount_codes:
+                        discount_code = code['code']
                         discount_data = {
-                            'title': code['code'],
-                            'id': code['price_rule_id'],
-                            'created_at': created_at
+                        'title': code['code'],
+                        'id': code['price_rule_id'],
+                        "created_at":code["created_at"]
                         }
                         discount_list.append(discount_data)
 
-            return Response({'coupon': discount_list}, status=status.HTTP_200_OK)
+            return Response({'coupon': discount_list},status=status.HTTP_200_OK)
         else:
-            print(response.json())
+            print(response.json())   
             return Response({'error': 'Failed to fetch discounts'}, status=500)
+        
 
 
 
