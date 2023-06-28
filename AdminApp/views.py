@@ -540,7 +540,7 @@ def Order_list(request,id):
             for order in orders3:
                 line_items = order.get("line_items", [])
                 discount_codes = order.get("discount_codes", [])
-                
+                print(discount_codes)
                 if discount_codes:
                     for line_item in line_items:
                         product_id = line_item.get("title")
@@ -554,7 +554,7 @@ def Order_list(request,id):
                         
             keys=list(product_sales.keys())
             values=list(product_sales.values())
-            print(product_sales)
+            print("salesssssssssss",product_sales)
             
             order_count = {str(i): 0 for i in range(1, 13)}
             orders = response.json().get("orders", [])
