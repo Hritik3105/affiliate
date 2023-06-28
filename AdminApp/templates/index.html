@@ -206,7 +206,8 @@
                                 <!--/ Earnings Card -->
                             </div>
                         </div>
-                        <h1 id="sales" hidden>{{sales_report}}</h1>
+                        <h1 id="sales" hidden>{{sale_val}}</h1>
+                        <h1 id="sales1" hidden>{{vendor}}</h1>
                        
                         <!-- Revenue Report Card -->
                         <div class="col-lg-8 col-12">
@@ -294,10 +295,13 @@
     <script>
         var total_sale = $('#sales').text();
         console.log(total_sale)
-        {% comment %} z= JSON.parse(total_sale)  {% endcomment %}
-        var xValues = ["Vendor1", "Vendor2", "Vendor3", "Vendor4", "Vendor5"];
-        var yValues = [55, 49, 44, 24, 30];
-        var barColors = ["#00aba9", "green","blue","orange","brown"];
+        var store = $('#sales1').text();
+        console.log(store)
+        z= JSON.parse(total_sale) 
+        x=JSON.parse(store)
+        var xValues = z;
+        var yValues = x;
+        var barColors = ["#00aba9", "green"];
         
         new Chart("myChart", {
           type: "bar",
