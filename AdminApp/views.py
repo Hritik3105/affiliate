@@ -40,30 +40,31 @@ def access_token(request,id):
     
 def show(request):
 
-    vendor_data=User.objects.filter(user_type=3).values("shopify_url")
-    for shop in vendor_data:
-        get_tok=Store.objects.filter(store_name=shop["shopify_url"]).values("access_token","store_name")
+    # vendor_data=User.objects.filter(user_type=3).values("shopify_url")
+    # for shop in vendor_data:
+    #     get_tok=Store.objects.filter(store_name=shop["shopify_url"]).values("access_token","store_name")
         
-        if get_tok:
+    #     if get_tok:
           
-            for token in get_tok:
-                headers= {"X-Shopify-Access-Token":token["access_token"]}
-                stores=token["store_name"]
-                print(stores)
-                print(headers)
+    #         for token in get_tok:
+    #             headers= {"X-Shopify-Access-Token":token["access_token"]}
+    #             stores=token["store_name"]
+    #             print(stores)
+    #             print(headers)
                 
-                # url = f"https://{stores}/admin/api/2023-04/orders.json"
+    #             # url = f"https://{stores}/admin/api/2023-04/orders.json"
                 
-                # response2 = requests.post(url,headers=headers)
-                # orders_data = response2.json()
+    #             # response2 = requests.post(url,headers=headers)
+    #             # orders_data = response2.json()
 
-                # total_order_amount = sum(float(order["total_price"]) for order in orders_data["orders"])
+    #             # total_order_amount = sum(float(order["total_price"]) for order in orders_data["orders"])
 
 
-                payouts_url = f"https://{stores}/admin/api/2023-04/shopify_payments/payouts.json"
-                response = requests.get(payouts_url, headers=headers)
-                payouts_data = response.json()
-                print(payouts_data)
+    #             payouts_url = f"https://{stores}/admin/api/2023-04/shopify_payments/payouts.json"
+    #             response = requests.get(payouts_url, headers=headers)
+    #             pri
+    #             payouts_data = response.json()
+                
                 # print(payouts_data)
                 # # Calculate total payout amount
                 # total_payout_amount = sum(float(payout["amount"]) for payout in payouts_data["payouts"])
