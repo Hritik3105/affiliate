@@ -1471,12 +1471,11 @@ class Analytics(APIView):
         if response.status_code == 200:
             
             
-            orders3 = response.json().get("orders", [])
+            orders_details = response.json().get("orders", [])
             product_sales = {}
-            for order in orders3:
-                print("orderssss",order)
+            for order in orders_details:
+               
                 line_items = order.get("line_items", [])
-                print("lineeee",line_items)
                 for line_item in line_items:
                     product_id = line_item.get("title")
                     price = float(line_item.get("price"))
@@ -1484,7 +1483,7 @@ class Analytics(APIView):
                         product_sales[product_id] += price
                     else:
                         product_sales[product_id] = price
-                        
+                        print("-------------",product_sales)            
             keys=list(product_sales.keys())
         
             values=list(product_sales.values())
