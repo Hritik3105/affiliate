@@ -5,9 +5,6 @@ urlpatterns = [
 
   
   #SHOPIFY APPS URLS
-  # path("createproduct",CreateProduct.as_view(),name="createproduct"),
-  # path("product/list",CreateProduct.as_view(),name="product/list"),
-  # path("order",OrderList.as_view(),name="order"),
   path("create/code/",CreateDiscountCodeView.as_view(),name="discountcode"),
   # path("paricular/",ParticularProduct.as_view(),name="paricular"),
   path("multiple/",DiscountCodeMultiple.as_view(),name="multiple"),
@@ -19,7 +16,7 @@ urlpatterns = [
   path('particular/edit/', ProductEditCodeView.as_view(), name='partedit'),
   path('particular/discount/', ParticularDiscountCodeView.as_view(), name='partdisct'),
   path('analytics',Analytics.as_view(), name='analytics'),
-  # path('sales-report/', SalesReportAPIView.as_view(), name='sales-report'),
+  
   path('coupons/', ShopifyCouponView.as_view(), name='shopify-coupons'),
 
 ]

@@ -39,6 +39,22 @@ def access_token(request,id):
     
     
 def show(request):
+    # print("hello")
+    # vendor_data=User.objects.filter(user_type=3).values("shopify_url")
+    # for shop in vendor_data:
+    #     get_tok=Store.objects.filter(store_name=shop["shopify_url"]).values("access_token")
+        
+    #     if get_tok:
+    #         print("hello",get_tok)
+    #         for token in get_tok:
+    #             headers= {"X-Shopify-Access-Token":token["access_token"]}
+    #     shops=shop["shopify_url"]
+    #     print(shops)
+    #     url = f"https://{shops}/admin/api/{API_VERSION}/shopify_payments/balance.json"
+    #     response = requests.get(url, headers=headers)
+        
+    #     print(response.json())
+    
     return render(request,'index.html')
 
 
@@ -378,28 +394,6 @@ def Single_Vendor(request,id):
     if get_tok:
         shopify_store = user[0]["shopify_url"]
         headers= {"X-Shopify-Access-Token": get_tok[0]["access_token"]}
-    # url = f'https://{shopify_store}/admin/api/{API_VERSION}/price_rules.json?status=active'
-        
-    # response = requests.get(url, headers=headers)
-  
-    # if response.status_code == 200:
-    #     price_rules = response.json().get('price_rules', [])
-    #     discount_list=[]
-       
-    #     for rule in price_rules:
-    #         price_rule_id = rule['id']
-    #         discount_codes_url = f"https://{shopify_store}/admin/api/2023-01/price_rules/{price_rule_id}/discount_codes.json"
-           
-    #         discount_codes_response = requests.get(discount_codes_url, headers=headers)
-           
-    #         if discount_codes_response.status_code == 200:
-                
-    #             discount_codes = discount_codes_response.json().get('discount_codes', [])
-    #             for code in discount_codes:
-    #                 discount_code = code['code']
-    #                 discount_list.append(discount_code)
-
-        # url = f'https://{shopify_store}/admin/api/2023-01/orders.json?status=any&code={discount_list}'
         url = f'https://{shopify_store}/admin/api/{API_VERSION}/orders.json?status=any'
 
         
@@ -431,7 +425,7 @@ def Single_Vendor(request,id):
                                     
                 
             sale=list(sales_by_coupon.keys())
-            print(":salesss",sales_by_coupon)
+            
             amount=list(sales_by_coupon.values())
             coup_dict={}
             coup_lst=[]
@@ -472,6 +466,8 @@ def Single_Vendor(request,id):
             return render(request,"campaignlist.html",{"vendor":vendor_campaign,"vendor_campaign":lst,"product_data":combined_data,"single_vendor":single_obj,"final_list":final_lst1})
         return render(request,"campaignlist.html",{"vendor":vendor_campaign,"vendor_campaign":lst,"product_data":combined_data,"single_vendor":single_obj,"final_list":final_lst1})
     return render(request,"campaignlist.html")
+
+
 
 
 @login_required
@@ -802,116 +798,113 @@ def charge_commission(request):
 
 
 
-def get_coupon_codes(request):
-    user=User.objects.filter(id=22).values("shopify_url")
+# def get_coupon_codes(request):
+#     user=User.objects.filter(id=22).values("shopify_url")
     
-    get_tok=Store.objects.filter(store_name=user[0]["shopify_url"]).values("access_token")
+#     get_tok=Store.objects.filter(store_name=user[0]["shopify_url"]).values("access_token")
     
-    shopify_store = user[0]["shopify_url"]
-    headers= {"X-Shopify-Access-Token": get_tok[0]["access_token"]}
-    url = f'https://{shopify_store}/admin/api/{API_VERSION}/price_rules.json?status=active'
-        
-    response = requests.get(url, headers=headers)
-    
-    print("response",response)
-    if response.status_code == 200:
-        price_rules = response.json().get('price_rules', [])
-        discount_list=[]
-        orders=[]
-        for rule in price_rules:
-            price_rule_id = rule['id']
-            discount_codes_url = f"https://{shopify_store}/admin/api/{API_VERSION}/price_rules/{price_rule_id}/discount_codes.json"
-            discount_codes_response = requests.get(discount_codes_url, headers=headers)
+#     shopify_store = user[0]["shopify_url"]
+#     headers= {"X-Shopify-Access-Token": get_tok[0]["access_token"]}
+#     url = f'https://{shopify_store}/admin/api/{API_VERSION}/price_rules.json?status=active'
+#     discount_list=[]
+#     orders=[]
+#     # response = requests.get(url, headers=headers)
+#     # if response.status_code == 200:
+#     #     price_rules = response.json().get('price_rules', [])
+#     #   
+#     #     for rule in price_rules:
+#     #         price_rule_id = rule['id']
+#     #         discount_codes_url = f"https://{shopify_store}/admin/api/{API_VERSION}/price_rules/{price_rule_id}/discount_codes.json"
+#     #         discount_codes_response = requests.get(discount_codes_url, headers=headers)
            
-            if discount_codes_response.status_code == 200:
+#     #         if discount_codes_response.status_code == 200:
                 
-                discount_codes = discount_codes_response.json().get('discount_codes', [])
-                for code in discount_codes:
-                    discount_code = code['code']
-                    discount_list.append(discount_code)
+#     #             discount_codes = discount_codes_response.json().get('discount_codes', [])
+#     #             for code in discount_codes:
+#     #                 discount_code = code['code']
+#     #                 discount_list.append(discount_code)
          
          
-        url = f'https://{shopify_store}/admin/api/{API_VERSION}/orders.json?status=any&code={discount_list}'
+#     url = f'https://{shopify_store}/admin/api/{API_VERSION}/orders.json?status=active'
 
 
-        response = requests.get(url,headers=headers)
-        
-        sales_by_coupon = {}
+#     response = requests.get(url,headers=headers)
     
-        if response.status_code == 200:
-            orders1 = response.json().get('orders', [])
+#     sales_by_coupon = {}
+
+#     if response.status_code == 200:
+#         orders1 = response.json().get('orders', [])
+        
+        
+#         for order in orders1:
+#             line_items = order.get('discount_codes', [])
+#             line_items3 = order.get('id', [])
+#             total_price = order.get('total_price')
             
-            
-            for order in orders1:
-                line_items = order.get('discount_codes', [])
-                line_items3 = order.get('id', [])
-                total_price = order.get('total_price')
-                
 
 
-                if line_items:
-                    coupon_code = line_items[0].get('code')
-                    id = line_items3
-                    sales_by_coupon["id"]=id
-                
-                    if coupon_code in sales_by_coupon:
-                        sales_by_coupon[coupon_code] += float(total_price)
-                        
-                    else:
-                        sales_by_coupon[coupon_code] = float(total_price)
-                                
+#             if line_items:
+#                 coupon_code = line_items[0].get('code')
+#                 id = line_items3
+#                 sales_by_coupon["id"]=id
+            
+#                 if coupon_code in sales_by_coupon:
+#                     sales_by_coupon[coupon_code] += float(total_price)
                     
-        sale=list(sales_by_coupon.keys())
-        amount=list(sales_by_coupon.values())
-        coup_dict={}
-        for  i in sale:    
-                check=Product_information.objects.filter(coupon_name__contains=i).values("campaignid","coupon_name")
-               
-                for z in check:
-                    if "coupon_name" in z:
-                        list_value = eval(z["coupon_name"])
+#                 else:
+#                     sales_by_coupon[coupon_code] = float(total_price)
+                            
+                
+#         sale=list(sales_by_coupon.keys())
+#         amount=list(sales_by_coupon.values())
+#         coup_dict={}
+#         for  i in sale:    
+#                 check=Product_information.objects.filter(coupon_name__contains=i).values("campaignid","coupon_name")
+                
+#                 for z in check:
+#                     if "coupon_name" in z:
+#                         list_value = eval(z["coupon_name"])
             
-                        campaign_id = z["campaignid"]
-                        if campaign_id in coup_dict:
-                            coup_dict[campaign_id].extend(list_value)
-                        else:
-                            coup_dict[campaign_id] = list_value
+#                         campaign_id = z["campaignid"]
+#                         if campaign_id in coup_dict:
+#                             coup_dict[campaign_id].extend(list_value)
+#                         else:
+#                             coup_dict[campaign_id] = list_value
 
-        dict_lst = [coup_dict]
+#         dict_lst = [coup_dict]
         
-        sale_by_id = {}
+#         sale_by_id = {}
 
-        for campaign_id, coupon_names in coup_dict.items():
-            sale = 0.0
+#         for campaign_id, coupon_names in coup_dict.items():
+#             sale = 0.0
             
-            for coupon_name in set(coupon_names):
-                if coupon_name in sales_by_coupon:
-                    sale += sales_by_coupon[coupon_name]
-            sale_by_id[campaign_id] = sale
+#             for coupon_name in set(coupon_names):
+#                 if coupon_name in sales_by_coupon:
+#                     sale += sales_by_coupon[coupon_name]
+#             sale_by_id[campaign_id] = sale
 
-            campaign_name = Campaign.objects.filter(id=campaign_id).values_list('campaign_name', flat=True).first() 
-            sale_by_id[campaign_id] = [sale, campaign_name]
-            
-        print(sale_by_id)             
-        return HttpResponse(orders)
-    else:
-        return HttpResponse("error")
+#             campaign_name = Campaign.objects.filter(id=campaign_id).values_list('campaign_name', flat=True).first() 
+#             sale_by_id[campaign_id] = [sale, campaign_name]
+#         print("ordersssss",orders)           
+#         return HttpResponse(orders)
+#     else:
+#         return HttpResponse("error")
     
     
-def influenceraccept(request,id):
-    ModashInfluencer.objects.filter(id=id).update(admin_approved=1)
-    Influencer=ModashInfluencer.objects.filter().values()
+# def influenceraccept(request,id):
+#     ModashInfluencer.objects.filter(id=id).update(admin_approved=1)
+#     Influencer=ModashInfluencer.objects.filter().values()
 
-    messages.success(request,"Influener accepted")
-    return render(request,"Influencerlist.html",{"influencer":Influencer})
+#     messages.success(request,"Influener accepted")
+#     return render(request,"Influencerlist.html",{"influencer":Influencer})
     
     
-def influencerdecline(request,id):
-    ModashInfluencer.objects.filter(id=id).update(admin_approved=0)
-    Influencer=ModashInfluencer.objects.filter().values()
+# def influencerdecline(request,id):
+#     ModashInfluencer.objects.filter(id=id).update(admin_approved=0)
+#     Influencer=ModashInfluencer.objects.filter().values()
 
-    messages.error(request,"Influencer declined")
-    return render(request,"Influencerlist.html",{"influencer":Influencer})
+#     messages.error(request,"Influencer declined")
+#     return render(request,"Influencerlist.html",{"influencer":Influencer})
 
 
 
@@ -931,4 +924,19 @@ def admin_decision(request):
           
             ModashInfluencer.objects.filter(id=int(ids)).update(admin_approved=0)
             return HttpResponse("Influencer Rejected")
-       
+
+
+def total_sales(request):
+    vendor_data=User.objects.filter(user_type=3).values("shopify_url")
+    for shop in vendor_data["shopify_url"]:
+        get_tok=Store.objects.filter(store_name=shop).values("access_token")
+        
+    if get_tok:
+        for token in get_tok["access_token"]:
+            headers= {"X-Shopify-Access-Token":token}
+
+        url = f"https://{shop}/admin/api/{API_VERSION}/shopify_payments/balance.json"
+        response = requests.get(url, headers=headers)
+        
+        print(response.json())
+    return render(request,"dashboard.html")

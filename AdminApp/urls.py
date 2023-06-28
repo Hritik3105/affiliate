@@ -41,9 +41,10 @@ urlpatterns = [
     path('split-payment/', split_payment, name='split_payment'),
     path('stripe/', stripe_data, name='stripe'),
     path('commission/', charge_commission, name='commission'),
-    path('get-coupon/', get_coupon_codes, name='get-coupon'),
-    path('campaign_accept/<int:id>', influenceraccept, name='campaign-accept'),
-    path('campaign_decline/<int:id>', influencerdecline, name='campaign-decline'),
+    # path('get-coupon/', get_coupon_codes, name='get-coupon'),
+    # path('campaign_accept/<int:id>', influenceraccept, name='campaign-accept'),
+    # path('campaign_decline/<int:id>', influencerdecline, name='campaign-decline'),
     path('infldec/', admin_decision, name='infldec'),
+    path('total_sales/', total_sales, name='total_sales'),
 
 ]
