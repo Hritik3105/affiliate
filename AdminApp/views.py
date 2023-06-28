@@ -52,26 +52,27 @@ def show(request):
                 print(stores)
                 print(headers)
                 
-                url = f"https://{stores}/admin/api/2023-04/orders.json"
+                # url = f"https://{stores}/admin/api/2023-04/orders.json"
                 
-                response2 = requests.post(url,headers=headers)
-                orders_data = response2.json()
+                # response2 = requests.post(url,headers=headers)
+                # orders_data = response2.json()
 
-                total_order_amount = sum(float(order["total_price"]) for order in orders_data["orders"])
+                # total_order_amount = sum(float(order["total_price"]) for order in orders_data["orders"])
 
 
-                payouts_url = f"https://{stores}/admin/api/2023-04//shopify_payments/payouts.json"
+                payouts_url = f"https://{stores}/admin/api/2023-04/shopify_payments/payouts.json"
                 response = requests.get(payouts_url, headers=headers)
                 payouts_data = response.json()
                 print(payouts_data)
-                # Calculate total payout amount
-                total_payout_amount = sum(float(payout["amount"]) for payout in payouts_data["payouts"])
+                # print(payouts_data)
+                # # Calculate total payout amount
+                # total_payout_amount = sum(float(payout["amount"]) for payout in payouts_data["payouts"])
 
                 # Calculate balance
-                balance = total_order_amount - total_payout_amount
+                # balance = total_order_amount - total_payout_amount
 
                 # Print the balance
-                print(f"Shop Balance: {balance}")
+                # print(f"Shop Balance: {balance}")
 
     
     return render(request,'index.html')
