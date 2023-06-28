@@ -25,36 +25,11 @@ def access_token(self,request):
     return acc_tok,shop
     
     
-#API TO FET PRODUCT LIST    
-class ProductList(APIView):
-    def get(self,request):
-        response = requests.get(base_url, headers=headers)
-        return Response({"success":json.loads(response.text)})    
 
 
 
-# API TO CREATE A PRODUCT
-class CreateProduct(APIView):
-    def post(self,request):
-        title=request.data.get("product")
-        body = {"product":title}
-        response = requests.post(base_url,headers=headers,json=body)
-        return Response({"success":json.loads(response.text)})
-    
-    
 
 
-
-#API TO GET ORDER LIST
-class OrderList(APIView):
-    authentication_classes=[TokenAuthentication]
-    permission_classes = [IsAuthenticated]  
-    def get(self,request):
-        acc_tok=access_token(self,request)
-        headers= {"X-Shopify-Access-Token": acc_tok[0]}
-        base_url=f"https://{acc_tok[1]}/admin/api/{API_VERSION}/orders.json?status=any"
-        response = requests.get(base_url, headers=headers)
-        return Response({"success":json.loads(response.text)},status=status.HTTP_200_OK)
 
 
 
@@ -129,6 +104,7 @@ class CreateDiscountCodeView(APIView):
                 'code': discount_code,
                 'usage_limit': 1,
                 'customer_selection': 'all',
+                "once_per_customer": True, 
                 'starts_at': '2023-04-06T00:00:00Z',
                 'ends_at': '2023-04-30T23:59:59Z'
             }
@@ -170,6 +146,7 @@ class DiscountCodeMultiple(APIView):
                 "value_type": discount_type,
                 "value":amount,
                 "customer_selection": "all",
+                "once_per_customer": True, 
                 'starts_at': '2023-04-06T00:00:00Z',
                 'ends_at': '2023-04-30T23:59:59Z'
 
@@ -196,6 +173,7 @@ class DiscountCodeMultiple(APIView):
                 'code': discount_code,
                 'usage_limit': None,
                 'customer_selection': 'all',
+                "once_per_customer": True, 
                 'starts_at': '2023-04-06T00:00:00Z',
                 'ends_at': '2023-04-30T23:59:59Z'
             }
@@ -275,6 +253,7 @@ class ParticularProduct(APIView):
                     "value_type": discount_type,
                     "value": amt,
                     "customer_selection": "all",
+                    "once_per_customer": True, 
                     'starts_at': '2023-04-06T00:00:00Z',
                     'ends_at': '2023-08-30T23:59:59Z',
                     "entitled_product_ids": my_list,
@@ -326,6 +305,7 @@ def discount_code1(price_id,shop,headers,discount_code):
             'code': discount_code,
             'usage_limit': None,
             'customer_selection': 'all',
+            "once_per_customer": True, 
             'starts_at': '2023-04-06T00:00:00Z',
             'ends_at': '2023-04-30T23:59:59Z',
             
@@ -388,20 +368,7 @@ class DiscountCodeView(APIView):
                 "created_at":created_at
                 }
                 discount_list.append(discount_data)
-                # discount_codes_url = f"https://{acc_tok[1]}/admin/api/{API_VERSION}/price_rules/{price_rule_id}/discount_codes.json"
-                # discount_codes_response = requests.get(discount_codes_url, headers=headers)
-                
-                # if discount_codes_response.status_code == 200:
-                   
-                #     discount_codes = discount_codes_response.json().get('discount_codes', [])
-                #     for code in discount_codes:
-                #         discount_code = code['code']
-                #         discount_data = {
-                #         'title': code['code'],
-                #         'id': code['price_rule_id'],
-                #         "created_at":code["created_at"]
-                #         }
-                #         discount_list.append(discount_data)
+              
 
             return Response({'coupon': discount_list},status=status.HTTP_200_OK)
         else:
@@ -593,7 +560,7 @@ class SingleCoupon(APIView):
                 coupon_data = get_response.json()["price_rule"]
                 infl_data=influencer_coupon.objects.filter(coupon_id=coupon_data["id"]).values("id")
                 infl_data_id=influencer_coupon.objects.filter(coupon_id=coupon_data["id"]).values("influencer_id")
-                print(infl_data)
+                
                 title = coupon_data["title"]
                 discount_type = coupon_data["value_type"]
                 amount   = coupon_data["value"]   
