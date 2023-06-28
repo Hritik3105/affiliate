@@ -32,7 +32,7 @@ class InstallView(APIView):
                     return redirect(f"https://myrefera.com/frontend/#/dashboard?shop="+shop,{'dashboard_url':f'https://admin.shopify.com/store/marketplacee-app/apps/{app_name}?shop='+ shop})
             else:
                 redirect_uri=redirect_url
-                scopes =['read_orders','write_products','read_themes','write_themes','read_customers','write_customers','read_files','write_files','write_price_rules','read_reports','write_reports','shopify_payments_accounts']
+                scopes =['read_orders','write_products','read_themes','write_themes','read_customers','write_customers','read_files','write_files','write_price_rules','read_reports','write_reports','shopify_payments_payouts']
                 get_shop=Store.objects.filter(store_name=shop)
                 # if get_shop:
                 #     return redirect(f"https://admin.shopify.com/store/marketplacee-app/apps/{app_name}")
