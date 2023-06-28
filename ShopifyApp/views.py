@@ -382,24 +382,26 @@ class DiscountCodeView(APIView):
                 price_rule_id = rule['id']
                 title = rule['title']
                 created_at=rule["created_at"]
+                discount_data = {
+                'title':title,
+                'id': price_rule_id,
+                "created_at":created_at
+                }
+                discount_list.append(discount_data)
+                # discount_codes_url = f"https://{acc_tok[1]}/admin/api/{API_VERSION}/price_rules/{price_rule_id}/discount_codes.json"
+                # discount_codes_response = requests.get(discount_codes_url, headers=headers)
                 
-                print(price_rule_id)
-                print(title)
-                print(created_at)
-                discount_codes_url = f"https://{acc_tok[1]}/admin/api/{API_VERSION}/price_rules/{price_rule_id}/discount_codes.json"
-                discount_codes_response = requests.get(discount_codes_url, headers=headers)
-                
-                if discount_codes_response.status_code == 200:
+                # if discount_codes_response.status_code == 200:
                    
-                    discount_codes = discount_codes_response.json().get('discount_codes', [])
-                    for code in discount_codes:
-                        discount_code = code['code']
-                        discount_data = {
-                        'title': code['code'],
-                        'id': code['price_rule_id'],
-                        "created_at":code["created_at"]
-                        }
-                        discount_list.append(discount_data)
+                #     discount_codes = discount_codes_response.json().get('discount_codes', [])
+                #     for code in discount_codes:
+                #         discount_code = code['code']
+                #         discount_data = {
+                #         'title': code['code'],
+                #         'id': code['price_rule_id'],
+                #         "created_at":code["created_at"]
+                #         }
+                #         discount_list.append(discount_data)
 
             return Response({'coupon': discount_list},status=status.HTTP_200_OK)
         else:
