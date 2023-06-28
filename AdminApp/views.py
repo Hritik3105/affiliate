@@ -54,9 +54,9 @@ def show(request):
                 url = f"https://{store_name}/admin/api/{API_VERSION}/orders.json?status=active"
                 response = requests.get(url, headers=headers)
                 sales_data = response.json().get('orders', [])
-                sales_report = 0  # Initialize sales report for the vendor
+                sales_report = 0 
                 order_count=0
-                
+                total_order_count=0
                 for order in sales_data:
                     total_price = float(order['total_price'])
                     discount_codes = order.get("discount_codes", [])
@@ -65,10 +65,11 @@ def show(request):
                         sales_report += total_price
                         total_sales += total_price
                     order_count += 1
+                total_order_count += order_count
                 sales_reports1.append({"store_name": store_name, "sales_report": sales_report,"order_count":order_count})
     print(sales_reports1)
     print(total_sales)
-    print(order_count)
+    print(total_order_count)
     return render(request,'index.html',{"total":total_sales,"sales_report":sales_reports1})
 
 
