@@ -39,21 +39,23 @@ def access_token(request,id):
     
     
 def show(request):
-    # print("hello")
-    # vendor_data=User.objects.filter(user_type=3).values("shopify_url")
-    # for shop in vendor_data:
-    #     get_tok=Store.objects.filter(store_name=shop["shopify_url"]).values("access_token")
+
+    vendor_data=User.objects.filter(user_type=3).values("shopify_url")
+    for shop in vendor_data:
+        get_tok=Store.objects.filter(store_name=shop["shopify_url"]).values("access_token","store_name")
         
-    #     if get_tok:
-    #         print("hello",get_tok)
-    #         for token in get_tok:
-    #             headers= {"X-Shopify-Access-Token":token["access_token"]}
-    #     shops=shop["shopify_url"]
-    #     print(shops)
-    #     url = f"https://{shops}/admin/api/{API_VERSION}/shopify_payments/balance.json"
-    #     response = requests.get(url, headers=headers)
+        if get_tok:
+          
+            for token in get_tok:
+                headers= {"X-Shopify-Access-Token":token["access_token"]}
+                stores=token["store_name"]
+                print(stores)
+                print(headers)
+                url = f"https://{stores}/admin/api/{API_VERSION}/shopify_payments/balance.json"
+                
+                response2 = requests.post(url,headers=headers)
         
-    #     print(response.json())
+                print(response2.json())
     
     return render(request,'index.html')
 
