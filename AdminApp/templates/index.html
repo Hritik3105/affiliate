@@ -298,11 +298,11 @@
         var store = $('#sales1').text();
         console.log(store)
         z= JSON.parse(total_sale) 
-        console.log(z)
+        console.log("zzz",z)
         x=JSON.parse(store)
-        console.log(x)
-        var xValues = total_sale;
-        var yValues = store;
+        console.log("xxx",x)
+        var xValues = z;
+        var yValues = x;
         var barColors = ["#00aba9", "green"];
         
         new Chart("myChart", {
