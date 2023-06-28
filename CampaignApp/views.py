@@ -1475,7 +1475,7 @@ class Analytics(APIView):
             product_sales = {}
             for order in orders3:
                 line_items = order.get("line_items", [])
-                
+                print("lineeee",line_items)
                 for line_item in line_items:
                     product_id = line_item.get("title")
                     price = float(line_item.get("price"))
@@ -1577,10 +1577,6 @@ class SalesRecord(APIView):
                 if start_date_year_ago <= created_at <= end_date:
                     sales_year += float(order['total_price'])
 
-        
-            print("Sales in the last 7 days: $", sales_7_days)
-            print("Sales in the last 30 days: $", sales_30_days)
-            print("Sales in the last year: $", sales_year)
             return Response({"seven_days":sales_7_days,"thirty_days":sales_30_days,"year":sales_year})
         else:
             return Response({"error":response.text})
@@ -1615,27 +1611,7 @@ class CampaignSales(APIView):
         acc_tok=access_token(self,request)
         store_url = acc_tok[1]
         api_token = acc_tok[0]
-        headers= {"X-Shopify-Access-Token": api_token}
-        # url = f'https://{store_url}/admin/api/{API_VERSION}/price_rules.json?status=active'
-            
-        # response = requests.get(url, headers=headers)
-        # if response.status_code == 200:
-        #     price_rules = response.json().get('price_rules', [])
-        #     discount_list=[]
-          
-        #     for rule in price_rules:
-        #         price_rule_id = rule['id']
-        #         discount_codes_url = f"https://{store_url}/admin/api/{API_VERSION}/price_rules/{price_rule_id}/discount_codes.json"
-        #         discount_codes_response = requests.get(discount_codes_url, headers=headers)
-            
-        #         if discount_codes_response.status_code == 200:
-                    
-        #             discount_codes = discount_codes_response.json().get('discount_codes', [])
-        #             for code in discount_codes:
-        #                 discount_code = code['code']
-        #                 discount_list.append(discount_code)
-            
-          
+        headers= {"X-Shopify-Access-Token": api_token}   
         url = f'https://{store_url}/admin/api/{API_VERSION}/orders.json?status=active'
         response = requests.get(url,headers=headers)
         sales_by_coupon = {}
@@ -1662,76 +1638,8 @@ class CampaignSales(APIView):
                         
                         sales_by_coupon[coupon_code] = float(total_price)
                         
-                                
-        
-            
             sale=list(sales_by_coupon.keys())
-            
             coup_dict={} 
-            campaign_ids =  Campaign.objects.values_list('id', flat=True) 
-
-            
-            # influencer_sales_for_campaign = {}
-
-            
-
-            # for coupon_name, sales in sales_by_coupon.items():
-            #     influencer_ids = influencer_coupon.objects.filter(coupon_name=coupon_name).values("influencer_id", "coupon_name")
-            #     for influencer in influencer_ids:
-            #         influencer_id = influencer["influencer_id"]
-            #         modash_data = Campaign.objects.filter(influencer_name__contains=influencer_id, id__in=campaign_ids).values_list("id",flat=True)
-            #         pro_data=Product_information.objects.filter(coupon_name__contains=coupon_name,campaignid__in=modash_data).values("campaignid")
-            #         for modash_entry in pro_data:
-            #             campaign_id = modash_entry["campaignid"]
-            #             if influencer_id in influencer_sales_for_campaign:
-            #                 influencer_sales_for_campaign[influencer_id].append({"campaign_id": campaign_id, "sales": sales})
-            #             else:
-            #                 influencer_sales_for_campaign[influencer_id] = [{"campaign_id": campaign_id, "sales": sales}]
-
-                
-
-        
-            
-            
-            # for coupon_name in sale:
-            #     influencer_ids = influencer_coupon.objects.filter(coupon_name=coupon_name).values("influencer_id","coupon_name")
-            #     for influencer in influencer_ids:
-            
-            #         modash_data=Campaign.objects.filter(influencer_name__contains=influencer["influencer_id"]).values("influencer_fee","id")
-
-            #         influencer_id = influencer["influencer_id"]
-                    
-            #         if influencer_id in influencer_sales:
-                        
-            #             influencer_sales[influencer_id] += sales_by_coupon[coupon_name]
-                        
-            #         else:
-            #             influencer_sales[influencer_id] = sales_by_coupon[coupon_name]
-
-            
-            # campaign_ids = Campaign.objects.values_list('id', flat=True) 
-            
-            # influencer_sales_for_campaign = {}
-            # for influencer_id, sales in influencer_sales.items():
-            
-            #     modash_data = Campaign.objects.filter(influencer_name__contains=influencer_id).values(
-            #             "id"
-            #     )
-                
-            #     for modash_entry in modash_data:
-            #         if modash_entry["id"] in campaign_ids:
-            #             campaign_id = modash_entry["id"]
-            #             if influencer_id in influencer_sales_for_campaign:
-            #                 influencer_sales_for_campaign[influencer_id].append({"campaign_id": campaign_id, "sales": sales})
-            #             else:
-            #                 influencer_sales_for_campaign[influencer_id] = [{"campaign_id": campaign_id, "sales": sales}]
-            #         else:
-            #             campaign_id = modash_entry["id"]
-            #             if influencer_id in influencer_sales_for_campaign:
-            #                 influencer_sales_for_campaign[influencer_id].append({"campaign_id": campaign_id, "sales": 0})
-            #             else:
-            #                 influencer_sales_for_campaign[influencer_id] = [{"campaign_id": campaign_id, "sales": 0}]
-            
             for  i in sale:    
                 check=Product_information.objects.filter(coupon_name__contains=i,vendor_id=self.request.user.id).values("campaignid","coupon_name")
                 
