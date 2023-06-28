@@ -206,7 +206,8 @@
                                 <!--/ Earnings Card -->
                             </div>
                         </div>
-
+                        <h1 id="sales" hidden>{{sales_report}}</h1>
+                       
                         <!-- Revenue Report Card -->
                         <div class="col-lg-8 col-12">
                             <div class="card card-revenue-budget">
@@ -291,6 +292,9 @@
 
 
     <script>
+        var total_sale = $('#sales').text();
+        console.log(total_sale)
+        z= JSON.parse(total_sale)
         var xValues = ["Vendor1", "Vendor2", "Vendor3", "Vendor4", "Vendor5"];
         var yValues = [55, 49, 44, 24, 30];
         var barColors = ["#00aba9", "green","blue","orange","brown"];
