@@ -42,7 +42,7 @@ def access_token(request,id):
 def show(request):
     vendor_data = User.objects.filter(user_type=3).values("shopify_url")
     total_sales = 0 
-    sales_reports=[]
+    sales_reports1=[]
     for shop in vendor_data:
         get_tok = Store.objects.filter(store_name=shop["shopify_url"]).values("access_token", "store_name")
 
@@ -63,8 +63,8 @@ def show(request):
                     if discount_codes:
                         sales_report += total_price
                         total_sales += total_price
-                sales_reports.append({"store_name": store_name, "sales_report": sales_report})
-    print(sales_reports)
+                sales_reports1.append({"store_name": store_name, "sales_report": sales_report})
+    print(sales_reports1)
     print(total_sales)
     return render(request,'index.html')
 
