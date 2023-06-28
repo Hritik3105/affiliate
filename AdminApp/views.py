@@ -64,7 +64,7 @@ def show(request):
                     if discount_codes:
                         sales_report += total_price
                         total_sales += total_price
-                    order_count += 1
+                        order_count += 1
                 
                 sales_reports1.append({"store_name": store_name, "sales_report": sales_report,"order_count":order_count})
     total_order_count=0
