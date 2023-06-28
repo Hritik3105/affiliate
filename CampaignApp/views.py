@@ -1483,7 +1483,7 @@ class Analytics(APIView):
                         product_sales[product_id] += price
                     else:
                         product_sales[product_id] = price
-                        print("-------------",product_sales)            
+                           
             keys=list(product_sales.keys())
         
             values=list(product_sales.values())
@@ -1515,7 +1515,7 @@ class Analytics(APIView):
                 month_name = calendar.month_name[month_number]
                 sales_report[month_name] = 0
                 
-                
+               
             for order in sales_data:
                 created_at = order['created_at']
                 month_number = int(created_at.split('-')[1])
@@ -1523,7 +1523,8 @@ class Analytics(APIView):
                 total_price = float(order['total_price'])
                 sales_report[month_name] += total_price
             sales=list(sales_report.values()) 
-        
+            print("-----",sales)
+            print("-------------",product_sales)         
             return Response({'sales_data': sales,"order":order_list,"product_sales":product_sales},status=status.HTTP_200_OK)
         else:
             return Response({'error':response.text},status=status.HTTP_400_BAD_REQUEST)
