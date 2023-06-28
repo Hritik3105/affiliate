@@ -526,7 +526,7 @@ def Order_list(request,id):
         headers= {"X-Shopify-Access-Token": get_tok[0]["access_token"]}
 
         
-        url = f"https://{shopify_store}/admin/api/{API_VERSION}/orders.json?status=any"
+        url = f"https://{shopify_store}/admin/api/{API_VERSION}/orders.json?status=active"
 
         response = requests.get(url, headers=headers)
 
