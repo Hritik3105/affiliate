@@ -64,6 +64,7 @@ def show(request):
                         total_sales += total_price
 
     print(f"Sales report for {store_name}: {sales_report}")
+    print(total_sales)
     return render(request,'index.html')
 
 
