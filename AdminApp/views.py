@@ -38,6 +38,7 @@ def access_token(request,id):
     return acc_tok,shop
     
     
+@login_required
 def show(request):
 
     # vendor_data=User.objects.filter(user_type=3).values("shopify_url")
