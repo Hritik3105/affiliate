@@ -292,32 +292,45 @@
 
 
     <script>
-        var total_sale = $('#sales').text();
-        console.log(total_sale)
-        z= JSON.parse(total_sale)
-        var xValues = ["Vendor1", "Vendor2", "Vendor3", "Vendor4", "Vendor5"];
-        var yValues = [55, 49, 44, 24, 30];
-        var barColors = ["#00aba9", "green","blue","orange","brown"];
-        
+        var total_sale = JSON.parse('{{ total_sale|escapejs }}');
+        var xValues = [];
+        var yValues = [];
+        var barColors = [];
+    
+        for (var i = 0; i < total_sale.length; i++) {
+            xValues.push(total_sale[i]['store_name']);
+            yValues.push(total_sale[i]['sales_report']);
+            barColors.push(getRandomColor());
+        }
+    
         new Chart("myChart", {
-          type: "bar",
-          data: {
-            labels: xValues,
-            datasets: [{
-              backgroundColor: barColors,
-              data: yValues
-            }]
-          },
-          options: {
-            legend: {display: false},
-            title: {
-              display: true,
-              text: "Total Sales"
+            type: "bar",
+            data: {
+                labels: xValues,
+                datasets: [{
+                    backgroundColor: barColors,
+                    data: yValues
+                }]
+            },
+            options: {
+                legend: { display: false },
+                title: {
+                    display: true,
+                    text: "Total Sales"
+                }
             }
-          }
         });
-        </script>
-
+    
+        function getRandomColor() {
+            var letters = "0123456789ABCDEF";
+            var color = "#";
+            for (var i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+    </script>
+    
     <script>
         $(window).on('load', function() {
             if (feather) {
