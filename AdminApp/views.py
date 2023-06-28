@@ -40,7 +40,29 @@ def access_token(request,id):
     
 @login_required
 def show(request):
+    vendor_data=User.objects.filter(user_type=3).values("shopify_url")
+    for shop in vendor_data:
+        get_tok=Store.objects.filter(store_name=shop["shopify_url"]).values("access_token","store_name")
+        
+        if get_tok:
+          
+            for token in get_tok:
+                headers= {"X-Shopify-Access-Token":token["access_token"]}
+                stores=token["store_name"]
+                
+                url = f"https://{stores}/admin/api/{API_VERSION}/orders.json?status=active"
+                response = requests.get(url,headers=headers)
+                sales_data = response.json()['orders']
+                sales_report = {}
 
+                for order in sales_data:
+                    total_price = float(order['total_price'])
+                    discount_codes = order.get("discount_codes", [])
+
+                    if discount_codes:
+                        sales_report += total_price
+                        print("salesss",sales_report)
+                
     # vendor_data=User.objects.filter(user_type=3).values("shopify_url")
     # for shop in vendor_data:
     #     get_tok=Store.objects.filter(store_name=shop["shopify_url"]).values("access_token","store_name")
@@ -450,7 +472,7 @@ def Single_Vendor(request,id):
             
             amount=list(sales_by_coupon.values())
             coup_dict={}
-            coup_lst=[]
+           
             for  i in sale:    
                     check=Product_information.objects.filter(coupon_name__contains=i).values("campaignid","coupon_name")
                 
@@ -484,6 +506,7 @@ def Single_Vendor(request,id):
                 sale_value = sale_by_id.get(sale_id, 0)
                 sale_by_id[sale_id] = sale_value
                 sale['sale'] = sale_value
+            
             
             return render(request,"campaignlist.html",{"vendor":vendor_campaign,"vendor_campaign":lst,"product_data":combined_data,"single_vendor":single_obj,"final_list":final_lst1})
         return render(request,"campaignlist.html",{"vendor":vendor_campaign,"vendor_campaign":lst,"product_data":combined_data,"single_vendor":single_obj,"final_list":final_lst1})
@@ -550,7 +573,7 @@ def Order_list(request,id):
                         
             keys=list(product_sales.keys())
             values=list(product_sales.values())
-            print(product_sales)
+            
             
             order_count = {str(i): 0 for i in range(1, 13)}
             orders = response.json().get("orders", [])
@@ -939,8 +962,7 @@ def charge_commission(request):
 def admin_decision(request):
     if request.method == "GET":
         value=request.GET.get("status")
-        print("---------------",value)
-      
+        
         ids=value[1:]
        
         if value[0]=="a":
@@ -967,3 +989,5 @@ def total_sales(request):
         
         print(response.json())
     return render(request,"dashboard.html")
+
+
