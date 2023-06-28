@@ -374,7 +374,7 @@ class DiscountCodeView(APIView):
 
        
         response = requests.get(url, headers=headers)
-        print("response",response)
+        print("response",response.json())
         if response.status_code == 200:
             price_rules = response.json().get('price_rules', [])
             discount_list=[]
