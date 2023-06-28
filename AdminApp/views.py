@@ -539,22 +539,18 @@ def Order_list(request,id):
             product_sales = {}
             for order in orders3:
                 line_items = order.get("line_items", [])
-                discount_codes = order.get("discount_codes", [])
-                print(discount_codes)
-                if discount_codes:
-                    for line_item in line_items:
-                        product_id = line_item.get("title")
-                        price = float(line_item.get("price"))
-                        
-                        if product_id in product_sales:
-                            product_sales[product_id] += price
-                        else:
-                            product_sales[product_id] = price
-
+                
+                for line_item in line_items:
+                    product_id = line_item.get("title")
+                    price = float(line_item.get("price"))
+                    if product_id in product_sales:
+                        product_sales[product_id] += price
+                    else:
+                        product_sales[product_id] = price
                         
             keys=list(product_sales.keys())
             values=list(product_sales.values())
-            print("salesssssssssss",product_sales)
+            print(product_sales)
             
             order_count = {str(i): 0 for i in range(1, 13)}
             orders = response.json().get("orders", [])
@@ -578,20 +574,22 @@ def Order_list(request,id):
             order_list=list(order_count.values())
             sales_data = response.json()['orders']
             sales_report = {}
-            
-            
+
             for month_number in range(1, 13):
                 month_name = calendar.month_name[month_number]
                 sales_report[month_name] = 0
-                
-                
+
             for order in sales_data:
                 created_at = order['created_at']
                 month_number = int(created_at.split('-')[1])
                 month_name = calendar.month_name[month_number]
                 total_price = float(order['total_price'])
-                sales_report[month_name] += total_price
-            sales=list(sales_report.values()) 
+                discount_codes = order.get("discount_codes", [])
+
+                if discount_codes:
+                    sales_report[month_name] += total_price
+
+            sales = list(sales_report.values())
         
             return render(request,"chart.html",{'sales_data': sales,"order":order_list})
         else:
