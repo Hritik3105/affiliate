@@ -374,12 +374,18 @@ class DiscountCodeView(APIView):
 
        
         response = requests.get(url, headers=headers)
-        print("response",response.json())
+      
         if response.status_code == 200:
             price_rules = response.json().get('price_rules', [])
             discount_list=[]
             for rule in price_rules:
                 price_rule_id = rule['id']
+                title = rule['title']
+                created_at=rule["created_at"]
+                
+                print(price_rule_id)
+                print(title)
+                print(created_at)
                 discount_codes_url = f"https://{acc_tok[1]}/admin/api/{API_VERSION}/price_rules/{price_rule_id}/discount_codes.json"
                 discount_codes_response = requests.get(discount_codes_url, headers=headers)
                 
@@ -397,7 +403,7 @@ class DiscountCodeView(APIView):
 
             return Response({'coupon': discount_list},status=status.HTTP_200_OK)
         else:
-            print(response.json())   
+               
             return Response({'error': 'Failed to fetch discounts'}, status=500)
         
 
