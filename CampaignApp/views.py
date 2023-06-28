@@ -1271,7 +1271,7 @@ class ProductUrl(APIView):
                     }    
                     dataList.append(product_dict)
         
-        print("-------------------",dataList)
+        # print("-------------------",dataList)
        
         for product in dataList:
             print(product)
@@ -1281,6 +1281,7 @@ class ProductUrl(APIView):
                 if product_id in product_dict:
                     product_dict[product_id]["name"].append(product["name"])
                     product_dict[product_id]["amount"].append(product["amount"])
+                    product_dict[product_id]["discout_type"].append(product["discout_type"])
                 
                 else:
                     print("check",product["influencer_id"])
@@ -1289,7 +1290,7 @@ class ProductUrl(APIView):
                         "product_id":product["product_id"],
                         "name": [product["name"]],
                         "amount": [product["amount"]],
-                        "discout_type":product["discout_type"],
+                        "discout_type":[product["discout_type"]],
                         "influencer_id":product["influencer_id"]
                         }
                              
