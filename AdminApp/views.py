@@ -539,14 +539,18 @@ def Order_list(request,id):
             product_sales = {}
             for order in orders3:
                 line_items = order.get("line_items", [])
+                discount_codes = order.get("discount_codes", [])
                 
-                for line_item in line_items:
-                    product_id = line_item.get("title")
-                    price = float(line_item.get("price"))
-                    if product_id in product_sales:
-                        product_sales[product_id] += price
-                    else:
-                        product_sales[product_id] = price
+                if discount_codes:
+                    for line_item in line_items:
+                        product_id = line_item.get("title")
+                        price = float(line_item.get("price"))
+                        
+                        if product_id in product_sales:
+                            product_sales[product_id] += price
+                        else:
+                            product_sales[product_id] = price
+
                         
             keys=list(product_sales.keys())
             values=list(product_sales.values())
@@ -562,7 +566,6 @@ def Order_list(request,id):
                 order_count[str(month)] += 1
             
 
-            # Prepare the data for the chart
             data = []
             for month in range(1, 13):
                 month_name = calendar.month_name[month]
