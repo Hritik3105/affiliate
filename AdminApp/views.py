@@ -67,10 +67,10 @@ def show(request):
                     order_count += 1
                 
                 sales_reports1.append({"store_name": store_name, "sales_report": sales_report,"order_count":order_count})
-   
+    total_order_count=0
     for i in sales_reports1:
-        print(i)
-        print(i["order_count"]) 
+        total_order_count+=i["order_count"]
+    print("total",total_order_count)
     return render(request,'index.html',{"total":total_sales,"sales_report":sales_reports1})
 
 
