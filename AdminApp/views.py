@@ -53,7 +53,7 @@ def show(request):
                 url = f"https://{stores}/admin/api/{API_VERSION}/orders.json?status=active"
                 response = requests.get(url,headers=headers)
                 sales_data = response.json()['orders']
-                sales_report = {}
+                sales_report = ""
 
                 for order in sales_data:
                     total_price = float(order['total_price'])
