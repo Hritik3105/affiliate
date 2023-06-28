@@ -1471,22 +1471,22 @@ class Analytics(APIView):
         if response.status_code == 200:
             
             
-            orders_details = response.json().get("orders", [])
-            product_sales = {}
-            for order in orders_details:
+            # orders_details = response.json().get("orders", [])
+            # product_sales = {}
+            # for order in orders_details:
                
-                line_items = order.get("line_items", [])
-                for line_item in line_items:
-                    product_id = line_item.get("title")
-                    price = float(line_item.get("price"))
-                    if product_id in product_sales:
-                        product_sales[product_id] += price
-                    else:
-                        product_sales[product_id] = price
+            #     line_items = order.get("line_items", [])
+            #     for line_item in line_items:
+            #         product_id = line_item.get("title")
+            #         price = float(line_item.get("price"))
+            #         if product_id in product_sales:
+            #             product_sales[product_id] += price
+            #         else:
+            #             product_sales[product_id] = price
                            
-            keys=list(product_sales.keys())
+            # keys=list(product_sales.keys())
         
-            values=list(product_sales.values())
+            # values=list(product_sales.values())
           
          
             order_count = {str(i): 0 for i in range(1, 13)}
@@ -1524,8 +1524,8 @@ class Analytics(APIView):
                 sales_report[month_name] += total_price
             sales=list(sales_report.values()) 
             print("-----",sales)
-            print("-------------",product_sales)         
-            return Response({'sales_data': sales,"order":order_list,"product_sales":product_sales},status=status.HTTP_200_OK)
+                  
+            return Response({'sales_data': sales,"order":order_list},status=status.HTTP_200_OK)
         else:
             return Response({'error':response.text},status=status.HTTP_400_BAD_REQUEST)
         
