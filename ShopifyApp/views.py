@@ -371,7 +371,7 @@ class DiscountCodeView(APIView):
         url = f'https://{acc_tok[1]}/admin/api/{API_VERSION}/price_rules.json?status=active'
         
         
-    
+
        
         response = requests.get(url, headers=headers)
         if response.status_code == 200:
@@ -381,7 +381,7 @@ class DiscountCodeView(APIView):
                 price_rule_id = rule['id']
                 discount_codes_url = f"https://{acc_tok[1]}/admin/api/{API_VERSION}/price_rules/{price_rule_id}/discount_codes.json"
                 discount_codes_response = requests.get(discount_codes_url, headers=headers)
-                
+                print("00000000000000",discount_codes_response)
                 if discount_codes_response.status_code == 200:
                    
                     discount_codes = discount_codes_response.json().get('discount_codes', [])
@@ -399,49 +399,7 @@ class DiscountCodeView(APIView):
             print(response.json())   
             return Response({'error': 'Failed to fetch discounts'}, status=500)
         
-    # def get(self, request, format=None):
-    #     acc_tok=access_token(self,request)
-    #     headers= {"X-Shopify-Access-Token": acc_tok[0]}
-       
-    #     url = f'https://{acc_tok[1]}/admin/api/{API_VERSION}/price_rules.json?status=active'
-        
-        
-    
-       
-    #     response = requests.get(url, headers=headers)
-    #     if response.status_code == 200:
-    #         price_rules = response.json().get('price_rules', [])
-    #         discount_list=[]
-    #         for rule in price_rules:
-    #             price_rule_id = rule['id']
-    #             discount_codes_url = f"{acc_tok[1]}/admin/api/{API_VERSION}/price_rules/{price_rule_id}/discount_codes.json"
-    #             discount_codes_response = requests.get(discount_codes_url, headers=headers)
-                
-    #             if discount_codes_response.status_code == 200:
-    #                 discount_codes = discount_codes_response.json().get('discount_codes', [])
-    #                 for code in discount_codes:
-    #                     discount_code = code['code']
-    #                     print(discount_code)
-    #                     discount_list.append(discount_code)
-        
-    #     # if response.status_code == 200:
-            
-    #     #     coupons = response.json()['price_rules']
-            
-    #     #     discount_list=[]
-    #     #     for discount in coupons:  
-    #     #         print(discount['title'])  
-    #     #         if discount['title']:
-    #     #             discount_data = {
-    #     #             'title': discount['title'],
-    #     #             'id': discount['id'],
-    #     #             "created_at":discount["created_at"]
-    #     #             }
-    #                 discount_list.append(discount_data)
-    
-    #         return Response({"coupon":discount_list})
-    #     else:
-    #         return Response({'message': response.text}, status=response.status_code)
+
 
 
 class  ParticularDiscountCodeView(APIView):

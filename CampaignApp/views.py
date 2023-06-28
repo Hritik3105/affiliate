@@ -1465,12 +1465,7 @@ class Analytics(APIView):
         url = f"https://{acc_tok[1]}/admin/api/{API_VERSION}/orders.json?status=active"
 
         response = requests.get(url, headers=headers)
-
-
-        
         if response.status_code == 200:
-            
-            
             # orders_details = response.json().get("orders", [])
             # product_sales = {}
             # for order in orders_details:
