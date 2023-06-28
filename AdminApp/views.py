@@ -40,20 +40,20 @@ def access_token(request,id):
     
 @login_required
 def show(request):
-    vendor_data=User.objects.filter(user_type=3).values("shopify_url")
+    vendor_data = User.objects.filter(user_type=3).values("shopify_url")
+
     for shop in vendor_data:
-        get_tok=Store.objects.filter(store_name=shop["shopify_url"]).values("access_token","store_name")
-        
+        get_tok = Store.objects.filter(store_name=shop["shopify_url"]).values("access_token", "store_name")
+
         if get_tok:
-          
             for token in get_tok:
-                headers= {"X-Shopify-Access-Token":token["access_token"]}
-                stores=token["store_name"]
-                
-                url = f"https://{stores}/admin/api/{API_VERSION}/orders.json?status=active"
-                response = requests.get(url,headers=headers)
-                sales_data = response.json()['orders']
-                sales_report = ""
+                headers = {"X-Shopify-Access-Token": token["access_token"]}
+                store_name = token["store_name"]
+
+                url = f"https://{store_name}/admin/api/{API_VERSION}/orders.json?status=active"
+                response = requests.get(url, headers=headers)
+                sales_data = response.json().get('orders', [])
+                sales_report = 0  # Initialize sales report for the vendor
 
                 for order in sales_data:
                     total_price = float(order['total_price'])
@@ -61,7 +61,8 @@ def show(request):
 
                     if discount_codes:
                         sales_report += total_price
-                        print("salesss",sales_report)
+
+                print(f"Sales report for {store_name}: {sales_report}")
                 
     # vendor_data=User.objects.filter(user_type=3).values("shopify_url")
     # for shop in vendor_data:
