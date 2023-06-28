@@ -292,46 +292,32 @@
 
 
     <script>
-        var total_sale = JSON.parse('{{ total_sale|escapejs }}');
-        alert(total_sale)
-        var xValues = [];
-        var yValues = [];
-        var barColors = [];
-    
-        for (var i = 0; i < total_sale.length; i++) {
-            xValues.push(total_sale[i]['store_name']);
-            yValues.push(total_sale[i]['sales_report']);
-            barColors.push(getRandomColor());
-        }
-    
+        {% comment %} var total_sale = $('#sales').text();
+        console.log(total_sale)
+        z= JSON.parse(total_sale) {% endcomment %}
+        var xValues = ["Vendor1", "Vendor2", "Vendor3", "Vendor4", "Vendor5"];
+        var yValues = [55, 49, 44, 24, 30];
+        var barColors = ["#00aba9", "green","blue","orange","brown"];
+        
         new Chart("myChart", {
-            type: "bar",
-            data: {
-                labels: xValues,
-                datasets: [{
-                    backgroundColor: barColors,
-                    data: yValues
-                }]
-            },
-            options: {
-                legend: { display: false },
-                title: {
-                    display: true,
-                    text: "Total Sales"
-                }
+          type: "bar",
+          data: {
+            labels: xValues,
+            datasets: [{
+              backgroundColor: barColors,
+              data: yValues
+            }]
+          },
+          options: {
+            legend: {display: false},
+            title: {
+              display: true,
+              text: "Total Sales"
             }
+          }
         });
-    
-        function getRandomColor() {
-            var letters = "0123456789ABCDEF";
-            var color = "#";
-            for (var i = 0; i < 6; i++) {
-                color += letters[Math.floor(Math.random() * 16)];
-            }
-            return color;
-        }
-    </script>
-    
+        </script>
+
     <script>
         $(window).on('load', function() {
             if (feather) {
