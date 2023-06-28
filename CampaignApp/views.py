@@ -545,7 +545,7 @@ class PendingList(APIView):
             for i in range(len(camp)):
                 cop=(camp[i]["coupon_name"])
                 amt=(camp[i]["amount"])
-                discount=(camp[i]["amount"])
+                discount=(camp[i]["discount_type"])
                 if cop:
                   
                     couponlst=ast.literal_eval(cop)
