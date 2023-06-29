@@ -295,15 +295,19 @@
     <script>
         var total_sale = $('#sales').text();
         console.log(total_sale)
+        console.log(jQuery.type(total_sale))
         var store = $('#sales1').text();
         console.log(store)
+        console.log(jQuery.type(store))
+        
+
 
         z= JSON.parse(total_sale) 
         console.log("zzz",z)
 
      
 
-        var xValues = ["vendor1","vendor2"];
+        var xValues = store;
         var yValues = total_sale
         var barColors = ["#00aba9", "green"];
         
