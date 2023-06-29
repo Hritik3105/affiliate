@@ -312,6 +312,10 @@
                     
                     $(".success-msg").css("display", "block");
                     $(".error-msg").css("display", "none");
+
+                    setTimeout(function() {
+                        $(".success-msg").css("display", "none");
+                      }, 3000);
                     //  console.log(data);
                     // $("#resultDiv").text("your card number is incorrect");
                     /**setTimeout(function() {
@@ -324,6 +328,10 @@
                   else{
                     $(".success-msg").css("display", "none");
                     $(".error-msg").css("display", "block");
+
+                    setTimeout(function() {
+                        $(".error-msg").css("display", "none");
+                      }, 3000);
      
 
                   }
