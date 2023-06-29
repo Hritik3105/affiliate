@@ -1553,6 +1553,8 @@ class SalesRecord(APIView):
             'X-Shopify-Access-Token': api_token
         }
         response = requests.get(url, headers=headers)
+        print("---------------",response)
+        
         if response.status_code == 200:
             data = response.json()
 
