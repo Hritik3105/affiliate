@@ -1545,7 +1545,8 @@ class SalesRecord(APIView):
         start_date_year_ago_str = start_date_year_ago.isoformat()
         end_date_str = end_date.isoformat()
 
-      
+        print(start_date_year_ago_str)
+        print(end_date_str)
         url = f"https://{store_url}/admin/api/2022-07/orders.json?status=active&created_at_min={start_date_year_ago_str}&created_at_max={end_date_str}"
 
 
