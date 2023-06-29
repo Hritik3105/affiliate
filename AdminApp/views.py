@@ -74,7 +74,7 @@ def show(request):
         total_order_count+=i["order_count"]
         vendor_store.append(i["store_name"])
         sale_val.append(i["sales_report"])
-    profile_update("enterrr")
+    print("enterrr")
     return render(request,'index.html',{"total":total_sales,"sales_report":sales_reports1,"count":total_order_count,"vendor":vendor_store,"sale_val":sale_val})
 
 
