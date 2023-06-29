@@ -306,11 +306,13 @@
         console.log("zzz",z)
 
 
-        x= JSON.stringify(store) 
-        console.log("xxx222",x)
+        corrected_store= JSON.stringify(store) 
+
+        final= JSON.parse(corrected_store) 
+        console.log("xxx222",final)
      
 
-        var xValues = store;
+        var xValues = final;
         var yValues = total_sale
         var barColors = ["#00aba9", "green"];
         
