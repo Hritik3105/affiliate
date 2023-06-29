@@ -294,28 +294,21 @@
 
     <script>
         var total_sale = $('#sales').text();
-        console.log(total_sale)
-        console.log(jQuery.type(total_sale))
+    
         var store = $('#sales1').text();
-        console.log(store)
-        console.log(jQuery.type(store))
-        
-
+    
 
         z= JSON.parse(total_sale) 
-        console.log("zzz",z)
-
-
-        corrected_store= JSON.stringify(store) 
-
-        final= JSON.parse(corrected_store) 
-        console.log("xxx222",final)
-        console.log(jQuery.type(final))
+    
+        
+        var test = eval(JSON.parse(abc.replace(/'/g, '"')));
+        console.log(test);
+        
      
 
-        var xValues = final;
+        var xValues = test;
         var yValues = total_sale
-        var barColors = ["#00aba9", "green"];
+        var barColors = ["#00aba9", "green","blue"];
         
         new Chart("myChart", {
           type: "bar",
