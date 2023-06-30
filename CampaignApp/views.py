@@ -925,10 +925,8 @@ class CountCampaign(APIView):
     permission_classes = [IsAuthenticated] 
     
     def get(self,request):
-        
         active=VendorCampaign.objects.filter(vendor_id=self.request.user.id,campaign_status=2,campaignid__campaign_exp=1).count()
-        pending=Product_information.objects.filter(vendor__id=self.request.user.id,campaignid__campaign_status=0,campaignid__draft_status=0,campaignid__campaign_exp=1).count()
-        print(pending)
+        pending=Campaign.objects.filter(vendorid_id=self.request.user.id,campaign_status=0,draft_status=0,campaign_exp=1).count()
         final_pending=pending 
         total=active + pending 
         return Response({"active_campaign":active,"pending_campaign":final_pending,"total":total},status=status.HTTP_200_OK)
