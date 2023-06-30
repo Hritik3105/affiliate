@@ -862,7 +862,7 @@ class ShopifyCouponView(APIView):
             for i in coupons_without_entitlement:
                 dict={
                     "coupon_name":i["title"],
-                    "discount_type":i["value_type"],
+                    "discout_type":i["value_type"],
                     "amount":i["value"],
                     "id":i["id"]
                 }
