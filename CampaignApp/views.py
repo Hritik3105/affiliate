@@ -1470,7 +1470,7 @@ class Analytics(APIView):
     def get(self,request):
         acc_tok=access_token(self,request)
         headers= {"X-Shopify-Access-Token":acc_tok[0]}
-        url = f"https://{acc_tok[1]}/admin/api/2022-07/orders.json?status=active"
+        url = f"https://{acc_tok[1]}/admin/api/2022-10/orders.json?status=active"
 
         response = requests.get(url, headers=headers)
         if response.status_code == 200:
@@ -1555,7 +1555,7 @@ class SalesRecord(APIView):
 
         print(start_date_year_ago_str)
         print(end_date_str)
-        url = f"https://{store_url}/admin/api/2022-07/orders.json?status=active&created_at_min={start_date_year_ago_str}&created_at_max={end_date_str}"
+        url = f"https://{store_url}/admin/api/2022-10/orders.json?status=active&created_at_min={start_date_year_ago_str}&created_at_max={end_date_str}"
 
 
         headers = {
@@ -1616,7 +1616,7 @@ class CampaignSales(APIView):
         store_url = acc_tok[1]
         api_token = acc_tok[0]
         headers= {"X-Shopify-Access-Token": api_token}   
-        url = f'https://{store_url}/admin/api/2022-07/orders.json?status=active'
+        url = f'https://{store_url}/admin/api/2022-10/orders.json?status=active'
         response = requests.get(url,headers=headers)
         sales_by_coupon = {}
     
@@ -1839,7 +1839,7 @@ class InfluencerCampSale(APIView):
         api_token = acc_tok[0]
         
         headers= {"X-Shopify-Access-Token": api_token}  
-        url = f'https://{store_url}/admin/api/2022-07/orders.json?status=active'
+        url = f'https://{store_url}/admin/api/2022-10/orders.json?status=active'
         response = requests.get(url,headers=headers)
            
         sales_by_coupon = {}
