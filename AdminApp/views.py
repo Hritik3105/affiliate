@@ -536,17 +536,7 @@ def Order_list(request,id):
             
             orders3 = response.json().get("orders", [])
             product_sales = {}
-            for order in orders3:
-                line_items = order.get("line_items", [])
-                
-                for line_item in line_items:
-                    product_id = line_item.get("title")
-                    price = float(line_item.get("price"))
-                    if product_id in product_sales:
-                        product_sales[product_id] += price
-                    else:
-                        product_sales[product_id] = price
-                        
+         
             keys=list(product_sales.keys())
             values=list(product_sales.values())
             
