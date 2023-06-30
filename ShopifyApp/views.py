@@ -859,7 +859,7 @@ class ShopifyCouponView(APIView):
                 coupon for coupon in coupons if not coupon.get("entitled_product_ids")
             ]
 
-            return Response(coupons)
+            return Response(coupons_without_entitlement)
 
         return Response("Failed to retrieve coupons", status=response.status_code)
     
