@@ -699,7 +699,7 @@ class  DraftList(APIView):
 # API TO GET LIST OF MARKETPLACE CAMPAIGN    
 
 """API GET LIST OF MARKETPLACE CAMPAIGN SHOWN IN MARKETPLACE TAB"""
-class  MarketplaceList(APIView):
+class   MarketplaceList(APIView):
     authentication_classes=[TokenAuthentication]
     permission_classes = [IsAuthenticated]
     def get(self,request):
@@ -728,23 +728,23 @@ class  MarketplaceList(APIView):
                 amt=(camp[i]["amount"])
                 discount=(camp[i]["discount_type"])
              
-                if cop:
+                # if cop:
                    
-                    couponlst=ast.literal_eval(cop)
-                else:
-                    couponlst=cop
+                #     couponlst=ast.literal_eval(cop)
+                # else:
+                #     couponlst=cop
                     
-                if amt:
+                # if amt:
                    
-                    amtlst=ast.literal_eval(amt)
-                else:
-                    amtlst=amt
+                #     amtlst=ast.literal_eval(amt)
+                # else:
+                #     amtlst=amt
                     
-                if discount:
+                # if discount:
                     
-                    disc_type=ast.literal_eval(discount)
-                else:
-                    disc_type=discount
+                #     disc_type=ast.literal_eval(discount)
+                # else:
+                #     disc_type=discount
                     
                     
                 dict1={
@@ -752,9 +752,9 @@ class  MarketplaceList(APIView):
                     "campaign_name": k.campaignid.campaign_name ,
                     "product":[{
                     "product_name":camp[i]["product_name"],
-                    "coupon_name":couponlst,
-                    "amount":amtlst,
-                    "discount_type":disc_type,
+                    "coupon_name":cop,
+                    "amount":amt,
+                    "discount_type":discount,
                     "product_id": camp[i]["product_id"],
                 }]
                 }
