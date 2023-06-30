@@ -844,6 +844,7 @@ class ShopifyCouponView(APIView):
     authentication_classes=[TokenAuthentication]
     permission_classes = [IsAuthenticated] 
     def get(self, request):
+        single_coupon=[]
         acc_tok=access_token(self,request)
         
         headers= {"X-Shopify-Access-Token": acc_tok[0]}
@@ -858,8 +859,15 @@ class ShopifyCouponView(APIView):
             coupons_without_entitlement = [
                 coupon for coupon in coupons if not coupon.get("entitled_product_ids")
             ]
-
-            return Response(coupons_without_entitlement)
+            for i in coupons_without_entitlement:
+                dict={
+                    "coupon_name":i["title"],
+                    "discount_type":i["value_type"],
+                    "amount":i["value"],
+                    "id":i["id"]
+                }
+                single_coupon.append(dict)
+            return Response(single_coupon)
 
         return Response("Failed to retrieve coupons", status=response.status_code)
     
