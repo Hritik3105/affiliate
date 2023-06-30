@@ -765,9 +765,7 @@ class Analytics(APIView):
 
 
 
-from rest_framework.views import APIView
-from rest_framework.response import Response
-import requests
+
 
 # class SalesReportAPIView(APIView):
 #     def get(self, request):
@@ -849,7 +847,7 @@ class ShopifyCouponView(APIView):
         acc_tok=access_token(self,request)
         
         headers= {"X-Shopify-Access-Token": acc_tok[0]}
-        endpoint = f"https://{acc_tok[1]}/admin/api/{API_VERSION}/price_rules.json"
+        endpoint = f"https://{acc_tok[1]}/admin/api/{API_VERSION}/price_rules.json?status=active"
       
 
         response = requests.get(endpoint, headers=headers)
@@ -861,12 +859,11 @@ class ShopifyCouponView(APIView):
                 coupon for coupon in coupons if not coupon.get("entitled_product_ids")
             ]
 
-            return Response(coupons_without_entitlement)
+            return Response(coupons)
 
         return Response("Failed to retrieve coupons", status=response.status_code)
     
     
+    
 
-
-        
-        
+    
