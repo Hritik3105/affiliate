@@ -153,25 +153,9 @@ class CreateCampaign(APIView):
                 cup_lst=[]
                 dict1={}
                 if val_lst2:
-                    for i in  range (len(val_lst2)):
-                        print(type(val_lst2[i]["name"]))
-                        for j in val_lst2[i]["name"]:         
-                            match_data=Product_information.objects.filter(coupon_name__contains=j,vendor_id=self.request.user.id).exists()
-                           
-                        
-                            dict1={str(val_lst2[i]["name"]):match_data}
-                            
-                            cup_lst.append(dict1)
-                            coup_lst.append(match_data)
-                            
-
-                            if True in coup_lst:
-                               
-                                cop=(list(dict1.keys())[0])
-                                print(cop)
-                                # cop_lst=ast.literal_eval(cop)
-                                
-                                return Response({"error": cop},status=status.HTTP_410_GONE)
+                   same=coupon_check(self,request,val_lst2,cup_lst,coup_lst)
+                   return Response({"error": same},status=status.HTTP_410_GONE)
+                                             
                 req_id=serializer.save(draft_status=1,vendorid_id=self.request.user.id,status=1)
                 val_lst=(request.data["product_discount"])
                 
@@ -217,13 +201,10 @@ class RequestCampaign(APIView):
             serializer=CampaignSerializer(data=request.data)
             if serializer.is_valid(raise_exception=True):
                 val_lst2=(request.data["product_discount"])
-               
                 coup_lst=[]
                 cup_lst=[]
-                dict1={}
                 if val_lst2:
                    same=coupon_check(self,request,val_lst2,cup_lst,coup_lst)
-                   print(same)
                    return Response({"error": same},status=status.HTTP_410_GONE)
 
                 req_id=serializer.save(vendorid_id=self.request.user.id,status=1)

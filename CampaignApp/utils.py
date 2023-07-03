@@ -62,7 +62,7 @@ def coupon_check(self,request,val_lst2,cup_lst,coup_lst):
             
 
             if True in coup_lst:
-                
+                print("00000000000000000000000",coup_lst)
                 cop=(list(dict1.keys())[0])
                
                 # cop_lst=ast.literal_eval(cop)
