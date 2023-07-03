@@ -1088,7 +1088,8 @@ class GetCampaign(APIView):
                 amtlst=ast.literal_eval(amt)
             else:
                 amtlst=amt
-          
+
+            convrt_type=ast.literal_eval(camp[i]["discount_type"])
           
             if k.campaignid.influencer_name:
                 dict1={
@@ -1110,7 +1111,7 @@ class GetCampaign(APIView):
                         "coupon_name":couponlst,
                         "amount":amtlst,
                         "product_id": camp[i]["product_id"],
-                        "discount_type":camp[i]["discount_type"]
+                        "discount_type":convrt_type
                     }]
                 }
 
@@ -1134,7 +1135,7 @@ class GetCampaign(APIView):
                         "coupon_name":couponlst,
                         "amount":amtlst,
                         "product_id": camp[i]["product_id"],
-                        "discount_type":camp[i]["discount_type"]
+                        "discount_type":convrt_type
                     }]
                 }
 
