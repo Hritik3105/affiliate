@@ -764,8 +764,9 @@ class   MarketplaceList(APIView):
                 if amt:
                    
                     amtlst=ast.literal_eval(amt)
-                    
+                    print(amtlst[0])
                     sliced=amtlst[0].replace("-","")
+                    print(sliced)
                 else:
                     amtlst=amt
                     
