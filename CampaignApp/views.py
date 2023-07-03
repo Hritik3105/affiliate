@@ -1110,6 +1110,7 @@ class GetCampaign(APIView):
                         "coupon_name":couponlst,
                         "amount":amtlst,
                         "product_id": camp[i]["product_id"],
+                        "discount_type":camp[i]["discount_type"]
                     }]
                 }
 
@@ -1133,6 +1134,7 @@ class GetCampaign(APIView):
                         "coupon_name":couponlst,
                         "amount":amtlst,
                         "product_id": camp[i]["product_id"],
+                        "discount_type":camp[i]["discount_type"]
                     }]
                 }
 

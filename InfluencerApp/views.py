@@ -1336,3 +1336,10 @@ class Admindecision(APIView):
     
     
     
+class InfluencerData(APIView):
+    authentication_classes=[TokenAuthentication]
+    permission_classes = [IsAuthenticated] 
+    
+    def get(self,request):
+        infl_data=InfluencerDetails.objects.filter(influencerid=self.request.user.id).values("influencerid__username","influencerid__email","influencerid__country","influencerid__promotion")
+        

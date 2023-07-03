@@ -19,6 +19,7 @@ urlpatterns = [
      
     #INFLUENCER SHOW/EDIT/Logout URLS
     path('influencer/list/', InfluencerList.as_view(),name="Influencer-list"),
+    path('details/', InfluencerData.as_view(),name="Influencer-details"),
     path("influencer/update/<int:pk>/",UpdateInfluencer.as_view(),name="UpdateInfluencer"),  
     path('influencer/logout/', LogoutView.as_view(), name='logout'),
     
