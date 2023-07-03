@@ -226,13 +226,17 @@ class RequestCampaign(APIView):
                     else:
                         z=""
                     if val_lst:
+                        print("hello worldddd")
                         product_details(self,request,val_lst,req_id)                          
                     else:
+                        print("checkersssss")
                         arg=request.data["product_name"]
                         if len(arg)>0:
                             arg_id=request.data["product"]
+                            print("sssssssss",arg_id)
                             product_name(self,request,req_id,arg,arg_id)  
                         else:
+                            print("helllooooooooooooo")
                             product=Product_information()
                             product.vendor_id=self.request.user.id
                             product.campaignid_id=req_id.id
