@@ -502,8 +502,8 @@ class EditCodeView(APIView):
 
         cop_res=discount_code5(price_rule,acc_tok[1],headers,discount)
 
-        print(cop_res)
-        if cop_res == 200:
+      
+        if cop_res.status_code == 200:
             print("Enterrrrrrrrrr")
             response = requests.put(url,headers=headers,json=data)
             if response.status_code == 200: 
@@ -668,7 +668,7 @@ class ProductEditCodeView(APIView):
     }
         
        
-        print(acc_tok[1])
+      
         zzx=discount_code9(price_rule,acc_tok[1],headers,discount)
       
 
