@@ -504,13 +504,11 @@ class EditCodeView(APIView):
 
       
         if cop_res.status_code == 200:
-            print("Enterrrrrrrrrr")
             response = requests.put(url,headers=headers,json=data)
             if response.status_code == 200: 
                 return Response({'message': 'Discount Edit successfully','title': discount,"discount_type":discount_type,'amount':amt,"id":price_rule},status=status.HTTP_200_OK)
             if response.status_code== 422:
-                return Response({'message': "must be between 0 and 100"}, status=status.HTTP_400_BAD_REQUEST)
-           
+                return Response({'message': "must be between 0 and 100"}, status=status.HTTP_400_BAD_REQUEST)   
         else:
             if cop_res.status_code== 400:
                 return Response({'message': "Coupon already exists"}, status=status.HTTP_400_BAD_REQUEST)

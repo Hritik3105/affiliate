@@ -20,6 +20,7 @@ from django.core.mail import EmailMessage
 from ShopifyApp.models import *
 import calendar
 from datetime import datetime, timedelta
+from django.utils import timezone
 import stripe
 from Affilate_Marketing import settings
 
@@ -146,15 +147,6 @@ class CreateCampaign(APIView):
         if vendor_status1[0]["vendor_status"] == True:
             serializer=CampaignSerializer(data=request.data)
             if serializer.is_valid(raise_exception=True):
-                val_lst2=(request.data["product_discount"])
-                print("value list",val_lst2)
-                coup_lst=[]
-                cup_lst=[]
-                dict1={}
-                if val_lst2:
-                   same=coupon_check(self,request,val_lst2,cup_lst,coup_lst)
-                   return Response({"error": same},status=status.HTTP_410_GONE)
-                                             
                 req_id=serializer.save(draft_status=1,vendorid_id=self.request.user.id,status=1)
                 val_lst=(request.data["product_discount"])
                 
@@ -202,33 +194,53 @@ class RequestCampaign(APIView):
                 val_lst2=(request.data["product_discount"])
                 coup_lst=[]
                 cup_lst=[]
+                dict1={}
                 if val_lst2:
-                   same=coupon_check(self,request,val_lst2,cup_lst,coup_lst)
-                   return Response({"error": same},status=status.HTTP_410_GONE)
+                    for i in  range (len(val_lst2)):
+                        print(type(val_lst2[i]["name"]))
+                        for j in val_lst2[i]["name"]:         
+                            match_data=Product_information.objects.filter(coupon_name__contains=j,vendor_id=self.request.user.id).exists()
+                           
+                        
+                            dict1={str(val_lst2[i]["name"]):match_data}
+                            
+                            cup_lst.append(dict1)
+                            coup_lst.append(match_data)
+                            
 
-                req_id=serializer.save(vendorid_id=self.request.user.id,status=1)
-                val_lst=(request.data["product_discount"])
+                            if True in coup_lst:
+                               
+                                cop=(list(dict1.keys())[0])
+                               
+                                cop_lst=ast.literal_eval(cop)
+                                
+                                return Response({"error": cop_lst},status=status.HTTP_410_GONE)
+                    req_id=serializer.save(vendorid_id=self.request.user.id,status=1)
+                    val_lst=(request.data["product_discount"])
                 
-                if {} in val_lst:
-                    z=val_lst.remove({})
-                else:
-                    z=""
-                if val_lst:
-                    product_details(self,request,val_lst,req_id)                          
-                else:
-                    arg=request.data["product_name"]
-                    if len(arg)>0:
-                        arg_id=request.data["product"]
-                        product_name(self,request,req_id,arg,arg_id)  
+                
+                
+                
+                    if {} in val_lst:
+                        z=val_lst.remove({})
                     else:
-                        product=Product_information()
-                        product.vendor_id=self.request.user.id
-                        product.campaignid_id=req_id.id
-                        product.save()
+                        z=""
+                    if val_lst:
+                        product_details(self,request,val_lst,req_id)                          
+                    else:
+                        arg=request.data["product_name"]
+                        if len(arg)>0:
+                            arg_id=request.data["product"]
+                            product_name(self,request,req_id,arg,arg_id)  
+                        else:
+                            product=Product_information()
+                            product.vendor_id=self.request.user.id
+                            product.campaignid_id=req_id.id
+                            product.save()
 
                 
+                        return Response({"success":"Campaign create successfully","product_details":serializer.data},status=status.HTTP_200_OK)
                     return Response({"success":"Campaign create successfully","product_details":serializer.data},status=status.HTTP_200_OK)
-                return Response({"success":"Campaign create successfully","product_details":serializer.data},status=status.HTTP_200_OK)
         else:
             return Response({"error":"Admin Deactive your shop"},status=status.HTTP_401_UNAUTHORIZED)
 
@@ -465,8 +477,11 @@ class InfluencerCampaign(APIView):
         if vendor_status1[0]["vendor_status"] == True:
             serializer=InflCampSerializer(data=request.data)
             if serializer.is_valid(raise_exception=True):
+            
+             
+               
                 val_lst2=(request.data["product_discount"])
-                
+                print(val_lst2)
                 coup_lst=[]
                 cup_lst=[]
                 dict1={}
@@ -962,7 +977,7 @@ class RequestSents(APIView):
                 dict1={}
                 if val_lst2:
                     for i in  range (len(val_lst2)):
-                        
+                        print(type(val_lst2[i]["name"]))
                         for j in val_lst2[i]["name"]:         
                             match_data=Product_information.objects.filter(coupon_name__contains=j,vendor_id=self.request.user.id).exists()
                            
@@ -980,7 +995,7 @@ class RequestSents(APIView):
                                 cop_lst=ast.literal_eval(cop)
                                 
                                 return Response({"error": cop_lst},status=status.HTTP_410_GONE)
-                    
+
                     req_id=serializer.save(status=2,vendorid_id=self.request.user.id)
                     infll=serializer.data["influencer_name"]
                     val_lst=(request.data["product_discount"])
@@ -1001,7 +1016,7 @@ class RequestSents(APIView):
                    
                                     
                 else:
-                    
+                    print(request.data)
                     req_id=serializer.save(status=2,vendorid_id=self.request.user.id)
                     arg=request.data["product_name"]
                 
