@@ -1500,3 +1500,6 @@ class Admindecision(APIView):
         else:
             dict={"message": "Admin Declined your Profile"}
         return Response(dict)
+    
+    
+    

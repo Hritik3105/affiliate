@@ -48,3 +48,24 @@ def influencer_details(self,request,int_list,req_id):
             
             
             
+def coupon_check(self,request,val_lst2,cup_lst,coup_lst):
+    for i in  range (len(val_lst2)):
+        print(type(val_lst2[i]["name"]))
+        for j in val_lst2[i]["name"]:         
+            match_data=Product_information.objects.filter(coupon_name__contains=j,vendor_id=self.request.user.id).exists()
+            
+        
+            dict1={str(val_lst2[i]["name"]):match_data}
+            
+            cup_lst.append(dict1)
+            coup_lst.append(match_data)
+            
+
+            if True in coup_lst:
+                
+                cop=(list(dict1.keys())[0])
+               
+                # cop_lst=ast.literal_eval(cop)
+                
+                # return Response({"error": cop},status=status.HTTP_410_GONE)
+                return cop
