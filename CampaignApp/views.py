@@ -1316,7 +1316,7 @@ class ProductUrl(APIView):
                     }    
                     dataList.append(product_dict)
         
-    
+        print("datalist",dataList)
        
         for product in dataList:
             print(product)
