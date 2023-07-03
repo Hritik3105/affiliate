@@ -210,7 +210,6 @@ class RequestCampaign(APIView):
                             
 
                             if True in coup_lst:
-                               
                                 cop=(list(dict1.keys())[0])
                                
                                 cop_lst=ast.literal_eval(cop)
@@ -1256,107 +1255,107 @@ class ProductUrl(APIView):
     def post(self,request):
         product_name=request.data.get('products')
         
-    
-        lst=[int(x) for x in product_name.split(",")]
-      
-        acc_tok=access_token(self,request)
-
-        headers= {"X-Shopify-Access-Token":acc_tok[0]}
+        if product_name:
+            lst=[int(x) for x in product_name.split(",")]
         
-        response = requests.get(f"https://{acc_tok[1]}/admin/api/{API_VERSION}/products.json/?ids={product_name}", headers=headers)
-        price_rule = requests.get(f'https://{SHOPIFY_API_KEY}:{SHOPIFY_API_SECRET}@{acc_tok[1]}/admin/api/{API_VERSION}/price_rules.json/?status=active',headers=headers)   
+            acc_tok=access_token(self,request)
 
-        pro_len=len(response.json()["products"])
-       
-        handle_lst=[]
-        title_list=[] 
-        dataList=[]
-        productMapDict = {}
-        product_dict={}
-        new_list=[]
-        prd_ids=[]
-       
+            headers= {"X-Shopify-Access-Token":acc_tok[0]}
+            
+            response = requests.get(f"https://{acc_tok[1]}/admin/api/{API_VERSION}/products.json/?ids={product_name}", headers=headers)
+            price_rule = requests.get(f'https://{SHOPIFY_API_KEY}:{SHOPIFY_API_SECRET}@{acc_tok[1]}/admin/api/{API_VERSION}/price_rules.json/?status=active',headers=headers)   
+
+            pro_len=len(response.json()["products"])
         
-        for  i in range(pro_len):
-            
-            prd_handle=json.loads(response.text)['products'][i]["handle"]
-            prd_title=json.loads(response.text)['products'][i]["title"]
-            prd_id=json.loads(response.text)['products'][i]["id"]
-            title_list.append(prd_title)
-            prd_ids.append(prd_id)
-            
-            handle_lst.append(f"https://{acc_tok[1]}/products/"+str(prd_handle))
-            productMapDict = { k:v for (k,v) in zip(prd_ids, title_list)} 
-
-            price_rules_data = price_rule.json()['price_rules']
-            pric_len=len(price_rules_data)
-            
-        for i in range(pric_len):
-      
-
-            price_rules_entitle = price_rule.json()['price_rules'][i]["entitled_product_ids"]
-            if price_rules_entitle == []:
-                 dataList.append({})     
-            for z in  price_rules_entitle:
-         
-                if z in  lst:
-                    price_rules_id=price_rule.json()['price_rules'][i]["id"]
-                    get_influencer=influencer_coupon.objects.filter(vendor_id=self.request.user.id,coupon_id=price_rules_id).values("influencer_id")
-                    influ_id=get_influencer
-                   
-                    price_rules_codes=price_rule.json()['price_rules'][i]["title"]
-                    price_rule_value=price_rule.json()['price_rules'][i]['value']
-                    price_rule_value_type=price_rule.json()['price_rules'][i]['value_type']
-                    product_dict={
-                        "product_name":productMapDict[z],
-                        "product_id":z,   
-                        "name": price_rules_codes,
-                        "amount":price_rule_value,   
-                        "discout_type":price_rule_value_type,
-                        "influencer_id":influ_id[0]["influencer_id"]
-                    }    
-                    dataList.append(product_dict)
+            handle_lst=[]
+            title_list=[] 
+            dataList=[]
+            productMapDict = {}
+            product_dict={}
+            new_list=[]
+            prd_ids=[]
         
-    
-       
-        for product in dataList:
-            print(product)
-            if product:
-                product_id = product["product_id"]
+            
+            for  i in range(pro_len):
                 
-                if product_id in product_dict:
-                    product_dict[product_id]["name"].append(product["name"])
-                    product_dict[product_id]["amount"].append(product["amount"])
-                    product_dict[product_id]["discout_type"].append(product["discout_type"])
+                prd_handle=json.loads(response.text)['products'][i]["handle"]
+                prd_title=json.loads(response.text)['products'][i]["title"]
+                prd_id=json.loads(response.text)['products'][i]["id"]
+                title_list.append(prd_title)
+                prd_ids.append(prd_id)
                 
+                handle_lst.append(f"https://{acc_tok[1]}/products/"+str(prd_handle))
+                productMapDict = { k:v for (k,v) in zip(prd_ids, title_list)} 
+
+                price_rules_data = price_rule.json()['price_rules']
+                pric_len=len(price_rules_data)
+                
+            for i in range(pric_len):
+        
+
+                price_rules_entitle = price_rule.json()['price_rules'][i]["entitled_product_ids"]
+                if price_rules_entitle == []:
+                    dataList.append({})     
+                for z in  price_rules_entitle:
+            
+                    if z in  lst:
+                        price_rules_id=price_rule.json()['price_rules'][i]["id"]
+                        get_influencer=influencer_coupon.objects.filter(vendor_id=self.request.user.id,coupon_id=price_rules_id).values("influencer_id")
+                        influ_id=get_influencer
+                    
+                        price_rules_codes=price_rule.json()['price_rules'][i]["title"]
+                        price_rule_value=price_rule.json()['price_rules'][i]['value']
+                        price_rule_value_type=price_rule.json()['price_rules'][i]['value_type']
+                        product_dict={
+                            "product_name":productMapDict[z],
+                            "product_id":z,   
+                            "name": price_rules_codes,
+                            "amount":price_rule_value,   
+                            "discout_type":price_rule_value_type,
+                            "influencer_id":influ_id[0]["influencer_id"]
+                        }    
+                        dataList.append(product_dict)
+            
+        
+        
+            for product in dataList:
+                print(product)
+                if product:
+                    product_id = product["product_id"]
+                    
+                    if product_id in product_dict:
+                        product_dict[product_id]["name"].append(product["name"])
+                        product_dict[product_id]["amount"].append(product["amount"])
+                        product_dict[product_id]["discout_type"].append(product["discout_type"])
+                    
+                    else:
+                        print("check",product["influencer_id"])
+                        product_dict[product_id] = {
+                            "product_name": product["product_name"],
+                            "product_id":product["product_id"],
+                            "name": [product["name"]],
+                            "amount": [product["amount"]],
+                            "discout_type":[product["discout_type"]],
+                            "influencer_id":product["influencer_id"]
+                            }
+                                
+            for i in lst:
+            
+                if i in product_dict:
+                    new_list.append(product_dict[i])
                 else:
-                    print("check",product["influencer_id"])
-                    product_dict[product_id] = {
-                        "product_name": product["product_name"],
-                        "product_id":product["product_id"],
-                        "name": [product["name"]],
-                        "amount": [product["amount"]],
-                        "discout_type":[product["discout_type"]],
-                        "influencer_id":product["influencer_id"]
-                        }
-                             
-        for i in lst:
-        
-            if i in product_dict:
-                new_list.append(product_dict[i])
-            else:
-                
+                    
 
-                new_list.append({"product_name": productMapDict[i],
-                        "product_id":i,
-                        "name":"",
-                        "amount": "",
-                        "discout_type":"",
-                        "influencer_id":"",
-                            })
+                    new_list.append({"product_name": productMapDict[i],
+                            "product_id":i,
+                            "name":"",
+                            "amount": "",
+                            "discout_type":"",
+                            "influencer_id":"",
+                                })
             
        
-        print(new_list)
+            print(new_list)
         return Response({'product_details':new_list,"product_url":handle_lst,"title_list":title_list},status=status.HTTP_200_OK)       
 
 
