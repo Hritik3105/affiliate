@@ -16,7 +16,6 @@ urlpatterns = [
   path('particular/edit/', ProductEditCodeView.as_view(), name='partedit'),
   path('particular/discount/', ParticularDiscountCodeView.as_view(), name='partdisct'),
   path('analytics',Analytics.as_view(), name='analytics'),
-  
   path('coupons/', ShopifyCouponView.as_view(), name='shopify-coupons'),
 
 ]

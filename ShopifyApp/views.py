@@ -504,7 +504,7 @@ class EditCodeView(APIView):
 
         print(cop_res)
         if cop_res == 200:
-            
+            print("Enterrrrrrrrrr")
             response = requests.put(url,headers=headers,json=data)
             if response.status_code == 200: 
                 return Response({'message': 'Discount Edit successfully','title': discount,"discount_type":discount_type,'amount':amt,"id":price_rule},status=status.HTTP_200_OK)
