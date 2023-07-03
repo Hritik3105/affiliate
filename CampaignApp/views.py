@@ -20,7 +20,6 @@ from django.core.mail import EmailMessage
 from ShopifyApp.models import *
 import calendar
 from datetime import datetime, timedelta
-from django.utils import timezone
 import stripe
 from Affilate_Marketing import settings
 
@@ -466,11 +465,8 @@ class InfluencerCampaign(APIView):
         if vendor_status1[0]["vendor_status"] == True:
             serializer=InflCampSerializer(data=request.data)
             if serializer.is_valid(raise_exception=True):
-            
-             
-               
                 val_lst2=(request.data["product_discount"])
-                print(val_lst2)
+                
                 coup_lst=[]
                 cup_lst=[]
                 dict1={}
@@ -966,7 +962,7 @@ class RequestSents(APIView):
                 dict1={}
                 if val_lst2:
                     for i in  range (len(val_lst2)):
-                        print(type(val_lst2[i]["name"]))
+                        
                         for j in val_lst2[i]["name"]:         
                             match_data=Product_information.objects.filter(coupon_name__contains=j,vendor_id=self.request.user.id).exists()
                            
@@ -984,7 +980,7 @@ class RequestSents(APIView):
                                 cop_lst=ast.literal_eval(cop)
                                 
                                 return Response({"error": cop_lst},status=status.HTTP_410_GONE)
-
+                    print("helllooooooooooo333333333")
                     req_id=serializer.save(status=2,vendorid_id=self.request.user.id)
                     infll=serializer.data["influencer_name"]
                     val_lst=(request.data["product_discount"])
@@ -1005,7 +1001,7 @@ class RequestSents(APIView):
                    
                                     
                 else:
-                    print(request.data)
+                    
                     req_id=serializer.save(status=2,vendorid_id=self.request.user.id)
                     arg=request.data["product_name"]
                 
