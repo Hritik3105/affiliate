@@ -980,7 +980,7 @@ class RequestSents(APIView):
                                 cop_lst=ast.literal_eval(cop)
                                 
                                 return Response({"error": cop_lst},status=status.HTTP_410_GONE)
-                    print("helllooooooooooo333333333")
+                    
                     req_id=serializer.save(status=2,vendorid_id=self.request.user.id)
                     infll=serializer.data["influencer_name"]
                     val_lst=(request.data["product_discount"])

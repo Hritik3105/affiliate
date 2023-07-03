@@ -664,20 +664,23 @@ class ProductEditCodeView(APIView):
             }
     }
         
-        response = requests.put(url,headers=headers,json=data)
+       
         print(acc_tok[1])
         zzx=discount_code9(price_rule,acc_tok[1],headers,discount)
       
 
-        if zzx.status_code == 200 and response.status_code==200:
-            upt_data=influencer_coupon.objects.filter(id=infludb_id).update(influencer_id_id=influencer_id,amount=int(amount),coupon_name=discount,vendor_id=self.request.user.id)
+        if zzx.status_code == 200:
+            response = requests.put(url,headers=headers,json=data)
+            if  response.status_code==200:
+                upt_data=influencer_coupon.objects.filter(id=infludb_id).update(influencer_id_id=influencer_id,amount=int(amount),coupon_name=discount,vendor_id=self.request.user.id)
 
-            return Response({'message': 'Discount Edit successfully','title': discount,"discount_type":discount_type,'amount':amt,"id":price_rule})
-        else:
+                return Response({'message': 'Discount Edit successfully','title': discount,"discount_type":discount_type,'amount':amt,"id":price_rule,"influencer":influencer_id})
             if response.status_code== 422:
-                print("entertte")
+               
                 return Response({'message': "must be between 0 and 100"}, status=status.HTTP_400_BAD_REQUEST)
-            elif zzx.status_code== 400:
+        else:
+          
+            if zzx.status_code== 400:
                 return Response({'message': "Coupon already exists"}, status=status.HTTP_400_BAD_REQUEST)
         
         
