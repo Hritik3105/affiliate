@@ -1319,7 +1319,7 @@ class ProductUrl(APIView):
         print("datalist",dataList)
        
         for product in dataList:
-            print(product)
+           
             if product:
                 product_id = product["product_id"]
                 
