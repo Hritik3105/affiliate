@@ -1355,7 +1355,7 @@ class ProductUrl(APIView):
                             })
             
        
-        print(new_list)
+        print("0000000000000000000000",new_list)
         return Response({'product_details':new_list,"product_url":handle_lst,"title_list":title_list},status=status.HTTP_200_OK)       
 
 
