@@ -1089,7 +1089,7 @@ class GetCampaign(APIView):
             else:
                 amtlst=amt
 
-            convrt_type=ast.literal_eval(camp[i]["discount_type"])
+           
           
             if k.campaignid.influencer_name:
                 dict1={
