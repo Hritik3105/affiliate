@@ -3,9 +3,9 @@ from StoreApp.models import *
 from rest_framework.response import Response
 
 def product_details(self,request,val_lst,req_id):
-    print(val_lst)
+ 
     for i in range(len(val_lst)):
-            print(i)
+            
             product=Product_information()
             product.vendor_id=self.request.user.id
             product.campaignid_id=req_id.id
