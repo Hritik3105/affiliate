@@ -764,6 +764,8 @@ class   MarketplaceList(APIView):
                 if amt:
                    
                     amtlst=ast.literal_eval(amt)
+                    print(type(amtlst))
+                    print(amtlst)
                 else:
                     amtlst=amt
                     
