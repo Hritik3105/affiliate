@@ -205,11 +205,11 @@ class RequestCampaign(APIView):
                 
                     for i in  range (len(val_lst2)):
                         
-                        for j in val_lst2[i]["name"]:         
+                        for j in val_lst2[i]["coupon_name"]:         
                             match_data=Product_information.objects.filter(coupon_name__contains=j,vendor_id=self.request.user.id).exists()
                            
                         
-                            dict1={str(val_lst2[i]["name"]):match_data}
+                            dict1={str(val_lst2[i]["coupon_name"]):match_data}
                             
                             cup_lst.append(dict1)
                             coup_lst.append(match_data)
@@ -485,13 +485,13 @@ class InfluencerCampaign(APIView):
                 if val_lst2:
                     for i in  range (len(val_lst2)):
                   
-                        for j in val_lst2[i]["name"]:
+                        for j in val_lst2[i]["coupon_name"]:
                         
                             
                             match_data=Product_information.objects.filter(coupon_name__contains=j,vendor_id=self.request.user.id).exists()
                            
                         
-                            dict1={str(val_lst2[i]["name"]):match_data}
+                            dict1={str(val_lst2[i]["coupon_name"]):match_data}
                             
                             cup_lst.append(dict1)
                             coup_lst.append(match_data)
