@@ -275,9 +275,9 @@ class UpdateCampaign(APIView):
             if val_lst2:
    
                 for i in  range (len(val_lst2)):
-                    if val_lst2[i]["name"]:
+                    if val_lst2[i]["coupon_name"]:
                       
-                        for j in val_lst2[i]["name"]:
+                        for j in val_lst2[i]["coupon_name"]:
                         
                             
                             match_data=Product_information.objects.filter(coupon_name__contains=j,vendor_id=self.request.user.id,campaignid_id=pk).exists()
@@ -286,7 +286,7 @@ class UpdateCampaign(APIView):
                                 match_data=Product_information.objects.filter(coupon_name__contains=j,vendor_id=self.request.user.id).exists()
 
                                 
-                                dict1={str(val_lst2[i]["name"]):match_data}
+                                dict1={str(val_lst2[i]["coupon_name"]):match_data}
                                 cup_lst.append(dict1)
                                 coup_lst.append(match_data)
                                 
@@ -315,7 +315,7 @@ class UpdateCampaign(APIView):
                     product.campaignid_id=req_id.id
                     product.product_name=val_lst[i]["product_name"]
                     product.product_id=val_lst[i]["product_id"]
-                    product.coupon_name=val_lst[i]["name"]
+                    product.coupon_name=val_lst[i]["coupon_name"]
                     product.amount=val_lst[i]["amount"]
                     product.save()
                 product=VendorCampaign.objects.filter(campaignid_id =req_id.id,vendor_id=self.request.user.id).delete()
