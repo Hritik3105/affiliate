@@ -4,7 +4,7 @@ from rest_framework.response import Response
 import ast
 
 def product_details(self,request,val_lst,req_id):
- 
+    print("hello",val_lst)
     for i in range(len(val_lst)):
             print(val_lst[i]["discout_type"])
             product=Product_information()
@@ -20,7 +20,7 @@ def product_details(self,request,val_lst,req_id):
        
                     
 def product_name(self,request,req_id,arg,arg_id):
-    print(arg)
+    print("aeeeeeeeeeeeee",arg)
     for i in  range(len(arg)):
     
         product=Product_information()
