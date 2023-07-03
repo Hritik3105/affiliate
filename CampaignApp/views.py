@@ -1327,6 +1327,7 @@ class ProductUrl(APIView):
                     product_dict[product_id]["name"].append(product["name"])
                     product_dict[product_id]["amount"].append(product["amount"])
                     product_dict[product_id]["discout_type"].append(product["discout_type"])
+                    product_dict[product_id]["influencer_id"].append(product["influencer_id"])
                 
                 else:
                     print("check",product["influencer_id"])
@@ -1336,7 +1337,7 @@ class ProductUrl(APIView):
                         "name": [product["name"]],
                         "amount": [product["amount"]],
                         "discout_type":[product["discout_type"]],
-                        "influencer_id":product["influencer_id"]
+                        "influencer_id":[product["influencer_id"]]
                         }
                              
         for i in lst:
