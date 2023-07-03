@@ -196,7 +196,7 @@ class RequestCampaign(APIView):
                 cup_lst=[]
                 dict1={}
                 if val_lst2:
-                    print("val list2",val_lst2)
+                
                     for i in  range (len(val_lst2)):
                         print(type(val_lst2[i]["name"]))
                         for j in val_lst2[i]["name"]:         
