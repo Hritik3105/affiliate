@@ -764,8 +764,8 @@ class   MarketplaceList(APIView):
                 if amt:
                    
                     amtlst=ast.literal_eval(amt)
-                    print(type(amtlst))
-                    print(amtlst)
+                    
+                    sliced=amtlst[0].replace("-","")
                 else:
                     amtlst=amt
                     
@@ -782,7 +782,7 @@ class   MarketplaceList(APIView):
                     "product":[{
                     "product_name":camp[i]["product_name"],
                     "coupon_name":couponlst,
-                    "amount":amtlst,
+                    "amount":sliced,
                     "discount_type":disc_type,
                     "product_id": camp[i]["product_id"],
                 }]
