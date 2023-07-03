@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from CampaignApp.models import *
@@ -176,8 +175,6 @@ class CreateCampaign(APIView):
                             product.campaignid_id=req_id.id
                             product.save()
                     
-                    
-                        # match_coupon=Product_information.objects.filter(coupon_name__in=)    
                         return Response({"success":"Campaign create successfully","product_details":serializer.data},status=status.HTTP_200_OK)
                         
                     return Response({"success":"Campaign create successfully","product_details":serializer.data},status=status.HTTP_200_OK)
@@ -279,7 +276,7 @@ class UpdateCampaign(APIView):
    
                 for i in  range (len(val_lst2)):
                     if val_lst2[i]["name"]:
-                        print("vallist2")
+                      
                         for j in val_lst2[i]["name"]:
                         
                             
@@ -312,9 +309,6 @@ class UpdateCampaign(APIView):
                 for i in range(len(val_lst)):
                     product=Product_information.objects.filter(campaignid_id =req_id.id,vendor_id=self.request.user.id).delete()
            
-          
-                    
-           
                 for i in range(len(val_lst)):
                     product=Product_information()
                     product.vendor_id=self.request.user.id
@@ -336,19 +330,18 @@ class UpdateCampaign(APIView):
                         Notification.objects.filter(campaignid_id=req_id.id,vendor_id=self.request.user.id).delete()
                         influencer_details(self,request,int_list,req_id)
                                
-            #when there is no product_discount_list    
     
             else:
-                print("enerrr333333r")
+               
                 req_id=serializer.save()
                 product=Product_information.objects.filter(campaignid_id =req_id.id,vendor_id=self.request.user.id).delete()
                
              
     
                 arg=request.data["product_name"]
-                print(arg)
+
                 if len(arg)>0:
-                    print("enrertrr")
+                   
                     for i in  range(len(arg)):
         
                         product=Product_information()
@@ -381,14 +374,7 @@ class UpdateCampaign(APIView):
                     product.campaignid_id=req_id.id
                     product.save()
            
-           
-            # if z == None :
-            #     print(" i am hererer")
-            #     product=Product_information.objects.filter(campaignid_id =req_id.id,vendor_id=self.request.user.id).delete()
-            #     product=Product_information()
-            #     product.vendor_id=self.request.user.id
-            #     product.campaignid_id=req_id.id
-            #     product.save()                    
+                    
             return Response(serializer.data,status=status.HTTP_200_OK)
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
     
@@ -492,13 +478,13 @@ class InfluencerCampaign(APIView):
              
                
                 val_lst2=(request.data["product_discount"])
-                print(val_lst2)
+                
                 coup_lst=[]
                 cup_lst=[]
                 dict1={}
                 if val_lst2:
                     for i in  range (len(val_lst2)):
-                        print(type(val_lst2[i]["name"]))
+                  
                         for j in val_lst2[i]["name"]:
                         
                             
@@ -775,9 +761,8 @@ class   MarketplaceList(APIView):
                 if amt:
                    
                     amtlst=ast.literal_eval(amt)
-                    print(amtlst[0])
                     sliced=amtlst[0].replace("-","")
-                    print(sliced)
+                   
                 else:
                     amtlst=amt
                     
@@ -889,6 +874,8 @@ class  MarketplaceDraftList(APIView):
     
 
 #SHOW LIST OF INFLUENCER API
+
+"""API TO  SHOW LIST OF INFLUENCER"""
 class InfluencerList(APIView):
     authentication_classes=[TokenAuthentication]
     permission_classes = [IsAuthenticated]
@@ -913,7 +900,7 @@ class DeleteCampaign(APIView):
         
         
 # API TO GET Product list
-
+"""API TO GET LIST OF PRODUCT"""
 class ProductList(APIView):
     authentication_classes=[TokenAuthentication]
     permission_classes = [IsAuthenticated]   
@@ -976,7 +963,7 @@ class CountCampaign(APIView):
 
 #API TO SEND REQUEST
 
-
+"""API TO SENT REQUSET TO INFLUENCER CAMPAIGN"""
 class RequestSents(APIView):
     authentication_classes=[TokenAuthentication]
     permission_classes = [IsAuthenticated]  
@@ -991,7 +978,7 @@ class RequestSents(APIView):
                 dict1={}
                 if val_lst2:
                     for i in  range (len(val_lst2)):
-                        print(type(val_lst2[i]["name"]))
+                       
                         for j in val_lst2[i]["name"]:         
                             match_data=Product_information.objects.filter(coupon_name__contains=j,vendor_id=self.request.user.id).exists()
                            
@@ -1030,12 +1017,12 @@ class RequestSents(APIView):
                    
                                     
                 else:
-                    print(request.data)
+                    
                     req_id=serializer.save(status=2,vendorid_id=self.request.user.id)
                     arg=request.data["product_name"]
                 
                     if len(arg)>0:
-                        print(" iam herer")
+                       
                         arg_id=request.data["product"]
                         
                         product_name(self,request,req_id,arg,arg_id)
@@ -1120,7 +1107,7 @@ class GetCampaign(APIView):
                     "draft_status":k.campaignid.draft_status,
                     "product":[{
                         "product_name":camp[i]["product_name"],
-                        "name":couponlst,
+                        "coupon_name":couponlst,
                         "amount":amtlst,
                         "product_id": camp[i]["product_id"],
                     }]
@@ -1143,7 +1130,7 @@ class GetCampaign(APIView):
                     "draft_status":k.campaignid.draft_status,
                     "product":[{
                         "product_name":camp[i]["product_name"],
-                        "name":couponlst,
+                        "coupon_name":couponlst,
                         "amount":amtlst,
                         "product_id": camp[i]["product_id"],
                     }]
@@ -1225,39 +1212,6 @@ class InstagramFollower(APIView):
 
 
 
-#API TO SEARCH COUPONS
-class SearchCoupon(APIView):
-    authentication_classes=[TokenAuthentication]
-    permission_classes = [IsAuthenticated] 
-    def post(self, request, format=None):
-        acc_tok=access_token(self,request)
-        headers= {"X-Shopify-Access-Token": acc_tok[0]}
-        url = f'https://{acc_tok[1]}/admin/api/{API_VERSION}/price_rules.json?status=active'
-        
-
-        response = requests.get(url, headers=headers)
-
-        if response.status_code == 200:
-            
-            coupons = response.json()['price_rules']
-            
-            discount_list=[]
-            for discount in coupons:    
-                discount_data = {
-                'title': discount['title'],
-                'id': discount['id'],
-                "created_at":discount["created_at"]
-                }
-                discount_list.append(discount_data)
-
-            name = request.data.get('name', None)
-            if name:
-                coupons = [coupon for coupon in discount_list if name.lower() in coupon['title'].lower()]
-            else:
-                coupons = discount_list
-            return Response(coupons)
-    
-
 #API TO GET PRODUCT URL
 """API HELP TO GET SELECTED PRODUCT URL AND THERE COUPON"""
 class ProductUrl(APIView):
@@ -1313,7 +1267,7 @@ class ProductUrl(APIView):
                     price_rules_id=price_rule.json()['price_rules'][i]["id"]
                     get_influencer=influencer_coupon.objects.filter(vendor_id=self.request.user.id,coupon_id=price_rules_id).values("influencer_id")
                     influ_id=get_influencer
-                    print("influuuu",influ_id)
+                  
                     price_rules_codes=price_rule.json()['price_rules'][i]["title"]
                     price_rule_value=price_rule.json()['price_rules'][i]['value']
                     price_rule_value_type=price_rule.json()['price_rules'][i]['value_type']
@@ -1327,7 +1281,7 @@ class ProductUrl(APIView):
                     }    
                     dataList.append(product_dict)
         
-        print("datalist",dataList)
+     
        
         for product in dataList:
            
@@ -1341,7 +1295,7 @@ class ProductUrl(APIView):
                     product_dict[product_id]["influencer_id"].append(product["influencer_id"])
                 
                 else:
-                    print("check",product["influencer_id"])
+             
                     product_dict[product_id] = {
                         "product_name": product["product_name"],
                         "product_id":product["product_id"],
@@ -1366,13 +1320,12 @@ class ProductUrl(APIView):
                         "influencer_id":"",
                             })
             
-       
-        print("0000000000000000000000",new_list)
         return Response({'product_details':new_list,"product_url":handle_lst,"title_list":title_list},status=status.HTTP_200_OK)       
 
 
 
 #Accept by Vendor API
+"""API TO ACCEPT CAMPAIGN REQUEST FROM INFLUENCER"""
 class VendorAccept(APIView):
     authentication_classes=[TokenAuthentication]
     permission_classes = [IsAuthenticated]    
@@ -1387,8 +1340,8 @@ class VendorAccept(APIView):
             return Response(status=status.HTTP_400_BAD_REQUEST)
         
 
-        
-        
+#Decline by Vendor API
+"""API TO DECLINE CAMPAIGN REQUEST FROM INFLUENCER"""       
 class DeclineVendor(APIView):
     authentication_classes=[TokenAuthentication]
     permission_classes = [IsAuthenticated]    
@@ -1405,16 +1358,15 @@ class DeclineVendor(APIView):
         
         
         
+#VENDOR APPROVAL LIST
+"""API TO SHOW VENDOR APPROVAL LIST"""        
 class VendorApprovalList(APIView):
     authentication_classes=[TokenAuthentication]
     permission_classes = [IsAuthenticated]
     def get(self,request):
-       
           
         influ_get=VendorCampaign.objects.exclude(Q(campaign_status=0)|Q(campaign_status=2),vendor_id=self.request.user.id).values_list("influencerid_id",flat=True)
-       
      
-        
         final_lst1=[] 
       
         campaign_obj2=VendorCampaign.objects.filter(campaign_status=1,vendor_id=self.request.user.id,campaignid__campaign_exp=1)
@@ -1434,7 +1386,9 @@ class VendorApprovalList(APIView):
         return Response({"data":final_lst1},status=status.HTTP_200_OK)  
  
  
-        
+ 
+#VENDOR DECLINE LIST
+"""API TO SHOW VENDOR DECLINE LIST"""  
 class VendorDeclineList(APIView):
     authentication_classes=[TokenAuthentication]
     permission_classes = [IsAuthenticated]
@@ -1462,6 +1416,9 @@ class VendorDeclineList(APIView):
         return Response({"data":final_lst1},status=status.HTTP_200_OK)  
     
 
+
+#INFLUENCER NOTIFICATION
+"""API TO SHOW NOTIFICATION TO INFLUENCER"""
 class InfluencerNotification(APIView):
     authentication_classes=[TokenAuthentication]
     permission_classes = [IsAuthenticated]
@@ -1487,7 +1444,10 @@ class InfluencerNotification(APIView):
         return Response({"data":notify_list},status=status.HTTP_200_OK)  
     
     
+    
+    
 #GET LIST OF NOTIFICATION API
+"""API TO CHANGE NOTIFICATION STATUS"""
 class ChangeNotifinflStatus(APIView):
     authentication_classes=[TokenAuthentication]
     permission_classes = [IsAuthenticated]
@@ -1505,6 +1465,8 @@ class ChangeNotifinflStatus(APIView):
         return Response(dict,status=status.HTTP_200_OK)  
     
     
+#ANALYTIC API
+"""API TO SHOW TOTAL SALRS AND ORDERS"""
 class Analytics(APIView):
     authentication_classes=[TokenAuthentication]
     permission_classes = [IsAuthenticated]
@@ -1516,24 +1478,7 @@ class Analytics(APIView):
 
         response = requests.get(url, headers=headers)
         if response.status_code == 200:
-            # orders_details = response.json().get("orders", [])
-            # product_sales = {}
-            # for order in orders_details:
-               
-            #     line_items = order.get("line_items", [])
-            #     for line_item in line_items:
-            #         product_id = line_item.get("title")
-            #         price = float(line_item.get("price"))
-            #         if product_id in product_sales:
-            #             product_sales[product_id] += price
-            #         else:
-            #             product_sales[product_id] = price
-                           
-            # keys=list(product_sales.keys())
-        
-            # values=list(product_sales.values())
-          
-         
+
             order_count = {str(i): 0 for i in range(1, 13)}
             orders = response.json().get("orders", [])
         
@@ -1568,11 +1513,12 @@ class Analytics(APIView):
                 total_price = float(order['total_price'])
                 sales_report[month_name] += total_price
             sales=list(sales_report.values()) 
-            print("-----",sales)
+   
                   
             return Response({'sales_data': sales,"order":order_list},status=status.HTTP_200_OK)
         else:
             return Response({'error':response.text},status=status.HTTP_400_BAD_REQUEST)
+        
         
         
 class SalesRecord(APIView):
@@ -1595,8 +1541,7 @@ class SalesRecord(APIView):
         start_date_year_ago_str = start_date_year_ago.isoformat()
         end_date_str = end_date.isoformat()
 
-        print(start_date_year_ago_str)
-        print(end_date_str)
+        
         url = f"https://{store_url}/admin/api/2022-10/orders.json?status=active&created_at_min={start_date_year_ago_str}&created_at_max={end_date_str}"
 
 
@@ -1608,7 +1553,7 @@ class SalesRecord(APIView):
         
         if response.status_code == 200:
             data = response.json()
-            print(data)
+          
 
             sales_7_days = 0
             sales_30_days = 0
@@ -1630,26 +1575,10 @@ class SalesRecord(APIView):
 
 
 
-class ExpiryCampaign(APIView):
-    authentication_classes=[TokenAuthentication]
-    permission_classes = [IsAuthenticated]
-        
-    def get(self,request):
-        acc_tok=access_token(self,request)
-        store_url = acc_tok[1]
-        api_token = acc_tok[0]
-        create_at=Campaign.objects.values_list("created_at",flat=True)
-        for i in create_at:
-          
-            update_date = i + timedelta(days=30)
-            
-            exp_camp=Campaign.objects.filter(created_at__lte=update_date)
-        
 
-        return Response({"val":"hello"})
-    
-    
-    
+
+#SHOW CAMPAIGN SALES
+"""API TO SHOW CAMPAIGN SALES"""    
 class CampaignSales(APIView):
     authentication_classes=[TokenAuthentication]
     permission_classes = [IsAuthenticated] 
@@ -1749,17 +1678,18 @@ class Balance(APIView):
     
     
     
+    
 class InfluencerStripeDetail(APIView):
     authentication_classes=[TokenAuthentication]
     permission_classes = [IsAuthenticated] 
     
     def get(self,request):
         api_key=StripeDetails.objects.all().values("secret_key","influencer")
-        print(api_key)
+      
         for i in api_key:
             stripe.api_key=i["secret_key"]
             account = stripe.Account.retrieve()
-            print(account)
+            
         return Response({"details":api_key},status=status.HTTP_200_OK)
     
 
@@ -1775,9 +1705,7 @@ class TranferMoney(APIView):
         amount=request.data.get("amount")
         campaignids=request.data.get("camp_id")
         salesdone=request.data.get("sales")
-        print("account",account)
-        print("influencer_id",influencer)
-        print("salesdone",salesdone)
+       
         get_account=StripeDetails.objects.filter(vendor_id=self.request.user.id).values("account_id","influencer_id")
         
 
@@ -1869,6 +1797,8 @@ class TranferMoney(APIView):
     
     
     
+#INFLUECER SALES
+"""API TO SHOW TOTAL INFLUENCER SALES"""
 class InfluencerCampSale(APIView):
     authentication_classes=[TokenAuthentication]
     permission_classes = [IsAuthenticated] 
@@ -2034,6 +1964,8 @@ class InfluencerCampSale(APIView):
         
 
 
+#INFLUENCER EXPIRED LIST
+"""API TO SHOW INFLUENCER EXPIRED CAMPAIGN LIST""" 
 class CampaignExpList(APIView):
     authentication_classes=[TokenAuthentication]
     permission_classes = [IsAuthenticated] 
@@ -2098,6 +2030,9 @@ class CampaignExpList(APIView):
         val=list(result.values())
         return Response({"data":val},status=status.HTTP_200_OK)   
     
+    
+#MARKETPLACE EXPIRED LIST
+"""API TO SHOW MARKETPLACE EXPIRED CAMPAIGN LIST""" 
 class MarketplaceExpList(APIView):
     authentication_classes=[TokenAuthentication]
     permission_classes = [IsAuthenticated]
@@ -2164,3 +2099,5 @@ class MarketplaceExpList(APIView):
 
         val=list(result.values())
         return Response({"data":val},status=status.HTTP_200_OK)   
+    
+    

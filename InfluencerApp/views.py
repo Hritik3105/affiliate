@@ -34,166 +34,7 @@ headers={"Authorization": "Bearer yGrFqiK4YqDtqODbGRZkZrWRIgsjFLZP"}
 
 
 #REGISTER INFLUENCER API
-
-    
-class Register(APIView):
-    def post(self, request):
-      
-
-        def handle_step_one(self, request):
-            infl_id = request.session.get("id")
-            if infl_id:
-                influencer_obj = ModashInfluencer.objects.get(id=infl_id)
-                serializer = InfluencerSerializer(influencer_obj, data=request.data)
-            else:
-                serializer = InfluencerSerializer(data=request.data)
-
-            if serializer.is_valid(raise_exception=True):
-                save_obj = serializer.save(user_type=2)
-                infl_id = serializer.data["id"]
-                request.session["id"] = infl_id
-
-                uid64 = urlsafe_base64_encode(force_bytes(infl_id))
-                current_site_info = get_current_site(request)
-                link = reverse(
-                    "activate",
-                    kwargs={"id": infl_id, "token": account_activation_token.make_token(save_obj)},
-                )
-                activate_url = (
-                    "https://myrefera.com/#/verify/"
-                    + account_activation_token.make_token(save_obj)
-                    + "/"
-                    + str(infl_id)
-                )
-                email_body = (
-                    "HI"
-                    + " "
-                    + serializer.data["username"]
-                    + "please use this link to verify account\n"
-                    + activate_url
-                )
-                mail_subject = "Activate your Account"
-                to_email = serializer.data["email"]
-                email = EmailMessage(mail_subject, email_body, to=[to_email])
-                email.send()
-
-                return Response(
-                    {
-                        "id": infl_id,
-                    },
-                    status=status.HTTP_201_CREATED,
-                )
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-        def handle_step_two(self, request):
-            infl_id = request.session.get("id")
-            if infl_id:
-                influencer_obj = ModashInfluencer.objects.get(id=infl_id)
-                serializer = StepTwoSerializer(influencer_obj, data=request.data)
-            else:
-                serializer = StepTwoSerializer(data=request.data)
-
-            if serializer.is_valid(raise_exception=True):
-                infl_id = request.session.get("id")
-                serializer.save(influencerid_id=infl_id)
-                handle = serializer.data["user_handle"]
-                influencer_obj = ModashInfluencer()
-                base_url = f"https://api.modash.io/v1/instagram/profile/@{handle}/report"
-                response = requests.get(base_url, headers=headers)
-                if response.ok:
-                    influencer_data = response.json()["profile"]["profile"]
-                    influencer_obj.username = influencer_data["username"]
-                    influencer_obj.fullname = influencer_data["fullname"]
-                    influencer_obj.isverified = influencer_data["isVerified"]
-                    influencer_obj.follower = influencer_data["followers"]
-                    influencer_obj.image = influencer_data["picture"]
-                    influencer_obj.engagements = influencer_data["engagements"]
-                    influencer_obj.engagement_rate = round(
-                        influencer_data["engagementRate"], 2
-                    )
-                    influencer_obj.influencerid_id = infl_id
-                    influencer_obj.save()
-                    return Response(
-                        {"Success": response.json()},
-                        status=status.HTTP_201_CREATED,
-                    )
-                else:
-                    return Response(
-                        {"error": response.json()},
-                        status=status.HTTP_400_BAD_REQUEST,
-                    )
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-
-# class Register(APIView):
-#     def post(self, request):
-#         serializer = InfluencerSerializer(data=request.data)
-#         if serializer.is_valid(raise_exception=True):
-#             serializer2 = StepTwoSerializer(data=request.data)
-#             if serializer2.is_valid(raise_exception=True):
-#                 save_obj = serializer.save(user_type=2)
-#                 infl_id = serializer.data["id"]
-#                 request.session["id"] = infl_id
-#                 handle = serializer.data["user_handle"]
-#                 influencer_obj = ModashInfluencer()
-#                 base_url = f"https://api.modash.io/v1/instagram/profile/@{handle}/report"
-#                 response = requests.get(base_url, headers=headers)
-#                 if response.ok:
-#                     influencer_data = response.json()["profile"]["profile"]
-#                     influencer_obj.username = influencer_data["username"]
-#                     influencer_obj.fullname = influencer_data["fullname"]
-#                     influencer_obj.isverified = influencer_data["isVerified"]
-#                     influencer_obj.follower = influencer_data["followers"]
-#                     influencer_obj.image = influencer_data["picture"]
-#                     influencer_obj.engagements = influencer_data["engagements"]
-#                     influencer_obj.engagement_rate = round(
-#                         influencer_data["engagementRate"], 2
-#                     )
-#                     influencer_obj.influencerid_id = infl_id
-#                     influencer_obj.save()
-                    
-#                 else:
-#                     print("enteter",response.json())
-#                     return Response(
-#                         {"error": "Influencer requirement did not match"},
-#                         status=status.HTTP_400_BAD_REQUEST,
-#                     )
-#                 serializer2.save(influencerid_id=infl_id)
-
-#                 uid64 = urlsafe_base64_encode(force_bytes(infl_id))
-#                 current_site_info = get_current_site(request)
-#                 link = reverse(
-#                     "activate",
-#                     kwargs={"id": infl_id, "token": account_activation_token.make_token(save_obj)},
-#                 )
-#                 activate_url = (
-#                     "https://myrefera.com/#/verify/"
-#                     + account_activation_token.make_token(save_obj)
-#                     + "/"
-#                     + str(infl_id)
-#                 )
-#                 email_body = (
-#                     "HI"
-#                     + " "
-#                     + serializer.data["username"]
-#                     + "please use this link to verify account\n"
-#                     + activate_url
-#                 )
-#                 mail_subject = "Activate your Account"
-#                 to_email = serializer.data["email"]
-#                 email = EmailMessage(mail_subject, email_body, to=[to_email])
-#                 email.send()
-#                 return Response(
-#                     {
-#                         "Success": response.json(),
-#                         "token": account_activation_token.make_token(save_obj),
-#                         "id": infl_id,
-#                     },
-#                     status=status.HTTP_201_CREATED,
-#                 )
-#             return Response(serializer2.errors, status=status.HTTP_400_BAD_REQUEST)
-#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+"""API FOR INFLUENCER REGISTER"""
 
 class Register(APIView):
     def post(self,request):
@@ -231,9 +72,9 @@ class Register(APIView):
                     influencer_obj.save()
                    
                     save_obj=serializer.save(user_type =2)
-                    print(save_obj.id)
+                   
                     infl_id=serializer.data["id"]
-                    print("idddddd",infl_id)
+                    
                     ModashInfluencer.objects.filter(id=influencer_obj.id).update(influencerid=infl_id)
 
 
@@ -360,6 +201,7 @@ class Details(APIView):
     
     
 #LOGIN INFLUENCER API  
+"""API FOR INFLUENCER LOGIN"""
 class InfluencerLogin(APIView): 
     def post(self, request):
         username = request.data.get('email')
@@ -393,6 +235,7 @@ class InfluencerLogin(APIView):
            
            
 #SHOW LIST OF INFLUENCER API
+"API TO SHOW LIST OF INFLUENCER"
 class InfluencerList(APIView):
     authentication_classes=[TokenAuthentication]
     permission_classes = [IsAuthenticated]
@@ -405,28 +248,11 @@ class InfluencerList(APIView):
 
 
 
-#YOUTUBER FOLLOWER API
-class YoutubeFollower(APIView):
-    
-    def get(self,request):
-        user_handler=request.GET.get("user")
-        base_url=f"https://api.modash.io/v1/youtube/profile/{user_handler}/report"
-        response = requests.get(base_url, headers=headers)
-        return Response({"success":json.loads(response.text)},status=status.HTTP_200_OK)
-    
-    
-    
-#INSTAGRAM FOLLOWER API
-class InstagramFollower(APIView):
-    def get(self,request):
-        user_handler=request.GET.get("user")
-     
-        base_url=f"https://api.modash.io/v1/instagram/profile/{user_handler}/report"
-        response = requests.get(base_url, headers=headers)
-        return Response({"success":json.loads(response.text)},status=status.HTTP_200_OK)
+
     
     
 #UPDATE INFLUENCER DATA API   
+"""API TO UPDATE INFLUENCER"""
 class UpdateInfluencer(APIView):
     authentication_classes=[TokenAuthentication]
     permission_classes = [IsAuthenticated]
@@ -443,6 +269,7 @@ class UpdateInfluencer(APIView):
     
     
 #ACCEPT CAMPAIGN API
+"""API TO ACCEPT CAMPAIGN"""
 class AcceptView(APIView):
     authentication_classes=[TokenAuthentication]
     permission_classes = [IsAuthenticated]    
@@ -484,6 +311,7 @@ class AcceptView(APIView):
     
     
 #DECLINE CAMPAIGN API
+"""API TO DECLINE CAMPAIGN"""
 class DeclineView(APIView):
     authentication_classes=[TokenAuthentication]
     permission_classes = [IsAuthenticated]    
@@ -492,12 +320,7 @@ class DeclineView(APIView):
             influencer_data=Campaign.objects.filter(id=id).values_list("vendorid",flat=True)
             vendor=influencer_data[0]
             modash_data=ModashInfluencer.objects.filter(influencerid_id=self.request.user.id).values_list("id",flat=True)
-            # if modash_data:
-            #     camp_accept=Campaign.objects.filter(id=id).update(campaign_status=3)
-            #     infl_accept=Notification.objects.filter(campaignid_id=id,influencerid_id=modash_data[0]).update(send_notification=4)
-
-            #     infl_accept=VendorCampaign.objects.filter(campaignid_id=id,influencerid_id=modash_data[0]).update(campaign_status=4)
-            #     cam_dec2=Campaign_accept.objects.filter(campaignid_id=id).update(influencerid_id=self.request.user.id,campaign_status=3,vendor_id=vendor)
+           
             modash_data1=ModashInfluencer.objects.filter(influencerid_id=self.request.user.id).values_list("id",flat=True)
             if modash_data1:
                 camp_accept=Campaign.objects.filter(id=id).update(campaign_status=3)
@@ -515,6 +338,7 @@ class DeclineView(APIView):
 
 
 #LIST OF CAMPAIGN API
+"""API TO SHOW LIST OF REQUESTED CAMPAIGN"""
 class PendingCampaing(APIView):
     authentication_classes=[TokenAuthentication]
     permission_classes = [IsAuthenticated]    
@@ -528,6 +352,7 @@ class PendingCampaing(APIView):
     
     
 #LOGOUT API
+"""API FOR LOGING OUT INFLUENCER"""
 class LogoutView(APIView):
     permission_classes = (IsAuthenticated,)
     def post(self, request, format=None):
@@ -625,7 +450,9 @@ class PendingList(APIView):
     
 
     
+    
 # GET CAMPAIGN APPROVAL LIST  
+"""API TO GET APPROVAL LIST"""
 class ApprovalList(APIView):
     authentication_classes=[TokenAuthentication]
     permission_classes = [IsAuthenticated]
@@ -729,6 +556,7 @@ class ApprovalList(APIView):
     
     
 #API TO GET SINGLE CAMPAIGN
+"""API HELPS US TO GET SINGLE CAMPAIGN DETAILS"""
 class GetCampaign(APIView):
     authentication_classes=[TokenAuthentication]
     permission_classes = [IsAuthenticated]  
@@ -799,6 +627,7 @@ class GetCampaign(APIView):
     
     
 # GET CAMPAIGN Decline LIST  
+"""API PROVIDE LIST OF DECLINED CAMPAIGN"""
 class DeclinelList(APIView):
     authentication_classes=[TokenAuthentication]
     permission_classes = [IsAuthenticated]
@@ -886,6 +715,7 @@ class DeclinelList(APIView):
     
     
 #GET LIST OF NOTIFICATION API
+"""API TO SHOW NOTIFICATION TO INFLUENCER"""
 class VendorNotification(APIView):
     authentication_classes=[TokenAuthentication]
     permission_classes = [IsAuthenticated]
@@ -924,6 +754,7 @@ class VendorNotification(APIView):
     
     
 #GET LIST OF NOTIFICATION API
+"""API TO CHANGE NOTIFICATION STATUS"""
 class ChangeNotifStatus(APIView):
     authentication_classes=[TokenAuthentication]
     permission_classes = [IsAuthenticated]
@@ -1489,6 +1320,8 @@ class Dubaiaccount(APIView):
         return Response({"detais":account})
         
         
+#ADMIN DECISION
+"""API TO SHOW IF ADMIN ACCEPTED YOU OR REJECT YOUR PROFILE"""
 class Admindecision(APIView):
     authentication_classes=[TokenAuthentication]
     permission_classes = [IsAuthenticated] 

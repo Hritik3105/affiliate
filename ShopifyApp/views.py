@@ -29,11 +29,6 @@ def access_token(self,request):
 
 
 
-
-
-
-
-
 #API TO CREATE DISCOUNT
 class CreateDiscountCodeView(APIView):
     

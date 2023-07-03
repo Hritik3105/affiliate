@@ -24,7 +24,6 @@ urlpatterns = [
     path('draft/list/',DraftList.as_view(),name="draft"),   
     path('markdraft/list/',MarketplaceDraftList.as_view(),name="markdraft"), 
     path('markplace/camp',RequestCampaign.as_view(),name="requestmark"), 
-    path('search/coupon/',SearchCoupon.as_view(),name="search"), 
     path('draft/update/<int:pk>/',DraftStatusUpdate.as_view(),name="draftupdate"), 
     path('vendor/accept/<int:id>/<int:pk>/',VendorAccept.as_view(),name="vendoraccept"), 
     path('vendor/decline/<int:id>/<int:pk>/',DeclineVendor.as_view(),name="vendordecline"), 
@@ -34,7 +33,7 @@ urlpatterns = [
     path("change/status/",ChangeNotifinflStatus.as_view(),name="changenotify"),
     path("analytics/",Analytics.as_view(),name="analytics"),
     path("sale_record/",SalesRecord.as_view(),name="sale_record"),
-    path("exp_camp/",ExpiryCampaign.as_view(),name="exp_camp"),
+
     path("sale_coup/",CampaignSales.as_view(),name="exp_camp"),
     path("detail",VendorStripe.as_view(),name="detail"),
     path("balance",Balance.as_view(),name="balance"),

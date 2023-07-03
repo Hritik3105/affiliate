@@ -23,9 +23,7 @@ urlpatterns = [
     path('influencer/logout/', LogoutView.as_view(), name='logout'),
     
     
-    #MODASH API URLS
-    path('youtuber/',YoutubeFollower.as_view(),name="youtuber"),
-    path('instagram/',InstagramFollower.as_view(),name="instagram"),
+
     
     
     #INFLUENCER CAMPAGIN APIS URLS
