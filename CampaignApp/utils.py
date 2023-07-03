@@ -4,9 +4,9 @@ from rest_framework.response import Response
 import ast
 
 def product_details(self,request,val_lst,req_id):
-    print("hello",val_lst)
+  
     for i in range(len(val_lst)):
-            print(val_lst[i]["discout_type"])
+            
             product=Product_information()
             product.vendor_id=self.request.user.id
             product.campaignid_id=req_id.id
@@ -50,14 +50,27 @@ def influencer_details(self,request,int_list,req_id):
             
             
 def coupon_check(self,request,val_lst2,cup_lst,coup_lst):
-    for i in  range (len(val_lst2)):
-        print(type(val_lst2[i]["name"]))
-        for j in val_lst2[i]["name"]:         
-            match_data=Product_information.objects.filter(coupon_name__contains=j,vendor_id=self.request.user.id).exists()
-            dict1={str(val_lst2[i]["name"]):match_data}
-            cup_lst.append(dict1)
-            coup_lst.append(match_data)
-            if True in coup_lst:
-                cop=(list(dict1.keys())[0])
-                return cop
+    val_lst2=(request.data["product_discount"])
+    coup_lst=[]
+    cup_lst=[]
+    dict1={}
+    if val_lst2:
+    
+        for i in  range (len(val_lst2)):
+            print(type(val_lst2[i]["name"]))
+            for j in val_lst2[i]["name"]:         
+                match_data=Product_information.objects.filter(coupon_name__contains=j,vendor_id=self.request.user.id).exists()
+                
             
+                dict1={str(val_lst2[i]["name"]):match_data}
+                
+                cup_lst.append(dict1)
+                coup_lst.append(match_data)
+                
+
+                if True in coup_lst:
+                    cop=(list(dict1.keys())[0])
+                    
+                    cop_lst=ast.literal_eval(cop)
+                    
+                    return cop
