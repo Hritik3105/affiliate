@@ -20,7 +20,7 @@ def product_details(self,request,val_lst,req_id):
        
                     
 def product_name(self,request,req_id,arg,arg_id):
-    print("aeeeeeeeeeeeee",arg)
+    
     for i in  range(len(arg)):
     
         product=Product_information()
@@ -57,12 +57,12 @@ def coupon_check(self,request,val_lst2,cup_lst,coup_lst):
     if val_lst2:
     
         for i in  range (len(val_lst2)):
-            print(type(val_lst2[i]["name"]))
-            for j in val_lst2[i]["name"]:         
+            print(type(val_lst2[i]["coupon_name"]))
+            for j in val_lst2[i]["coupon_name"]:         
                 match_data=Product_information.objects.filter(coupon_name__contains=j,vendor_id=self.request.user.id).exists()
                 
             
-                dict1={str(val_lst2[i]["name"]):match_data}
+                dict1={str(val_lst2[i]["coupon_name"]):match_data}
                 
                 cup_lst.append(dict1)
                 coup_lst.append(match_data)
