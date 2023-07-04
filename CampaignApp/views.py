@@ -445,12 +445,12 @@ class DraftStatusUpdate(APIView):
                 
                     influencer_details(self,request,int_list,req_id)               
                
-                else:
-                    print("lets go")
-                    product=Product_information()
-                    product.vendor_id=self.request.user.id
-                    product.campaignid_id=req_id.id
-                    product.save()
+                # else:
+                #     print("lets go")
+                #     product=Product_information()
+                #     product.vendor_id=self.request.user.id
+                #     product.campaignid_id=req_id.id
+                #     product.save()
                    
                         
                 
