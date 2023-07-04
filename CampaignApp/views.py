@@ -418,7 +418,7 @@ class DraftStatusUpdate(APIView):
                                     cop=(list(dict1.keys())[0])
                                     cop_lst=ast.literal_eval(cop)
                                     return Response({"error": cop_lst},status=status.HTTP_410_GONE)
-         
+                print("first point")
                 req_id=serializer.save(draft_status=0,campaign_status=0)
                 val_lst=(request.data["product_discount"])
                 
@@ -428,13 +428,15 @@ class DraftStatusUpdate(APIView):
                     z=""
                     
                 for i in range(len(val_lst)):
+                    print("i am here")
                     product=Product_information.objects.filter(campaignid_id =req_id.id,vendor_id=self.request.user.id).delete()
             
          
-               
+                print("third point")
                 product_details(self,request,val_lst,req_id)
                 
                 if  "influencer_name" in request.data:
+                    print("here")
                     val_lst1=(request.data["influencer_name"])
                     
                     data_list=val_lst1.split(",")
@@ -442,16 +444,18 @@ class DraftStatusUpdate(APIView):
                     int_list = [int(num) for num in data_list]
                 
                     influencer_details(self,request,int_list,req_id)               
+               
                 else:
-                   
+                    print("lets go")
                     product=Product_information()
                     product.vendor_id=self.request.user.id
                     product.campaignid_id=req_id.id
                     product.save()
-                    # influencer_details(self,request,int_list,req_id)
+                   
                         
                 
                 if z == None :
+                    print("lets go2")
                     product=Product_information()
                     product.vendor_id=self.request.user.id
                     product.campaignid_id=req_id.id
