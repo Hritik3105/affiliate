@@ -1158,7 +1158,6 @@ class GetCampaign(APIView):
     
 
 # UPDATE PROFILE OF VENDOR
-
 """API HELP IN UPDATING THE PROFILE OF VENDOR"""
 class ProfileUpdate(APIView):
     authentication_classes=[TokenAuthentication]
@@ -1277,7 +1276,7 @@ class ProductUrl(APIView):
                     product_dict={
                         "product_name":productMapDict[z],
                         "product_id":z,   
-                        "name": price_rules_codes,
+                        "coupon_name": price_rules_codes,
                         "amount":price_rule_value,   
                         "discout_type":price_rule_value_type,
                         "influencer_id":influ_id[0]["influencer_id"]
@@ -1302,7 +1301,7 @@ class ProductUrl(APIView):
                     product_dict[product_id] = {
                         "product_name": product["product_name"],
                         "product_id":product["product_id"],
-                        "name": [product["name"]],
+                        "coupon_name": [product["name"]],
                         "amount": [product["amount"]],
                         "discout_type":[product["discout_type"]],
                         "influencer_id":[product["influencer_id"]]
@@ -1317,7 +1316,7 @@ class ProductUrl(APIView):
 
                 new_list.append({"product_name": productMapDict[i],
                         "product_id":i,
-                        "name":"",
+                        "coupon_name":"",
                         "amount": "",
                         "discout_type":"",
                         "influencer_id":"",
