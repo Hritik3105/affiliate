@@ -1291,7 +1291,7 @@ class ProductUrl(APIView):
                 product_id = product["product_id"]
                 
                 if product_id in product_dict:
-                    product_dict[product_id]["name"].append(product["name"])
+                    product_dict[product_id]["coupon_name"].append(product["coupon_name"])
                     product_dict[product_id]["amount"].append(product["amount"])
                     product_dict[product_id]["discout_type"].append(product["discout_type"])
                     product_dict[product_id]["influencer_id"].append(product["influencer_id"])
@@ -1301,7 +1301,7 @@ class ProductUrl(APIView):
                     product_dict[product_id] = {
                         "product_name": product["product_name"],
                         "product_id":product["product_id"],
-                        "coupon_name": [product["name"]],
+                        "coupon_name": [product["coupon_name"]],
                         "amount": [product["amount"]],
                         "discout_type":[product["discout_type"]],
                         "influencer_id":[product["influencer_id"]]
