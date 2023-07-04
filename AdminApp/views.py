@@ -51,7 +51,7 @@ def show(request):
                 headers = {"X-Shopify-Access-Token": token["access_token"]}
                 store_name = token["store_name"]
 
-                url = f"https://{store_name}/admin/api/2022-07/orders.json?status=active"
+                url = f"https://{store_name}/admin/api/2022-10/orders.json?status=active"
                 response = requests.get(url, headers=headers)
                 sales_data = response.json().get('orders', [])
                 sales_report = 0 
