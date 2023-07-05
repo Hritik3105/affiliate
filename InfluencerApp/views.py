@@ -23,7 +23,7 @@ from Affilate_Marketing import settings
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
-from django.urls import reverse
+from ShopifyApp.models import *
 
 
 
@@ -491,7 +491,9 @@ class ApprovalList(APIView):
          
             camp=Product_information.objects.filter(campaignid_id=i).values()
             campaign_obj59=Product_information.objects.filter(campaignid_id=i).select_related("campaignid")
-        
+            coupon_match=influencer_coupon.objects.filter(influencer_id=self.request.user.id).values("coupon_name")
+            print(coupon_match)
+           
             for k in campaign_obj59:
                pass
 
@@ -503,8 +505,10 @@ class ApprovalList(APIView):
                 if cop:
                   
                     couponlst=ast.literal_eval(cop)
+                    print("sssssssssss",couponlst)
                 else:
                     couponlst=cop
+                    print("check",couponlst)
                     
                 if amt:
                     
@@ -553,6 +557,7 @@ class ApprovalList(APIView):
                 result[record["campaignid_id"]]["product"] = record["product"]
         val=list(result.values())
         return Response({"data":val},status=status.HTTP_200_OK)  
+    
     
     
 #API TO GET SINGLE CAMPAIGN
