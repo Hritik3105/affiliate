@@ -460,7 +460,8 @@ class ApprovalList(APIView):
         lst=[]
         final_lst=[]
         res=[]
-        res2=[]    
+        res2=[]  
+        updated_cop=[]  
         value=ModashInfluencer.objects.filter(influencerid_id=request.user.id).values_list("id",flat=True)[0]
         vendor_codes=VendorCampaign.objects.filter(influencerid_id=value,campaign_status=2)
         vendo_camp=vendor_codes.values_list("campaignid_id__id",flat=True)
@@ -500,13 +501,17 @@ class ApprovalList(APIView):
         
             for i in range(len(camp)):
                 cop=(camp[i]["coupon_name"])
-                print(type(cop))
+              
                 amt=(camp[i]["amount"])
              
                 if cop:
                   
                     couponlst=ast.literal_eval(cop)
-                    print("sssssssssss",couponlst)
+                    for i in couponlst:
+                        if i in coupon_match:
+                            updated_cop.append(i)
+                            
+                    print("sssssssssss",updated_cop)
                 else:
                     couponlst=cop
                     print("check",couponlst)
