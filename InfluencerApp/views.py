@@ -511,12 +511,12 @@ class ApprovalList(APIView):
                     # print(type(coupon_match))
                     # print(couponlst)
                     # print(coupon_match)
-                    for i in couponlst:
-                        print("checked",i)
-                    #     # if i in coupon_match:
-                    #     #     updated_cop.append(i)
+                    for cop in couponlst:
+                        print("checked",cop)
+                        if cop in coupon_match:
+                            updated_cop.append(i)
                             
-                    # print("sssssssssss",updated_cop)
+                    print("sssssssssss",updated_cop)
                 else:
                     couponlst=cop
                     print("check",couponlst)
@@ -528,7 +528,7 @@ class ApprovalList(APIView):
                     amtlst=amt
                     
                
-                print(camp[i]["campaignid_id"])
+                print("sssss",camp[i]["campaignid_id"])
                 print(vendo_camp)
                 if camp[i]["campaignid_id"] in vendo_camp:
                     dict1={
