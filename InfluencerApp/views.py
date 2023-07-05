@@ -507,10 +507,10 @@ class ApprovalList(APIView):
                 if cop:
                   
                     couponlst=ast.literal_eval(cop)
-                    print(type(couponlst))
-                    print(type(coupon_match))
-                    print(couponlst)
-                    print(coupon_match)
+                    # print(type(couponlst))
+                    # print(type(coupon_match))
+                    # print(couponlst)
+                    # print(coupon_match)
                     for i in couponlst:
                         print("checked",i)
                     #     # if i in coupon_match:
@@ -528,7 +528,8 @@ class ApprovalList(APIView):
                     amtlst=amt
                     
                
-                
+                print(camp[i]["campaignid_id"])
+                print(vendo_camp)
                 if camp[i]["campaignid_id"] in vendo_camp:
                     dict1={
                         "campaignid_id":camp[i]["campaignid_id"],
