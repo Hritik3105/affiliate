@@ -511,12 +511,12 @@ class ApprovalList(APIView):
                     print(type(coupon_match))
                     print(couponlst)
                     print(coupon_match)
-                    for i in couponlst:
-                        print("sssss",i)
-                        # if i in coupon_match:
-                        #     updated_cop.append(i)
+                    # for i in couponlst:
+                    #     print("sssss",i)
+                    #     # if i in coupon_match:
+                    #     #     updated_cop.append(i)
                             
-                    print("sssssssssss",updated_cop)
+                    # print("sssssssssss",updated_cop)
                 else:
                     couponlst=cop
                     print("check",couponlst)
