@@ -513,10 +513,10 @@ class ApprovalList(APIView):
                     # print(coupon_match)
                     for cop in couponlst:
                         print("checked",cop)
-                        if cop in coupon_match:
-                            updated_cop.append(cop)
+                        if cop  not in coupon_match:
+                            couponlst.remove(cop)
                             
-                    print("updateddd",updated_cop)
+                    print("9999999999",couponlst)
                 else:
                     couponlst=cop
                     print("check",couponlst)
@@ -537,7 +537,7 @@ class ApprovalList(APIView):
                         "status":k.campaignid.campaign_status,
                         "product":[{
                         "product_name":camp[i]["product_name"],
-                        "coupon_name":updated_cop,
+                        "coupon_name":couponlst,
                         "amount":amtlst,
                         "product_id": camp[i]["product_id"],
                         
