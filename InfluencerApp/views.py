@@ -509,6 +509,8 @@ class ApprovalList(APIView):
                     couponlst=ast.literal_eval(cop)
                     print(type(couponlst))
                     print(type(coupon_match))
+                    print(couponlst)
+                    print(coupon_match)
                     for i in couponlst:
                         print("sssss",i)
                         # if i in coupon_match:
