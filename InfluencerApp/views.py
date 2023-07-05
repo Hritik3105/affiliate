@@ -500,6 +500,7 @@ class ApprovalList(APIView):
         
             for i in range(len(camp)):
                 cop=(camp[i]["coupon_name"])
+                print(type(cop))
                 amt=(camp[i]["amount"])
              
                 if cop:
