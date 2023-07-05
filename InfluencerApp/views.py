@@ -514,9 +514,9 @@ class ApprovalList(APIView):
                     for cop in couponlst:
                         print("checked",cop)
                         if cop in coupon_match:
-                            updated_cop.append(i)
+                            updated_cop.append(cop)
                             
-                    print("sssssssssss",updated_cop)
+                    print("updateddd",updated_cop)
                 else:
                     couponlst=cop
                     print("check",couponlst)
