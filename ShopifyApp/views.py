@@ -265,7 +265,7 @@ class ParticularProduct(APIView):
             price_create=json.loads(response.text)["price_rule"]["created_at"]
             z=discount_code1(price_rule_id,acc_tok[1],headers,discount)
             if z.status_code==201:
-                print(z.json()["discount_code"])
+              
                 inf_obj=influencer_coupon()
                 inf_obj.influencer_id_id=influencer
                 inf_obj.coupon_name=discount
@@ -357,6 +357,7 @@ class DiscountCodeView(APIView):
                 price_rule_id = rule['id']
                 title = rule['title']
                 created_at=rule["created_at"]
+                print("created at ____________------",created_at.split("T"))
                 discount_data = {
                 'title':title,
                 'id': price_rule_id,
