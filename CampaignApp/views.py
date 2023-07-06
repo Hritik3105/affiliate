@@ -34,10 +34,8 @@ from Affilate_Marketing import settings
 def access_token(self,request):
     user_obj=User.objects.filter(id=self.request.user.id)
     shop=user_obj.values("shopify_url")[0]["shopify_url"]
-    acc_tok=Store.objects.filter(store_name=shop).values("access_token")[0]["access_token"] 
-    acc_tok1=Store.objects.get(store_name=shop).access_token
-    print("----------------",acc_tok)
-    print("----------------",acc_tok1)
+    acc_tok=Store.objects.get(store_name=shop).access_token
+
     return acc_tok,shop
 
 """API HELP TO GET SHOPIFY ACCESS TOKEN AND SHOPIFY STORE NAME"""
@@ -144,7 +142,8 @@ class CreateCampaign(APIView):
     authentication_classes=[TokenAuthentication]
     permission_classes = [IsAuthenticated]   
     def post(self,request):
-       
+        vendor_status21=User.objects.get(id=self.request.user.id).vendor_status
+        print(vendor_status21)
         vendor_status1=User.objects.filter(id=self.request.user.id).values("vendor_status")
         if vendor_status1[0]["vendor_status"] == True:
             serializer=CampaignSerializer(data=request.data)
