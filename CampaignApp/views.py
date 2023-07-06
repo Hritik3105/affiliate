@@ -142,8 +142,6 @@ class CreateCampaign(APIView):
     authentication_classes=[TokenAuthentication]
     permission_classes = [IsAuthenticated]   
     def post(self,request):
-        vendor_status21=User.objects.get(id=self.request.user.id).vendor_status
-        print(vendor_status21)
         vendor_status1=User.objects.filter(id=self.request.user.id).values("vendor_status")
         if vendor_status1[0]["vendor_status"] == True:
             serializer=CampaignSerializer(data=request.data)
