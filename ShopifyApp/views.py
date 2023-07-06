@@ -357,11 +357,11 @@ class DiscountCodeView(APIView):
                 price_rule_id = rule['id']
                 title = rule['title']
                 created_at=rule["created_at"]
-                print("created at ____________------",created_at.split("T"))
+                split_date=created_at.split("T")[0]
                 discount_data = {
                 'title':title,
                 'id': price_rule_id,
-                "created_at":created_at
+                "created_at":split_date
                 }
                 discount_list.append(discount_data)
               
