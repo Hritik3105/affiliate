@@ -33,7 +33,6 @@ urlpatterns = [
     path("change/status/",ChangeNotifinflStatus.as_view(),name="changenotify"),
     path("analytics/",Analytics.as_view(),name="analytics"),
     path("sale_record/",SalesRecord.as_view(),name="sale_record"),
-
     path("sale_coup/",CampaignSales.as_view(),name="exp_camp"),
     path("detail",VendorStripe.as_view(),name="detail"),
     path("balance",Balance.as_view(),name="balance"),

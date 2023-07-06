@@ -35,6 +35,9 @@ def access_token(self,request):
     user_obj=User.objects.filter(id=self.request.user.id)
     shop=user_obj.values("shopify_url")[0]["shopify_url"]
     acc_tok=Store.objects.filter(store_name=shop).values("access_token")[0]["access_token"] 
+    acc_tok1=Store.objects.get(store_name=shop).access_token
+    print("----------------",acc_tok)
+    print("----------------",acc_tok1)
     return acc_tok,shop
 
 """API HELP TO GET SHOPIFY ACCESS TOKEN AND SHOPIFY STORE NAME"""
@@ -52,7 +55,7 @@ class Register(APIView):
             serializer.save(user_type =3)
             infl_id=serializer.data["id"]
             mail_subject = 'Vendor Register'  
-            email_body= "HI"  +  " "  +  serializer.data["username"] + "your Shop Register Successfully"
+            email_body= "HI"  +  " "  +  serializer.data["username"] + " " + "your Shop Register Successfully"
         
             to_email =serializer.data["email"]  
             email = EmailMessage(  
