@@ -1360,3 +1360,31 @@ class InfluencerData(APIView):
     def get(self,request):
         infl_data=InfluencerDetails.objects.filter(influencerid=self.request.user.id).values("influencerid__username","influencerid__email","influencerid__country","influencerid__promotion")
         
+
+
+#influencer apply
+class InfluencerApplied(APIView):
+    authentication_classes=[TokenAuthentication]
+    permission_classes = [IsAuthenticated] 
+    
+    def get(self,request):
+        camp_id=request.data.get("value")
+       
+        lst=[]
+        final_lst=[]
+   
+        camp=Product_information.objects.get(campaignid_id=camp_id)
+        
+        dict1={
+                "campaignid_id":camp_id,
+                "campaign_name":camp.campaignid.campaign_name ,
+                "product":[{
+                "product_name":camp.product_name,
+                "coupon_name":camp.coupon_name,
+                "amount":camp.amount,
+                "discount_type":camp.discount_type,
+                "product_id": camp.product_id,
+            }]
+        }    
+        return Response({"data":dict1},status=status.HTTP_200_OK)   
+     
