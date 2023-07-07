@@ -1369,11 +1369,14 @@ class InfluencerApplied(APIView):
     
     def get(self,request):
         camp_id=request.data.get("value")
-       
+        print("-------------",camp_id)
+        
+        
         lst=[]
         final_lst=[]
    
-        camp=Product_information.objects.get(campaignid_id=camp_id)
+        camp=Product_information.objects.get(campaignid=camp_id)
+        print(camp)
         
         dict1={
                 "campaignid_id":camp_id,
@@ -1388,3 +1391,10 @@ class InfluencerApplied(APIView):
         }    
         return Response({"data":dict1},status=status.HTTP_200_OK)   
      
+     
+class AssignCoupon(APIView):
+    authentication_classes=[TokenAuthentication]
+    permission_classes = [IsAuthenticated] 
+    def post(self,request):
+        camp_id=request.data.get("campaignid"):
+        
