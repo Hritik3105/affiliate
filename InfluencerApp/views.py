@@ -1368,7 +1368,7 @@ class InfluencerApplied(APIView):
     permission_classes = [IsAuthenticated] 
     
     def get(self,request):
-        camp_id=request.data.get("value")
+        camp_id=request.query_params.get('value')
         print("-------------",camp_id)
         
         
@@ -1396,5 +1396,8 @@ class InfluencerApplied(APIView):
 #     authentication_classes=[TokenAuthentication]
 #     permission_classes = [IsAuthenticated] 
 #     def post(self,request):
-#         camp_id=request.data.get("campaignid"):
+#         camp_id=request.data.get("campaignid")
+#         influ_id=ModashInfluencer.objects.get(influencerid=self.request.user.id)
+        
+#         influencer_coupon.objects.create
         
