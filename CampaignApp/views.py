@@ -2107,3 +2107,79 @@ class MarketplaceExpList(APIView):
         return Response({"data":val},status=status.HTTP_200_OK)   
     
     
+    
+class MarketplaceWebsiteList(APIView):
+    def get(self,request):
+        lst=[]
+        final_lst=[]
+   
+        
+        campaign_obj=Campaign.objects.filter(status=1,draft_status=0,campaign_exp=1)
+        if campaign_obj:
+            z=(campaign_obj.values("id"))
+            for i in z:
+              
+                lst.append(i['id'])
+        set_data=set(lst)
+     
+        fin_value=set_data
+        for i in fin_value:
+            camp=Product_information.objects.filter(campaignid_id=i).values()
+            campaign_obj59=Product_information.objects.filter(campaignid_id=i).select_related("campaignid")
+            for k in campaign_obj59:
+              pass
+
+        
+            for i in range(len(camp)):
+                cop=(camp[i]["coupon_name"])
+                amt=(camp[i]["amount"])
+                discount=(camp[i]["discount_type"])
+             
+                if cop:
+                   
+                    couponlst=ast.literal_eval(cop)
+                else:
+                    couponlst=cop
+                    
+                if amt:
+                   
+                    amtlst=ast.literal_eval(amt)
+                    sliced=amtlst[0].replace("-","")
+                   
+                else:
+                    amtlst=amt
+                    
+                if discount:
+                    
+                    disc_type=ast.literal_eval(discount)
+                else:
+                    disc_type=discount
+                    
+                    
+                dict1={
+                    "campaignid_id":camp[i]["campaignid_id"],
+                    "campaign_name": k.campaignid.campaign_name ,
+                    "product":[{
+                    "product_name":camp[i]["product_name"],
+                    "coupon_name":couponlst,
+                    "amount":[sliced],
+                    "discount_type":disc_type,
+                    "product_id": camp[i]["product_id"],
+                }]
+                }
+    
+                final_lst.append(dict1)
+                
+        result={}
+        for i, record in enumerate(final_lst):
+         
+            if record["campaignid_id"] in result:
+                result[record["campaignid_id"]]["product"].append(record["product"][0])
+            else:
+               
+                result[record["campaignid_id"]] = record
+                result[record["campaignid_id"]]["product"] = record["product"]
+
+        val=list(result.values())
+        return Response({"data":val},status=status.HTTP_200_OK)   
+     
