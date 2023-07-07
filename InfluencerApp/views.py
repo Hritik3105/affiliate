@@ -1392,9 +1392,9 @@ class InfluencerApplied(APIView):
         return Response({"data":dict1},status=status.HTTP_200_OK)   
      
      
-class AssignCoupon(APIView):
-    authentication_classes=[TokenAuthentication]
-    permission_classes = [IsAuthenticated] 
-    def post(self,request):
-        camp_id=request.data.get("campaignid"):
+# class AssignCoupon(APIView):
+#     authentication_classes=[TokenAuthentication]
+#     permission_classes = [IsAuthenticated] 
+#     def post(self,request):
+#         camp_id=request.data.get("campaignid"):
         
