@@ -1377,7 +1377,7 @@ class InfluencerApplied(APIView):
         vendor_id=Campaign.objects.get(id=camp_id)
         infl_ids=ModashInfluencer.objects.get(influencerid=self.request.user.id)
         
-        VendorCampaign.objects.create(campaign_status=1,camapaignid_id=camp_id,influencerid_id=infl_ids.id,vendor=vendor_id.vendorid)
+        VendorCampaign.objects.create(campaign_status=1,campaignid_id=camp_id,influencerid_id=infl_ids.id,vendor=vendor_id.vendorid)
         camp=Product_information.objects.get(campaignid=camp_id)
        
         
