@@ -1929,7 +1929,7 @@ class InfluencerCampSale(APIView):
             for sales_entry in combined_sales_list:
                 
                 data_max.append(sales_entry)   
-            
+            print("data_maxx",data_max)
             emp_check=PaymentDetails.objects.filter(vendor=self.request.user.id)
             if emp_check:
                 for i in data_max:

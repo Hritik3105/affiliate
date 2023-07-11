@@ -97,7 +97,7 @@ class CreateDiscountCodeView(APIView):
         discount_code_data = {
             'discount_code': {
                 'code': discount_code,
-                'usage_limit': 1,
+                'usage_limit': None,
                 'customer_selection': 'all',
                 "once_per_customer": True, 
                 'starts_at': '2023-04-06T00:00:00Z',
