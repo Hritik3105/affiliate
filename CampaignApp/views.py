@@ -2230,14 +2230,16 @@ class MarketplaceAccept(APIView):
 
     def get(self,request,id,pk):
         try:
-            campaign_id=request.data.get("campaignid")
-            influencer_id=request.data.get("influencerid")
-            coupon_name=request.data.get("coupon")
-            amount=request.data.get("amount")
+            print("enter")
+            # campaign_id=request.data.get("campaignid")
+            # influencer_id=request.data.get("influencerid")
+            # coupon_name=request.data.get("coupon")
+            # amount=request.data.get("amount")
             assign_coupon=Campaign.objects.filter(id=382).update(inluencer_name=[20])
             influencer_cop=influencer_coupon.objects.create(coupon_name="mark",amount=12,vendor_id=self.request.user.id,influencer_id_id=20)
             cam_dec=VendorCampaign.objects.filter(campaignid_id=id,influencerid_id=pk,vendor_id=self.request.user.id).update(campaign_status=2)
             cam_dec=Notification.objects.filter(campaignid_id=id,influencerid_id=pk,vendor_id=self.request.user.id).update(send_notification=3)
             return Response({"message":"Campaign Accept"},status=status.HTTP_202_ACCEPTED)
         except Exception as e:
+            print(e)
             return Response(status=status.HTTP_400_BAD_REQUEST)
