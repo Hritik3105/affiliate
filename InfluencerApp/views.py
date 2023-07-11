@@ -1507,7 +1507,7 @@ class InfluencerApplied(APIView):
         
         camp_accept=Campaign.objects.filter(id=camp_id).update(campaign_status=1)
         infl_accept=Notification.objects.create(campaignid_id=camp_id,influencerid_id=infl_ids.id,send_notification=2,vendor_id=vendors_id.vendorid.id)
-        VendorCampaign.objects.create(campaign_status=1,campaignid_id=camp_id,influencerid_id=infl_ids.id,vendor=vendors_id.vendorid.id)
+        VendorCampaign.objects.create(campaign_status=1,campaignid_id=camp_id,influencerid_id=infl_ids.id,vendor_id=vendors_id.vendorid.id)
         camp=Product_information.objects.get(campaignid=camp_id)  
         
         
@@ -1515,7 +1515,7 @@ class InfluencerApplied(APIView):
        
         if vendor_codes.exists():
             res.append(vendor_codes)
-        else:
+        else:   
             res=""
         
         if res:
