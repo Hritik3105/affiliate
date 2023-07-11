@@ -1375,7 +1375,7 @@ class VendorApprovalList(APIView):
      
         final_lst1=[] 
       
-        campaign_obj2=VendorCampaign.objects.filter(campaign_status=1,vendor_id=self.request.user.id,campaignid__campaign_exp=1)
+        campaign_obj2=VendorCampaign.objects.filter(campaign_status=1,vendor_id=self.request.user.id,campaignid__campaign_exp=1.campaignid__status=2)
       
         z=campaign_obj2.values_list("campaignid__id","campaignid__campaign_name")
         influencerid=campaign_obj2.values_list("influencerid",flat=True)
