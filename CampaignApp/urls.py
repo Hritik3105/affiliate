@@ -43,4 +43,5 @@ urlpatterns = [
     path("marketcampaignexp/",MarketplaceExpList.as_view(),name="marketcampaignexp"),
     path("marketplacewebsite/",MarketplaceWebsiteList.as_view(),name="marketplacewebsite"),
     path("marketapproval/",MarketplaceApprovalList.as_view(),name="marketapproval"),
+    path("marketplaceaccept/<int:id>/<int:pk>/",MarketplaceApprovalList.as_view(),name="marketplaceaccept"),
 ]
