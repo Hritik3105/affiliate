@@ -39,7 +39,7 @@ headers={"Authorization": "Bearer yGrFqiK4YqDtqODbGRZkZrWRIgsjFLZP"}
 class Register(APIView):
     def post(self,request):
         influencer_id=request.data.get("user_handle")
-        print(influencer_id)
+      
         serializer=InfluencerSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
             
@@ -59,7 +59,7 @@ class Register(APIView):
 
                 base_url="https://app.clickanalytic.com/api/v2/analysis"
                 response=requests.post(base_url,headers=headers2,json=dict)
-                print(response.json())
+                
                 if response.status_code==200:
                     influencer_obj.follower=response.json()["user_profile"]["followers"]
                     influencer_obj.engagement_rate=response.json()["user_profile"]["engagement_rate"]
@@ -165,7 +165,7 @@ class StepTwoAPIView(APIView):
             infl_id = serializer.data["influencerid"]
             save_obj = User.objects.get(id=infl_id)
 
-            print(save_obj)
+          
             uid64 = urlsafe_base64_encode(force_bytes(infl_id))
             current_site_info = get_current_site(request)
             activate_url = (
@@ -370,9 +370,9 @@ class PendingList(APIView):
         res=[]
         res2=[]    
         value=ModashInfluencer.objects.filter(influencerid_id=self.request.user.id).values_list("id",flat=True)[0]
-        print("valuess",value)
+    
         vendor_codes=VendorCampaign.objects.filter(influencerid_id=value,campaign_status=0)
-        print(vendor_codes)
+      
         if vendor_codes.exists():
             res.append(vendor_codes)
         else:
@@ -493,7 +493,7 @@ class ApprovalList(APIView):
             camp=Product_information.objects.filter(campaignid_id=i).values()
             campaign_obj59=Product_information.objects.filter(campaignid_id=i).select_related("campaignid")
             coupon_match=influencer_coupon.objects.filter(influencer_id=value).values_list("coupon_name",flat=True)
-            print(coupon_match)
+      
            
             for k in campaign_obj59:
                pass
@@ -512,14 +512,14 @@ class ApprovalList(APIView):
                     # print(couponlst)
                     # print(coupon_match)
                     for cop in couponlst:
-                        print("checked",cop)
+                        
                         if cop  not in coupon_match:
                             couponlst.remove(cop)
                             
-                    print("9999999999",couponlst)
+        
                 else:
                     couponlst=cop
-                    print("check",couponlst)
+                 
                     
                 if amt:
                     
@@ -528,8 +528,8 @@ class ApprovalList(APIView):
                     amtlst=amt
                     
                
-                print("sssss",camp[i]["campaignid_id"])
-                print(vendo_camp)
+               
+                
                 if camp[i]["campaignid_id"] in vendo_camp:
                     dict1={
                         "campaignid_id":camp[i]["campaignid_id"],
@@ -739,8 +739,7 @@ class VendorNotification(APIView):
     
     def get(self,request):
         modash_get=ModashInfluencer.objects.filter(influencerid_id=self.request.user.id,).values_list('id',flat=True)[0]
-        
-        print("--------------",modash_get)
+     
         notification_obj=Notification.objects.filter(influencerid_id=modash_get,send_notification__in=[1,3,5])
         
         notify_list=[]
@@ -804,9 +803,9 @@ class StripeConnectAccountView(APIView):
         routing_number=request.data.get("routing_number")
         account_holder_name=request.data.get("account_holder_name")
         secret=request.data.get("secret")
-        print(secret)
+       
         vendorids=request.data.get("vendorid")
-        print(vendorids)
+    
         check_data=StripeDetails.objects.all()
         if check_data:
             
@@ -1231,9 +1230,9 @@ class Click_analytics(APIView):
     def get(self,request):
         headers2={"Authorization": "Bearer 1m5vdEGduXxmd4QpwpL48Xj8FiA1jxrLPwQPO0W5"}
         platform=request.data.get("platform")
-        print(platform)
+        
         influencer_id=request.data.get("influencer_id")
-        print(influencer_id)
+       
         
         dict={
         "platform": platform,
@@ -1244,7 +1243,7 @@ class Click_analytics(APIView):
         url="https://app.clickanalytic.com/api/v2/analysis"
         
         response=requests.post(url,headers=headers2,json=dict)
-        print(response.json())
+       
         if response.status_code==200:
             followers=response.json()["user_profile"]["followers"]
             engagement_rate=response.json()["user_profile"]["engagement_rate"]
@@ -1324,7 +1323,7 @@ class Dubaiaccount(APIView):
         last_name="Diaz",
         )
             
-        print(person)   
+      
         
          
         data=stripe.Account.modify_person(
@@ -1333,7 +1332,7 @@ class Dubaiaccount(APIView):
         relationship={"representative": True,"owner":True},
         
         )
-        print(data)
+       
         return Response({"detais":account})
         
         
@@ -1400,7 +1399,7 @@ class InfluencerApplied(APIView):
         res2=[]    
         
         vendor_codes=VendorCampaign.objects.filter(influencerid_id=infl_ids.id,campaign_status=1)
-        print(vendor_codes)
+       
         if vendor_codes.exists():
             res.append(vendor_codes)
         else:

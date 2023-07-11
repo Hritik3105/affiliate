@@ -176,8 +176,7 @@ class CheckStore(APIView):
         input_url = "marketplacee-app.myshopify.com"
         shop=f"https://{input_url}/admin/api/{API_VERSION}/shop.json"
         response = requests.get(f"https://{input_url}/admin/api/{API_VERSION}/shop.json")
-        print(shop)
-        print(response.status_code)
+        
         return response.status_code == 200
 
 

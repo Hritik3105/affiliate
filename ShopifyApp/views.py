@@ -315,7 +315,7 @@ def discount_code1(price_id,shop,headers,discount_code):
     if discount_code_response.status_code == 201:
         return discount_code_response
     else:
-        print("i mam hererre")
+    
         pp=delete_price_rule(price_id,shop, headers)
         return discount_code_response
       
@@ -427,7 +427,7 @@ class DeleteCodeView(APIView):
 
         if response.status_code == 204:
             delete_dbcoupon=influencer_coupon.objects.filter(coupon_id=price_rule).delete()
-            print("checkdddd",delete_dbcoupon)
+         
             return Response({'message': 'Discount deleted successfully'})
         else:
             return Response({'message': response.text}, status=response.status_code)
@@ -733,7 +733,7 @@ class Analytics(APIView):
         now = datetime.now()
         year = now.year
         month = now.month
-        print(month)
+       
 
       
         start_date = date(2023, 1, 1)
@@ -760,7 +760,7 @@ class Analytics(APIView):
 
             return Response({'total_sales': total_sales})
         else:
-            print(response.json())
+          
             return Response({'error': 'Failed to fetch total sales'}, status=500)
 
 

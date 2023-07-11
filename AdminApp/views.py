@@ -309,7 +309,7 @@ def Single_camp(request,id):
 def Single_Vendor(request,id):
     
     single_obj=User.objects.filter(id=id).values()
-    print(id)
+
     camp_obj=Campaign.objects.filter(vendorid_id=id,draft_status=0,status=2).values()
    
     lst1=[]
@@ -360,8 +360,8 @@ def Single_Vendor(request,id):
         product_names = [item['product_name'] for item in result if item['campaignid'] == campaign_id]
         for item in result: 
             if item['campaignid'] == campaign_id:
-                print(item["amount"])
-                
+             
+                print("hello")
         combined_data.append({'product_name': product_names,"id":campaign_id})
         
         
@@ -953,7 +953,7 @@ def total_sales(request):
         url = f"https://{shop}/admin/api/{API_VERSION}/shopify_payments/balance.json"
         response = requests.get(url, headers=headers)
         
-        print(response.json())
+       
     return render(request,"dashboard.html")
 
 
