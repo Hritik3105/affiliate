@@ -1503,11 +1503,11 @@ class InfluencerApplied(APIView):
 
         camp_id=request.query_params.get('value')
         infl_ids=ModashInfluencer.objects.get(influencerid=self.request.user.id)
-        vendor_id=Campaign.objects.get(id=camp_id)
+        vendors_id=Campaign.objects.get(id=camp_id)
         
         camp_accept=Campaign.objects.filter(id=camp_id).update(campaign_status=1)
-        infl_accept=Notification.objects.create(campaignid_id=camp_id,influencerid_id=infl_ids.id,send_notification=2,vendor_id=vendor_id.vendorid)
-        VendorCampaign.objects.create(campaign_status=1,campaignid_id=camp_id,influencerid_id=infl_ids.id,vendor=vendor_id.vendorid)
+        infl_accept=Notification.objects.create(campaignid_id=camp_id,influencerid_id=infl_ids.id,send_notification=2,vendor_id=vendors_id.vendorid.id)
+        VendorCampaign.objects.create(campaign_status=1,campaignid_id=camp_id,influencerid_id=infl_ids.id,vendor=vendors_id.vendorid.id)
         camp=Product_information.objects.get(campaignid=camp_id)  
         
         
@@ -1588,3 +1588,26 @@ class InfluencerApplied(APIView):
         val=list(result.values())
         
         return Response({"data":val},status=status.HTTP_200_OK)   
+    
+    
+    
+    
+class InfluencerProfile(APIView):
+    authentication_classes=[TokenAuthentication]
+    permission_classes = [IsAuthenticated] 
+
+
+    def get(self,request):
+        try:
+            infl_details=User.objects.get(id=self.request.user.id)
+            
+            infl_dict={
+                "name":infl_details.username,
+                "email":infl_details.email,
+                "country":infl_details.country
+            }
+
+            return Response({"details":infl_dict},status=status.HTTP_200_OK)
+
+        except Exception as e:
+            return Response({"error":e},status=status.HTTP_400_BAD_REQUEST)

@@ -63,6 +63,7 @@ urlpatterns = [
     path('dubai/', Dubaiaccount.as_view(), name='dubai'),
     path('admindec/', Admindecision.as_view(), name='admindec'),
     path('inflapplied/', InfluencerApplied.as_view(), name='inflapplied'),
+    path('inflprofile/', InfluencerProfile.as_view(), name='inflprofile'),
     
 
     
