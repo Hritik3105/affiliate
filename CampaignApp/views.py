@@ -1929,39 +1929,40 @@ class InfluencerCampSale(APIView):
             for sales_entry in combined_sales_list:
                 
                 data_max.append(sales_entry)   
-            
-            for i in data_max:
-               
-                emp_check=PaymentDetails.objects.filter(vendor=self.request.user.id,campaign_id=i["campaign_detail"]).exists()
-               
-                if emp_check == False:
-                    PaymentDetails.objects.create(sales=i["sales"],influencerfee=i["influener_fee"],offer=i["offer"],amount=i["amount"],influencer_id=i["influencer"],vendor_id=self.request.user.id,campaign_id=i["campaign_detail"],account_id=i["account"])
-                else:
-                    print("enterrrrrrrrr",i)
+            empty=PaymentDetails.objects.all().exists():
+            if empty == True:
+                for i in data_max:
+                
+                    emp_check=PaymentDetails.objects.filter(vendor=self.request.user.id,campaign_id=i["campaign_detail"]).exists()
+                
+                    if emp_check == False:
+                        PaymentDetails.objects.create(sales=i["sales"],influencerfee=i["influener_fee"],offer=i["offer"],amount=i["amount"],influencer_id=i["influencer"],vendor_id=self.request.user.id,campaign_id=i["campaign_detail"],account_id=i["account"])
+                    else:
+                        print("enterrrrrrrrr",i)
+                        
+                # if emp_check:
+                #     for i in data_max:
+                #         PaymentDetails.objects.filter(vendor=self.request.user.id,campaign=i["campaign_detail"],influencer=i["influencer"]).update(sales=i["sales"],influencerfee=i["influener_fee"],offer=i["offer"],amount=i["amount"])
                     
-            # if emp_check:
-            #     for i in data_max:
-            #         PaymentDetails.objects.filter(vendor=self.request.user.id,campaign=i["campaign_detail"],influencer=i["influencer"]).update(sales=i["sales"],influencerfee=i["influener_fee"],offer=i["offer"],amount=i["amount"])
-                 
-            # for data in data_max:
-            #     emp_check=PaymentDetails.objects.filter(influencer=data["influencer"],campaign=data["campaign_detail"])
-            #     print("emp_checkkkkkkkkkkkkk",emp_check)
-            #     if emp_check:
-            #         for i in data_max:
-            #             PaymentDetails.objects.filter(vendor=self.request.user.id,campaign=i["campaign_detail"],influencer=i["influencer"]).update(sales=i["sales"],influencerfee=i["influener_fee"],offer=i["offer"],amount=i["amount"])     
-                 
-            print("first try")
-            for i in data_max:
-                details_obj=PaymentDetails()
-                details_obj.amount=i["amount"]
-                details_obj.influencer_id=i["influencer"]
-                details_obj.vendor_id=self.request.user.id
-                details_obj.sales=i["sales"]
-                details_obj.influencerfee=i["influener_fee"]
-                details_obj.offer=i["offer"]
-                details_obj.campaign_id=i["campaign_detail"]
-                details_obj.account_id=i["account"]
-                details_obj.save()
+                # for data in data_max:
+                #     emp_check=PaymentDetails.objects.filter(influencer=data["influencer"],campaign=data["campaign_detail"])
+                #     print("emp_checkkkkkkkkkkkkk",emp_check)
+                #     if emp_check:
+                #         for i in data_max:
+                #             PaymentDetails.objects.filter(vendor=self.request.user.id,campaign=i["campaign_detail"],influencer=i["influencer"]).update(sales=i["sales"],influencerfee=i["influener_fee"],offer=i["offer"],amount=i["amount"])     
+            else:     
+                print("first try")
+                for i in data_max:
+                    details_obj=PaymentDetails()
+                    details_obj.amount=i["amount"]
+                    details_obj.influencer_id=i["influencer"]
+                    details_obj.vendor_id=self.request.user.id
+                    details_obj.sales=i["sales"]
+                    details_obj.influencerfee=i["influener_fee"]
+                    details_obj.offer=i["offer"]
+                    details_obj.campaign_id=i["campaign_detail"]
+                    details_obj.account_id=i["account"]
+                    details_obj.save()
                 
             upd_data=PaymentDetails.objects.filter(vendor=self.request.user.id)
             upd_lst=[]
