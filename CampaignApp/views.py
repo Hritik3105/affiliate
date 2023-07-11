@@ -1935,11 +1935,10 @@ class InfluencerCampSale(APIView):
                 emp_check=PaymentDetails.objects.filter(vendor=self.request.user.id,campaign_id=i["campaign_detail"]).exists()
                
                 if emp_check == False:
-
-                    
                     PaymentDetails.objects.create(sales=i["sales"],influencerfee=i["influener_fee"],offer=i["offer"],amount=i["amount"],influencer_id=i["influencer"],vendor_id=self.request.user.id,campaign_id=i["campaign_detail"],account_id=i["account"])
                 else:
-                    pass
+                    print("enterrrrrrrrr",i)
+                    
             # if emp_check:
             #     for i in data_max:
             #         PaymentDetails.objects.filter(vendor=self.request.user.id,campaign=i["campaign_detail"],influencer=i["influencer"]).update(sales=i["sales"],influencerfee=i["influener_fee"],offer=i["offer"],amount=i["amount"])
@@ -1951,7 +1950,7 @@ class InfluencerCampSale(APIView):
             #         for i in data_max:
             #             PaymentDetails.objects.filter(vendor=self.request.user.id,campaign=i["campaign_detail"],influencer=i["influencer"]).update(sales=i["sales"],influencerfee=i["influener_fee"],offer=i["offer"],amount=i["amount"])     
                  
-        
+            print("first try")
             for i in data_max:
                 details_obj=PaymentDetails()
                 details_obj.amount=i["amount"]
