@@ -1937,6 +1937,7 @@ class InfluencerCampSale(APIView):
                  
             for data in data_max:
                 emp_check=PaymentDetails.objects.filter(influencer=data["influencer"],campaign=data["campaign_detail"])
+                print("emp_checkkkkkkkkkkkkk",emp_check)
                 if emp_check:
                     for i in data_max:
                         PaymentDetails.objects.filter(vendor=self.request.user.id,campaign=i["campaign_detail"],influencer=i["influencer"]).update(sales=i["sales"],influencerfee=i["influener_fee"],offer=i["offer"],amount=i["amount"])     
