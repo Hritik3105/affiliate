@@ -2240,10 +2240,9 @@ class MarketplaceAccept(APIView):
     def get(self,request,id,pk):
         try:
             print("enter")
-            # campaign_id=request.data.get("campaignid")
-            # influencer_id=request.data.get("influencerid")
-            # coupon_name=request.data.get("coupon")
-            # amount=request.data.get("amount")
+            
+            coupon_name=request.data.get("coupon")
+            amount=request.data.get("amount")
             assign_coupon=Campaign.objects.filter(id=382).update(influencer_name=[20])
             influencer_cop=influencer_coupon.objects.create(coupon_name="mark",amount=12,vendor_id=self.request.user.id,influencer_id_id=20)
             cam_dec=VendorCampaign.objects.filter(campaignid_id=id,influencerid_id=pk,vendor_id=self.request.user.id).update(campaign_status=2)
@@ -2259,7 +2258,7 @@ class MarketplaceAccept(APIView):
 class MarketplaceDecline(APIView):
     authentication_classes=[TokenAuthentication]
     permission_classes = [IsAuthenticated]    
-    def post(self,request,id,pk):
+    def get(self,request,id,pk):
         try:
         
             cam_dec=VendorCampaign.objects.filter(campaignid_id=id,influencerid_id=pk,vendor_id=self.request.user.id).update(campaign_status=4)
