@@ -1495,13 +1495,15 @@ class InfluencerApplied(APIView):
     permission_classes = [IsAuthenticated] 
     
     def get(self,request):
-   
+        print("countsss")
         lst=[]
         final_lst=[]
         res=[]
         res2=[]    
 
         camp_id=request.query_params.get('value')
+        print("camp_id",camp_id)
+        
         infl_ids=ModashInfluencer.objects.get(influencerid=self.request.user.id)
         vendors_id=Campaign.objects.get(id=camp_id)
         
