@@ -1936,9 +1936,11 @@ class InfluencerCampSale(APIView):
                
                 if emp_check == False:
                     print(i)
-            if emp_check:
-                for i in data_max:
-                    PaymentDetails.objects.filter(vendor=self.request.user.id,campaign=i["campaign_detail"],influencer=i["influencer"]).update(sales=i["sales"],influencerfee=i["influener_fee"],offer=i["offer"],amount=i["amount"])
+                    PaymentDetails.objects.create(sales=i["sales"],influencerfee=i["influener_fee"],offer=i["offer"],amount=i["amount"],influencer_id=i["influencer"],vendor_id=self.request.user.id,campaign_id=i["campaign_detail"],account_id=i["account"])
+
+            # if emp_check:
+            #     for i in data_max:
+            #         PaymentDetails.objects.filter(vendor=self.request.user.id,campaign=i["campaign_detail"],influencer=i["influencer"]).update(sales=i["sales"],influencerfee=i["influener_fee"],offer=i["offer"],amount=i["amount"])
                  
             # for data in data_max:
             #     emp_check=PaymentDetails.objects.filter(influencer=data["influencer"],campaign=data["campaign_detail"])
