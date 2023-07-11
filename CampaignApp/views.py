@@ -2190,3 +2190,33 @@ class MarketplaceWebsiteList(APIView):
         val=list(result.values())
         return Response({"data":val},status=status.HTTP_200_OK)   
      
+     
+#VENDOR APPROVAL LIST
+"""API TO SHOW MARKETPLACE APPROVAL LIST"""        
+class MarketplaceApprovalList(APIView):
+    authentication_classes=[TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    def get(self,request):
+          
+        influ_get=VendorCampaign.objects.exclude(Q(campaign_status=0)|Q(campaign_status=2),vendor_id=self.request.user.id).values_list("influencerid_id",flat=True)
+     
+        final_lst1=[] 
+      
+        campaign_obj2=VendorCampaign.objects.filter(campaign_status=1,vendor_id=self.request.user.id,campaignid__campaign_exp=1,campaignid__status=2)
+        
+        z=campaign_obj2.values_list("campaignid__id","campaignid__campaign_name")
+        influencerid=campaign_obj2.values_list("influencerid",flat=True)
+        
+        for i in campaign_obj2:
+            cop_names=Product_information.objects.get(campaignid=i.campaignid.id)
+            dict1={
+                "campaignid_id":i.campaignid.id,
+                "campaign_name": i.campaignid.campaign_name,
+                "influencer_name":i.influencerid.id,
+                "coupon_name":cop_names.coupon_name,
+                "amount":cop_names.amount
+               
+            }
+            
+            final_lst1.append(dict1)          
+        return Response({"data":final_lst1},status=status.HTTP_200_OK)  

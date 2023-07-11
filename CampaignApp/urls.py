@@ -42,4 +42,5 @@ urlpatterns = [
     path("campaignexp/",CampaignExpList.as_view(),name="campaignexp"),
     path("marketcampaignexp/",MarketplaceExpList.as_view(),name="marketcampaignexp"),
     path("marketplacewebsite/",MarketplaceWebsiteList.as_view(),name="marketplacewebsite"),
+    path("marketapproval/",MarketplaceApprovalList.as_view(),name="marketapproval"),
 ]
