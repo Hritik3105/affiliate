@@ -44,4 +44,7 @@ urlpatterns = [
     path("marketplacewebsite/",MarketplaceWebsiteList.as_view(),name="marketplacewebsite"),
     path("marketapproval/",MarketplaceApprovalList.as_view(),name="marketapproval"),
     path("marketplaceaccept/<int:id>/<int:pk>/",MarketplaceAccept.as_view(),name="marketplaceaccept"),
+    path("marketplacedecline/<int:id>/<int:pk>/",MarketplaceDecline.as_view(),name="marketplacedecline"),
+    path("market_approval/",MarketPlaceApprovalList.as_view(),name="marketapproval"),
+    path("market_decline/",MarketDeclineList.as_view(),name="marketdecline"),
 ]

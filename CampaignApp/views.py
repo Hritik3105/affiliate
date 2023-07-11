@@ -2243,3 +2243,77 @@ class MarketplaceAccept(APIView):
         except Exception as e:
             print(e)
             return Response(status=status.HTTP_400_BAD_REQUEST)
+        
+        
+        
+#MAKETPLACE DECLINE BY VENDOR
+class MarketplaceDecline(APIView):
+    authentication_classes=[TokenAuthentication]
+    permission_classes = [IsAuthenticated]    
+    def post(self,request,id,pk):
+        try:
+        
+            cam_dec=VendorCampaign.objects.filter(campaignid_id=id,influencerid_id=pk,vendor_id=self.request.user.id).update(campaign_status=4)
+            cam_dec=Notification.objects.filter(campaignid_id=id,influencerid_id=pk,vendor_id=self.request.user.id).update(send_notification=5)
+           
+            return Response({"message":"Campaign Decline by Vendor"},status=status.HTTP_200_OK)
+        except:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+        
+        
+#MARKETPLACE APPROVAL LIST
+"""API TO SHOW MARKETPLACE APPROVAL LIST"""        
+class MarketPlaceApprovalList(APIView):
+    authentication_classes=[TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    def get(self,request):
+          
+        influ_get=VendorCampaign.objects.exclude(Q(campaign_status=0)|Q(campaign_status=2),vendor_id=self.request.user.id).values_list("influencerid_id",flat=True)
+     
+        final_lst1=[] 
+      
+        campaign_obj2=VendorCampaign.objects.filter(campaign_status=1,vendor_id=self.request.user.id,campaignid__campaign_exp=1,campaignid__status=1)
+      
+        z=campaign_obj2.values_list("campaignid__id","campaignid__campaign_name")
+        influencerid=campaign_obj2.values_list("influencerid",flat=True)
+        
+        for i in campaign_obj2:
+           
+            dict1={
+                "campaignid_id":i.campaignid.id,
+                "campaign_name": i.campaignid.campaign_name,
+                "influencer_name":i.influencerid.id,
+            }
+            
+            final_lst1.append(dict1)          
+        return Response({"data":final_lst1},status=status.HTTP_200_OK)  
+    
+
+
+#MARKETPLACE DECLINE LIST
+"""API TO SHOW MARKETPLACE DECLINE LIST"""  
+class MarketDeclineList(APIView):
+    authentication_classes=[TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    def get(self,request):
+               
+        final_lst1=[] 
+      
+        campaign_obj2=VendorCampaign.objects.filter(campaign_status=4,vendor_id=self.request.user.id,campaignid__campaign_exp=1,campaignid__status=1)
+      
+        z=campaign_obj2.values_list("campaignid__id","campaignid__campaign_name")
+        influencerid=campaign_obj2.values_list("influencerid",flat=True)
+        
+        for i in campaign_obj2:
+           
+            dict1={
+                "campaignid_id":i.campaignid.id,
+                "campaign_name": i.campaignid.campaign_name,
+                "influencer_name":i.influencerid.id,
+            }
+            
+    
+        
+            final_lst1.append(dict1)
+            
+        return Response({"data":final_lst1},status=status.HTTP_200_OK)  
