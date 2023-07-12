@@ -1850,6 +1850,8 @@ class InfluencerCampSale(APIView):
                 influencer_ids = influencer_coupon.objects.filter(coupon_name=coupon_name,vendor=self.request.user.id).values("influencer_id", "coupon_name")
                 for influencer in influencer_ids:
                     influencer_id = influencer["influencer_id"]
+                    print(influencer_id)
+                    print(campaign_ids)
                     modash_data = Campaign.objects.filter(influencer_name__contains=influencer_id, id__in=campaign_ids,vendorid=self.request.user.id).values_list("id",flat=True)
                     pro_data=Product_information.objects.filter(coupon_name__contains=coupon_name,campaignid__in=modash_data,vendor=self.request.user.id).values("campaignid")
                     for modash_entry in pro_data:
@@ -2325,3 +2327,30 @@ class MarketDeclineList(APIView):
             final_lst1.append(dict1)
             
         return Response({"data":final_lst1},status=status.HTTP_200_OK)  
+    
+    
+class BuySubscription(APIView):
+    authentication_classes=[TokenAuthentication]
+    permission_classes=[IsAuthenticated]
+    def post(self,request):
+        
+        plan=request.query_params.get()
+        session = stripe.checkout.Session.create(
+                        payment_method_types=['card'],
+                        line_items=[
+                                {
+                                    'price': plan,
+                                    'quantity': 1,
+                                },
+                            ],
+
+                        mode='subscription',
+                        success_url='http://127.0.0.1:8000/success',
+                        # success_url='http://54.172.231.92:8000/success',
+                        cancel_url='https://example.com/cancel',
+                        billing_address_collection='auto'
+        )
+        
+        print(session)
+        
+        return Response

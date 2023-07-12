@@ -108,8 +108,6 @@ class CreateDiscountCodeView(APIView):
 
         discount_code_response = requests.post(discount_code_endpoint, json=discount_code_data,headers=headers)
     
-    
-
         if discount_code_response.status_code == 201:
             print('Discount code created successfully!')
         else:
