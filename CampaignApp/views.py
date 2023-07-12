@@ -1273,6 +1273,7 @@ class ProductUrl(APIView):
                     price_rules_id=price_rule.json()['price_rules'][i]["id"]
                     get_influencer=influencer_coupon.objects.filter(vendor_id=self.request.user.id,coupon_id=price_rules_id).values("influencer_id")
                     influ_id=get_influencer
+                    print(get_influencer)
                   
                     price_rules_codes=price_rule.json()['price_rules'][i]["title"]
                     price_rule_value=price_rule.json()['price_rules'][i]['value']
