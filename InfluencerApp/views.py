@@ -52,7 +52,7 @@ class Register(APIView):
                 influencer_obj.follower=122
                 influencer_obj.engagement_rate=12.45
                 dict={
-                "platform": "instagram",
+                "platform": ["instagram","tiktok"],
                 "influencer_id": influencer_id
                 }
                 headers2={"Authorization": "Bearer 1m5vdEGduXxmd4QpwpL48Xj8FiA1jxrLPwQPO0W5"}

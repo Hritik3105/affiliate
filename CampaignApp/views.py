@@ -2243,7 +2243,7 @@ class MarketplaceAccept(APIView):
             
             coupon_name=request.data.get("coupon")
             amount=request.data.get("amount")
-            assign_coupon=Campaign.objects.filter(id=382).update(influencer_name=[20])
+            assign_coupon=Campaign.objects.filter(id=394).update(influencer_name=[20])
             influencer_cop=influencer_coupon.objects.create(coupon_name="mark",amount=12,vendor_id=self.request.user.id,influencer_id_id=20)
             cam_dec=VendorCampaign.objects.filter(campaignid_id=id,influencerid_id=pk,vendor_id=self.request.user.id).update(campaign_status=2)
             cam_dec=Notification.objects.filter(campaignid_id=id,influencerid_id=pk,vendor_id=self.request.user.id).update(send_notification=3)
@@ -2280,7 +2280,7 @@ class MarketPlaceApprovalList(APIView):
      
         final_lst1=[] 
       
-        campaign_obj2=VendorCampaign.objects.filter(campaign_status=1,vendor_id=self.request.user.id,campaignid__campaign_exp=1,campaignid__status=1)
+        campaign_obj2=VendorCampaign.objects.filter(campaign_status=2,vendor_id=self.request.user.id,campaignid__campaign_exp=1,campaignid__status=1)
       
         z=campaign_obj2.values_list("campaignid__id","campaignid__campaign_name")
         influencerid=campaign_obj2.values_list("influencerid",flat=True)
