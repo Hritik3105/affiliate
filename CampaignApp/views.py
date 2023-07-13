@@ -2416,6 +2416,9 @@ class ExpiryCoupondelete(APIView):
         product_info=Product_information.objects.filter(campaignid_id__campaign_exp=0).values_list("coupon_name",flat=True)
         product_vendor_id=Product_information.objects.filter(campaignid_id__campaign_exp=0).values_list("vendor_id",flat=True)
         print(product_vendor_id)
+        zz=zip(product_info,product_vendor_id)
+        
+        print("-000000000000",zz)
         for coup in product_info:   
             
             if coup:
