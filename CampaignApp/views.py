@@ -139,9 +139,12 @@ class VendorLogin(APIView):
 
 """API TO CREATE CAMPAIGN FOR MARKET PLACE DRAFT"""
 class CreateCampaign(APIView):
+    
+    
     authentication_classes=[TokenAuthentication]
     permission_classes = [IsAuthenticated]   
     def post(self,request):
+        ExpiryCoupondelete(self,request)
         vendor_status1=User.objects.filter(id=self.request.user.id).values("vendor_status")
         if vendor_status1[0]["vendor_status"] == True:
             serializer=CampaignSerializer(data=request.data)
@@ -2409,30 +2412,10 @@ class Success(APIView):
         
         
 
-class ExpiryCoupondelete(APIView):
-    authentication_classes=[TokenAuthentication]
-    permission_classes=[IsAuthenticated]
-    def get(self,request):
-        product_info=Product_information.objects.filter(campaignid_id__campaign_exp=0).values_list("coupon_name",flat=True)
-        product_vendor_id=Product_information.objects.filter(campaignid_id__campaign_exp=0).values_list("vendor_id",flat=True)
-        
-        zip_list=zip(product_info,product_vendor_id)
-        
-        
-        list_val=list(zip_list)
-        filtered_data = [item for item in list_val if item[0] is not None]
-        
-        
-        for coupon,vendor in filtered_data:
-           
-        
-   
-            str_lst=ast.literal_eval(coupon)
-            # print(type(str_lst))
-            cop_id=influencer_coupon.objects.filter(coupon_name__in=str_lst,vendor=vendor).values("coupon_name","coupon_id")
-            print(cop_id)
-            # delete_coup=influencer_coupon.objects.filter(coupon_name__in=coup).delete()
-            
-            # url =f'https://{SHOPIFY_API_KEY}:{SHOPIFY_API_SECRET}@{acc_tok[1]}/admin/api/{API_VERSION}/price_rules/{price_rule}.json'
-        return Response({"success":cop_id})
+# class ExpiryCoupondelete(APIView):
+#     authentication_classes=[TokenAuthentication]
+#     permission_classes=[IsAuthenticated]
+
+
+    
     

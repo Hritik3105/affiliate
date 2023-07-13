@@ -2,6 +2,8 @@ from CampaignApp.models import *
 from StoreApp.models import *
 from rest_framework.response import Response
 import ast
+from ShopifyApp.models import *
+from CampaignApp.views import access_token
 
 def product_details(self,request,val_lst,req_id):
   
@@ -74,3 +76,30 @@ def coupon_check(self,request,val_lst2,cup_lst,coup_lst):
                     cop_lst=ast.literal_eval(cop)
                     
                     return cop
+
+
+
+
+def ExpiryCoupondelete(self,request):
+    
+    acc_tok=access_token(self,request)
+    print("heloooooooooooooooooooooooooooooooooooooooooooooooo")
+    headers= {"X-Shopify-Access-Token": acc_tok[0]}
+    price_rule=request.query_params.get('price')
+    product_info=Product_information.objects.filter(campaignid_id__campaign_exp=0,vendor_id=self.request.user.id).values_list("coupon_name",flat=True)
+    
+    
+    if product_info:
+        for coupon in product_info:
+
+            str_lst=ast.literal_eval(coupon)
+        
+            cop_id=influencer_coupon.objects.filter(coupon_name__in=str_lst,vendor=self.request.user.id).values_list("coupon_id",flat=True)
+            print(cop_id)
+            # url =f'https://{SHOPIFY_API_KEY}:{SHOPIFY_API_SECRET}@{acc_tok[1]}/admin/api/{API_VERSION}/price_rules/{price_rule}.json'
+    
+    
+            # response = requests.delete(url,headers=headers)
+
+            # delete_coup=influencer_coupon.objects.filter(coupon_name__in=str_lst).delete()
+    return Response({"success":"coupon_delete"})
