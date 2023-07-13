@@ -137,7 +137,7 @@ def checkout(self,request,plan):
     return session
 
 
-def success(self,request,subscription_id,price_id,start_date,end_date):
+def success(self,request,subscription_id,price_id,start_date,end_date,amount):
     subscription=StripeSubscription()
     subscription.vendor_id=self.request.user.id
     subscription.status=1
@@ -146,6 +146,19 @@ def success(self,request,subscription_id,price_id,start_date,end_date):
     subscription.start_date=start_date
     subscription.end_date=end_date
     subscription.save()
+    print(amount)    
+    credit=CampaignCredit()
+    if amount == 100:
+        credit.total_campaign=10
+    elif amount == 250:
+        credit.total_campaign=30
+    else:
+        credit.total_campaign=50
+        
+    credit.status=1
+    credit.vendor_id=self.request.user.id
+    credit.start_date=start_date
+    credit.end_date=end_date
     
     return "Created"
     

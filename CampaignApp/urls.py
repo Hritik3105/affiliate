@@ -49,7 +49,7 @@ urlpatterns = [
     path("market_decline/",MarketDeclineList.as_view(),name="marketdecline"),
     path("checkout_session/",BuySubscription.as_view(),name="checkout_session"),
     path("success/",Success.as_view(),name="success"),
-    # path("cancel_subscription/",CancelSubscription.as_view(),name="cancel_subscription"),
-    # path("expiry_delete/",ExpiryCoupondelete.as_view(),name="expiry_delete"),
+    path("cancel/",Cancel.as_view(),name="cancel"),
+   
     
 ]

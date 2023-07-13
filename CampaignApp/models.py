@@ -132,3 +132,11 @@ class StripeSubscription(models.Model):
   start_date = models.DateField(blank=True, null=True)
   end_date = models.DateField(blank=True, null=True)
   
+  
+class CampaignCredit(models.Model):
+  total_campaign=models.IntegerField(blank=True,null=True)
+  status=models.BooleanField(default=False)
+  used_campaign=models.IntegerField(blank=True,null=True)
+  vendor=models.ForeignKey(User,on_delete=models.CASCADE,blank=True,null=True)
+  start_date = models.DateField(blank=True, null=True)
+  end_date = models.DateField(blank=True, null=True)

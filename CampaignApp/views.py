@@ -1856,11 +1856,10 @@ class InfluencerCampSale(APIView):
             for coupon_name, sales in sales_by_coupon.items():
                 
                 influencer_ids = influencer_coupon.objects.filter(coupon_name=coupon_name,vendor=self.request.user.id).values("influencer_id", "coupon_name")
-                print(influencer_ids)
+               
                 for influencer in influencer_ids:
                     influencer_id = influencer["influencer_id"]
-                    print(influencer_id)
-                    print(campaign_ids)
+                    
                     modash_data = Campaign.objects.filter(influencer_name__contains=influencer_id, id__in=campaign_ids,vendorid=self.request.user.id).values_list("id",flat=True)
                     pro_data=Product_information.objects.filter(coupon_name__contains=coupon_name,campaignid__in=modash_data,vendor=self.request.user.id).values("campaignid")
                     for modash_entry in pro_data:
@@ -1962,7 +1961,7 @@ class InfluencerCampSale(APIView):
                 #         for i in data_max:
                 #             PaymentDetails.objects.filter(vendor=self.request.user.id,campaign=i["campaign_detail"],influencer=i["influencer"]).update(sales=i["sales"],influencerfee=i["influener_fee"],offer=i["offer"],amount=i["amount"])     
             else:     
-                print("first try")
+         
                 for i in data_max:
                     details_obj=PaymentDetails()
                     details_obj.amount=i["amount"]
@@ -2338,6 +2337,8 @@ class MarketDeclineList(APIView):
         return Response({"data":final_lst1},status=status.HTTP_200_OK)  
     
     
+    
+#API TO BUY SUBSCRIPTION
 class BuySubscription(APIView):
     authentication_classes=[TokenAuthentication]
     permission_classes=[IsAuthenticated]
@@ -2356,7 +2357,7 @@ class BuySubscription(APIView):
         
         
         
-        
+#API TO SAVE SUBCRIPTION DATA         
 class Success(APIView):
     authentication_classes=[TokenAuthentication]
     permission_classes=[IsAuthenticated]
@@ -2383,7 +2384,9 @@ class Success(APIView):
             amount = amount[:amount_len]
             amount = int(amount)
             
-            success(self,request,subscription_id,price_id,start_date,end_date)
+            
+            
+            success(self,request,subscription_id,price_id,start_date,end_date,amount)
             
             
         
@@ -2395,7 +2398,21 @@ class Success(APIView):
     
     
 
-
-
+#API TO SHOW CANCEL PAGE
+class Cancel(APIView):
+    authentication_classes=[TokenAuthentication]
+    permission_classes=[IsAuthenticated]
+    def get(self,request):
+        return Response({"error":"Subscription Failed"},status=status.HTTP_400_BAD_REQUEST)
+        
+       
     
+    
+class CheckSubscription(APIView):
+    authentication_classes=[TokenAuthentication]
+    permission_classes=[IsAuthenticated]
+    def get(self,request):
+        plan=StripeSubscription.objects.filter(vendor_id=self.request.user.id).exists()
+        if plan == False:
+            return Response({"message":"Please Buy a Subscription"},status=status.HTTP_200_OK)
     
