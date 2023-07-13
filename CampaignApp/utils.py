@@ -80,6 +80,14 @@ def coupon_check(self,request,val_lst2,cup_lst,coup_lst):
 
 
 
+def access_token(self,request):
+    user_obj=User.objects.filter(id=self.request.user.id)
+    shop=user_obj.values("shopify_url")[0]["shopify_url"]
+    acc_tok=Store.objects.get(store_name=shop).access_token
+
+    return acc_tok,shop
+
+
 def ExpiryCoupondelete(self,request):
     
     acc_tok=access_token(self,request)
