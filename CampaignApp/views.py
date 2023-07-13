@@ -22,7 +22,7 @@ from datetime import datetime, timedelta
 from django.utils import timezone
 import stripe
 from Affilate_Marketing import settings
-
+from CampaignApp.utils import *
 
 # Create your views here.
 
