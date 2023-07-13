@@ -47,4 +47,9 @@ urlpatterns = [
     path("marketplacedecline/<int:id>/<int:pk>/",MarketplaceDecline.as_view(),name="marketplacedecline"),
     path("market_approval/",MarketPlaceApprovalList.as_view(),name="marketapproval"),
     path("market_decline/",MarketDeclineList.as_view(),name="marketdecline"),
+    path("checkout_session/",BuySubscription.as_view(),name="checkout_session"),
+    path("success/",Success.as_view(),name="success"),
+    # path("cancel_subscription/",CancelSubscription.as_view(),name="cancel_subscription"),
+    path("expiry_delete/",ExpiryCoupondelete.as_view(),name="expiry_delete"),
+    
 ]

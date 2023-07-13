@@ -2337,24 +2337,87 @@ class BuySubscription(APIView):
     authentication_classes=[TokenAuthentication]
     permission_classes=[IsAuthenticated]
     def post(self,request):
-        
-        plan=request.query_params.get()
-        session = stripe.checkout.Session.create(
-                        payment_method_types=['card'],
-                        line_items=[
-                                {
-                                    'price': plan,
-                                    'quantity': 1,
-                                },
-                            ],
+        try:
+            plan=request.query_params.get()
+            session = stripe.checkout.Session.create(
+                            payment_method_types=['card'],
+                            line_items=[
+                                    {
+                                        'price': plan,
+                                        'quantity': 1,
+                                    },
+                                ],
 
-                        mode='subscription',
-                        success_url='http://127.0.0.1:8000/success',
-                        # success_url='http://54.172.231.92:8000/success',
-                        cancel_url='https://example.com/cancel',
-                        billing_address_collection='auto'
-        )
+                            mode='subscription',
+                           
+                            success_url='https://myrefera.com//success',
+                            # success_url='http://54.172.231.92:8000/success',
+                            cancel_url='https://myrefera.com/cancel',
+                            billing_address_collection='auto'
+            )
+            
+            
+            return Response({"session_url":session.url,"id":session.id})
+        except stripe.error.StripeError as e:
+            return Response({"error":e.user_message},status=status.HTTP_400_BAD_REQUEST)
         
-        print(session)
         
-        return Response
+        
+class Success(APIView):
+    authentication_classes=[TokenAuthentication]
+    permission_classes=[IsAuthenticated]
+    def get(self,request):
+        session_id=request.data.get("session_id")
+        checkout_session = stripe.checkout.Session.retrieve(session_id)
+        subscription_id = checkout_session.subscription
+        a=stripe.Subscription.retrieve(subscription_id)
+        user_id = request.user.id
+        current_period_end = a["current_period_end"]
+        current_period_start = a["current_period_start"]
+        end_date = datetime.datetime.fromtimestamp(current_period_end)
+        start_date = datetime.datetime.fromtimestamp(current_period_start)
+
+        # Format the date into a desired format
+        end_date = end_date.strftime('%Y-%m-%d')
+        start_date = start_date.strftime('%Y-%m-%d')
+
+
+        price_id = a["items"]["data"][0]["plan"]["id"]
+        amount = a["items"]["data"][0]["plan"]["amount"]
+        amount = str(amount)
+        amount_len = len(amount)-2
+        amount = amount[:amount_len]
+        amount = int(amount)
+        
+        
+        
+        # subscription = Stripe_subscription(user_id_id=user_id,subscription_id=subscription_id,price_id=price_id,start_date=start_date,end_date=end_date)
+        # subscription.save()
+        
+        
+        
+        
+        return Response({"success":"Subscription activated"},status=status.HTTP_200_OK)
+    
+    
+    
+# class CancelSubscription(APIView):
+#     authentication_classes=[TokenAuthentication]
+#     permission_classes=[IsAuthenticated]
+    
+#     def get(self,request):
+        
+        
+
+class ExpiryCoupondelete(APIView):
+    def get(self,request):
+        product_info=Product_information.objects.filter(campaignid_id__campaign_exp=0).values_list("coupon_name")
+        for coup in product_info:
+            cop_id=influencer_coupon.objects.filter(coupon_name__in=coup).values("coupon_id")
+            print(cop_id)
+            
+            # delete_coup=influencer_coupon.objects.filter(coupon_name__in=coup).delete()
+            
+            # url =f'https://{SHOPIFY_API_KEY}:{SHOPIFY_API_SECRET}@{acc_tok[1]}/admin/api/{API_VERSION}/price_rules/{price_rule}.json'
+        return Response({"success":cop_id})
+    
