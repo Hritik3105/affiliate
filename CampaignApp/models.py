@@ -121,3 +121,14 @@ class transferdetails(models.Model):
   vendor=models.ForeignKey(User,on_delete=models.CASCADE,blank=True,null=True)
   amount=models.IntegerField(blank=True,null=True)
   destination=models.CharField(max_length=255,blank=True,null=True)
+  
+  
+  
+class StripeSubscription(models.Model):
+  vendor=models.ForeignKey(User,on_delete=models.CASCADE,blank=True,null=True)
+  status=models.BooleanField(default=False)
+  subscription_id=models.CharField(blank=True,null=True,max_length=255)
+  price_id=models.CharField(blank=True,null=True,max_length=255)
+  start_date = models.DateField(blank=True, null=True)
+  end_date = models.DateField(blank=True, null=True)
+  

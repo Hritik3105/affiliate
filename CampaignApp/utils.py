@@ -6,6 +6,7 @@ from ShopifyApp.models import *
 from CampaignApp.views import *
 from Affilate_Marketing.settings import SHOPIFY_API_KEY,SHOPIFY_API_SECRET,API_VERSION
 import requests
+import stripe
 
 def product_details(self,request,val_lst,req_id):
   
@@ -115,3 +116,36 @@ def ExpiryCoupondelete(self,request):
 
                 delete_coup=influencer_coupon.objects.filter(coupon_name__in=str_lst).delete()
     return "DONE"
+
+
+def checkout(self,request,plan):
+
+    session = stripe.checkout.Session.create(
+                    payment_method_types=['card'],
+                    line_items=[
+                            {
+                                'price': plan,
+                                'quantity': 1,
+                            },
+                        ],
+                    mode='subscription',
+                    success_url='https://myrefera.com/success',
+                    cancel_url='https://myrefera.com/cancel',
+                    billing_address_collection='auto'
+    )
+    
+    return session
+
+
+def success(self,request,subscription_id,price_id,start_date,end_date):
+    subscription=StripeSubscription()
+    subscription.vendor_id=self.request.user.id
+    subscription.status=1
+    subscription.subscription_id=subscription_id
+    subscription.price_id=price_id
+    subscription.start_date=start_date
+    subscription.end_date=end_date
+    subscription.save()
+    
+    return "Created"
+    

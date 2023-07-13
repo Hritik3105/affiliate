@@ -2343,28 +2343,17 @@ class BuySubscription(APIView):
     permission_classes=[IsAuthenticated]
     def post(self,request):
         try:
-            plan=request.query_params.get()
-            session = stripe.checkout.Session.create(
-                            payment_method_types=['card'],
-                            line_items=[
-                                    {
-                                        'price': plan,
-                                        'quantity': 1,
-                                    },
-                                ],
+            plan=request.query_params.get("plan")
+            
+            print(plan)
+            value=checkout(self,request,plan)
+            print(value)
 
-                            mode='subscription',
-                           
-                            success_url='https://myrefera.com//success',
-                            # success_url='http://54.172.231.92:8000/success',
-                            cancel_url='https://myrefera.com/cancel',
-                            billing_address_collection='auto'
-            )
-            
-            
-            return Response({"session_url":session.url,"id":session.id})
+            return Response({"session_url":value.url,"id":value.id})
         except stripe.error.StripeError as e:
             return Response({"error":e.user_message},status=status.HTTP_400_BAD_REQUEST)
+        
+        
         
         
         
@@ -2372,51 +2361,40 @@ class Success(APIView):
     authentication_classes=[TokenAuthentication]
     permission_classes=[IsAuthenticated]
     def get(self,request):
-        session_id=request.data.get("session_id")
-        checkout_session = stripe.checkout.Session.retrieve(session_id)
-        subscription_id = checkout_session.subscription
-        a=stripe.Subscription.retrieve(subscription_id)
-        user_id = request.user.id
-        current_period_end = a["current_period_end"]
-        current_period_start = a["current_period_start"]
-        end_date = datetime.datetime.fromtimestamp(current_period_end)
-        start_date = datetime.datetime.fromtimestamp(current_period_start)
+        
+        try:
+            session_id=request.query_params.get("session_id")
+            checkout_session = stripe.checkout.Session.retrieve(session_id)
+            subscription_id = checkout_session.subscription
+            sub_retrieve=stripe.Subscription.retrieve(subscription_id)
+            current_period_end = sub_retrieve["current_period_end"]
+            current_period_start = sub_retrieve["current_period_start"]
+            end_date = datetime.datetime.fromtimestamp(current_period_end)
+            start_date = datetime.datetime.fromtimestamp(current_period_start)
 
-        # Format the date into a desired format
-        end_date = end_date.strftime('%Y-%m-%d')
-        start_date = start_date.strftime('%Y-%m-%d')
+        
+            end_date = end_date.strftime('%Y-%m-%d')
+            start_date = start_date.strftime('%Y-%m-%d')
 
-
-        price_id = a["items"]["data"][0]["plan"]["id"]
-        amount = a["items"]["data"][0]["plan"]["amount"]
-        amount = str(amount)
-        amount_len = len(amount)-2
-        amount = amount[:amount_len]
-        amount = int(amount)
+            price_id = sub_retrieve["items"]["data"][0]["plan"]["id"]
+            amount = sub_retrieve["items"]["data"][0]["plan"]["amount"]
+            amount = str(amount)
+            amount_len = len(amount)-2
+            amount = amount[:amount_len]
+            amount = int(amount)
+            
+            success(self,request,subscription_id,price_id,start_date,end_date)
+            
+            
         
+            return Response({"success":"Subscription activated"},status=status.HTTP_200_OK)
         
-        
-        # subscription = Stripe_subscription(user_id_id=user_id,subscription_id=subscription_id,price_id=price_id,start_date=start_date,end_date=end_date)
-        # subscription.save()
-        
-        
-        
-        
-        return Response({"success":"Subscription activated"},status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response((e),status=status.HTTP_400_BAD_REQUEST)
     
     
     
-# class CancelSubscription(APIView):
-#     authentication_classes=[TokenAuthentication]
-#     permission_classes=[IsAuthenticated]
-    
-#     def get(self,request):
-        
-        
 
-# class ExpiryCoupondelete(APIView):
-#     authentication_classes=[TokenAuthentication]
-#     permission_classes=[IsAuthenticated]
 
 
     
