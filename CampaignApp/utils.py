@@ -3,7 +3,7 @@ from StoreApp.models import *
 from rest_framework.response import Response
 import ast
 from ShopifyApp.models import *
-from CampaignApp.views import access_token
+from CampaignApp.views import *
 
 def product_details(self,request,val_lst,req_id):
   
