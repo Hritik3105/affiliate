@@ -2421,13 +2421,17 @@ class ExpiryCoupondelete(APIView):
         
         list_val=list(zip_list)
         filtered_data = [item for item in list_val if item[0] is not None]
-        print("--------------------",filtered_data)
+        
+        
+        for coupon,vendor in filtered_data:
+            print(coupon)
+            print(vendor)
         for coup in product_info:   
             
             if coup:
    
                 str_lst=ast.literal_eval(coup)
-                print(type(str_lst))
+                # print(type(str_lst))
                 cop_id=influencer_coupon.objects.filter(coupon_name__in=str_lst,vendor=self.request.user.id).values("coupon_name","coupon_id")
                 
             # delete_coup=influencer_coupon.objects.filter(coupon_name__in=coup).delete()
