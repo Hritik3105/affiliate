@@ -2417,7 +2417,9 @@ class ExpiryCoupondelete(APIView):
             
             if coup:
                 print("coppp",type(coup))
-                cop_id=influencer_coupon.objects.filter(coupon_name__iexact__in=coup).values("coupon_name","coupon_id")
+                str_lst=ast.literal_eval(coup)
+                print(type(str_lst))
+                cop_id=influencer_coupon.objects.filter(coupon_name__iexact__in=str_lst).values("coupon_name","coupon_id")
                 
                 print("copppppp",cop_id)
             
