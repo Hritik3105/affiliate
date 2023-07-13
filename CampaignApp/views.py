@@ -2416,7 +2416,7 @@ class ExpiryCoupondelete(APIView):
         for coup in product_info:
             
             if coup:
-                print("coppp",coup)
+                print("coppp",type(coup))
                 cop_id=influencer_coupon.objects.filter(coupon_name__iexact__in=coup).values("coupon_name","coupon_id")
                 
                 print("copppppp",cop_id)
