@@ -2414,8 +2414,9 @@ class ExpiryCoupondelete(APIView):
     permission_classes=[IsAuthenticated]
     def get(self,request):
         product_info=Product_information.objects.filter(campaignid_id__campaign_exp=0).values_list("coupon_name",flat=True)
-        
-        for coup in product_info:
+        product_vendor_id=Product_information.objects.filter(campaignid_id__campaign_exp=0).values_list("vendor_id",flat=True)
+        print(product_vendor_id)
+        for coup in product_info:   
             
             if coup:
                 print("coppp",type(coup))
