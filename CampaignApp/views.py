@@ -2419,7 +2419,7 @@ class ExpiryCoupondelete(APIView):
                 print("coppp",type(coup))
                 str_lst=ast.literal_eval(coup)
                 print(type(str_lst))
-                cop_id=influencer_coupon.objects.filter(coupon_name__in=str_lst).values("coupon_name","coupon_id")
+                cop_id=influencer_coupon.objects.filter(coupon_name__in=str_lst,vendor=self.request.user.id).values("coupon_name","coupon_id")
                 
                 print("copppppp",cop_id)
             
