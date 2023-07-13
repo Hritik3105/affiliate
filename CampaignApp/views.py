@@ -2410,6 +2410,8 @@ class Success(APIView):
         
 
 class ExpiryCoupondelete(APIView):
+    authentication_classes=[TokenAuthentication]
+    permission_classes=[IsAuthenticated]
     def get(self,request):
         product_info=Product_information.objects.filter(campaignid_id__campaign_exp=0).values_list("coupon_name",flat=True)
         
