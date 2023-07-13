@@ -2415,20 +2415,21 @@ class ExpiryCoupondelete(APIView):
     def get(self,request):
         product_info=Product_information.objects.filter(campaignid_id__campaign_exp=0).values_list("coupon_name",flat=True)
         product_vendor_id=Product_information.objects.filter(campaignid_id__campaign_exp=0).values_list("vendor_id",flat=True)
-        if product_info:
-            zz=zip(product_info,product_vendor_id)
         
-            print("-000000000000",list(zz))
+        zip_list=zip(product_info,product_vendor_id)
+        
+        
+        list_val=list(zip_list)
+        filtered_data = [item for item in list_val if item[0] is not None]
+        print("--------------------",filtered_data)
         for coup in product_info:   
             
             if coup:
-                print("coppp",type(coup))
+   
                 str_lst=ast.literal_eval(coup)
                 print(type(str_lst))
                 cop_id=influencer_coupon.objects.filter(coupon_name__in=str_lst,vendor=self.request.user.id).values("coupon_name","coupon_id")
                 
-                print("copppppp",cop_id)
-            
             # delete_coup=influencer_coupon.objects.filter(coupon_name__in=coup).delete()
             
             # url =f'https://{SHOPIFY_API_KEY}:{SHOPIFY_API_SECRET}@{acc_tok[1]}/admin/api/{API_VERSION}/price_rules/{price_rule}.json'
