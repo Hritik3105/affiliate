@@ -144,7 +144,7 @@ class CreateCampaign(APIView):
     authentication_classes=[TokenAuthentication]
     permission_classes = [IsAuthenticated]   
     def post(self,request):
-        ExpiryCoupondelete(self,request)
+       
         vendor_status1=User.objects.filter(id=self.request.user.id).values("vendor_status")
         if vendor_status1[0]["vendor_status"] == True:
             serializer=CampaignSerializer(data=request.data)
@@ -1435,6 +1435,8 @@ class InfluencerNotification(APIView):
     permission_classes = [IsAuthenticated]
     
     def get(self,request):
+        
+        ExpiryCoupondelete(self,request)
         notification_obj=Notification.objects.filter(vendor_id=self.request.user.id,send_notification__in=[2,4])
        
         notify_list=[]
