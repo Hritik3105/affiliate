@@ -2412,12 +2412,12 @@ class Success(APIView):
 class ExpiryCoupondelete(APIView):
     def get(self,request):
         product_info=Product_information.objects.filter(campaignid_id__campaign_exp=0).values_list("coupon_name",flat=True)
-        print(product_info)
+        
         for coup in product_info:
-            print("dddddddddd",coup)
+            
             if coup:
                 cop_id=influencer_coupon.objects.filter(coupon_name__in=coup).values("coupon_id")
-                print(cop_id)
+                print("copppppp",cop_id)
             
             # delete_coup=influencer_coupon.objects.filter(coupon_name__in=coup).delete()
             
