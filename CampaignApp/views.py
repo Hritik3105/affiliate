@@ -2424,7 +2424,7 @@ class ExpiryCoupondelete(APIView):
         
         
         for coupon,vendor in filtered_data:
-            print(coupon)
+            print(type(coupon))
             print(vendor)
         for coup in product_info:   
             
