@@ -1885,8 +1885,9 @@ class InfluencerCampSale(APIView):
 
                     if str_detail:
                         if  check[0]["offer"] == "percentage":
-                            amount=i["sales"] / check[0]["influencer_fee"] 
-                        
+                            amount=i["sales"] * check[0]["influencer_fee"] /100
+                            amount=round(amount,2)
+                            
                         else:
                             amount=i["sales"] - check[0]["influencer_fee"] 
                         
@@ -1906,7 +1907,8 @@ class InfluencerCampSale(APIView):
                     else:
                         
                         if  check[0]["offer"] == "percentage":
-                            amount=int(i["sales"])  / check[0]["influencer_fee"] 
+                            amount=int(i["sales"]) * check[0]["influencer_fee"] / 100
+                            amount=round(amount,2)
                         
                         else:
                             amount=i["sales"] - check[0]["influencer_fee"] 
