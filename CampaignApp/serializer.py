@@ -86,7 +86,7 @@ class CampaignSerializer(serializers.ModelSerializer):
   
    class Meta:
         model=Campaign
-        fields = ['id','campaign_name',"offer","date","description","influencer_visit","influencer_fee","campaign_name","end_date",]
+        fields = ['id','campaign_name',"offer","date","description","influencer_visit","influencer_fee","campaign_name","end_date","payout_amount"]
         extra_kwargs = {
                 'campaign_name': {'required': True},
                 'date': {'required': True},
@@ -94,6 +94,7 @@ class CampaignSerializer(serializers.ModelSerializer):
                 #'influencer_name': {'required': True},
                 'offer': {'required': False},
                 "influencer_fee":{'required': False},
+                "payout_amount":{'required': False},
             
             }
  
@@ -113,7 +114,7 @@ class InflCampSerializer(serializers.ModelSerializer):
 #    product_discount=CommaSeparatedField()
    class Meta:
         model=Campaign
-        fields = ['id', 'campaign_name',"influencer_name","date","influencer_visit","offer","description","influencer_fee","end_date"]
+        fields = ['id', 'campaign_name',"influencer_name","date","influencer_visit","offer","description","influencer_fee","end_date","payout_amount"]
         extra_kwargs = {
                 'campaign_name': {'required': True},
                 'influencer_visit': {'required': True},
@@ -122,7 +123,7 @@ class InflCampSerializer(serializers.ModelSerializer):
                 'date': {'required': True},
                 'end_date': {'required': True},
                  "influencer_fee":{'required': False},
-                
+                "payout_amount":{'required': False},
                 
             }
 
@@ -140,7 +141,7 @@ class CampaignUpdateSerializer(serializers.ModelSerializer):
    influencer_name= CommaSeparatedField(required=False) 
    class Meta:
         model=Campaign
-        fields = ["id",'campaign_name','influencer_visit',"offer","date","description","influencer_name","influencer_fee","campaign_status","end_date"]
+        fields = ["id",'campaign_name','influencer_visit',"offer","date","description","influencer_name","influencer_fee","campaign_status","end_date","payout_amount"]
         extra_kwargs = {
         'campaign_name': {'required': False},
         'influencer_visit': {'required': False},
@@ -149,7 +150,8 @@ class CampaignUpdateSerializer(serializers.ModelSerializer):
         'influencer_name': {'required': False},
         'date': {'required': False},  
         'end_date': {'required': False},    
-        'influencer_fee': {'required': False},   
+        'influencer_fee': {'required': False}, 
+        'payout_amount': {'required': False},   
     }
 
 

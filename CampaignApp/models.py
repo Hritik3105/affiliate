@@ -29,6 +29,7 @@ class Campaign(models.Model):
   influencer_fee=models.FloatField(blank=True,null=True)
   campaign_exp=models.BooleanField(default=True)
   end_date=models.DateField(null=True)
+  payout_amount=models.IntegerField(blank=True,null=True)
   
   
 class Productdetails(models.Model):
@@ -67,6 +68,7 @@ class Product_information(models.Model):
   coupon_name=models.TextField(blank=True,null=True)
   amount=models.TextField(blank=True)
   discount_type=models.TextField(blank=True)
+  coupon_id=models.TextField(blank=True,null=True)
   
   
 class Campaign_accept(models.Model):
