@@ -1280,14 +1280,14 @@ class ProductUrl(APIView):
                     if influ_id:
                     
                         price_rules_codes=price_rule.json()['price_rules'][i]["title"]
-                        price_rules_id=price_rule.json()['price_rules'][i]["id"]
+                        price_rules_ids=price_rule.json()['price_rules'][i]["id"]
                         price_rule_value=price_rule.json()['price_rules'][i]['value']
                         price_rule_value_type=price_rule.json()['price_rules'][i]['value_type']
                         product_dict={
                             "product_name":productMapDict[z],
                             "product_id":z,   
                             "coupon_name": price_rules_codes,
-                            "coupon_id":price_rules_id,
+                            "coupon_id":price_rules_ids,
                             "amount":price_rule_value,   
                             "discout_type":price_rule_value_type,
                             "influencer_id":influ_id[0]["influencer_id"]
@@ -1314,7 +1314,7 @@ class ProductUrl(APIView):
                         "product_name": product["product_name"],
                         "product_id":product["product_id"],
                         "coupon_name": [product["coupon_name"]],
-                        "coupon_is": [product["coupon_id"]],
+                        "coupon_id": [product["coupon_id"]],
                         "amount": [product["amount"]],
                         "discout_type":[product["discout_type"]],
                         "influencer_id":[product["influencer_id"]]
