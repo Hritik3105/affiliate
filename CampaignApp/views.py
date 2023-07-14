@@ -1894,7 +1894,7 @@ class InfluencerCampSale(APIView):
                         
                         infl_dict={
                             "campaing_id":check[0]["campaign_name"],
-                            "sales":i["sales"],
+                            "sales":round(i["sales"],2),
                             "account":str_detail[0]["account_id"],
                             "influencer":key,
                             "influener_fee":check[0]["influencer_fee"],
@@ -1916,7 +1916,7 @@ class InfluencerCampSale(APIView):
                             
                         infl_dict={
                             "campaing_id":check[0]["campaign_name"],
-                            "sales":i["sales"],
+                            "sales":round(i["sales"],2),
                             "account":"",
                             "influencer":key,
                             "influener_fee":check[0]["influencer_fee"],
@@ -1986,7 +1986,7 @@ class InfluencerCampSale(APIView):
             for pay in upd_data:
                 upd_dict={
                     "campaing_id":pay.campaign.campaign_name,
-                    "sales":pay.sales,
+                    "sales":round(pay.sales,2),
                     "account":pay.account_id,
                     "influencer":pay.influencer.id,
                     "influener_fee":pay.influencerfee,
