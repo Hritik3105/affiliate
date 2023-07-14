@@ -401,7 +401,12 @@
                       
                           if (vals.status == 'Accepted') {
                             var html = '<tr><td>' + vals.influencer_name + '</td><td><span class="badge rounded-pill badge-light-success me-1">' + vals.status + '</span></td></tr>';
-                          } else {
+                          
+                          } else if (vals.status == 'Declined') {
+                          var html = '<tr><td>' + vals.influencer_name + '</td><td><span class="badge rounded-pill badge-light-success me-1">' + vals.status + '</span></td></tr>';
+
+                        }
+                        else {
                             var html = '<tr><td>' + vals.influencer_name + '</td><td><span class="badge rounded-pill badge-light-warning me-1">' + vals.status + '</span></td></tr>';
                           }
                       
