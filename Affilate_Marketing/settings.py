@@ -35,7 +35,7 @@ ALLOWED_HOSTS = ["13.50.106.134","myrefera.com","api.myrefera.com","admin.myrefe
 
 
 # Application definition
-
+ 
 INSTALLED_APPS = [
     'django_crontab',
     'django.contrib.admin',

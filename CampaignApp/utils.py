@@ -114,7 +114,7 @@ def ExpiryCoupondelete(self,request):
         
                 response = requests.delete(url,headers=headers)
 
-                delete_coup=influencer_coupon.objects.filter(coupon_name__in=str_lst).delete()
+                delete_coup=influencer_coupon.objects.filter(coupon_name__in=str_lst,vendor=self.request.user.id).delete()
     return "DONE"
 
 

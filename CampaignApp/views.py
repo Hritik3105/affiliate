@@ -1280,12 +1280,14 @@ class ProductUrl(APIView):
                     if influ_id:
                     
                         price_rules_codes=price_rule.json()['price_rules'][i]["title"]
+                        price_rules_id=price_rule.json()['price_rules'][i]["id"]
                         price_rule_value=price_rule.json()['price_rules'][i]['value']
                         price_rule_value_type=price_rule.json()['price_rules'][i]['value_type']
                         product_dict={
                             "product_name":productMapDict[z],
                             "product_id":z,   
                             "coupon_name": price_rules_codes,
+                            "coupon_id":price_rules_id,
                             "amount":price_rule_value,   
                             "discout_type":price_rule_value_type,
                             "influencer_id":influ_id[0]["influencer_id"]
@@ -1301,6 +1303,7 @@ class ProductUrl(APIView):
                 
                 if product_id in product_dict:
                     product_dict[product_id]["coupon_name"].append(product["coupon_name"])
+                    product_dict[product_id]["coupon_id"].append(product["coupon_id"])
                     product_dict[product_id]["amount"].append(product["amount"])
                     product_dict[product_id]["discout_type"].append(product["discout_type"])
                     product_dict[product_id]["influencer_id"].append(product["influencer_id"])
@@ -1311,6 +1314,7 @@ class ProductUrl(APIView):
                         "product_name": product["product_name"],
                         "product_id":product["product_id"],
                         "coupon_name": [product["coupon_name"]],
+                        "coupon_is": [product["coupon_id"]],
                         "amount": [product["amount"]],
                         "discout_type":[product["discout_type"]],
                         "influencer_id":[product["influencer_id"]]
@@ -1326,6 +1330,7 @@ class ProductUrl(APIView):
                 new_list.append({"product_name": productMapDict[i],
                         "product_id":i,
                         "coupon_name":"",
+                        "coupon_id":"",
                         "amount": "",
                         "discout_type":"",
                         "influencer_id":"",
