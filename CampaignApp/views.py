@@ -822,7 +822,7 @@ class  MarketplaceDraftList(APIView):
         
         campaign_obj=Campaign.objects.filter(vendorid_id=self.request.user.id,status=1,draft_status=1,campaign_exp=1)
         if campaign_obj:
-            z=(campaign_obj.values("id"))
+            z=(campaign_obj.values("id")) 
             for i in z:
                
                 lst.append(i['id'])

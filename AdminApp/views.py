@@ -602,6 +602,7 @@ def Influencer_list(request):
 def influencer_name(request):
     if request.method == "GET":
         value=request.GET.get("status")
+        print(value)
        
         camp_obj=Campaign.objects.filter(id=value,draft_status=0,status=2).values()
        
@@ -637,7 +638,7 @@ def influencer_name(request):
                     k["status"]="Accepted"
 
 
-         
+        print("sddddddddd",lst1)
         return JsonResponse({"val":lst1})
     
 
