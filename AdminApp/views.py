@@ -640,7 +640,7 @@ def influencer_name(request):
         campaign_obj3=VendorCampaign.objects.filter(campaign_status=4,campaignid_id=value) 
         for k in lst1:
            
-            for j in campaign_obj2:
+            for j in campaign_obj3:
            
                 if k["influencer_id"] == j.influencerid.id:
                     k["status"]="Declined"
