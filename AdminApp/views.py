@@ -637,8 +637,14 @@ def influencer_name(request):
                 if k["influencer_id"] == j.influencerid.id:
                     k["status"]="Accepted"
 
+        campaign_obj3=VendorCampaign.objects.filter(campaign_status=4,campaignid_id=value) 
+        for k in lst1:
+           
+            for j in campaign_obj2:
+           
+                if k["influencer_id"] == j.influencerid.id:
+                    k["status"]="Declined"
 
-        print("sddddddddd",lst1)
         return JsonResponse({"val":lst1})
     
 
