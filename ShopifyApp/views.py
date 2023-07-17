@@ -278,7 +278,7 @@ class ParticularProduct(APIView):
                 
                     return Response({"error":"Coupon already Exists"},status=status.HTTP_401_UNAUTHORIZED)
             else:
-                return Response({"error":response.text},status=status.HTTP_400_BAD_REQUEST)
+                return Response({"error":"Amount should be in positive"},status=status.HTTP_400_BAD_REQUEST)
                 
         else:
             return Response({"error":"Admin Deactivate your shop"},status=status.HTTP_401_UNAUTHORIZED)
