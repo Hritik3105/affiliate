@@ -484,7 +484,7 @@ def Single_Vendor(request,id):
                 sale_by_id[sale_id] = sale_value
                 sale['sale'] = sale_value
             
-            
+            print(lst)
             return render(request,"campaignlist.html",{"vendor":vendor_campaign,"vendor_campaign":lst,"product_data":combined_data,"single_vendor":single_obj,"final_list":final_lst1})
         return render(request,"campaignlist.html",{"vendor":vendor_campaign,"vendor_campaign":lst,"product_data":combined_data,"single_vendor":single_obj,"final_list":final_lst1})
     return render(request,"campaignlist.html")
