@@ -41,41 +41,44 @@ def access_token(request,id):
     
 @login_required
 def show(request):
-    vendor_data = User.objects.filter(user_type=3).values("shopify_url")
     total_sales = 0 
     sales_reports1=[]
-    for shop in vendor_data:
-        get_tok = Store.objects.filter(store_name=shop["shopify_url"]).values("access_token", "store_name")
-
-        if get_tok:
-            for token in get_tok:
-                headers = {"X-Shopify-Access-Token": token["access_token"]}
-                store_name = token["store_name"]
-
-                url = f"https://{store_name}/admin/api/2022-10/orders.json?status=active"
-                response = requests.get(url, headers=headers)
-                sales_data = response.json().get('orders', [])
-                sales_report = 0 
-                order_count=0
-          
-                for order in sales_data:
-                    total_price = float(order['total_price'])
-                    discount_codes = order.get("discount_codes", [])
-
-                    if discount_codes:
-                        sales_report += total_price
-                        total_sales += total_price
-                        order_count += 1
-                
-                sales_reports1.append({"store_name": store_name, "sales_report": sales_report,"order_count":order_count})
     total_order_count=0
     vendor_store=[]
     sale_val=[]
-    for i in sales_reports1:
-        total_order_count+=i["order_count"]
-        vendor_store.append(i["store_name"])
-        sale_val.append(i["sales_report"])
-    rouded_value=round(total_sales,2)
+    vendor_data = User.objects.filter(user_type=3).values("shopify_url")
+  
+    
+    for shop in vendor_data:
+        get_tok = Store.objects.filter(store_name=shop["shopify_url"]).values("access_token", "store_name")
+        values=dashboard_value(request,get_tok,sales_reports1,vendor_store,sale_val,total_order_count,total_sales)
+        print(values)
+    #     if get_tok:
+    #         for token in get_tok:
+    #             headers = {"X-Shopify-Access-Token": token["access_token"]}
+    #             store_name = token["store_name"]
+
+    #             url = f"https://{store_name}/admin/api/2022-10/orders.json?status=active"
+    #             response = requests.get(url, headers=headers)
+    #             sales_data = response.json().get('orders', [])
+    #             sales_report = 0 
+    #             order_count=0
+          
+    #             for order in sales_data:
+    #                 total_price = float(order['total_price'])
+    #                 discount_codes = order.get("discount_codes", [])
+
+    #                 if discount_codes:
+    #                     sales_report += total_price
+    #                     total_sales += total_price
+    #                     order_count += 1  
+    #             sales_reports1.append({"store_name": store_name, "sales_report": sales_report,"order_count":order_count})
+ 
+    # for i in sales_reports1:
+    #     total_order_count+=i["order_count"]
+    #     vendor_store.append(i["store_name"])
+    #     sale_val.append(i["sales_report"])
+    # rouded_value=round(total_sales,2)
     return render(request,'index.html',{"total":rouded_value,"sales_report":sales_reports1,"count":total_order_count,"vendor":vendor_store,"sale_val":sale_val})
 
 
