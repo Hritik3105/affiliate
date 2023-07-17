@@ -54,7 +54,7 @@ def show(request):
         values=dashboard_value(request,get_tok,sales_reports1,vendor_store,sale_val,total_order_count,total_sales)
        
     rouded_value=values[0]
-    print(values)
+    print(rouded_value)
     # sales_reports1=values[1]
     # total_order_count=values[2]
     # vendor_store=values[3]
