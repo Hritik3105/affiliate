@@ -235,8 +235,7 @@ class ParticularProduct(APIView):
 
                     
 
-            
-            
+    
             price_rule_payload = {
                 "price_rule": {
                     "title": discount,

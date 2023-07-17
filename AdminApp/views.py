@@ -38,6 +38,7 @@ def access_token(request,id):
     return acc_tok,shop
     
     
+    
 @login_required
 def show(request):
     vendor_data = User.objects.filter(user_type=3).values("shopify_url")
@@ -74,7 +75,7 @@ def show(request):
         total_order_count+=i["order_count"]
         vendor_store.append(i["store_name"])
         sale_val.append(i["sales_report"])
-    
+    print(total_sales)
     return render(request,'index.html',{"total":total_sales,"sales_report":sales_reports1,"count":total_order_count,"vendor":vendor_store,"sale_val":sale_val})
 
 
