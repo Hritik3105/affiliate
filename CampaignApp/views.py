@@ -910,7 +910,7 @@ class DeleteCampaign(APIView):
 """API TO GET LIST OF PRODUCT"""
 class ProductList(APIView):
     authentication_classes=[TokenAuthentication]
-    permission_classes = [IsAuthenticated]   
+    permission_classes = [IsAuthenticated]      
     def get(self,request):
         acc_tok=access_token(self,request)
         headers= {"X-Shopify-Access-Token": acc_tok[0]}
