@@ -52,7 +52,8 @@ def show(request):
     for shop in vendor_data:
         get_tok = Store.objects.filter(store_name=shop["shopify_url"]).values("access_token", "store_name")
         values=dashboard_value(request,get_tok,sales_reports1,vendor_store,sale_val,total_order_count,total_sales)
-        print(values)
+        print("----------------------",values)
+        print(values.rouded_value)
     #     if get_tok:
     #         for token in get_tok:
     #             headers = {"X-Shopify-Access-Token": token["access_token"]}
