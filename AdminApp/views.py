@@ -51,13 +51,13 @@ def show(request):
     
     for shop in vendor_data:
         get_tok = Store.objects.filter(store_name=shop["shopify_url"]).values("access_token", "store_name")
-        values=dashboard_value(request,get_tok,sales_reports1,vendor_store,sale_val,total_order_count,total_sales)
+    values=dashboard_value(request,get_tok,sales_reports1,vendor_store,sale_val,total_order_count,total_sales)
      
-        rouded_value=values[0]
-        sales_reports1=values[1]
-        total_order_count=values[2]
-        vendor_store=values[3]
-        sale_val=values[4]
+    rouded_value=values[0]
+    sales_reports1=values[1]
+    total_order_count=values[2]
+    vendor_store=values[3]
+    sale_val=values[4]
         
     #     if get_tok:
     #         for token in get_tok:
