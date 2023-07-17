@@ -482,7 +482,7 @@ def Single_Vendor(request,id):
                 sale_id = sale['id']
                 sale_value = sale_by_id.get(sale_id, 0)
                 sale_by_id[sale_id] = sale_value
-                sale['sale'] = sale_value
+                sale['sale'] = round(sale_value,2)
             
             print(lst)
             return render(request,"campaignlist.html",{"vendor":vendor_campaign,"vendor_campaign":lst,"product_data":combined_data,"single_vendor":single_obj,"final_list":final_lst1})
