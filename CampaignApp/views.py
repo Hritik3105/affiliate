@@ -2423,3 +2423,89 @@ class CheckSubscription(APIView):
         if plan == False:
             return Response({"message":"Please Buy a Subscription"},status=status.HTTP_200_OK)
     
+    
+class InfluencerProfile(APIView):
+    authentication_classes=[TokenAuthentication]
+    permission_classes=[IsAuthenticated]
+    def get(self,request,id):
+        get_data=ModashInfluencer.objects.filter(id=id)
+        influencer_data=[]
+        for data in get_data:
+            dict={
+                "username":data.username,
+                "followers":data.followers,
+                "image":data.image,
+                "engagements":data.engagements,
+                "engagements_rate":data.engagements_rate,
+                "fullname":data.fullname,
+                "isverified":data.isverified,
+                }
+            influencer_data.append(dict)
+            
+        return Response({"data":dict},status=status.HTTP_200_OK)
+    
+    
+    
+class Payout(APIView):
+    
+    
+    
+    def get(self,request):
+        stripe.api_key = settings.STRIPE_API_KEY
+
+        account = stripe.Account.retrieve()
+        stripe_account_id = account.id
+        
+        print(stripe_account_id)
+
+        # maincustomer=stripe.Customer.create(
+        # email="vendor@codenomad.net",
+        # name="vendorSood",
+        # description="My First Test Customer (created for API docs at https://www.stripe.com/docs/api)",
+        # )
+        
+
+        # print(maincustomer)
+        
+        # paymentmethod=stripe.PaymentMethod.create(
+        # type="card",
+        # card={
+        #     'token': 'tok_visa',
+        # }
+        # )
+       
+        # attach=stripe.PaymentMethod.attach(
+        # paymentmethod.id,
+        # customer=maincustomer.id,
+        # )
+
+        # customer=stripe.Customer.create(
+        # email="Hritik@codenomad.net",
+        # name="HritikSood",
+        # description="My Second Test Customer (created for API docs at https://www.stripe.com/docs/api)",
+        # )
+        
+
+        # paymentmethod=stripe.PaymentMethod.create(
+        # type="card",
+        # card={
+        #     'token': 'tok_visa',
+        # }
+        # )
+
+       
+        # attach=stripe.PaymentMethod.attach(
+        # paymentmethod.id,
+        # customer=customer.id,
+        # )
+       
+        balance_transaction = stripe.BalanceTransaction.create(
+                amount=1000,
+                currency='usd',
+                description='Adding balance to customer',
+                customer="cus_OGcfFnF5kPbmoR",
+            )
+
+        client_secret = balance_transaction.id
+        
+        return Response({"data":client_secret},status=status.HTTP_200_OK)

@@ -50,6 +50,9 @@ urlpatterns = [
     path("checkout_session/",BuySubscription.as_view(),name="checkout_session"),
     path("success/",Success.as_view(),name="success"),
     path("cancel/",Cancel.as_view(),name="cancel"),
+    path("InfluencerProfile/",InfluencerProfile.as_view(),name="InfluencerProfile"),
+    path("payouts/",Payout.as_view(),name="payouts"),
+   
    
     
 ]
