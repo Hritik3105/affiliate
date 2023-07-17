@@ -259,24 +259,27 @@ class ParticularProduct(APIView):
             url = f'https://{acc_tok[1]}/admin/api/{API_VERSION}/price_rules.json'
             response = requests.post(url, headers=headers, json=price_rule_payload)
             print(response)
-            price_rule_id = response.json()['price_rule']['id']
-            price_create=json.loads(response.text)["price_rule"]["created_at"]
-            z=discount_code1(price_rule_id,acc_tok[1],headers,discount)
-            if z.status_code==201:
-              
-                inf_obj=influencer_coupon()
-                inf_obj.influencer_id_id=influencer
-                inf_obj.coupon_name=discount
-                inf_obj.amount=amount
-                inf_obj.coupon_id=z.json()["discount_code"]["price_rule_id"]
-                inf_obj.vendor_id=self.request.user.id
-                inf_obj.save()
+            if response.ok:
+                price_rule_id = response.json()['price_rule']['id']
+                price_create=json.loads(response.text)["price_rule"]["created_at"]
+                z=discount_code1(price_rule_id,acc_tok[1],headers,discount)
+                if z.status_code==201:
                 
-                return Response({"message":"coupon created successfully","title": discount,"created_at":price_create,"id":price_rule_id},status=status.HTTP_201_CREATED)
+                    inf_obj=influencer_coupon()
+                    inf_obj.influencer_id_id=influencer
+                    inf_obj.coupon_name=discount
+                    inf_obj.amount=amount
+                    inf_obj.coupon_id=z.json()["discount_code"]["price_rule_id"]
+                    inf_obj.vendor_id=self.request.user.id
+                    inf_obj.save()
+                    
+                    return Response({"message":"coupon created successfully","title": discount,"created_at":price_create,"id":price_rule_id},status=status.HTTP_201_CREATED)
+                else:
+                
+                    return Response({"error":"Coupon already Exists"},status=status.HTTP_401_UNAUTHORIZED)
             else:
-               
-                return Response({"error":"Coupon already Exists"},status=status.HTTP_401_UNAUTHORIZED)
-
+                return Response({"error":response.text},status=status.HTTP_400_BAD_REQUEST)
+                
         else:
             return Response({"error":"Admin Deactivate your shop"},status=status.HTTP_401_UNAUTHORIZED)
         
