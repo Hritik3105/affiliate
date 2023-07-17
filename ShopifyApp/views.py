@@ -230,7 +230,7 @@ class ParticularProduct(APIView):
             
             amt="-"+amount
             if amount and discount_type=="percentage":
-                if int(amount) >100:
+                if float(amount) >100:
                     return Response({'error': 'amount should be less than 100'}, status=status.HTTP_400_BAD_REQUEST)
 
                     
