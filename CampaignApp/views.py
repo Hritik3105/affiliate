@@ -1726,8 +1726,11 @@ class TranferMoney(APIView):
     
     def post(self,request):
         account=request.data.get("account_id")
+        print(account)
         influencer=request.data.get("influencer")
+    
         amount=request.data.get("amount")
+        print(amount)
         campaignids=request.data.get("camp_id")
         salesdone=request.data.get("sales")
        
@@ -1989,6 +1992,8 @@ class InfluencerCampSale(APIView):
                     details_obj.save()
                 
             upd_data=PaymentDetails.objects.filter(vendor=self.request.user.id)
+            print("00000000000000000000000",upd_data)
+            
             upd_lst=[]
             for pay in upd_data:
                 upd_dict={
