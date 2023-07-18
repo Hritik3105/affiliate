@@ -1938,6 +1938,8 @@ class InfluencerCampSale(APIView):
                         lst_data.append(infl_dict)  
             
             campaign_totals = {}
+            
+            print("check",lst_data)
             for entry in lst_data:
                 campaign_id = entry["campaing_id"]
                 influencer = entry["influencer"]
@@ -1992,7 +1994,6 @@ class InfluencerCampSale(APIView):
                     details_obj.save()
                 
             upd_data=PaymentDetails.objects.filter(vendor=self.request.user.id)
-            print("00000000000000000000000",upd_data)
             
             upd_lst=[]
             for pay in upd_data:
