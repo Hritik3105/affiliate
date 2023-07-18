@@ -2246,8 +2246,8 @@ class MarketplaceApprovalList(APIView):
                 "campaignid_id":i.campaignid.id,
                 "campaign_name": i.campaignid.campaign_name,
                 "influencer_name":i.influencerid.id,
-                "coupon_name":cop_names.coupon_name,
-                "amount":cop_names.amount
+                "coupon_name":ast.literal_eval(cop_names.coupon_name),
+                "amount":ast.literal_eval(cop_names.amount)
                
             }
             
