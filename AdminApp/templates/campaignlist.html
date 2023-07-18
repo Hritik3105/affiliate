@@ -173,8 +173,9 @@
                         </div>
                     </div>
                 </section>
+                <div class="card">
                 <section id="basic-datatable">
-                    <div class="row">
+                    <div class="row d-flex justify-content-between align-items-center m-1">
                         <div class="col-12">
                             <div class="card">
                                 <table class="datatables-basic table" id="university_table">
@@ -192,6 +193,7 @@
                                           
                                         </tr>
                                     </thead>
+                                    
                                     <tbody>
                                     {% for i in  vendor_campaign%}
                                         <tr>
@@ -201,7 +203,7 @@
                                             <td><a href="" data-bs-toggle="modal" data-bs-target="#myModal1"  data-id={{i.id}} class="product" ><button class="btn btn-primary btn-sm w-100 mb-75 waves-effect waves-float waves-light" disabled="" style="background-image: linear-gradient(to right, #14bdad , #14bdad);border:1px solid #14bdad !important">View</button></a></td>
                                             <td>{{i.offer}}</td>
                                             
-                                            {% comment %} <td>{% for k in i.influencer_id %}<a class="influencer_name" data-bs-toggle="modal" data-bs-target="#myModal" href="#"  data-id="{{k}}"  onclick="openModal({{k}})" >{% endfor %} {% for j in i.influencer_name %}<br>{{j}}</br>{%endfor%}</a></td> {% endcomment %}
+                                           
                                             <td><a href="" data-bs-toggle="modal" data-bs-target="#myModal" data-id={{i.id}} class="influencer"><button class="btn btn-primary btn-sm w-100 mb-75 waves-effect waves-float waves-light" disabled="" style="background-image: linear-gradient(to right, #14bdad , #14bdad);border:1px solid #14bdad !important">View</button></a></td>
                                             <td>{{i.influencer_fee}}</td>
                                             <td>{{i.sale}}</td>
@@ -437,11 +439,9 @@
                     var table = $("#interest1");
                     table.find("tr").remove();
                     jQuery.each(response.val, function( i, vals ) {
-                        console.log('val',vals)
                         var html = '<tr><td>'+ vals.product_name +'</td><td>';
                         var jsonArray = JSON.parse(vals.coupon.replace(/'/g, "\""));
                         var jsonArray1 = JSON.parse(vals.amount.replace(/'/g, "\""));
-                       
                         for (var i = 0; i < jsonArray.length; i++) {
                                 html += '<span>' + jsonArray[i] + '</span><br>';
                                 
@@ -455,10 +455,6 @@
                    
                     html += '</tr></td>';
                     
-                       
-                        
-                     
-                       
                         $("#interest1").append(html);
                       
                      

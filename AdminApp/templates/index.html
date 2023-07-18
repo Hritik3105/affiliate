@@ -13,7 +13,7 @@
     <link rel="apple-touch-icon" href="/static/app-assets/images/ico/apple-icon-120.png">
     <link rel="shortcut icon" type="image/x-icon" href="/static/app-assets/images/avatars/mainwebsite.png">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500;1,600" rel="stylesheet">
-
+    
     <!-- BEGIN: Vendor CSS-->
     <link rel="stylesheet" type="text/css" href="/static/app-assets/vendors/css/vendors.min.css">
     <link rel="stylesheet" type="text/css" href="/static/app-assets/vendors/css/charts/apexcharts.css">
@@ -173,7 +173,7 @@
                                 <!-- Line Chart - Profit -->
                                 <div class="col-lg-6 col-md-3 col-6">
                                     <div class="card card-tiny-line-stats">
-                                        <div class="card-body pb-50">
+                                         <div class="card-body pb-50">
                                             <h6>Profit</h6>
                                             <h2 class="fw-bolder mb-1">0k</h2>
                                             <div id="statistics-profit-chart"></div>
@@ -185,8 +185,8 @@
                                 <!-- Earnings Card -->
                                 <div class="col-lg-12 col-md-6 col-12">
                                     <div class="card earnings-card">
-                                        <div class="card-body">
-                                            <div class="row">
+                                        {% comment %} <div class="card-body"> {% endcomment %}
+                                            {% comment %} <div class="row">
                                                 <div class="col-6">
                                                     <h4 class="card-title mb-1">Earnings</h4>
                                                     <div class="font-small-2">This Month</div>
@@ -197,10 +197,10 @@
                                                 </div>
                                                 <div class="col-6">
                                                     <canvas id="myChart1" style="width:100%;max-width:600px"></canvas>
-                                                    {% comment %} <div id="earnings-chart"></div> {% endcomment %}
+                                                  
                                                 </div>
-                                            </div>
-                                        </div>
+                                            </div> {% endcomment %}
+                                        {% comment %} </div> {% endcomment %}
                                     </div>
                                 </div>
                                 <!--/ Earnings Card -->
@@ -308,7 +308,7 @@
 
         var xValues = test;
         var yValues = z
-        var barColors = ["#00aba9", "green","blue"];
+        var barColors = ["#00aba9", "green","blue","red","purple"];
         
         new Chart("myChart", {
           type: "bar",
