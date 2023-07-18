@@ -73,14 +73,13 @@ def show(request):
                         order_count += 1  
                 
                 sales_reports1.append({"store_name": store_name, "sales_report": sales_report,"order_count":order_count})
-    print(sales_reports1)
     for i in sales_reports1:
         if i["sales_report"]:
             total_order_count+=i["order_count"]
             vendor_store.append(i["store_name"])
             sale_val.append(i["sales_report"])
     rouded_value=round(total_sales,2)
-    return render(request,'index.html',{"total":rouded_value,"sales_report":sales_reports1,"count":total_order_count,"vendor":vendor_store,"sale_val":sale_val})
+    return render(request,'index.html',{"total":rouded_value,"sales_report":sales_reports1,"count":total_order_count,"vendor":vendor_store,"sale_val":round(sale_val,2)})
 
 
 

@@ -2263,8 +2263,7 @@ class MarketplaceAccept(APIView):
 
     def post(self,request,id,pk):
         try:
-            print("enter")
-            
+         
             coupon_name=request.data.get("coupon")
             amount=request.data.get("amount")
             assign_coupon=Campaign.objects.filter(id=394).update(influencer_name=[20])
