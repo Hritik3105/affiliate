@@ -23,6 +23,14 @@ from django.utils import timezone
 import stripe
 from Affilate_Marketing import settings
 from CampaignApp.utils import *
+import checkout_sdk
+from checkout_sdk.accounts.accounts import OnboardEntityRequest, ContactDetails, Profile, Individual, DateOfBirth, Identification
+from checkout_sdk.common.common import Phone, Address
+from checkout_sdk.common.enums import Country
+from checkout_sdk.checkout_sdk import CheckoutSdk
+from checkout_sdk.environment import Environment
+from checkout_sdk.exception import CheckoutApiException, CheckoutArgumentException, CheckoutAuthorizationException
+from checkout_sdk.oauth_scopes import OAuthScopes
 
 # Create your views here.
 
@@ -1463,7 +1471,6 @@ class InfluencerNotification(APIView):
     
     
     
-    
 #GET LIST OF NOTIFICATION API
 """API TO CHANGE NOTIFICATION STATUS"""
 class ChangeNotifinflStatus(APIView):
@@ -2254,7 +2261,7 @@ class MarketplaceAccept(APIView):
     authentication_classes=[TokenAuthentication]
     permission_classes=[IsAuthenticated]
 
-    def get(self,request,id,pk):
+    def post(self,request,id,pk):
         try:
             print("enter")
             
@@ -2275,7 +2282,7 @@ class MarketplaceAccept(APIView):
 class MarketplaceDecline(APIView):
     authentication_classes=[TokenAuthentication]
     permission_classes = [IsAuthenticated]    
-    def get(self,request,id,pk):
+    def post(self,request,id,pk):
         try:
         
             cam_dec=VendorCampaign.objects.filter(campaignid_id=id,influencerid_id=pk,vendor_id=self.request.user.id).update(campaign_status=4)
@@ -2509,3 +2516,65 @@ class Payout(APIView):
         client_secret = balance_transaction.id
         
         return Response({"data":client_secret},status=status.HTTP_200_OK)
+    
+    
+    
+class Checkout(APIView):
+    def post(self,request):
+        api = CheckoutSdk.builder() \
+        .oauth() \
+        .client_credentials('hritik@codenomad.net', 'Mongodb31') \
+        .environment(Environment.sandbox()) \
+        .scopes([OAuthScopes.ACCOUNTS]) \
+        .build()
+
+        phone = Phone()
+        phone.country_code = '44'
+        phone.number = '4155552671'
+
+        address = Address()
+        address.address_line1 = 'CheckoutSdk.com'
+        address.address_line2 = '90 Tottenham Court Road'
+        address.city = 'London'
+        address.state = 'London'
+        address.zip = 'W1T 4TJ'
+        address.country = Country.GB
+
+        request = OnboardEntityRequest()
+        request.reference = 'reference'
+        request.contact_details = ContactDetails()
+        request.contact_details.phone = phone
+        request.profile = Profile()
+        request.profile.urls = ['https://docs.checkout.com/url']
+        request.profile.mccs = ['0742']
+        request.individual = Individual()
+        request.individual.first_name = 'First'
+        request.individual.last_name = 'Last'
+        request.individual.trading_name = "Batman's Super Hero Masks"
+        request.individual.registered_address = address
+        request.individual.national_tax_id = 'TAX123456'
+        request.individual.date_of_birth = DateOfBirth()
+        request.individual.date_of_birth.day = 5
+        request.individual.date_of_birth.month = 6
+        request.individual.date_of_birth.year = 1996
+        request.individual.identification = Identification()
+        request.individual.identification.national_id_number = 'AB123456C'
+
+        try:
+            response = api.accounts.create_entity(request)
+            print(response)
+            return Response(response)
+        except CheckoutApiException as err:
+            # API error
+            request_id = err.request_id
+            status_code = err.http_status_code
+            error_details = err.error_details
+            http_response = err.http_response
+        except CheckoutArgumentException as err:
+            print("hello")
+            # Bad arguments
+
+        except CheckoutAuthorizationException as err:
+            # Invalid authorization
+            print("why")
+        

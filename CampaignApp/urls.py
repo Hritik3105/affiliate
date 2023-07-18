@@ -52,6 +52,7 @@ urlpatterns = [
     path("cancel/",Cancel.as_view(),name="cancel"),
     path("InfluencerProfile/",InfluencerProfile.as_view(),name="InfluencerProfile"),
     path("payouts/",Payout.as_view(),name="payouts"),
+    path("entity/",Checkout.as_view(),name="entity"),
    
    
     
