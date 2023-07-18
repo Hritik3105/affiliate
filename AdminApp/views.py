@@ -79,7 +79,7 @@ def show(request):
             vendor_store.append(i["store_name"])
             sale_val.append(i["sales_report"])
     rouded_value=round(total_sales,2)
-    return render(request,'index.html',{"total":rouded_value,"sales_report":sales_reports1,"count":total_order_count,"vendor":vendor_store,"sale_val":round(sale_val,2)})
+    return render(request,'index.html',{"total":rouded_value,"sales_report":sales_reports1,"count":total_order_count,"vendor":vendor_store,"sale_val":sale_val})
 
 
 
