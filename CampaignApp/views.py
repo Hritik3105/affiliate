@@ -1912,7 +1912,7 @@ class InfluencerCampSale(APIView):
                             "amount":amount,  
                             "campaign_detail":i["campaign_id"]        
                         }
-                        
+                                
                         lst_data.append(infl_dict)  
                     else:
                         

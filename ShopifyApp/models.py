@@ -9,5 +9,5 @@ class influencer_coupon(models.Model):
     influencer_id=models.ForeignKey(ModashInfluencer,on_delete=models.CASCADE,blank=True,null=True)
     vendor=models.ForeignKey(User,on_delete=models.CASCADE,blank=True,null=True)
     coupon_name=models.CharField(max_length=255,blank=True,null=True)
-    amount=models.IntegerField(blank=True,null=True)
+    amount=models.FloatField(blank=True,null=True)
     coupon_id=models.CharField(max_length=255,blank=True,null=True)
