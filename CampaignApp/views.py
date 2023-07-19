@@ -1894,8 +1894,9 @@ class InfluencerCampSale(APIView):
                 
                 for i in influencer_sales_for_campaign[key]:
                     str_detail=StripeDetails.objects.filter(influencer=key,vendor=self.request.user.id).values("account_id")
+                    print("-===================",str_detail)
                     check=Campaign.objects.filter(id=i["campaign_id"]).values("influencer_fee","offer","campaign_name")
-
+                    
                     if str_detail:
                         if  check[0]["offer"] == "percentage":
                             amount=i["sales"] * check[0]["influencer_fee"] /100
