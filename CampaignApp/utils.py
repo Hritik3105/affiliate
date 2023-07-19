@@ -105,9 +105,9 @@ def ExpiryCoupondelete(self,request):
         
         if coupon:
             str_lst=ast.literal_eval(coupon)
-            print(str_lst)
+           
             cop_id=influencer_coupon.objects.filter(coupon_name__in=str_lst,vendor=self.request.user.id).values_list("coupon_id",flat=True)
-            print(cop_id)
+           
             if cop_id:
                 url =f'https://{SHOPIFY_API_KEY}:{SHOPIFY_API_SECRET}@{acc_tok[1]}/admin/api/{API_VERSION}/price_rules/{cop_id[0]}.json'
         
