@@ -1903,7 +1903,7 @@ class InfluencerCampSale(APIView):
                             amount=round(amount,2)
                             
                         else:
-                            amount=i["sales"] - check[0]["influencer_fee"] 
+                            amount=check[0]["influencer_fee"] 
                         
                         
                         infl_dict={
@@ -1926,7 +1926,7 @@ class InfluencerCampSale(APIView):
                             amount=round(amount,2)
                         
                         else:
-                            amount=i["sales"] - check[0]["influencer_fee"] 
+                            amount=check[0]["influencer_fee"] 
                         
                             
                         infl_dict={
@@ -1972,6 +1972,7 @@ class InfluencerCampSale(APIView):
                     if emp_check == False:
                         PaymentDetails.objects.create(sales=i["sales"],influencerfee=i["influener_fee"],offer=i["offer"],amount=i["amount"],influencer_id=i["influencer"],vendor_id=self.request.user.id,campaign_id=i["campaign_detail"],account_id=i["account"])
                     else:
+                        
                         PaymentDetails.objects.update(sales=i["sales"],influencerfee=i["influener_fee"],offer=i["offer"],amount=i["amount"],influencer_id=i["influencer"],vendor_id=self.request.user.id,campaign_id=i["campaign_detail"],account_id=i["account"])
 
                         
