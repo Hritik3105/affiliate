@@ -1894,9 +1894,9 @@ class InfluencerCampSale(APIView):
                 
                 for i in influencer_sales_for_campaign[key]:
                     str_detail=StripeDetails.objects.filter(influencer=key,vendor=self.request.user.id).values("account_id")
-                    print("-===================",str_detail)
+             
                     check=Campaign.objects.filter(id=i["campaign_id"]).values("influencer_fee","offer","campaign_name")
-                    
+
                     if str_detail:
                         if  check[0]["offer"] == "percentage":
                             amount=i["sales"] * check[0]["influencer_fee"] /100
@@ -1941,7 +1941,6 @@ class InfluencerCampSale(APIView):
                         }
                         
                         lst_data.append(infl_dict)  
-                print("lsrrr",lst_data)
             campaign_totals = {}
             
         
@@ -1963,7 +1962,7 @@ class InfluencerCampSale(APIView):
             for sales_entry in combined_sales_list:
                 
                 data_max.append(sales_entry)   
-     
+            print("data_max",data_max)
             empty=PaymentDetails.objects.all().exists()
             if empty == True:
                 for i in data_max:
