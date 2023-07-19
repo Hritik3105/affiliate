@@ -133,8 +133,7 @@ class InflCampSerializer(serializers.ModelSerializer):
    def validate_influencer_fee(self,influencer_fee):
         
         offer = self.initial_data.get('offer')
-        print(offer)
-        print(influencer_fee)
+      
         
         if influencer_fee >100 and offer=="percentage":
             raise serializers.ValidationError("Influencer fee must be less than or equal to 100.")
