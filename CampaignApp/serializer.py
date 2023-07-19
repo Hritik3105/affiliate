@@ -139,7 +139,7 @@ class InflCampSerializer(serializers.ModelSerializer):
         if influencer_fee >100 and offer=="percentage":
             raise serializers.ValidationError("Influencer fee must be less than or equal to 100.")
         
-        elif influencer_fee < 0 and offer=="percentage" or offer == "fixed":
+        elif influencer_fee < 0 and offer=="percentage" or offer == "commission":
             raise serializers.ValidationError("Influencer fee must be in positive.")
         return influencer_fee
 
