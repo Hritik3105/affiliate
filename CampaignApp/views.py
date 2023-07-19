@@ -1962,7 +1962,7 @@ class InfluencerCampSale(APIView):
             for sales_entry in combined_sales_list:
                 
                 data_max.append(sales_entry)   
-            print("data_max",data_max)
+           
             empty=PaymentDetails.objects.all().exists()
             if empty == True:
                 for i in data_max:
@@ -1972,7 +1972,8 @@ class InfluencerCampSale(APIView):
                     if emp_check == False:
                         PaymentDetails.objects.create(sales=i["sales"],influencerfee=i["influener_fee"],offer=i["offer"],amount=i["amount"],influencer_id=i["influencer"],vendor_id=self.request.user.id,campaign_id=i["campaign_detail"],account_id=i["account"])
                     else:
-                        pass
+                        PaymentDetails.objects.update(sales=i["sales"],influencerfee=i["influener_fee"],offer=i["offer"],amount=i["amount"],influencer_id=i["influencer"],vendor_id=self.request.user.id,campaign_id=i["campaign_detail"],account_id=i["account"])
+
                         
                 # if emp_check:
                 #     for i in data_max:
