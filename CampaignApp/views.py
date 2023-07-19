@@ -1917,7 +1917,7 @@ class InfluencerCampSale(APIView):
                         }
 
                         lst_data.append(infl_dict)  
-                        print("lsrrr",lst_data)
+                      
                     else:
                         
                         if  check[0]["offer"] == "percentage":
@@ -1940,7 +1940,7 @@ class InfluencerCampSale(APIView):
                         }
                         
                         lst_data.append(infl_dict)  
-            
+                print("lsrrr",lst_data)
             campaign_totals = {}
             
         
