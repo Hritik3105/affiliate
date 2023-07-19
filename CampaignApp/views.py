@@ -1887,7 +1887,7 @@ class InfluencerCampSale(APIView):
                         else:
                             influencer_sales_for_campaign[influencer_id] = [{"campaign_id": campaign_id, "sales": sales}]
     
-            print("influencer",influencer_sales_for_campaign)
+            
             lst_data=[]
             
             for key in influencer_sales_for_campaign:
@@ -1917,6 +1917,7 @@ class InfluencerCampSale(APIView):
                         }
 
                         lst_data.append(infl_dict)  
+                        print("lsrrr",lst_data)
                     else:
                         
                         if  check[0]["offer"] == "percentage":
