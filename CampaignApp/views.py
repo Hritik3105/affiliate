@@ -1865,8 +1865,7 @@ class InfluencerCampSale(APIView):
             sale=list(sales_by_coupon.keys())
             amount=list(sales_by_coupon.values())
             
-            print("sale",sale)
-            print("amount",amount)
+          
             
 
             campaign_ids =  Campaign.objects.filter(vendorid=self.request.user.id).values_list('id', flat=True) 
@@ -1888,7 +1887,7 @@ class InfluencerCampSale(APIView):
                         else:
                             influencer_sales_for_campaign[influencer_id] = [{"campaign_id": campaign_id, "sales": sales}]
     
-        
+            print("influencer",influencer_sales_for_campaign)
             lst_data=[]
             
             for key in influencer_sales_for_campaign:
