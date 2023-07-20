@@ -1982,7 +1982,11 @@ class InfluencerCampSale(APIView):
                     if emp_check == False:
                         PaymentDetails.objects.create(sales=i["sales"],influencerfee=i["influener_fee"],offer=i["offer"],amount=i["amount"],influencer_id=i["influencer"],vendor_id=self.request.user.id,campaign_id=i["campaign_detail"],account_id=i["account"])
                     else:
-                        pass
+                        
+                        amount_transfered=transferdetails.objects.filter(vendor=self.request.user.id,influencer=i["influener_fee"],campaign=i["campaign_detail"]).values_list("amount",flat=True)
+                        amount_deduct=int(i["amount"]-int(amount_transfered[0]))
+                        PaymentDetails.objects.filter(vendor=self.request.user.id,campaign_id=i["campaign_detail"]).update(amount=amount_deduct)
+
                         # print(i["influencer"])
                         # print(i["campaign_detail"])
                         # tranfer_money=transferdetails.objects.filter(vendor=self.request.user.id,influencer=i["influencer"],campaign=i["campaign_detail"]).values("amount")
