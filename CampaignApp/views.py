@@ -1720,7 +1720,7 @@ class InfluencerStripeDetail(APIView):
 
     
     
-class TranferMoney(APIView):
+class   TranferMoney(APIView):
     authentication_classes=[TokenAuthentication]
     permission_classes = [IsAuthenticated] 
     
@@ -1745,11 +1745,8 @@ class TranferMoney(APIView):
             payment_method=stripe.PaymentMethod.create(
             type="card",
             card={
-                "number": "4242424242424242",
-                "exp_month": 8,
-                "exp_year": 2024,
-                "cvc": "314",
-            },
+               "token": "tok_visa", 
+               },
             
             )
         except stripe.error.StripeError as e:
@@ -2282,7 +2279,9 @@ class MarketplaceAccept(APIView):
             amount=request.data.get("amount")
             print(amount)
             assign_coupon=Campaign.objects.filter(id=id).update(influencer_name=[pk])
+            print(assign_coupon)
             influencer_cop=influencer_coupon.objects.create(coupon_name=coupon_name,amount=amount,vendor_id=self.request.user.id,influencer_id_id=pk)
+            print(influencer_cop)
             cam_dec=VendorCampaign.objects.filter(campaignid_id=id,influencerid_id=pk,vendor_id=self.request.user.id).update(campaign_status=2)
             cam_dec=Notification.objects.filter(campaignid_id=id,influencerid_id=pk,vendor_id=self.request.user.id).update(send_notification=3)
             return Response({"message":"Campaign Accept"},status=status.HTTP_202_ACCEPTED)
