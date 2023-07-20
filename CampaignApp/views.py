@@ -1890,7 +1890,7 @@ class InfluencerCampSale(APIView):
                         else:
                             influencer_sales_for_campaign[influencer_id] = [{"campaign_id": campaign_id, "sales": sales}]
 
-                        print("------------",influencer_sales_for_campaign)
+                       
             lst_data=[]
             
             for key in influencer_sales_for_campaign:
@@ -1969,7 +1969,7 @@ class InfluencerCampSale(APIView):
             for sales_entry in combined_sales_list:
                 
                 data_max.append(sales_entry)   
-            
+            print(data_max)
             empty=PaymentDetails.objects.all().exists()
             if empty == True:
                 for i in data_max:
