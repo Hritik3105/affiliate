@@ -1974,8 +1974,10 @@ class InfluencerCampSale(APIView):
                     if emp_check == False:
                         PaymentDetails.objects.create(sales=i["sales"],influencerfee=i["influener_fee"],offer=i["offer"],amount=i["amount"],influencer_id=i["influencer"],vendor_id=self.request.user.id,campaign_id=i["campaign_detail"],account_id=i["account"])
                     else:
-                        print(i["campaign_detail"])
-                        PaymentDetails.objects.filter(vendor=self.request.user.id,campaign_id=i["campaign_detail"]).update(sales=i["sales"],influencerfee=i["influener_fee"],offer=i["offer"],amount=i["amount"],influencer_id=i["influencer"],vendor_id=self.request.user.id,campaign_id=i["campaign_detail"],account_id=i["account"])
+                       
+                        tranfer_money=transferdetails.objects.filter(vendor=self.request.user.id,influencer=i["influencer"],campaign=i["campaign_detail"]).values("amountpaid")
+                        print("transfer",tranfer_money)
+                        PaymentDetails.objects.filter(vendor=self.request.user.id,campaign_id=i["campaign_detail"]).update(sales=i["sales"],influencerfee=i["influener_fee"],offer=i["offer"],amount=i["amount"],influencer_id=i["influencer"],vendor_id=self.request.user.id,campaign_id=i["campaign_detail"],account_id=i["account"],amount=)
 
                         
                 # if emp_check:
