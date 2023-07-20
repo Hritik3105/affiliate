@@ -1941,7 +1941,7 @@ class InfluencerCampSale(APIView):
                         }
                         
                         lst_data.append(infl_dict)  
-                    print(lst_data)
+                    
             campaign_totals = {}
             
         
@@ -1963,7 +1963,7 @@ class InfluencerCampSale(APIView):
             for sales_entry in combined_sales_list:
                 
                 data_max.append(sales_entry)   
-           
+            print(data_max)
             empty=PaymentDetails.objects.all().exists()
             if empty == True:
                 for i in data_max:
