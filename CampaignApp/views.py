@@ -1733,13 +1733,11 @@ class TranferMoney(APIView):
         amount=request.data.get("amount")
         print(amount)
         campaignids=request.data.get("camp_id")
-        print(campaignids)
+       
         salesdone=request.data.get("sales")
        
         get_account=StripeDetails.objects.filter(vendor_id=self.request.user.id).values("account_id","influencer_id")
         
-
-            
         
         stripe.api_key = settings.STRIPE_API_KEY  
         
@@ -1795,7 +1793,7 @@ class TranferMoney(APIView):
                     transfer_obj.transferid=transfer1["id"]
                     transfer_obj.amount=transfer1["amount"]
                     transfer_obj.destination=transfer1["destination"]
-                    transfer_obj.campaign_id=434
+                    transfer_obj.campaign_id=campaignids
                     transfer_obj.save()
 
                     pay_value=PaymentDetails.objects.filter(campaign=campaignids,influencer=influencer,vendor=self.request.user.id).values("sales","amount")
@@ -1806,10 +1804,11 @@ class TranferMoney(APIView):
                     
                     PaymentDetails.objects.filter(campaign=campaignids,influencer=influencer,vendor=self.request.user.id).update(amountpaid=transfer1["amount"],salespaid=salesdone,amount=remaining_amount)
                 else:  
-                    amount_Paid=transferdetails.objects.filter(vendor=self.request.user.id,influencer=influencer,campaign=434).values_list("amount",flat=True)
+                    print("entrrrr")
+                    amount_Paid=transferdetails.objects.filter(vendor=self.request.user.id,influencer=influencer,campaign=campaignids).values_list("amount",flat=True)
                     new_amount=int(amount_Paid[0])+int(transfer1["amount"])
                     print(new_amount)
-                    amount_Paid=transferdetails.objects.filter(vendor=self.request.user.id,influencer=influencer,campaign=434).update(amount=new_amount)
+                    amount_Paid=transferdetails.objects.filter(vendor=self.request.user.id,influencer=influencer,campaign=campaignids).update(amount=new_amount)
 
           
             except stripe.error.StripeError as e:
