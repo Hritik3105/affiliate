@@ -1984,7 +1984,10 @@ class InfluencerCampSale(APIView):
                     else:
                         
                         amount_transfered=transferdetails.objects.filter(vendor=self.request.user.id,influencer=i["influener_fee"],campaign=i["campaign_detail"]).values_list("amount",flat=True)
+                        print(amount_transfered)
                         amount_deduct=int(i["amount"]-int(amount_transfered[0]))
+                        print(amount_deduct)
+                        
                         PaymentDetails.objects.filter(vendor=self.request.user.id,campaign_id=i["campaign_detail"]).update(amount=amount_deduct)
 
                         # print(i["influencer"])
