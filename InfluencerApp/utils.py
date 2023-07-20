@@ -59,5 +59,4 @@ def createaccount(secret):
         tos_acceptance={"date": 1609798905, "ip": "8.8.8.8"}
         )
         return account
-    # except stripe.error.StripeError as e:
-    #     return Response({"error":e.user_message},status=status.HTTP_400_BAD_REQUEST)
+   
