@@ -1785,24 +1785,28 @@ class TranferMoney(APIView):
                     transfer_group=intent.id,
                 )     
                 
-                exists_transfer=transferdetails.objects.filter(vendor=self.request.user.id,influencer=influencer).exists()   
-                if exists_transfer == True:
+                exists_transfer=transferdetails.objects.filter(vendor=self.request.user.id,influencer=influencer,campaign=434).exists()   
+                if exists_transfer == False:
                     transfer_obj=transferdetails()
                     transfer_obj.vendor_id=self.request.user.id
                     transfer_obj.influencer_id=influencer
                     transfer_obj.transferid=transfer1["id"]
                     transfer_obj.amount=transfer1["amount"]
                     transfer_obj.destination=transfer1["destination"]
+                    transfer_obj.campaign_id=434
                     transfer_obj.save()
-                
                 
                     pay_value=PaymentDetails.objects.filter(campaign=campaignids,influencer=influencer,vendor=self.request.user.id).values("sales","amount")
                     remaining_amount=amount-transfer1["amount"] 
                     
                     
                     PaymentDetails.objects.filter(campaign=campaignids,influencer=influencer,vendor=self.request.user.id).update(amountpaid=transfer1["amount"],salespaid=salesdone,amount=remaining_amount)
-                
-                
+                else:  
+                    amount_Paid=transferdetails.objects.filter(vendor=self.request.user.id,influencer=influencer,campaign=434).values_list("amount",flat=True)
+                    new_amount=amount_Paid+transfer1["amount"]
+                    amount_Paid=transferdetails.objects.filter(vendor=self.request.user.id,influencer=influencer,campaign=434).update(amount=new_amount)
+
+          
             except stripe.error.StripeError as e:
                 return Response({"error":e.user_message},status=status.HTTP_400_BAD_REQUEST)
             try:
