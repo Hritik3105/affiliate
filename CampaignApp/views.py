@@ -1980,6 +1980,8 @@ class InfluencerCampSale(APIView):
                         PaymentDetails.objects.create(sales=i["sales"],influencerfee=i["influener_fee"],offer=i["offer"],amount=i["amount"],influencer_id=i["influencer"],vendor_id=self.request.user.id,campaign_id=i["campaign_detail"],account_id=i["account"])
                     else:
                         
+                        print(i["influencer"])
+                        print(i["campaign_detail"])
                         tranfer_money=transferdetails.objects.filter(vendor=self.request.user.id,influencer=i["influencer"],campaign=i["campaign_detail"]).values("amount")
                         print("transfer",tranfer_money)
                         print("amount",i["amount"])
