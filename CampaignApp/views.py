@@ -1774,8 +1774,7 @@ class   TranferMoney(APIView):
             return Response({"error":e.user_message},status=status.HTTP_400_BAD_REQUEST)
             
             
-      
-       
+    
 
         if confim.status == 'succeeded':
             try:
@@ -1797,9 +1796,10 @@ class   TranferMoney(APIView):
                 transfer_obj.save()
                 
                 pay_value=PaymentDetails.objects.filter(campaign=campaignids,influencer=influencer,vendor=self.request.user.id).values("sales","amount")
-                # trsamt=int(pay_value[0]["amount"])-transfer1["amount"]
+                remaining_amount=amount-transfer1["amount"] 
+                print(remaining_amount)
                 
-                PaymentDetails.objects.filter(campaign=campaignids,influencer=influencer,vendor=self.request.user.id).update(amountpaid=transfer1["amount"],salespaid=salesdone)
+                PaymentDetails.objects.filter(campaign=campaignids,influencer=influencer,vendor=self.request.user.id).update(amountpaid=transfer1["amount"],salespaid=salesdone,amount=remaining_amount)
                 
                 
             except stripe.error.StripeError as e:
