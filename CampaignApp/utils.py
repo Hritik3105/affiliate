@@ -8,8 +8,7 @@ from Affilate_Marketing.settings import SHOPIFY_API_KEY,SHOPIFY_API_SECRET,API_V
 import requests
 import stripe
 
-def product_details(self,request,val_lst,req_id):
-  
+def product_details(self,request,val_lst,req_id):  
     for i in range(len(val_lst)):
             
             product=Product_information()
@@ -27,7 +26,6 @@ def product_details(self,request,val_lst,req_id):
 def product_name(self,request,req_id,arg,arg_id):
     
     for i in  range(len(arg)):
-    
         product=Product_information()
         product.vendor_id=self.request.user.id
         product.campaignid_id=req_id.id
@@ -37,7 +35,7 @@ def product_name(self,request,req_id,arg,arg_id):
 
 
 def influencer_details(self,request,int_list,req_id):
-    
+
     for i in int_list:
             vendor_obj=VendorCampaign()
             vendor_obj.influencerid_id=i

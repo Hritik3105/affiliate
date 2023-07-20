@@ -1490,7 +1490,7 @@ class InfluencerApplied(APIView):
     authentication_classes=[TokenAuthentication]
     permission_classes = [IsAuthenticated] 
     
-    def get(self,request):
+    def post(self,request):
         print("countsss")
         lst=[]
         final_lst=[]

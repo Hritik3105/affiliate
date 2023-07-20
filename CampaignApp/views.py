@@ -1720,13 +1720,13 @@ class InfluencerStripeDetail(APIView):
 
     
     
-class   TranferMoney(APIView):
+class TranferMoney(APIView):
     authentication_classes=[TokenAuthentication]
     permission_classes = [IsAuthenticated] 
     
     def post(self,request):
         account=request.data.get("account_id")
-        print(account)
+        
         influencer=request.data.get("influencer")
     
         amount=request.data.get("amount")
@@ -1784,22 +1784,23 @@ class   TranferMoney(APIView):
                     destination=account,
                     transfer_group=intent.id,
                 )     
-                   
-                transfer_obj=transferdetails()
-                transfer_obj.vendor_id=self.request.user.id
-                transfer_obj.influencer_id=influencer
-                transfer_obj.transferid=transfer1["id"]
-                transfer_obj.amount=transfer1["amount"]
-                transfer_obj.destination=transfer1["destination"]
+                
+                exists_transfer=transferdetails.objects.filter(vendor=self.request.user.id,influencer=influencer).exists()   
+                if exists_transfer == True:
+                    transfer_obj=transferdetails()
+                    transfer_obj.vendor_id=self.request.user.id
+                    transfer_obj.influencer_id=influencer
+                    transfer_obj.transferid=transfer1["id"]
+                    transfer_obj.amount=transfer1["amount"]
+                    transfer_obj.destination=transfer1["destination"]
+                    transfer_obj.save()
                 
                 
-                transfer_obj.save()
-                
-                pay_value=PaymentDetails.objects.filter(campaign=campaignids,influencer=influencer,vendor=self.request.user.id).values("sales","amount")
-                remaining_amount=amount-transfer1["amount"] 
-                print(remaining_amount)
-                
-                PaymentDetails.objects.filter(campaign=campaignids,influencer=influencer,vendor=self.request.user.id).update(amountpaid=transfer1["amount"],salespaid=salesdone,amount=remaining_amount)
+                    pay_value=PaymentDetails.objects.filter(campaign=campaignids,influencer=influencer,vendor=self.request.user.id).values("sales","amount")
+                    remaining_amount=amount-transfer1["amount"] 
+                    
+                    
+                    PaymentDetails.objects.filter(campaign=campaignids,influencer=influencer,vendor=self.request.user.id).update(amountpaid=transfer1["amount"],salespaid=salesdone,amount=remaining_amount)
                 
                 
             except stripe.error.StripeError as e:
