@@ -32,6 +32,7 @@ from checkout_sdk.environment import Environment
 from checkout_sdk.exception import CheckoutApiException, CheckoutArgumentException, CheckoutAuthorizationException
 from checkout_sdk.oauth_scopes import OAuthScopes
 
+
 # Create your views here.
 
 
@@ -1866,7 +1867,6 @@ class InfluencerCampSale(APIView):
                         sales_by_coupon[coupon_code] += float(total_price)
                         
                     else:
-                        
                         sales_by_coupon[coupon_code] = float(total_price)
             
             sale=list(sales_by_coupon.keys())
@@ -1971,9 +1971,9 @@ class InfluencerCampSale(APIView):
             for sales_entry in combined_sales_list:
                 
                 data_max.append(sales_entry)   
+            print("data",data_max)
             empty=PaymentDetails.objects.all().exists()
-            empty1=PaymentDetails.objects.filter(vendor=self.request.user.id)
-            print(empty1)
+           
             if empty == True:
                 for i in data_max:
         
@@ -1981,8 +1981,9 @@ class InfluencerCampSale(APIView):
                     print("emp_checkkkkk",emp_check)
                     if emp_check == False:
                         PaymentDetails.objects.create(sales=i["sales"],influencerfee=i["influener_fee"],offer=i["offer"],amount=i["amount"],influencer_id=i["influencer"],vendor_id=self.request.user.id,campaign_id=i["campaign_detail"],account_id=i["account"])
-                    else:
                         
+                    else:
+                        print
                         amount_transfered=transferdetails.objects.filter(vendor=self.request.user.id,influencer=i["influencer"],campaign=i["campaign_detail"]).values_list("amount",flat=True)
                         print(amount_transfered)
                         amount_deduct=i["amount"]
