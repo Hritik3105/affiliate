@@ -1795,10 +1795,12 @@ class TranferMoney(APIView):
                     transfer_obj.destination=transfer1["destination"]
                     transfer_obj.campaign_id=434
                     transfer_obj.save()
-                
+
                     pay_value=PaymentDetails.objects.filter(campaign=campaignids,influencer=influencer,vendor=self.request.user.id).values("sales","amount")
                     remaining_amount=amount-transfer1["amount"] 
+                    print(remaining_amount)
                     
+                   
                     
                     PaymentDetails.objects.filter(campaign=campaignids,influencer=influencer,vendor=self.request.user.id).update(amountpaid=transfer1["amount"],salespaid=salesdone,amount=remaining_amount)
                 else:  
