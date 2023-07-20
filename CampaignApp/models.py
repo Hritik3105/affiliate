@@ -123,6 +123,9 @@ class transferdetails(models.Model):
   vendor=models.ForeignKey(User,on_delete=models.CASCADE,blank=True,null=True)
   amount=models.IntegerField(blank=True,null=True)
   destination=models.CharField(max_length=255,blank=True,null=True)
+  remaining_amount=models.FloatField(blank=True,null=True)
+  campaign=models.ForeignKey(Campaign,on_delete=models.CASCADE,blank=True,null=True)
+
   
   
   
@@ -142,3 +145,5 @@ class CampaignCredit(models.Model):
   vendor=models.ForeignKey(User,on_delete=models.CASCADE,blank=True,null=True)
   start_date = models.DateField(blank=True, null=True)
   end_date = models.DateField(blank=True, null=True)
+  
+  

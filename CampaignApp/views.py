@@ -1793,6 +1793,7 @@ class   TranferMoney(APIView):
                 transfer_obj.amount=transfer1["amount"]
                 transfer_obj.destination=transfer1["destination"]
                 
+                
                 transfer_obj.save()
                 
                 pay_value=PaymentDetails.objects.filter(campaign=campaignids,influencer=influencer,vendor=self.request.user.id).values("sales","amount")
