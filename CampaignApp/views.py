@@ -1893,10 +1893,8 @@ class InfluencerCampSale(APIView):
                        
             lst_data=[]
             
-            for key in influencer_sales_for_campaign:
-                
+            for key in influencer_sales_for_campaign: 
                 for i in influencer_sales_for_campaign[key]:
-                    
                     print(i)
                     print(key)
                     str_detail=StripeDetails.objects.filter(influencer=key,vendor=self.request.user.id).values("account_id")
@@ -1969,8 +1967,9 @@ class InfluencerCampSale(APIView):
             for sales_entry in combined_sales_list:
                 
                 data_max.append(sales_entry)   
-            print(data_max)
             empty=PaymentDetails.objects.all().exists()
+            empty1=PaymentDetails.objects.filter(vendor=self.request.user.id)
+            print(empty1)
             if empty == True:
                 for i in data_max:
         
