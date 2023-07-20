@@ -1803,7 +1803,7 @@ class TranferMoney(APIView):
                     PaymentDetails.objects.filter(campaign=campaignids,influencer=influencer,vendor=self.request.user.id).update(amountpaid=transfer1["amount"],salespaid=salesdone,amount=remaining_amount)
                 else:  
                     amount_Paid=transferdetails.objects.filter(vendor=self.request.user.id,influencer=influencer,campaign=434).values_list("amount",flat=True)
-                    new_amount=amount_Paid+transfer1["amount"]
+                    new_amount=int(amount_Paid[0])+int(transfer1["amount"])
                     amount_Paid=transferdetails.objects.filter(vendor=self.request.user.id,influencer=influencer,campaign=434).update(amount=new_amount)
 
           
