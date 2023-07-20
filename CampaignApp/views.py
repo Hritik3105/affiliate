@@ -1894,7 +1894,7 @@ class InfluencerCampSale(APIView):
                     print(i)
                     print(key)
                     str_detail=StripeDetails.objects.filter(influencer=key,vendor=self.request.user.id).values("account_id")
-                    print(str_detail)
+               
                     check=Campaign.objects.filter(id=i["campaign_id"]).values("influencer_fee","offer","campaign_name")
 
                     if str_detail:
@@ -1941,7 +1941,7 @@ class InfluencerCampSale(APIView):
                         }
                         
                         lst_data.append(infl_dict)  
-            print(lst_data)
+                        print(lst_data)
             campaign_totals = {}
             
         
