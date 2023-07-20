@@ -1890,6 +1890,9 @@ class InfluencerCampSale(APIView):
             for key in influencer_sales_for_campaign:
                 
                 for i in influencer_sales_for_campaign[key]:
+                    
+                    print(i)
+                    print(key)
                     str_detail=StripeDetails.objects.filter(influencer=key,vendor=self.request.user.id).values("account_id")
                     print(str_detail)
                     check=Campaign.objects.filter(id=i["campaign_id"]).values("influencer_fee","offer","campaign_name")
