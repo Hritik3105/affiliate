@@ -39,7 +39,7 @@ def createaccount(secret):
         business_profile={'mcc':'5734', 'url':'https://www.google.com/'},
 
         individual ={'first_name':"sood",
-        'last_name':"hritik",
+        'last_name':"arpan",
         'email': "test@gmail.com",
         'phone':"+15555551234",
         'ssn_last_4':"0000",
