@@ -1732,6 +1732,7 @@ class TranferMoney(APIView):
         amount=request.data.get("amount")
         print(amount)
         campaignids=request.data.get("camp_id")
+        print(campaignids)
         salesdone=request.data.get("sales")
        
         get_account=StripeDetails.objects.filter(vendor_id=self.request.user.id).values("account_id","influencer_id")
@@ -1785,7 +1786,7 @@ class TranferMoney(APIView):
                     transfer_group=intent.id,
                 )     
                 
-                exists_transfer=transferdetails.objects.filter(vendor=self.request.user.id,influencer=influencer,campaign=434).exists()   
+                exists_transfer=transferdetails.objects.filter(vendor=self.request.user.id,influencer=influencer,campaign=campaignids).exists()   
                 if exists_transfer == False:
                     transfer_obj=transferdetails()
                     transfer_obj.vendor_id=self.request.user.id
@@ -1800,12 +1801,13 @@ class TranferMoney(APIView):
                     remaining_amount=amount-transfer1["amount"] 
                     print(remaining_amount)
                     
-                   
+
                     
                     PaymentDetails.objects.filter(campaign=campaignids,influencer=influencer,vendor=self.request.user.id).update(amountpaid=transfer1["amount"],salespaid=salesdone,amount=remaining_amount)
                 else:  
                     amount_Paid=transferdetails.objects.filter(vendor=self.request.user.id,influencer=influencer,campaign=434).values_list("amount",flat=True)
                     new_amount=int(amount_Paid[0])+int(transfer1["amount"])
+                    print(new_amount)
                     amount_Paid=transferdetails.objects.filter(vendor=self.request.user.id,influencer=influencer,campaign=434).update(amount=new_amount)
 
           
