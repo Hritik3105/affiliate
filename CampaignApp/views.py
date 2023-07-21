@@ -161,7 +161,7 @@ class CreateCampaign(APIView):
                 val_lst2=(request.data["product_discount"])
                 coup_lst=[]
                 cup_lst=[]
-                dict1={}
+              
                 if val_lst2[0]["coupon_name"] !=[None]:
                     final_err=coupon_check(self,request,val_lst2,cup_lst,coup_lst)
                   
@@ -196,8 +196,10 @@ class CreateCampaign(APIView):
                 product.vendor_id=self.request.user.id
                 product.campaignid_id=req_id.id
                 product.save()
+                return Response({"success":"Campaign create successfully","product_details":serializer.data},status=status.HTTP_200_OK)
+
+                
         else:
-   
             return Response({"error":"Admin Deactive your shop"},status=status.HTTP_401_UNAUTHORIZED)
 
         return Response({"error":"Campaign not created"},status=status.HTTP_400_BAD_REQUEST)
