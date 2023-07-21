@@ -214,7 +214,7 @@ class RequestCampaign(APIView):
                 cup_lst=[]
                 dict1={}
                 print(val_lst2[0]["coupon_name"])
-                if val_lst2:
+                if val_lst2[0]["coupon_name"] !=[None]:
                     
                     for i in  range (len(val_lst2)):
                         if val_lst2[i]["coupon_name"]:
