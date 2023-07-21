@@ -999,7 +999,7 @@ class RequestSents(APIView):
                             print("jjjjjjjjjjjjjjj",j) 
                             match_data=Product_information.objects.filter(coupon_name__contains=j,vendor_id=self.request.user.id).exists()
                            
-                        
+                            print(val_lst2[i]["coupon_name"])
                             dict1={str(val_lst2[i]["coupon_name"]):match_data}
                             
                             cup_lst.append(dict1)
