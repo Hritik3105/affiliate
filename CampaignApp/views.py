@@ -998,21 +998,24 @@ class RequestSents(APIView):
                         for j in val_lst2[i]["coupon_name"]:        
                             print("jjjjjjjjjjjjjjj",j) 
                             match_data=Product_information.objects.filter(coupon_name__contains=j,vendor_id=self.request.user.id).exists()
-                           
-                            print(val_lst2[i]["coupon_name"])
-                            dict1={str(val_lst2[i]["coupon_name"]):match_data}
-                            
-                            cup_lst.append(dict1)
-                            coup_lst.append(match_data)
-                            
-
-                            if True in coup_lst:
-                               
-                                cop=(list(dict1.keys())[0])
+                            if match_data == True:
+                                print("dictttt",val_lst2[i]["coupon_name"])
                                 
-                                cop_lst=ast.literal_eval(cop)
-                                print("list",cop_lst)
-                                return Response({"error": cop_lst},status=status.HTTP_410_GONE)
+                                dict3={str(j):match_data}
+                                print(dict3)
+                                dict1={str(val_lst2[i]["coupon_name"]):match_data}
+                                
+                                cup_lst.append(dict1)
+                                coup_lst.append(match_data)
+                                
+
+                                if True in coup_lst:
+                                
+                                    cop=(list(dict1.keys())[0])
+                                    
+                                    cop_lst=ast.literal_eval(cop)
+                                    print("list",cop_lst)
+                                    return Response({"error": cop_lst},status=status.HTTP_410_GONE)
 
                     req_id=serializer.save(status=2,vendorid_id=self.request.user.id)
                     infll=serializer.data["influencer_name"]
