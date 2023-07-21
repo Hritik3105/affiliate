@@ -306,7 +306,7 @@ class UpdateCampaign(APIView):
             if val_lst2:
    
                 for i in  range (len(val_lst2)):
-                    if val_lst2[i]["coupon_name"]:
+                    if val_lst2[i]["coupon_name"] and val_lst2[i]["coupon_name"] != [None]:
                       
                         for j in val_lst2[i]["coupon_name"]:
                         
