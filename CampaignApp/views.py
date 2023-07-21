@@ -1000,22 +1000,19 @@ class RequestSents(APIView):
                             print("jjjjjjjjjjjjjjj",j) 
                             match_data=Product_information.objects.filter(coupon_name__contains=j,vendor_id=self.request.user.id).exists()
                             if match_data == True:
-                                print("dictttt",val_lst2[i]["coupon_name"])
+                            
                                 match_cop.append(j)
                                 dict3={str(match_cop):match_data}
                                 print(dict3)
-                                dict1={str(val_lst2[i]["coupon_name"]):match_data}
-                                print(dict1)
+                                # dict1={str(val_lst2[i]["coupon_name"]):match_data}
+                                # print(dict1)
                                 cup_lst.append(dict3)
                                 coup_lst.append(match_data)
-                                
-
+                
                                 if True in coup_lst:
-                                
                                     cop=(list(dict3.keys())[0])
-                                    
                                     cop_lst=ast.literal_eval(cop)
-                                    print("list",cop_lst)
+                                  
                                     return Response({"error": cop_lst},status=status.HTTP_410_GONE)
 
                     req_id=serializer.save(status=2,vendorid_id=self.request.user.id)
