@@ -1009,11 +1009,11 @@ class RequestSents(APIView):
                                 cup_lst.append(dict3)
                                 coup_lst.append(match_data)
                 
-                            if True in coup_lst:
-                                cop=(list(dict3.keys())[0])
-                                cop_lst=ast.literal_eval(cop)
-                                
-                                return Response({"error": cop_lst},status=status.HTTP_410_GONE)
+                        if True in coup_lst:
+                            cop=(list(dict3.keys())[0])
+                            cop_lst=ast.literal_eval(cop)
+                            
+                            return Response({"error": cop_lst},status=status.HTTP_410_GONE)
 
                     req_id=serializer.save(status=2,vendorid_id=self.request.user.id)
                     infll=serializer.data["influencer_name"]
