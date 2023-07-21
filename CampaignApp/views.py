@@ -190,7 +190,7 @@ class CreateCampaign(APIView):
                         return Response({"success":"Campaign create successfully","product_details":serializer.data},status=status.HTTP_200_OK)
                         
                     return Response({"success":"Campaign create successfully","product_details":serializer.data},status=status.HTTP_200_OK)
-                req_id=serializer.save(vendorid_id=self.request.user.id,status=1)
+                req_id=serializer.save(draft_status=1,vendorid_id=self.request.user.id,status=1)
                 val_lst=(request.data["product_discount"])
                 product=Product_information()
                 product.vendor_id=self.request.user.id
