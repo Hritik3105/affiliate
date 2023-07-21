@@ -235,6 +235,7 @@ class RequestCampaign(APIView):
                                     cop_lst=ast.literal_eval(cop)
                                     
                                     return Response({"error": cop_lst},status=status.HTTP_410_GONE)
+                        print("Enterrr")
                     req_id=serializer.save(vendorid_id=self.request.user.id,status=1)
                     val_lst=(request.data["product_discount"])
                 
