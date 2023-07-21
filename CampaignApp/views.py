@@ -1006,9 +1006,9 @@ class RequestSents(APIView):
                             
 
                             if True in coup_lst:
-                                print(cop)
+                               
                                 cop=(list(dict1.keys())[0])
-
+                                print(cop)
                                 cop_lst=ast.literal_eval(cop)
                                 print("list",cop_lst)
                                 return Response({"error": cop_lst},status=status.HTTP_410_GONE)
