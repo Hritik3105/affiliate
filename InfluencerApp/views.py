@@ -1511,81 +1511,81 @@ class InfluencerApplied(APIView):
         
         vendor_codes=VendorCampaign.objects.filter(influencerid_id=infl_ids.id,campaign_status=1)
        
-        if vendor_codes.exists():
-            res.append(vendor_codes)
-        else:   
-            res=""
+        # if vendor_codes.exists():
+        #     res.append(vendor_codes)
+        # else:   
+        #     res=""
         
-        if res:
+        # if res:
             
-            for i in res:
-                z=(i.values("campaignid"))
-                res2.append(z)
+        #     for i in res:
+        #         z=(i.values("campaignid"))
+        #         res2.append(z)
         
   
-            for i in res2:
-                ids = [q['campaignid'] for q in i]
-                for id in ids:
-                    lst.append(id)
+        #     for i in res2:
+        #         ids = [q['campaignid'] for q in i]
+        #         for id in ids:
+        #             lst.append(id)
                     
-        set_data=set(lst)
+        # set_data=set(lst)
      
-        fin_value=set_data
-        for i in fin_value:
+        # fin_value=set_data
+        # for i in fin_value:
          
-            camp=Product_information.objects.filter(campaignid_id=i).values()
-            campaign_obj59=Product_information.objects.filter(campaignid_id=i).select_related("campaignid")
+        #     camp=Product_information.objects.filter(campaignid_id=i).values()
+        #     campaign_obj59=Product_information.objects.filter(campaignid_id=i).select_related("campaignid")
         
-            for k in campaign_obj59:
-               pass
+        #     for k in campaign_obj59:
+        #        pass
 
         
-            for i in range(len(camp)):
-                cop=(camp[i]["coupon_name"])
-                amt=(camp[i]["amount"])
+        #     for i in range(len(camp)):
+        #         cop=(camp[i]["coupon_name"])
+        #         amt=(camp[i]["amount"])
              
-                if cop:
+        #         if cop:
                   
-                    couponlst=ast.literal_eval(cop)
-                else:
-                    couponlst=cop
+        #             couponlst=ast.literal_eval(cop)
+        #         else:
+        #             couponlst=cop
                     
-                if amt:
+        #         if amt:
                     
-                    amtlst=ast.literal_eval(amt)
-                else:
-                    amtlst=amt
+        #             amtlst=ast.literal_eval(amt)
+        #         else:
+        #             amtlst=amt
                     
                
             
-                dict1={
-                    "campaignid_id":camp[i]["campaignid_id"],
-                    "campaign_name": k.campaignid.campaign_name ,
+        #         dict1={
+        #             "campaignid_id":camp[i]["campaignid_id"],
+        #             "campaign_name": k.campaignid.campaign_name ,
                     
-                    "status":k.campaignid.campaign_status,
-                    "product":[{
-                    "product_name":camp[i]["product_name"],
-                    "coupon_name":couponlst,
-                    "amount":amtlst,
-                    "product_id": camp[i]["product_id"],
+        #             "status":k.campaignid.campaign_status,
+        #             "product":[{
+        #             "product_name":camp[i]["product_name"],
+        #             "coupon_name":couponlst,
+        #             "amount":amtlst,
+        #             "product_id": camp[i]["product_id"],
                     
-                }]
-                }
-                final_lst.append(dict1)
+        #         }]
+        #         }
+        #         final_lst.append(dict1)
                     
     
-        result={}
-        for i, record in enumerate(final_lst):
+        # result={}
+        # for i, record in enumerate(final_lst):
          
-            if record["campaignid_id"] in result:
-                result[record["campaignid_id"]]["product"].append(record["product"][0])
-            else:
+        #     if record["campaignid_id"] in result:
+        #         result[record["campaignid_id"]]["product"].append(record["product"][0])
+        #     else:
                
-                result[record["campaignid_id"]] = record
-                result[record["campaignid_id"]]["product"] = record["product"]
-        val=list(result.values())
+        #         result[record["campaignid_id"]] = record
+        #         result[record["campaignid_id"]]["product"] = record["product"]
+        # val=list(result.values())
         
-        return Response({"data":val},status=status.HTTP_200_OK)   
+        return Response({"success":"Successfully Applied"},status=status.HTTP_200_OK)   
     
     
     

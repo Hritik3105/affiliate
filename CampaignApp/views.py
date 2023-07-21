@@ -158,6 +158,7 @@ class CreateCampaign(APIView):
         if vendor_status1[0]["vendor_status"] == True:
             serializer=CampaignSerializer(data=request.data)
             if serializer.is_valid(raise_exception=True):
+                
                 val_lst2=(request.data["product_discount"])
                 coup_lst=[]
                 cup_lst=[]
@@ -306,7 +307,7 @@ class UpdateCampaign(APIView):
             if val_lst2:
    
                 for i in  range (len(val_lst2)):
-                    if val_lst2[i]["coupon_name"] and val_lst2[i]["coupon_name"] != [None]:
+                    if val_lst2[i]["coupon_name"]:
                       
                         for j in val_lst2[i]["coupon_name"]:
                         
@@ -331,7 +332,7 @@ class UpdateCampaign(APIView):
                         
                 req_id=serializer.save()
                 val_lst=(request.data["product_discount"])
-                
+
                 if {} in val_lst:
                     z=val_lst.remove({})
                 else:
@@ -408,6 +409,8 @@ class UpdateCampaign(APIView):
                     
             return Response(serializer.data,status=status.HTTP_200_OK)
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+    
+    
     
 
 
