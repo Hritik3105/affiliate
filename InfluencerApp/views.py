@@ -1491,15 +1491,9 @@ class InfluencerApplied(APIView):
     permission_classes = [IsAuthenticated] 
     
     def post(self,request):
-        print("countsss")
-        lst=[]
-        final_lst=[]
-        res=[]
-        res2=[]    
+       
 
-        camp_id=request.query_params.get('value')
-        print("camp_id",camp_id)
-        
+        camp_id=request.query_params.get('value')        
         infl_ids=ModashInfluencer.objects.get(influencerid=self.request.user.id)
         vendors_id=Campaign.objects.get(id=camp_id)
         
@@ -1510,84 +1504,105 @@ class InfluencerApplied(APIView):
         
         
         vendor_codes=VendorCampaign.objects.filter(influencerid_id=infl_ids.id,campaign_status=1)
-       
-        # if vendor_codes.exists():
-        #     res.append(vendor_codes)
-        # else:   
-        #     res=""
-        
-        # if res:
-            
-        #     for i in res:
-        #         z=(i.values("campaignid"))
-        #         res2.append(z)
-        
-  
-        #     for i in res2:
-        #         ids = [q['campaignid'] for q in i]
-        #         for id in ids:
-        #             lst.append(id)
-                    
-        # set_data=set(lst)
-     
-        # fin_value=set_data
-        # for i in fin_value:
-         
-        #     camp=Product_information.objects.filter(campaignid_id=i).values()
-        #     campaign_obj59=Product_information.objects.filter(campaignid_id=i).select_related("campaignid")
-        
-        #     for k in campaign_obj59:
-        #        pass
-
-        
-        #     for i in range(len(camp)):
-        #         cop=(camp[i]["coupon_name"])
-        #         amt=(camp[i]["amount"])
-             
-        #         if cop:
-                  
-        #             couponlst=ast.literal_eval(cop)
-        #         else:
-        #             couponlst=cop
-                    
-        #         if amt:
-                    
-        #             amtlst=ast.literal_eval(amt)
-        #         else:
-        #             amtlst=amt
-                    
-               
-            
-        #         dict1={
-        #             "campaignid_id":camp[i]["campaignid_id"],
-        #             "campaign_name": k.campaignid.campaign_name ,
-                    
-        #             "status":k.campaignid.campaign_status,
-        #             "product":[{
-        #             "product_name":camp[i]["product_name"],
-        #             "coupon_name":couponlst,
-        #             "amount":amtlst,
-        #             "product_id": camp[i]["product_id"],
-                    
-        #         }]
-        #         }
-        #         final_lst.append(dict1)
-                    
     
-        # result={}
-        # for i, record in enumerate(final_lst):
-         
-        #     if record["campaignid_id"] in result:
-        #         result[record["campaignid_id"]]["product"].append(record["product"][0])
-        #     else:
-               
-        #         result[record["campaignid_id"]] = record
-        #         result[record["campaignid_id"]]["product"] = record["product"]
-        # val=list(result.values())
         
         return Response({"success":"Successfully Applied"},status=status.HTTP_200_OK)   
     
     
+    
+    
+class AppliedCampaign(APIView):
+    authentication_classes=[TokenAuthentication]
+    permission_classes = [IsAuthenticated] 
+    
+    def get(self,request):
+        lst=[]
+        final_lst=[]
+        res=[]
+        res2=[]    
+
+        infl_ids=ModashInfluencer.objects.get(influencerid=self.request.user.id)
+        
+        vendor_codes=VendorCampaign.objects.filter(influencerid_id=infl_ids.id,campaign_status=1)
+        
+        if vendor_codes.exists():
+            res.append(vendor_codes)
+        else:   
+            res=""
+        
+        if res:
+            
+            for i in res:
+                z=(i.values("campaignid"))
+                res2.append(z)
+        
+  
+            for i in res2:
+                ids = [q['campaignid'] for q in i]
+                for id in ids:
+                    lst.append(id)
+                    
+        set_data=set(lst)
+     
+        fin_value=set_data
+        for i in fin_value:
+         
+            camp=Product_information.objects.filter(campaignid_id=i).values()
+            campaign_obj59=Product_information.objects.filter(campaignid_id=i).select_related("campaignid")
+        
+            for k in campaign_obj59:
+               pass
+
+        
+            for i in range(len(camp)):
+                cop=(camp[i]["coupon_name"])
+                amt=(camp[i]["amount"])
+             
+                if cop:
+                  
+                    couponlst=ast.literal_eval(cop)
+                else:
+                    couponlst=cop
+                    
+                if amt:
+                    
+                    amtlst=ast.literal_eval(amt)
+                else:
+                    amtlst=amt
+                    
+               
+            
+                dict1={
+                    "campaignid_id":camp[i]["campaignid_id"],
+                    "campaign_name": k.campaignid.campaign_name ,
+                    
+                    "status":k.campaignid.campaign_status,
+                    "product":[{
+                    "product_name":camp[i]["product_name"],
+                    "coupon_name":couponlst,
+                    "amount":amtlst,
+                    "product_id": camp[i]["product_id"],
+                    
+                }]
+                }
+                final_lst.append(dict1)
+                    
+    
+        result={}
+        for i, record in enumerate(final_lst):
+         
+            if record["campaignid_id"] in result:
+                result[record["campaignid_id"]]["product"].append(record["product"][0])
+            else:
+               
+                result[record["campaignid_id"]] = record
+                result[record["campaignid_id"]]["product"] = record["product"]
+        val=list(result.values())
+        
+        return Response({"data":val},status=status.HTTP_200_OK)   
+
+      
+        
     
     
 class InfluencerProfile(APIView):
