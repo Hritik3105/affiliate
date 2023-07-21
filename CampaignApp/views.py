@@ -1006,11 +1006,11 @@ class RequestSents(APIView):
                             
 
                             if True in coup_lst:
-                               
+                                
                                 cop=(list(dict1.keys())[0])
                                
                                 cop_lst=ast.literal_eval(cop)
-                                
+                                print("list",cop_lst)
                                 return Response({"error": cop_lst},status=status.HTTP_410_GONE)
 
                     req_id=serializer.save(status=2,vendorid_id=self.request.user.id)
@@ -1798,13 +1798,12 @@ class TranferMoney(APIView):
 
                     pay_value=PaymentDetails.objects.filter(campaign=campaignids,influencer=influencer,vendor=self.request.user.id).values("sales","amount")
                     remaining_amount=amount-transfer1["amount"] 
-                    print(remaining_amount)
-                    
-
+                   
+            
                     
                     PaymentDetails.objects.filter(campaign=campaignids,influencer=influencer,vendor=self.request.user.id).update(amountpaid=transfer1["amount"],salespaid=salesdone,amount=remaining_amount)
                 else:  
-                    print("entrrrr")
+                   
                     amount_Paid=transferdetails.objects.filter(vendor=self.request.user.id,influencer=influencer,campaign=campaignids).values_list("amount",flat=True)
                     PaymentDetails.objects.filter(campaign=campaignids,influencer=influencer,vendor=self.request.user.id).update(amountpaid=amount_Paid[0],salespaid=salesdone)
   
