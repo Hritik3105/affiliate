@@ -1430,7 +1430,12 @@ class VendorApprovalList(APIView):
                 "influencer_name":i.influencerid.id,
             }
             
-            final_lst1.append(dict1)          
+            
+            
+            final_lst1.append(dict1)         
+            
+            
+             
         return Response({"data":final_lst1},status=status.HTTP_200_OK)  
  
  
@@ -2641,3 +2646,72 @@ class Checkout(APIView):
             # Invalid authorization
             print("why")
         
+        
+#API TO GET SINGLE CAMPAIGN
+"""API HELPS US TO GET SINGLE CAMPAIGN DETAILS"""
+class ApprovalCampaignDetails(APIView):
+    authentication_classes=[TokenAuthentication]
+    permission_classes = [IsAuthenticated]  
+    def get(self,request,id):
+        value_lst=[]
+        try:
+            camp=Product_information.objects.filter(campaignid_id=id).values()
+            campaign_obj=Product_information.objects.filter(campaignid_id=id).select_related("campaignid")
+          
+
+        except Campaign.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        
+        for k in campaign_obj:
+            pass
+        for i in range(len(camp)):
+            cop=(camp[i]["coupon_name"])
+            amt=(camp[i]["amount"])
+            
+            if cop:
+                
+                couponlst=ast.literal_eval(cop)
+            else:
+                couponlst=cop
+                
+            if amt:
+    
+                amtlst=ast.literal_eval(amt)
+            else:
+                amtlst=amt
+                   
+            dict1={
+                "campaignid_id":camp[i]["campaignid_id"],
+                "product_name":camp[i]["product_name"],
+                "campaign_name": k.campaignid.campaign_name ,
+                "influencer_visit": k.campaignid.influencer_visit ,
+                "influencer_name": k.campaignid.influencer_name ,
+                "offer": k.campaignid.offer ,
+                "date": k.campaignid.date ,
+                "description": k.campaignid.description,
+                "influencer_fee": k.campaignid.influencer_fee,
+                "campaign_status":k.campaignid.campaign_status,
+                "draft_status":k.campaignid.draft_status,
+                "product":[{
+                    "product_name":camp[i]["product_name"],
+                    "name":couponlst,
+                    "amount":amtlst,
+                    "product_id": camp[i]["product_id"],
+                }]
+            }
+
+            value_lst.append(dict1)
+            
+        result = {}
+        for i, record in enumerate(value_lst):
+         
+            if record["campaign_name"] in result:
+                result[record["campaign_name"]]["product"].append(record["product"][0])
+            else:
+               
+                result[record["campaign_name"]] = record
+                result[record["campaign_name"]]["product"] = record["product"]
+
+        val=list(result.values())
+        return Response({"data":val},status=status.HTTP_200_OK)
+    
