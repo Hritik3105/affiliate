@@ -1004,7 +1004,7 @@ class RequestSents(APIView):
                                 dict3={str(j):match_data}
                                 print(dict3)
                                 dict1={str(val_lst2[i]["coupon_name"]):match_data}
-                                
+                                print(dict1)
                                 cup_lst.append(dict1)
                                 coup_lst.append(match_data)
                                 
