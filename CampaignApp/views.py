@@ -214,25 +214,26 @@ class RequestCampaign(APIView):
                 cup_lst=[]
                 dict1={}
                 if val_lst2:
-                
+                    print(val_lst2)
+                    print(val_lst2[i]["coupon_name"])
                     for i in  range (len(val_lst2)):
-                        
-                        for j in val_lst2[i]["coupon_name"]:         
-                            match_data=Product_information.objects.filter(coupon_name__contains=j,vendor_id=self.request.user.id).exists()
-                           
-                        
-                            dict1={str(val_lst2[i]["coupon_name"]):match_data}
+                        if val_lst2[i]["coupon_name"]:
+                            for j in val_lst2[i]["coupon_name"]:         
+                                match_data=Product_information.objects.filter(coupon_name__contains=j,vendor_id=self.request.user.id).exists()
                             
-                            cup_lst.append(dict1)
-                            coup_lst.append(match_data)
                             
-
-                            if True in coup_lst:
-                                cop=(list(dict1.keys())[0])
-                               
-                                cop_lst=ast.literal_eval(cop)
+                                dict1={str(val_lst2[i]["coupon_name"]):match_data}
                                 
-                                return Response({"error": cop_lst},status=status.HTTP_410_GONE)
+                                cup_lst.append(dict1)
+                                coup_lst.append(match_data)
+                                
+
+                                if True in coup_lst:
+                                    cop=(list(dict1.keys())[0])
+                                
+                                    cop_lst=ast.literal_eval(cop)
+                                    
+                                    return Response({"error": cop_lst},status=status.HTTP_410_GONE)
                     req_id=serializer.save(vendorid_id=self.request.user.id,status=1)
                     val_lst=(request.data["product_discount"])
                 
