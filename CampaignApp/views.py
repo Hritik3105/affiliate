@@ -214,8 +214,8 @@ class RequestCampaign(APIView):
                 cup_lst=[]
                 dict1={}
                 if val_lst2:
-                    print(val_lst2)
-                    print(val_lst2[i]["coupon_name"])
+                    print("-------",val_lst2)
+                    print("00000000000000000",val_lst2[i]["coupon_name"])
                     for i in  range (len(val_lst2)):
                         if val_lst2[i]["coupon_name"]:
                             for j in val_lst2[i]["coupon_name"]:         
