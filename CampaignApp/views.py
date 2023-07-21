@@ -237,7 +237,7 @@ class RequestCampaign(APIView):
                     req_id=serializer.save(vendorid_id=self.request.user.id,status=1)
                     val_lst=(request.data["product_discount"])
                 
-                
+
                     if {} in val_lst:
                         z=val_lst.remove({})
                     else:
@@ -258,10 +258,17 @@ class RequestCampaign(APIView):
                             product.vendor_id=self.request.user.id
                             product.campaignid_id=req_id.id
                             product.save()
+   
 
-                
+                    
                         return Response({"success":"Campaign create successfully","product_details":serializer.data},status=status.HTTP_200_OK)
                     return Response({"success":"Campaign create successfully","product_details":serializer.data},status=status.HTTP_200_OK)
+                product=Product_information()
+                product.vendor_id=self.request.user.id
+                product.campaignid_id=req_id.id
+                product.save()
+                return Response({"success":"Campaign create successfully","product_details":serializer.data},status=status.HTTP_200_OK)
+
         else:
             return Response({"error":"Admin Deactive your shop"},status=status.HTTP_401_UNAUTHORIZED)
 
@@ -998,15 +1005,14 @@ class RequestSents(APIView):
                     for i in  range (len(val_lst2)):
                        
                         for j in val_lst2[i]["coupon_name"]:        
-                            print("jjjjjjjjjjjjjjj",j) 
+                   
                             match_data=Product_information.objects.filter(coupon_name__contains=j,vendor_id=self.request.user.id).exists()
                             if match_data == True:
                             
                                 match_cop.append(j)
                                 dict3={str(match_cop):match_data}
                                 print(dict3)
-                                # dict1={str(val_lst2[i]["coupon_name"]):match_data}
-                                # print(dict1)
+                               
                                 cup_lst.append(dict3)
                                 coup_lst.append(match_data)
                 
