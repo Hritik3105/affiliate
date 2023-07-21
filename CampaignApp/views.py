@@ -213,13 +213,12 @@ class RequestCampaign(APIView):
                 coup_lst=[]
                 cup_lst=[]
                 dict1={}
+                print(val_lst2[0]["coupon_name"])
                 if val_lst2:
-                    print("-------",val_lst2)
-                   
+                    
                     for i in  range (len(val_lst2)):
-                        print(type(val_lst2[i]["coupon_name"]))
-                        if val_lst2[i]["coupon_name"] != [None]:
-                            for j in val_lst2[i]["coupon_name"] :         
+                        if val_lst2[i]["coupon_name"]:
+                            for j in val_lst2[i]["coupon_name"]:         
                                 match_data=Product_information.objects.filter(coupon_name__contains=j,vendor_id=self.request.user.id).exists()
                             
                             
@@ -235,7 +234,6 @@ class RequestCampaign(APIView):
                                     cop_lst=ast.literal_eval(cop)
                                     
                                     return Response({"error": cop_lst},status=status.HTTP_410_GONE)
-                        print("Enterrr")
                     req_id=serializer.save(vendorid_id=self.request.user.id,status=1)
                     val_lst=(request.data["product_discount"])
                 
