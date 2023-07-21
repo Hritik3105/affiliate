@@ -217,7 +217,7 @@ class RequestCampaign(APIView):
                     print("-------",val_lst2)
                    
                     for i in  range (len(val_lst2)):
-                        print(type("00000000000000000",val_lst2[i]["coupon_name"]))
+                        print(type(val_lst2[i]["coupon_name"]))
                         if val_lst2[i]["coupon_name"]:
                             for j in val_lst2[i]["coupon_name"]:         
                                 match_data=Product_information.objects.filter(coupon_name__contains=j,vendor_id=self.request.user.id).exists()
