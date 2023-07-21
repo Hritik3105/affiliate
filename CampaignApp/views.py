@@ -298,12 +298,12 @@ class UpdateCampaign(APIView):
                         coup_lst.append(match_data)
                         
 
-                        if True in coup_lst:
-                            cop=(list(dict1.keys())[0])
-                            
-                            cop_lst=ast.literal_eval(cop)
-                            
-                            return Response({"error": cop_lst},status=status.HTTP_410_GONE)
+                    if True in coup_lst:
+                        cop=(list(dict1.keys())[0])
+                        
+                        cop_lst=ast.literal_eval(cop)
+                        
+                        return Response({"error": cop_lst},status=status.HTTP_410_GONE)
                         
                 req_id=serializer.save()
                 val_lst=(request.data["product_discount"])
