@@ -2889,7 +2889,7 @@ class AdminTranferMoney(APIView):
                     transfer_obj.campaign_id=campaignids
                     transfer_obj.save()
 
-                    pay_value=PaymentDetails.objects.filter(campaign=campaignids,influencer=admin,vendor=self.request.user.id).values("sales","amount")
+                    pay_value=PaymentDetails.objects.filter(campaign=campaignids,admin=admin,vendor=self.request.user.id).values("sales","amount")
                     remaining_amount=amount-transfer1["amount"] 
                    
             
