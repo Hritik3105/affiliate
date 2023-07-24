@@ -503,7 +503,15 @@ class ApprovalList(APIView):
                 cop=(camp[i]["coupon_name"])
               
                 amt=(camp[i]["amount"])
-             
+
+                disc_type=(camp[i]["discount_type"])
+            
+                if disc_type:
+                    discc_type=ast.literal_eval(disc_type)
+                else:
+                    
+                    discc_type=disc_type
+                
                 if cop:
                   
                     couponlst=ast.literal_eval(cop)
@@ -537,6 +545,8 @@ class ApprovalList(APIView):
                         "coupon_name":couponlst,
                         "amount":amtlst,
                         "product_id": camp[i]["product_id"],
+                        "discount_type":discc_type,
+                        
                         
                     }]
                     }
