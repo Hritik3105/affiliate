@@ -2667,6 +2667,10 @@ class ApprovalCampaignDetails(APIView):
         for i in range(len(camp)):
             cop=(camp[i]["coupon_name"])
             amt=(camp[i]["amount"])
+            disc_type=(camp[i]["discount_type"])
+            
+            if disc_type:
+                discc_type=ast.literal_eval(disc_type)
             
             if cop:
                 
@@ -2695,6 +2699,7 @@ class ApprovalCampaignDetails(APIView):
                 "product":[{
                     "product_name":camp[i]["product_name"],
                     "name":couponlst,
+                    "discount_type":discc_type,
                     "amount":amtlst,
                     "product_id": camp[i]["product_id"],
                 }]
