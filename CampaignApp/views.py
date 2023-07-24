@@ -2718,7 +2718,7 @@ class AdminTransfer(APIView):
     permission_classes = [IsAuthenticated]
     def get(self,request): 
         get_account_id=stripe_details.objects.filter(vendor_id=self.request.user.id)
-        get_commission=commission_charges.objects.all().values_list("commission")
+        get_commission=commission_charges.objects.all().values_list("commission",flat=True)
         if get_commission:
             commission_val=get_commission[0]
         acc_tok=access_token(self,request)
