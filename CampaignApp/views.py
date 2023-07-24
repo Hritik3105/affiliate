@@ -2795,6 +2795,112 @@ class AdminTransfer(APIView):
         
         
         
+    
+class AdminTranferMoney(APIView):
+    authentication_classes=[TokenAuthentication]
+    permission_classes = [IsAuthenticated] 
+    
+    def post(self,request):
+        account=request.data.get("account_id")
+        
+        admin=request.data.get("admin")
+    
+        amount=request.data.get("amount")
+
+        campaignids=request.data.get("camp_id")
+       
+        salesdone=request.data.get("sales")
+       
+        get_account=StripeDetails.objects.filter(vendor_id=self.request.user.id).values("account_id","influencer_id")
         
         
+        stripe.api_key = settings.STRIPE_API_KEY  
         
+        try:
+            payment_method=stripe.PaymentMethod.create(
+            type="card",
+            card={
+               "token": "tok_visa", 
+               },
+            
+            )
+        except stripe.error.StripeError as e:
+            return Response({"error":e.user_message},status=status.HTTP_400_BAD_REQUEST)
+            
+        try:
+            intent = stripe.PaymentIntent.create(
+                amount=int(amount),
+                currency='usd',
+                payment_method_types=['card'],
+                payment_method=payment_method["id"],
+            
+            )
+            
+        except stripe.error.StripeError as e:
+            return Response({"error":e.user_message},status=status.HTTP_400_BAD_REQUEST)
+        
+        
+        try:    
+            confim=stripe.PaymentIntent.confirm(
+            intent["id"],
+            payment_method="pm_card_visa",
+            )
+        except stripe.error.StripeError as e:
+            return Response({"error":e.user_message},status=status.HTTP_400_BAD_REQUEST)
+            
+            
+    
+
+        if confim.status == 'succeeded':
+            try:
+                transfer1 = stripe.Transfer.create(
+                    amount=int(amount),
+                    currency='usd',
+                    destination=account,
+                    transfer_group=intent.id,
+                )     
+                
+                exists_transfer=transferdetails.objects.filter(vendor=self.request.user.id,admin=admin,campaign=campaignids).exists()   
+                if exists_transfer == False:
+                    transfer_obj=transferdetails()
+                    transfer_obj.vendor_id=self.request.user.id
+                    transfer_obj.admin_id=admin
+                    transfer_obj.transferid=transfer1["id"]
+                    transfer_obj.amount=transfer1["amount"]
+                    transfer_obj.destination=transfer1["destination"]
+                    transfer_obj.campaign_id=campaignids
+                    transfer_obj.save()
+
+                    pay_value=PaymentDetails.objects.filter(campaign=campaignids,influencer=admin,vendor=self.request.user.id).values("sales","amount")
+                    remaining_amount=amount-transfer1["amount"] 
+                   
+            
+                    
+                    PaymentDetails.objects.filter(campaign=campaignids,influencer=admin,vendor=self.request.user.id).update(amountpaid=transfer1["amount"],salespaid=salesdone,amount=remaining_amount)
+                else:  
+                   
+                    amount_Paid=transferdetails.objects.filter(vendor=self.request.user.id,influencer=admin,campaign=campaignids).values_list("amount",flat=True)
+                    PaymentDetails.objects.filter(campaign=campaignids,influencer=admin,vendor=self.request.user.id).update(amountpaid=amount_Paid[0],salespaid=salesdone)
+  
+                    new_amount=int(amount_Paid[0])+int(transfer1["amount"])
+                  
+                    amount_Paid=transferdetails.objects.filter(vendor=self.request.user.id,influencer=admin,campaign=campaignids).update(amount=new_amount)
+
+          
+            except stripe.error.StripeError as e:
+                return Response({"error":e.user_message},status=status.HTTP_400_BAD_REQUEST)
+            try:
+                payout=stripe.Payout.create(
+                    amount=int(amount),
+                    currency="usd",
+                    stripe_account=account,
+                
+                    )
+                
+               
+            except stripe.error.StripeError as e:
+                return Response({"error":e.user_message},status=status.HTTP_400_BAD_REQUEST)
+            
+            return Response({"data":transfer1,"message":"Money transfer Successfully"},status=status.HTTP_200_OK)
+        return Response({"error":"not valid"},status=status.HTTP_400_BAD_REQUEST)
+    

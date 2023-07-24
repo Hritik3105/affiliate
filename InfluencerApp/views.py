@@ -827,7 +827,7 @@ class StripeConnectAccountView(APIView):
                 
             else:
                 try:
-                    acc_data=createaccount(secret)
+                    acc_data=createaccount()
                    
 
                     val=ModashInfluencer.objects.filter(influencerid=self.request.user.id).values("id")

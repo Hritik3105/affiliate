@@ -109,6 +109,7 @@ class PaymentDetails(models.Model):
   amountpaid=models.FloatField(blank=True,null=True)
   influencer=models.ForeignKey(ModashInfluencer,on_delete=models.CASCADE,blank=True,null=True)
   vendor=models.ForeignKey(User,on_delete=models.CASCADE,blank=True,null=True)
+  admin=models.ForeignKey(User,on_delete=models.CASCADE,blank=True,null=True,related_name="adminpayment")
   sales=models.FloatField(blank=True,null=True)
   influencerfee=models.FloatField(blank=True,null=True)
   offer=models.CharField(max_length=200,blank=True,null=True)
@@ -125,6 +126,7 @@ class transferdetails(models.Model):
   destination=models.CharField(max_length=255,blank=True,null=True)
   remaining_amount=models.FloatField(blank=True,null=True)
   campaign=models.ForeignKey(Campaign,on_delete=models.CASCADE,blank=True,null=True)
+  admin=models.ForeignKey(User,on_delete=models.CASCADE,blank=True,null=True,related_name="admin")
 
   
   
