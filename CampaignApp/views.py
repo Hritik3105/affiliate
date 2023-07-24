@@ -2776,6 +2776,8 @@ class AdminTransfer(APIView):
                 for coupon_name in set(coupon_names):
                     if coupon_name in sales_by_coupon:
                         sale += sales_by_coupon[coupon_name]
+                        print(commission_val)
+                        
                 sale_by_id[campaign_id] = sale
 
                 campaign_name = Campaign.objects.filter(id=campaign_id).values_list('campaign_name', flat=True).first() 
