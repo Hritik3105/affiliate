@@ -2780,7 +2780,7 @@ class AdminTransfer(APIView):
                        
                         sale += sales_by_coupon[coupon_name]
                         admin_part=sale*commission_val/100
-                        print(admin_part)
+                        
                         
                 sale_by_id[campaign_id] = sale
 
