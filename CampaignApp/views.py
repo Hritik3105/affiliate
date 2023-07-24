@@ -2776,6 +2776,7 @@ class AdminTransfer(APIView):
                 for coupon_name in set(coupon_names):
                     if coupon_name in sales_by_coupon:
                         sale += sales_by_coupon[coupon_name]
+                        print(sale)
                         print(commission_val)
                         
                 sale_by_id[campaign_id] = sale
