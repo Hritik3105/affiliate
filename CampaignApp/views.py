@@ -2723,6 +2723,7 @@ class AdminTransfer(APIView):
     def get(self,request): 
         get_account_id=stripe_details.objects.filter(vendor_id=self.request.user.id).values_list("account_id",flat=True)
         admin_id=stripe_details.objects.filter(vendor_id=self.request.user.id).values_list("user",flat=True)
+        print(admin_id)
         if admin_id:
             admin_acc=admin_id[0]
         if get_account_id:
