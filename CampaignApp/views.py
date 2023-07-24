@@ -2003,7 +2003,7 @@ class InfluencerCampSale(APIView):
                         
                     else:
                         account_check=PaymentDetails.objects.filter(vendor=self.request.user.id,campaign_id=i["campaign_detail"]).values_list("account_id",flat=True)
-                        print(account_check)
+                        print(account_check[0])
                         
                         
 
