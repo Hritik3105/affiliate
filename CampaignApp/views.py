@@ -2722,6 +2722,9 @@ class AdminTransfer(APIView):
     permission_classes = [IsAuthenticated]
     def get(self,request): 
         get_account_id=stripe_details.objects.filter(vendor_id=self.request.user.id).values_list("account_id",flat=True)
+        admin_id=stripe_details.objects.filter(vendor_id=self.request.user.id).values_list("user",flat=True)
+        if admin_id:
+            admin_acc=admin_id[0]
         if get_account_id:
             admin_account=get_account_id[0]
         get_commission=commission_charges.objects.all().values_list("commission",flat=True)
@@ -2790,7 +2793,18 @@ class AdminTransfer(APIView):
 
                 campaign_name = Campaign.objects.filter(id=campaign_id).values_list('campaign_name', flat=True).first() 
                 admin_tra.append({"campaign_id":campaign_id,"sale":round(sale,2), "campaign_name":campaign_name,"commission":commission_val,"admin_part":round(admin_part,2),"account":admin_account})
-    
+            for  i in admin_tra:
+                details_obj=PaymentDetails()
+                details_obj.amount=i["amount"]
+                details_obj.admin_id=admin_acc
+                details_obj.vendor_id=self.request.user.id
+                details_obj.sales=i["sales"]
+                details_obj.influencerfee=i["influener_fee"]
+                details_obj.offer=i["offer"]
+                details_obj.campaign_id=i["campaign_detail"]
+                details_obj.account_id=i["account"]
+                details_obj.save()
+                
             return Response({"campaign_sales":admin_tra})
         else:
             return Response({"Message":"unable to fetch data"})
@@ -2880,7 +2894,7 @@ class AdminTranferMoney(APIView):
                    
             
                     
-                    PaymentDetails.objects.filter(campaign=campaignids,influencer=admin,vendor=self.request.user.id).update(amountpaid=transfer1["amount"],salespaid=salesdone,amount=remaining_amount)
+                    PaymentDetails.objects.filter(campaign=campaignids,admin=admin,vendor=self.request.user.id).update(amountpaid=transfer1["amount"],salespaid=salesdone,amount=remaining_amount)
                 else:  
                    
                     amount_Paid=transferdetails.objects.filter(vendor=self.request.user.id,influencer=admin,campaign=campaignids).values_list("amount",flat=True)
@@ -2888,7 +2902,7 @@ class AdminTranferMoney(APIView):
   
                     new_amount=int(amount_Paid[0])+int(transfer1["amount"])
                   
-                    amount_Paid=transferdetails.objects.filter(vendor=self.request.user.id,influencer=admin,campaign=campaignids).update(amount=new_amount)
+                    amount_Paid=transferdetails.objects.filter(vendor=self.request.user.id,admin=admin,campaign=campaignids).update(amount=new_amount)
 
           
             except stripe.error.StripeError as e:
