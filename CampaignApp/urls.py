@@ -54,7 +54,7 @@ urlpatterns = [
     path("payouts/",Payout.as_view(),name="payouts"),
     # path("entity/",Checkout.as_view(),name="entity"),
     path("approvaldet/<int:id>/",ApprovalCampaignDetails.as_view(),name="approvaldet"),
-    path("admintransfer",AdminTransfer.as_view(),name="admintransfer"),
+    path("admintransfer/",AdminTransfer.as_view(),name="admintransfer"),
     path("adminmoney/",AdminTranferMoney.as_view(),name="adminmoney"),
    
    
