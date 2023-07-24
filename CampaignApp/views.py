@@ -2003,9 +2003,8 @@ class InfluencerCampSale(APIView):
                         
                     else:
                         account_check=PaymentDetails.objects.filter(vendor=self.request.user.id,campaign_id=i["campaign_detail"]).values_list("account_id",flat=True)
-                        print(account_check[0])
-                        
-                        
+                        if account_check[0]== "":                      
+                            amount_transfered=transferdetails.objects.filter(vendor=self.request.user.id,influencer=i["influencer"],campaign=i["campaign_detail"]).update(account_id=i["account"])
 
                         amount_transfered=transferdetails.objects.filter(vendor=self.request.user.id,influencer=i["influencer"],campaign=i["campaign_detail"]).values_list("amount",flat=True)
                         
