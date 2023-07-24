@@ -1172,8 +1172,8 @@ class Vendorkey(APIView):
             for i in vendor_data:
                 dict={
                     # "vendor_key":i["secret_key"],
-                    "vendor":i["id"],
-                    "vendor_id":i["username"]
+                    "vendor":i["username"],
+                    "vendor_id":i["id"]
                     
                 }
                 key_list.append(dict)
