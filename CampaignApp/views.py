@@ -2782,6 +2782,8 @@ class AdminTransfer(APIView):
                 sale_by_id[campaign_id] = [sale, campaign_name]
                 
             print("-----------------",sale_by_id)
+            for i in sale_by_id:
+                print("value",i)
             return Response({"campaign_sales":sale_by_id})
         else:
             return Response({"Message":"unable to fetch data"})
