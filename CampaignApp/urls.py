@@ -55,7 +55,7 @@ urlpatterns = [
     # path("entity/",Checkout.as_view(),name="entity"),
     path("approvaldet/<int:id>/",ApprovalCampaignDetails.as_view(),name="approvaldet"),
     path("admintransfer",AdminTransfer.as_view(),name="admintransfer"),
-    path("adminmoney",AdminTranferMoney.as_view(),name="adminmoney"),
+    path("adminmoney/",AdminTranferMoney.as_view(),name="adminmoney"),
    
    
     
