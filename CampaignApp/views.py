@@ -1751,7 +1751,7 @@ class TranferMoney(APIView):
         influencer=request.data.get("influencer")
     
         amount=request.data.get("amount")
-        print(amount)
+
         campaignids=request.data.get("camp_id")
        
         salesdone=request.data.get("sales")
@@ -2785,10 +2785,9 @@ class AdminTransfer(APIView):
                 sale_by_id[campaign_id] = sale
 
                 campaign_name = Campaign.objects.filter(id=campaign_id).values_list('campaign_name', flat=True).first() 
-                sale_by_id[campaign_id] = [sale, campaign_name,commission_val,admin_part,admin_account]
+                sale_by_id[campaign_id] = [{"sale":sale, "campaign_name":campaign_name,"commission":commission_val,"admin_part":admin_part,"account":admin_account}]
                 
-            for i in sale_by_id:
-                print("value",i)
+    
             return Response({"campaign_sales":sale_by_id})
         else:
             return Response({"Message":"unable to fetch data"})
