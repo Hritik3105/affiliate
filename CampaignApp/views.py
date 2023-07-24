@@ -2717,7 +2717,9 @@ class AdminTransfer(APIView):
     authentication_classes=[TokenAuthentication]
     permission_classes = [IsAuthenticated]
     def get(self,request): 
-        get_account_id=stripe_details.objects.filter(vendor_id=self.request.user.id)
+        get_account_id=stripe_details.objects.filter(vendor_id=self.request.user.id).values_list("account_id",flat=True)
+        if get_account_id:
+            admin_account=get_account_id[0]
         get_commission=commission_charges.objects.all().values_list("commission",flat=True)
         if get_commission:
             commission_val=get_commission[0]
@@ -2775,15 +2777,15 @@ class AdminTransfer(APIView):
                 
                 for coupon_name in set(coupon_names):
                     if coupon_name in sales_by_coupon:
-                        print(coupon_name)
+                       
                         sale += sales_by_coupon[coupon_name]
-                        print(sale)
-                        print(commission_val)
+                        admin_part=sale*commission_val/100
+                        print(admin_part)
                         
                 sale_by_id[campaign_id] = sale
 
                 campaign_name = Campaign.objects.filter(id=campaign_id).values_list('campaign_name', flat=True).first() 
-                sale_by_id[campaign_id] = [sale, campaign_name]
+                sale_by_id[campaign_id] = [sale, campaign_name,admin_part,admin_account]
                 
             print("-----------------",sale_by_id)
             for i in sale_by_id:
