@@ -2785,7 +2785,7 @@ class AdminTransfer(APIView):
                 sale_by_id[campaign_id] = sale
 
                 campaign_name = Campaign.objects.filter(id=campaign_id).values_list('campaign_name', flat=True).first() 
-                admin_tra.append({"campaign_id":campaign_id,"sale":sale, "campaign_name":campaign_name,"commission":commission_val,"admin_part":admin_part,"account":admin_account})
+                admin_tra.append({"campaign_id":campaign_id,"sale":round(sale,2), "campaign_name":campaign_name,"commission":commission_val,"admin_part":round(admin_part,2),"account":admin_account})
     
             return Response({"campaign_sales":admin_tra})
         else:
