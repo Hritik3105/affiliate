@@ -2795,13 +2795,13 @@ class AdminTransfer(APIView):
                 admin_tra.append({"campaign_id":campaign_id,"sale":round(sale,2), "campaign_name":campaign_name,"commission":commission_val,"admin_part":round(admin_part,2),"account":admin_account,"admin_id":admin_acc})
             for  i in admin_tra:
                 details_obj=PaymentDetails()
-                details_obj.amount=i["amount"]
-                details_obj.admin_id=admin_acc
+                details_obj.amount=i["admin_part"]
+                details_obj.admin_id=i["admin_id"]
                 details_obj.vendor_id=self.request.user.id
-                details_obj.sales=i["sales"]
-                details_obj.influencerfee=i["influener_fee"]
-                details_obj.offer=i["offer"]
-                details_obj.campaign_id=i["campaign_detail"]
+                details_obj.sales=i["sale"]
+                # details_obj.influencerfee=i["influener_fee"]
+                # details_obj.offer=i["offer"]
+                details_obj.campaign_id=i["campaign_id"]
                 details_obj.account_id=i["account"]
                 details_obj.save()
                 
