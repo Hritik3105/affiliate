@@ -1166,14 +1166,13 @@ class Vendorkey(APIView):
     def get(self,request):
         try:
             
-            vendor_data=User.objects.filter(user_type=3).values("id","username")
             get_key=VendorStripeDetails.objects.all().values("vendor__username","secret_key","vendor")
             key_list=[]
-            for i in vendor_data:
+            for i in get_key:
                 dict={
-                    # "vendor_key":i["secret_key"],
-                    "vendor":i["username"],
-                    "vendor_id":i["id"]
+                    "vendor_key":i["secret_key"],
+                    "vendor":i["vendor__username"],
+                    "vendor_id":i["vendor"]
                     
                 }
                 key_list.append(dict)
