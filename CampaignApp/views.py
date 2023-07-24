@@ -23,15 +23,7 @@ from django.utils import timezone
 import stripe
 from Affilate_Marketing import settings
 from CampaignApp.utils import *
-import checkout_sdk
-from checkout_sdk.accounts.accounts import OnboardEntityRequest, ContactDetails, Profile, Individual, DateOfBirth, Identification
-from checkout_sdk.common.common import Phone, Address
-from checkout_sdk.common.enums import Country
-from checkout_sdk.checkout_sdk import CheckoutSdk
-from checkout_sdk.environment import Environment
-from checkout_sdk.exception import CheckoutApiException, CheckoutArgumentException, CheckoutAuthorizationException
-from checkout_sdk.oauth_scopes import OAuthScopes
-
+from AdminApp.models import *
 
 # Create your views here.
 
@@ -2587,64 +2579,64 @@ class Payout(APIView):
     
     
     
-class Checkout(APIView):
-    def post(self,request):
-        api = CheckoutSdk.builder() \
-        .oauth() \
-        .client_credentials('hritik@codenomad.net', 'Mongodb31') \
-        .environment(Environment.sandbox()) \
-        .scopes([OAuthScopes.ACCOUNTS]) \
-        .build()
+# class Checkout(APIView):
+#     def post(self,request):
+#         api = CheckoutSdk.builder() \
+#         .oauth() \
+#         .client_credentials('hritik@codenomad.net', 'Mongodb31') \
+#         .environment(Environment.sandbox()) \
+#         .scopes([OAuthScopes.ACCOUNTS]) \
+#         .build()
 
-        phone = Phone()
-        phone.country_code = '44'
-        phone.number = '4155552671'
+#         phone = Phone()
+#         phone.country_code = '44'
+#         phone.number = '4155552671'
 
-        address = Address()
-        address.address_line1 = 'CheckoutSdk.com'
-        address.address_line2 = '90 Tottenham Court Road'
-        address.city = 'London'
-        address.state = 'London'
-        address.zip = 'W1T 4TJ'
-        address.country = Country.GB
+#         address = Address()
+#         address.address_line1 = 'CheckoutSdk.com'
+#         address.address_line2 = '90 Tottenham Court Road'
+#         address.city = 'London'
+#         address.state = 'London'
+#         address.zip = 'W1T 4TJ'
+#         address.country = Country.GB
 
-        request = OnboardEntityRequest()
-        request.reference = 'reference'
-        request.contact_details = ContactDetails()
-        request.contact_details.phone = phone
-        request.profile = Profile()
-        request.profile.urls = ['https://docs.checkout.com/url']
-        request.profile.mccs = ['0742']
-        request.individual = Individual()
-        request.individual.first_name = 'First'
-        request.individual.last_name = 'Last'
-        request.individual.trading_name = "Batman's Super Hero Masks"
-        request.individual.registered_address = address
-        request.individual.national_tax_id = 'TAX123456'
-        request.individual.date_of_birth = DateOfBirth()
-        request.individual.date_of_birth.day = 5
-        request.individual.date_of_birth.month = 6
-        request.individual.date_of_birth.year = 1996
-        request.individual.identification = Identification()
-        request.individual.identification.national_id_number = 'AB123456C'
+#         request = OnboardEntityRequest()
+#         request.reference = 'reference'
+#         request.contact_details = ContactDetails()
+#         request.contact_details.phone = phone
+#         request.profile = Profile()
+#         request.profile.urls = ['https://docs.checkout.com/url']
+#         request.profile.mccs = ['0742']
+#         request.individual = Individual()
+#         request.individual.first_name = 'First'
+#         request.individual.last_name = 'Last'
+#         request.individual.trading_name = "Batman's Super Hero Masks"
+#         request.individual.registered_address = address
+#         request.individual.national_tax_id = 'TAX123456'
+#         request.individual.date_of_birth = DateOfBirth()
+#         request.individual.date_of_birth.day = 5
+#         request.individual.date_of_birth.month = 6
+#         request.individual.date_of_birth.year = 1996
+#         request.individual.identification = Identification()
+#         request.individual.identification.national_id_number = 'AB123456C'
 
-        try:
-            response = api.accounts.create_entity(request)
-            print(response)
-            return Response(response)
-        except CheckoutApiException as err:
-            # API error
-            request_id = err.request_id
-            status_code = err.http_status_code
-            error_details = err.error_details
-            http_response = err.http_response
-        except CheckoutArgumentException as err:
-            print("hello")
-            # Bad arguments
+#         try:
+#             response = api.accounts.create_entity(request)
+#             print(response)
+#             return Response(response)
+#         except CheckoutApiException as err:
+#             # API error
+#             request_id = err.request_id
+#             status_code = err.http_status_code
+#             error_details = err.error_details
+#             http_response = err.http_response
+#         except CheckoutArgumentException as err:
+#             print("hello")
+#             # Bad arguments
 
-        except CheckoutAuthorizationException as err:
-            # Invalid authorization
-            print("why")
+#         except CheckoutAuthorizationException as err:
+#             # Invalid authorization
+#             print("why")
         
         
 #API TO GET SINGLE CAMPAIGN
@@ -2717,4 +2709,87 @@ class ApprovalCampaignDetails(APIView):
 
         val=list(result.values())
         return Response({"data":val},status=status.HTTP_200_OK)
+   
     
+    
+    
+class AdminTransfer(APIView):
+    authentication_classes=[TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    def get(self,request): 
+        get_account_id=stripe_details.objects.filter(vendor_id=self.request.user.id)
+        get_commission=commission_charges.objects.all().values_list("commission")
+        if get_commission:
+            commission_val=get_commission[0]
+        acc_tok=access_token(self,request)
+        store_url = acc_tok[1]
+        api_token = acc_tok[0]
+        headers= {"X-Shopify-Access-Token": api_token}   
+        url = f'https://{store_url}/admin/api/2022-10/orders.json?status=active'
+        response = requests.get(url,headers=headers)
+        sales_by_coupon = {}
+    
+        if response.status_code == 200:
+            orders1 = response.json().get('orders', [])
+            
+            
+            for order in orders1:
+                line_items = order.get('discount_codes', [])
+                
+                
+                total_price = order.get('total_price')
+                    
+                if line_items:
+                    coupon_code = line_items[0].get('code')
+                    
+                    
+                
+                    if coupon_code in sales_by_coupon:
+                        sales_by_coupon[coupon_code] += float(total_price)
+                        
+                    else:
+                        
+                        sales_by_coupon[coupon_code] = float(total_price)
+                        
+            sale=list(sales_by_coupon.keys())
+            coup_dict={} 
+            for  i in sale:    
+                check=Product_information.objects.filter(coupon_name__contains=i,vendor_id=self.request.user.id).values("campaignid","coupon_name")
+                
+                for z in check:
+                    if "coupon_name" in z:
+                        list_value = eval(z["coupon_name"])
+            
+                        campaign_id = z["campaignid"]
+                        if campaign_id in coup_dict:
+                            coup_dict[campaign_id].extend(list_value)
+                        else:
+                            coup_dict[campaign_id] = list_value
+
+            dict_lst = [coup_dict]
+            
+            sale_by_id = {}
+
+            for campaign_id, coupon_names in coup_dict.items():
+                sale = 0.0
+                
+                for coupon_name in set(coupon_names):
+                    if coupon_name in sales_by_coupon:
+                        sale += sales_by_coupon[coupon_name]
+                sale_by_id[campaign_id] = sale
+
+                campaign_name = Campaign.objects.filter(id=campaign_id).values_list('campaign_name', flat=True).first() 
+                sale_by_id[campaign_id] = [sale, campaign_name]
+                
+            print("-----------------",sale_by_id)
+            return Response({"campaign_sales":sale_by_id})
+        else:
+            return Response({"Message":"unable to fetch data"})
+   
+        
+        
+        
+        
+        
+        
+        

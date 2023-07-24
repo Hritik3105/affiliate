@@ -1181,20 +1181,7 @@ class Vendorkey(APIView):
         except Exception as e:
           
             return Response({"error":"please try again"},status=status.HTTP_400_BAD_REQUEST)
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+            
         
         
  # try:
