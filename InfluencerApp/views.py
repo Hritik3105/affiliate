@@ -852,17 +852,19 @@ class StripeConnectAccountView(APIView):
             stripe_details.influencer_id=val[0]["id"]
             stripe_details.account_id=acc_data["id"]
             stripe_details.save()
+            
         except stripe.error.StripeError as e:          
             return Response({"error":e.user_message},status=status.HTTP_400_BAD_REQUEST)
         return Response({"message":"Account Created",'account_id': "account"},status=status.HTTP_201_CREATED)
     
 
 
+
+
 class CustomerCreate(APIView):
     def post(self,request):
         global account_id
         global customer_id
-    
 
         customer=stripe.Customer.create(
         name="hritik",
@@ -1163,13 +1165,15 @@ class Vendorkey(APIView):
     permission_classes = [IsAuthenticated] 
     def get(self,request):
         try:
+            
+            vendor_data=User.objects.filter(user_type=3).values("id","username")
             get_key=VendorStripeDetails.objects.all().values("vendor__username","secret_key","vendor")
             key_list=[]
-            for i in get_key:
+            for i in vendor_data:
                 dict={
-                    "vendor_key":i["secret_key"],
-                    "vendor":i["vendor__username"],
-                    "vendor_id":i["vendor"]
+                    # "vendor_key":i["secret_key"],
+                    "vendor":i["id"],
+                    "vendor_id":i["username"]
                     
                 }
                 key_list.append(dict)

@@ -25,6 +25,8 @@ from django.conf import settings
 from django.shortcuts import render
 from django.contrib import messages
 import calendar
+from InfluencerApp.utils import *
+from InfluencerApp.models import *
 
 # Create your views here.
 
@@ -282,6 +284,8 @@ def marketplace_list(request):
     campaign_model=Campaign.objects.filter(status=1)
     return render(request,"campaignlist.html",{"data":campaign_model,"influencer_name":lst})
     
+    
+    
 @login_required
 def Single_camp(request,id):
     single_obj=Campaign.objects.filter(id=id).values()
@@ -395,7 +399,6 @@ def Single_Vendor(request,id):
             if j["id"]== i["id"]:   
                 j["product_name"]=i["product_name"]
                 
-
       
     final_lst1=[] 
     campaign_obj2=VendorCampaign.objects.filter(campaign_status=2,vendor_id=id) 
@@ -407,8 +410,7 @@ def Single_Vendor(request,id):
                 "influencer_name":i.influencerid.id,
                 
             }
-        
-        
+    
             final_lst1.append(dict1)
     
     
@@ -608,7 +610,7 @@ def Influencer_list(request):
 def influencer_name(request):
     if request.method == "GET":
         value=request.GET.get("status")
-        print(value)
+        
        
         camp_obj=Campaign.objects.filter(id=value,draft_status=0,status=2).values()
        
@@ -777,28 +779,44 @@ def split_payment(request):
 def stripe_data(request):
     
     if request.method=="POST":
+        vendorids=request.POST.get("vendorids")
+        try:
+            acc_data=createaccount()
+            stripe_det=stripe_details()
+            stripe_det.vendor_id=vendorids
+            stripe_det.user_id=request.user.id
+            stripe_det.account_id=acc_data["id"]
+            stripe_det.save()
+        except stripe.error.StripeError as e:
+            messages.success(request,e.user_message) 
+            return render(request,"stripe.html")
+
+        messages.success(request, "Account Created Successfully")
+        return redirect("stripe")
+
         
-        stripe_obj=stripe_details()
-        publish_key=request.POST.get("publish")
-        secret_key=request.POST.get("secret")
+        # stripe_obj=stripe_details()
+        # publish_key=request.POST.get("publish")
+        # secret_key=request.POST.get("secret")
         
-        stripe_obj.user_id=request.user.id
-        stripe_obj.publishable_key=publish_key
-        stripe_obj.secret_key=secret_key
+        # stripe_obj.user_id=request.user.id
+        # stripe_obj.publishable_key=publish_key
+        # stripe_obj.secret_key=secret_key
         
-        if  stripe_details.objects.filter(user_id=request.user.id).exists():
-            stripe_details.objects.filter(user_id=request.user.id).update(publishable_key=publish_key,secret_key=secret_key)
-        else:
-            stripe_obj.save()
+        # if  stripe_details.objects.filter(user_id=request.user.id).exists():
+        #     stripe_details.objects.filter(user_id=request.user.id).update(publishable_key=publish_key,secret_key=secret_key)
+        # else:
+        #     stripe_obj.save()
+        # stripe_get=stripe_details.objects.filter(user_id=request.user.id).values("publishable_key","secret_key")
         
-        stripe_get=stripe_details.objects.filter(user_id=request.user.id).values("publishable_key","secret_key")
-        messages.success(request, "Stripe Details Update Successfully" )
-        return render(request,"stripe.html",{"publish":stripe_get[0]["publishable_key"],"secret":stripe_get[0]["secret_key"]})
-    stripe_get=stripe_details.objects.filter(user_id=request.user.id).values("publishable_key","secret_key")  
-    if stripe_get:
-        return render(request,"stripe.html",{"publish":stripe_get[0]["publishable_key"],"secret":stripe_get[0]["secret_key"]})
-    else:
-        return render(request,"stripe.html")
+        # return render(request,"stripe.html",{"publish":stripe_get[0]["publishable_key"],"secret":stripe_get[0]["secret_key"]})
+    vendor_list=User.objects.filter(user_type=3).values("id","username")
+   
+    # stripe_get=stripe_details.objects.filter(user_id=request.user.id).values("publishable_key","secret_key")  
+    # if stripe_get:
+    return render(request,"stripe.html",{"data":vendor_list})
+    # else:
+    #     return render(request,"stripe.html")
 
 
 def charge_commission(request):

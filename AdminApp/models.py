@@ -41,10 +41,11 @@ class User(AbstractBaseUser,PermissionsMixin):
 
 
 
-class stripe_details(models.Model):
+class   stripe_details(models.Model):
   user=models.ForeignKey(User,on_delete=models.CASCADE,blank=True,null=True)
-  publishable_key=models.CharField(max_length=255,blank=True)
-  secret_key=models.CharField(max_length=255,blank=True)
+  account_id=models.CharField(max_length=255,blank=True,null=True)
+  vendor=models.ForeignKey(User,on_delete=models.CASCADE,blank=True,null=True,related_name="vendor")
+
   
 
 class commission_charges(models.Model):
