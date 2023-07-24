@@ -545,7 +545,7 @@ class ApprovalList(APIView):
                         "coupon_name":couponlst,
                         "amount":amtlst,
                         "product_id": camp[i]["product_id"],
-                        "discount_type":discc_type,
+                        "discount_type":discc_type, 
                         
                         
                     }]

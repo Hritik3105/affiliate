@@ -65,6 +65,7 @@ urlpatterns = [
     path('inflapplied/', InfluencerApplied.as_view(), name='inflapplied'),
     path('applied/', AppliedCampaign.as_view(), name='applied'),
     path('inflprofile/', InfluencerProfile.as_view(), name='inflprofile'),
+    path('inflmarketaccept/', MarketplaceAccept.as_view(), name='inflmarketaccept'),
     
 
     
