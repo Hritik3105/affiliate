@@ -275,3 +275,19 @@ class VendorStripeSerializer(serializers.ModelSerializer):
             'secret_key': {'required': True},
             
         }
+        
+    
+    def validate_publishable_key(self,publishable_key):
+
+        if publishable_key == "":
+            raise serializers.ValidationError("publishable_key cannot be empty")
+            
+        return publishable_key
+    
+    
+    def validate_secret_key(self,secret_key):
+
+        if secret_key == "":
+            raise serializers.ValidationError("secret_key cannot be empty")
+            
+        return secret_key
