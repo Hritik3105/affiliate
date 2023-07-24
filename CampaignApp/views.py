@@ -1708,7 +1708,7 @@ class VendorStripe(APIView):
         if seri_obj.is_valid(raise_exception=True):
             seri_obj.save(vendor_id=self.request.user.id)
             return Response({"success":" Stripe Details Saved Successfully"},status=status.HTTP_201_CREATED)
-        return Response({"error":seri_obj.error_messages},status=status.HTTP_201_CREATED)
+        return Response({"error":seri_obj.error_messages},status=status.HTTP_404_NOT_FOUND)
         
     
 
