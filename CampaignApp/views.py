@@ -2050,7 +2050,7 @@ class InfluencerCampSale(APIView):
                 
             upd_data=PaymentDetails.objects.filter(vendor=self.request.user.id,influencer__isnull=False)
         
-            print("0000000000000000000",upd_data)
+            
             
             upd_lst=[]
             for pay in upd_data:
@@ -2804,7 +2804,7 @@ class AdminTransfer(APIView):
                 for i in admin_tra:
                     
                     emp_check=PaymentDetails.objects.filter(vendor=self.request.user.id,campaign_id=i["campaign_id"]).exists()
-                    print("emp_checkkkkk",emp_check)
+                   
                     if emp_check == False:
                         PaymentDetails.objects.create(sales=i["sales"],influencerfee=i["influener_fee"],offer=i["offer"],amount=i["amount"],admin=i["admin_id"],vendor_id=self.request.user.id,campaign_id=i["campaign_id"],account_id=i["account"])
                         
@@ -2819,11 +2819,11 @@ class AdminTransfer(APIView):
                         amount_deduct=i["admin_part"]
                         if amount_transfered:
                             amount_deduct=int(i["admin_part"]-int(amount_transfered[0]))
-                        print(amount_deduct)
+                   
                         
                         PaymentDetails.objects.filter(vendor=self.request.user.id,campaign_id=i["campaign_id"]).update(amount=amount_deduct,sales=i["sale"])
             else:
-                print("enterrrrrrrrrrrr")
+              
                 for  i in admin_tra:
                     details_obj=PaymentDetails()
                     details_obj.amount=i["admin_part"]
@@ -2831,13 +2831,13 @@ class AdminTransfer(APIView):
                     details_obj.vendor_id=self.request.user.id
                     details_obj.sales=i["sale"]
                     # details_obj.influencerfee=i["influener_fee"]
-                    # details_obj.offer=i["offer"]
+                    details_obj.offer=i["offer"]
                     details_obj.campaign_id=i["campaign_id"]
                     details_obj.account_id=i["account"]
                     details_obj.save()
                     
-            upd_data=PaymentDetails.objects.filter(vendor=self.request.user.id,admin=admin_acc)
-            print("0000000000000000000",upd_data)
+            upd_data=PaymentDetails.objects.filter(vendor=self.request.user.id,influencer__isnull=True)
+          
             
             upd_lst=[]
             for pay in upd_data:
@@ -2846,7 +2846,7 @@ class AdminTransfer(APIView):
                     "sales":round(pay.sales,2),
                     "account":pay.account_id,
                     "admin":pay.admin.id,
-                    "influener_fee":pay.influencerfee,
+                    "admin_fee":commission_val,
                     "offer":pay.offer,
                     "amount":pay.amount,  
                     "amount_paid":pay.amountpaid,
