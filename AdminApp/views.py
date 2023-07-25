@@ -779,6 +779,10 @@ def stripe_data(request):
     
     if request.method=="POST":
         vendorids=request.POST.get("vendorids")
+        match=VendorStripeDetails.objects.filter(vendor=vendorids).exists()
+        if match == True:
+            messages.success(request,"Account Already Exists") 
+            return redirect("stripe")
         try:
             acc_data=createaccount()
             stripe_det=stripe_details()
