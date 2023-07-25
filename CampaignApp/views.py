@@ -2050,7 +2050,9 @@ class InfluencerCampSale(APIView):
                 
             upd_data=PaymentDetails.objects.filter(vendor=self.request.user.id)
             for i in upd_data:
+                print(i.influencer)
                 if i.influencer:
+                    
                     print("0--00000",upd_data)
             print("0000000000000000000",upd_data)
             
