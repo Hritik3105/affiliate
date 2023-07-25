@@ -1982,6 +1982,7 @@ class InfluencerSaledata(APIView):
     authentication_classes=[TokenAuthentication]
     
     def get(self,request): 
+        print(self.request.user.id)
         infl_ids=ModashInfluencer.objects.filter(influencerid=self.request.user.id).values_list("id",flat=True)
         print(infl_ids)
         infl_main=infl_ids[0]
