@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-5w&&1euej3vf@2r-s9p&+te=-4kjgkmx3wu!+t*0hv4qo$y8h3
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
+from django.contrib.messages import constants as messages
 # ALLOWED_HOSTS = []
 ALLOWED_HOSTS = ["13.50.106.134","myrefera.com","api.myrefera.com","admin.myrefera.com"]
 
@@ -115,6 +115,14 @@ CRONJOBS = [
 
 
 
+
+MESSAGE_TAGS = {
+        messages.DEBUG: 'alert-secondary',
+        messages.INFO: 'alert-info',
+        messages.SUCCESS: 'alert-success',
+        messages.WARNING: 'alert-warning',
+        messages.ERROR: 'alert-danger',
+}
 # CRONJOBS = [
 #     ('0 0 * * *', 'CampaignApp.cron.update_campaign_status')
 # ]
