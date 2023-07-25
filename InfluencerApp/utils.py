@@ -28,8 +28,9 @@ class VerificationView(generics.GenericAPIView):
         return Response({"Success": "Influencer Register Successfully"},status=status.HTTP_201_CREATED)
         
         
-def createaccount():
-        
+def createaccount(secret):
+        print("secret",secret)
+        stripe.api_key=secret
         account = stripe.Account.create(
         country="US",
         type="custom",
