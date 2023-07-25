@@ -781,7 +781,7 @@ def stripe_data(request):
         vendorids=request.POST.get("vendorids")
         secret=VendorStripeDetails.objects.filter(vendor=vendorids).values("secret_key")
         if secret:
-            secret=secret["secret_key"]
+            secret=secret[0]["secret_key"]
         match=stripe_details.objects.filter(vendor=vendorids).exists()
         if match == True:
             messages.error(request,"Account Already Exists") 
