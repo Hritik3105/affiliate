@@ -2016,8 +2016,11 @@ class AmountTransfer(APIView):
             sale_dict={
                 "campaign_name":i.campaign.campaign_name,
                 "vendor_name":i.vendor.username,
-                "sales":i.amountpaid
+                "amount_paid":i.amountpaid
             }
             sale.append(sale_dict)
-
+            
+        
+        return Response({"data":sale},status=status.HTTP_200_OK)
+    
         
