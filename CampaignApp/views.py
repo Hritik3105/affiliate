@@ -2737,7 +2737,7 @@ class AdminTransfer(APIView):
     permission_classes = [IsAuthenticated]
     def get(self,request): 
         admin_account=""
-        admin_acc=0
+        admin_acc=None
         get_account_id=stripe_details.objects.filter(vendor_id=self.request.user.id).values_list("account_id",flat=True)
         admin_id=stripe_details.objects.filter(vendor_id=self.request.user.id).values_list("user",flat=True)
         
