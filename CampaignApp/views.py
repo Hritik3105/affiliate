@@ -1688,8 +1688,9 @@ class CampaignSales(APIView):
                 sale_by_id[campaign_id] = sale
 
                 campaign_name = Campaign.objects.filter(id=campaign_id).values_list('campaign_name', flat=True).first() 
-                sale_by_id[campaign_id] = [sale, campaign_name]
                 
+                sale_by_id[campaign_id] = [sale, campaign_name]
+                print(sale_by_id)
             
             return Response({"campaign_sales":sale_by_id})
         else:
