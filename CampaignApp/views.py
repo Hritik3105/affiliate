@@ -1720,6 +1720,18 @@ class VendorStripe(APIView):
         return Response({"error":seri_obj.error_messages},status=status.HTTP_404_NOT_FOUND)
         
     
+    
+class ShowStripe(APIView):
+    authentication_classes=[TokenAuthentication]
+    permission_classes = [IsAuthenticated] 
+    
+    def get(self,request):
+        val=VendorStripeDetails.objects.filter(vendor=self.request.user.id).values("publishable_key","secret_key")
+        if val:
+            publish_key=val[]
+    
+    
+    
 
 class Balance(APIView):
     authentication_classes=[TokenAuthentication]
@@ -2786,7 +2798,7 @@ class AdminTransfer(APIView):
             coup_dict={} 
             for  i in sale:    
                 check=Product_information.objects.filter(coupon_name__contains=i,vendor_id=self.request.user.id).values("campaignid","coupon_name")
-                
+                print(check)
                 for z in check:
                     if "coupon_name" in z:
                         list_value = eval(z["coupon_name"])
