@@ -1907,7 +1907,7 @@ class InfluencerCampSale(APIView):
                     influencer_id = influencer["influencer_id"]
                     
                     modash_data = Campaign.objects.filter(influencer_name__contains=influencer_id, id__in=campaign_ids,vendorid=self.request.user.id).values_list("id",flat=True)
-                    pro_data=Product_information.objects.filter(coupon_name___icontains=coupon_name,campaignid__in=modash_data,vendor=self.request.user.id).values("campaignid")
+                    pro_data=Product_information.objects.filter(coupon_name___contains=coupon_name,campaignid__in=modash_data,vendor=self.request.user.id).values("campaignid")
                     print(pro_data)
                     for modash_entry in pro_data:
                         campaign_id = modash_entry["campaignid"]
