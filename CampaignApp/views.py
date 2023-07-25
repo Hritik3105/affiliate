@@ -2857,9 +2857,10 @@ class AdminTransfer(APIView):
 
                         amount_transfered=transferdetails.objects.filter(vendor=self.request.user.id,admin=admin_acc,campaign=i["campaign_id"]).values_list("amount",flat=True)
                         
-                        print(amount_transfered)
+                        print("ppppppppppp",amount_transfered)
                         amount_deduct=i["admin_part"]
                         if amount_transfered:
+                            print("amounttttttttttt",amount_transfered)
                             amount_deduct=int(i["admin_part"]-int(amount_transfered[0]))
                             print(amount_deduct)
                    
