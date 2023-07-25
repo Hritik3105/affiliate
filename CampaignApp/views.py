@@ -2825,7 +2825,7 @@ class AdminTransfer(APIView):
                         
                 sale_by_id[campaign_id] = sale
                 print(sale_by_id)
-                filtered_data = {key: value for key, value in sale_by_id.items() if value[0] > 0}
+                filtered_data = {key: value for key, value in sale_by_id.items() if int(value[0]) > 0}
 
                 print(filtered_data)
                 
