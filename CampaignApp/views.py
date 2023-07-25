@@ -1690,9 +1690,12 @@ class CampaignSales(APIView):
                 campaign_name = Campaign.objects.filter(id=campaign_id).values_list('campaign_name', flat=True).first() 
                 
                 sale_by_id[campaign_id] = [sale, campaign_name]
-                print(sale_by_id)
+                
+                filtered_data = {key: value for key, value in sale_by_id.items() if value[0] > 0}
+
+                print(filtered_data)
             
-            return Response({"campaign_sales":sale_by_id})
+            return Response({"campaign_sales":filtered_data})
         else:
             return Response({"Message":"unable to fetch data"})
 
