@@ -2974,7 +2974,7 @@ class AdminTranferMoney(APIView):
         return Response({"error":"not valid"},status=status.HTTP_400_BAD_REQUEST)
     
     
-class CheckSubscription(API_VERSION):
+class CheckSubscription(APIView):
    authentication_classes=[TokenAuthentication]
    permission_classes = [IsAuthenticated] 
    
