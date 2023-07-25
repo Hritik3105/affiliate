@@ -2139,6 +2139,7 @@ class CampaignExpList(APIView):
         return Response({"data":val},status=status.HTTP_200_OK)   
     
     
+    
 #MARKETPLACE EXPIRED LIST
 """API TO SHOW MARKETPLACE EXPIRED CAMPAIGN LIST""" 
 class MarketplaceExpList(APIView):
@@ -2795,19 +2796,45 @@ class AdminTransfer(APIView):
 
                 campaign_name = Campaign.objects.filter(id=campaign_id).values_list('campaign_name', flat=True).first() 
                 admin_tra.append({"campaign_id":campaign_id,"sale":round(sale,2), "campaign_name":campaign_name,"commission":commission_val,"admin_part":round(admin_part,2),"account":admin_account,"admin_id":admin_acc})
-            for  i in admin_tra:
-                details_obj=PaymentDetails()
-                details_obj.amount=i["admin_part"]
-                details_obj.admin_id=i["admin_id"]
-                details_obj.vendor_id=self.request.user.id
-                details_obj.sales=i["sale"]
-                # details_obj.influencerfee=i["influener_fee"]
-                # details_obj.offer=i["offer"]
-                details_obj.campaign_id=i["campaign_id"]
-                details_obj.account_id=i["account"]
-                details_obj.save()
-                
-            return Response({"campaign_sales":admin_tra})
+            
+            empty=PaymentDetails.objects.all().exists()
+           
+            if empty == True:
+                for i in admin_tra:
+                    
+                    emp_check=PaymentDetails.objects.filter(vendor=self.request.user.id,campaign_id=i["campaign_id"]).exists()
+                    print("emp_checkkkkk",emp_check)
+                    if emp_check == False:
+                        PaymentDetails.objects.create(sales=i["sales"],influencerfee=i["influener_fee"],offer=i["offer"],amount=i["amount"],admin=i["admin_id"],vendor_id=self.request.user.id,campaign_id=i["campaign_id"],account_id=i["account"])
+                        
+                    else:
+                        account_check=PaymentDetails.objects.filter(vendor=self.request.user.id,campaign_id=i["campaign_id"]).values_list("account_id",flat=True)
+                        if account_check[0]== "":                      
+                            amount_transfered=PaymentDetails.objects.filter(vendor=self.request.user.id,campaign_id=i["campaign_id"]).update(account_id=i["account"])
+
+                        amount_transfered=transferdetails.objects.filter(vendor=self.request.user.id,admin=i["admin_id"],campaign=i["campaign_id"]).values_list("amount",flat=True)
+                        
+                   
+                        amount_deduct=i["amount"]
+                        if amount_transfered:
+                            amount_deduct=int(i["amount"]-int(amount_transfered[0]))
+                        print(amount_deduct)
+                        
+                        PaymentDetails.objects.filter(vendor=self.request.user.id,campaign_id=i["campaign_id"]).update(amount=amount_deduct,sales=i["sale"])
+            else:
+                for  i in admin_tra:
+                    details_obj=PaymentDetails()
+                    details_obj.amount=i["admin_part"]
+                    details_obj.admin_id=i["admin_id"]
+                    details_obj.vendor_id=self.request.user.id
+                    details_obj.sales=i["sale"]
+                    # details_obj.influencerfee=i["influener_fee"]
+                    # details_obj.offer=i["offer"]
+                    details_obj.campaign_id=i["campaign_id"]
+                    details_obj.account_id=i["account"]
+                    details_obj.save()
+                    
+                return Response({"campaign_sales":admin_tra})
         else:
             return Response({"Message":"unable to fetch data"})
    
