@@ -1982,9 +1982,9 @@ class InfluencerSaledata(APIView):
     authentication_classes=[TokenAuthentication]
     
     def get(self,request): 
-        print(self.request.user.id)
+      
         infl_ids=ModashInfluencer.objects.filter(influencerid=self.request.user.id).values_list("id",flat=True)
-        print(infl_ids)
+        
         infl_main=infl_ids[0]
         
         particular_sales=PaymentDetails.objects.filter(influencer=infl_main)
@@ -1998,3 +1998,26 @@ class InfluencerSaledata(APIView):
             sale.append(sale_dict)
 
         return Response({"data":sale},status=status.HTTP_200_OK)
+    
+    
+    
+class AmountTransfer(APIView):
+    permission_classes=[IsAuthenticated]
+    authentication_classes=[TokenAuthentication]
+    
+    def get(self,request):
+        infl_ids=ModashInfluencer.objects.filter(influencerid=self.request.user.id).values_list("id",flat=True)
+        
+        infl_main=infl_ids[0]
+        particular_sales=PaymentDetails.objects.filter(influencer=infl_main)
+        sale=[]
+        sale_dict={}
+        for i in particular_sales:
+            sale_dict={
+                "campaign_name":i.campaign.campaign_name,
+                "vendor_name":i.vendor.username,
+                "sales":i.amountpaid
+            }
+            sale.append(sale_dict)
+
+        

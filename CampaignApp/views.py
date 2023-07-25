@@ -1992,7 +1992,7 @@ class InfluencerCampSale(APIView):
                 
                 data_max.append(sales_entry)   
           
-            
+            print(data_max)
             
             empty=PaymentDetails.objects.all().exists()
            
