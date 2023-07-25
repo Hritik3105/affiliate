@@ -809,7 +809,7 @@ def stripe_data(request):
         # stripe_get=stripe_details.objects.filter(user_id=request.user.id).values("publishable_key","secret_key")
         
         # return render(request,"stripe.html",{"publish":stripe_get[0]["publishable_key"],"secret":stripe_get[0]["secret_key"]})
-    vendor_list=VendorStripeDetails.objects.all().values("vendor_username","vendor")
+    vendor_list=VendorStripeDetails.objects.all().values("vendor__username","vendor")
    
     # stripe_get=stripe_details.objects.filter(user_id=request.user.id).values("publishable_key","secret_key")  
     # if stripe_get:
