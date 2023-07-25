@@ -2822,6 +2822,7 @@ class AdminTransfer(APIView):
                         
                         PaymentDetails.objects.filter(vendor=self.request.user.id,campaign_id=i["campaign_id"]).update(amount=amount_deduct,sales=i["sale"])
             else:
+                print("enterrrrrrrrrrrr")
                 for  i in admin_tra:
                     details_obj=PaymentDetails()
                     details_obj.amount=i["admin_part"]
