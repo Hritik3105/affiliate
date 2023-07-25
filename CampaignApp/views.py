@@ -2835,7 +2835,26 @@ class AdminTransfer(APIView):
                     details_obj.account_id=i["account"]
                     details_obj.save()
                     
-                return Response({"campaign_sales":admin_tra})
+            upd_data=PaymentDetails.objects.filter(vendor=self.request.user.id,admin=admin_acc)
+            print("0000000000000000000",upd_data)
+            
+            upd_lst=[]
+            for pay in upd_data:
+                upd_dict={
+                    "campaing_id":pay.campaign.campaign_name,
+                    "sales":round(pay.sales,2),
+                    "account":pay.account_id,
+                    "influencer":pay.influencer.id,
+                    "influener_fee":pay.influencerfee,
+                    "offer":pay.offer,
+                    "amount":pay.amount,  
+                    "amount_paid":pay.amountpaid,
+                    "campaign_detail":pay.campaign.id      
+                    
+                }
+                upd_lst.append(upd_dict)
+                
+            return Response({"sale_details":upd_lst},status=status.HTTP_200_OK)
         else:
             return Response({"Message":"unable to fetch data"})
    
