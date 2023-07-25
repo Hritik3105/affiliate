@@ -2736,7 +2736,7 @@ class AdminTransfer(APIView):
     authentication_classes=[TokenAuthentication]
     permission_classes = [IsAuthenticated]
     def get(self,request): 
-        
+    
         get_account_id=stripe_details.objects.filter(vendor_id=self.request.user.id).values_list("account_id",flat=True)
         admin_id=stripe_details.objects.filter(vendor_id=self.request.user.id).values_list("user",flat=True)
         admin_acc=""
@@ -2829,7 +2829,7 @@ class AdminTransfer(APIView):
                         if account_check[0]== "":                      
                             amount_transfered=PaymentDetails.objects.filter(vendor=self.request.user.id,campaign_id=i["campaign_id"]).update(account_id=i["account"])
 
-                        amount_transfered=transferdetails.objects.filter(vendor=self.request.user.id,admin=i["admin_id"],campaign=i["campaign_id"]).values_list("amount",flat=True)
+                        amount_transfered=transferdetails.objects.filter(vendor=self.request.user.id,admin=admin_acc,campaign=i["campaign_id"]).values_list("amount",flat=True)
                         
                    
                         amount_deduct=i["admin_part"]
