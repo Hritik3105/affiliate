@@ -2807,7 +2807,7 @@ class AdminTransfer(APIView):
                     emp_check=PaymentDetails.objects.filter(vendor=self.request.user.id,campaign_id=i["campaign_id"]).exists()
                    
                     if emp_check == False:
-                        PaymentDetails.objects.create(sales=i["sale"],influencerfee=i["commission"],offer=i["offer"],amount=i["admin_part"],admin=i["admin_id"],vendor_id=self.request.user.id,campaign_id=i["campaign_id"],account_id=i["account"])
+                        PaymentDetails.objects.create(sales=i["sale"],influencerfee=i["commission"],offer=i["offer"],amount=i["admin_part"],admin_id=i["admin_id"],vendor_id=self.request.user.id,campaign_id=i["campaign_id"],account_id=i["account"])
                         
                     else:
                         account_check=PaymentDetails.objects.filter(vendor=self.request.user.id,campaign_id=i["campaign_id"]).values_list("account_id",flat=True)
