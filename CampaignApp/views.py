@@ -1721,14 +1721,14 @@ class VendorStripe(APIView):
         
     
     
-class ShowStripe(APIView):
-    authentication_classes=[TokenAuthentication]
-    permission_classes = [IsAuthenticated] 
+# class ShowStripe(APIView):
+#     authentication_classes=[TokenAuthentication]
+#     permission_classes = [IsAuthenticated] 
     
-    def get(self,request):
-        val=VendorStripeDetails.objects.filter(vendor=self.request.user.id).values("publishable_key","secret_key")
-        if val:
-            publish_key=val[]
+#     def get(self,request):
+#         val=VendorStripeDetails.objects.filter(vendor=self.request.user.id).values("publishable_key","secret_key")
+#         if val:
+#             publish_key=val[0][]
     
     
     
