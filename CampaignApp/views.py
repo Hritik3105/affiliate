@@ -2914,6 +2914,7 @@ class AdminTranferMoney(APIView):
         account=request.data.get("account_id")
         
         admin=request.data.get("admin")
+        print(admin)
     
         amount=request.data.get("amount")
 
