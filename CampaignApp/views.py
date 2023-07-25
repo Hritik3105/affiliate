@@ -1894,7 +1894,7 @@ class InfluencerCampSale(APIView):
             amount=list(sales_by_coupon.values())
             
           
-            
+            print("sales",sales_by_coupon)
 
             campaign_ids =  Campaign.objects.filter(vendorid=self.request.user.id).values_list('id', flat=True) 
           
