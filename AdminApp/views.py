@@ -767,8 +767,7 @@ def split_payment(request):
                 currency='usd',
                 destination='acct_1N65yo2eF54Yl928',
                 transfer_group=intent.id,
-            )
-                      
+            )     
             return render(request, 'payment_success.html')
     return render(request, 'payment_success.html',{"STRIPE_PUBLISHABLE_KEY":settings.STRIPE_PUBLISHABLE_KEY})
 
@@ -810,7 +809,7 @@ def stripe_data(request):
         # stripe_get=stripe_details.objects.filter(user_id=request.user.id).values("publishable_key","secret_key")
         
         # return render(request,"stripe.html",{"publish":stripe_get[0]["publishable_key"],"secret":stripe_get[0]["secret_key"]})
-    vendor_list=User.objects.filter(user_type=3).values("id","username")
+    vendor_list=VendorStripeDetails.objects.all().values("vendor_username","vendor")
    
     # stripe_get=stripe_details.objects.filter(user_id=request.user.id).values("publishable_key","secret_key")  
     # if stripe_get:

@@ -52,10 +52,10 @@ urlpatterns = [
     path("cancel/",Cancel.as_view(),name="cancel"),
     path("InfluencerProfile/",InfluencerProfile.as_view(),name="InfluencerProfile"),
     path("payouts/",Payout.as_view(),name="payouts"),
-    # path("entity/",Checkout.as_view(),name="entity"),
     path("approvaldet/<int:id>/",ApprovalCampaignDetails.as_view(),name="approvaldet"),
     path("admintransfer/",AdminTransfer.as_view(),name="admintransfer"),
     path("adminmoney/",AdminTranferMoney.as_view(),name="adminmoney"),
+    path("checksubscritpion/",CheckSubscription.as_view(),name="checksubscritpion"),
    
    
     

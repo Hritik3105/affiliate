@@ -146,25 +146,25 @@
                                     <div class="row">
                                         <div class="col-12 col-sm-6 mb-1">
                                             <label class="form-label" for="accountFirstName"><b>First name</b></label>
-                                            <input type="text" class="form-control" id="username" name="publish" value={{publish}} >
+                                            <input type="text" class="form-control" id="username" name="publish" value= >
                                         </div>
                                        
                                         <div class="col-12 col-sm-6 mb-1">
                                             <label class="form-label" for="accountEmail"><b>Last name</b></label>
-                                            <input type="text" class="form-control" id="email" name="secret"  value={{secret}}>
+                                            <input type="text" class="form-control" id="email" name="secret"  value=>
                                         </div>
                                         <div class="col-12 col-sm-6 mb-1">
                                             <label class="form-label" for="accountFirstName"><b>Email</b></label>
-                                            <input type="text" class="form-control" id="username" name="publish" value={{publish}} >
+                                            <input type="text" class="form-control" id="username" name="publish" value= >
                                         </div>
                                        
                                         <div class="col-12 col-sm-6 mb-1">
                                             <label class="form-label" for="accountEmail"><b>Account number</b></label>
-                                            <input type="text" class="form-control" id="email" name="secret"  value={{secret}}>
+                                            <input type="text" class="form-control" id="email" name="secret"  value=>
                                         </div>
                                         <div class="col-12 col-sm-6 mb-1">
                                             <label class="form-label" for="accountFirstName"><b>Routing number</b></label>
-                                            <input type="text" class="form-control" id="username" name="publish" value={{publish}} >
+                                            <input type="text" class="form-control" id="username" name="publish" value= >
                                         </div>
                                        
                                         <div class="col-12 col-sm-6 mb-1">
@@ -172,7 +172,7 @@
                                              
                                             <select name="vendorids" id="vend" class="form-control">
                                                 {% for i in data %}   
-                                              <option value={{i.id}} class="form-control">{{i.username}}</option>
+                                              <option value={{i.vendor}} class="form-control">{{i.vendor_username}}</option>
                                            
                                             {% endfor %}
                                         </select>
