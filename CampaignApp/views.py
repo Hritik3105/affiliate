@@ -2988,15 +2988,15 @@ class AdminTranferMoney(APIView):
                    
             
                     
-                    PaymentDetails.objects.filter(campaign=campaignids,admin=admin,vendor=self.request.user.id).update(amountpaid=transfer1["amount"],salespaid=salesdone,amount=remaining_amount)
+                    PaymentDetails.objects.filter(campaign=campaignids,admin=32,vendor=self.request.user.id).update(amountpaid=transfer1["amount"],salespaid=salesdone,amount=remaining_amount)
                 else:  
                    
-                    amount_Paid=transferdetails.objects.filter(vendor=self.request.user.id,admin=admin,campaign=campaignids).values_list("amount",flat=True)
-                    PaymentDetails.objects.filter(campaign=campaignids,admin=admin,vendor=self.request.user.id).update(amountpaid=amount_Paid[0],salespaid=salesdone)
+                    amount_Paid=transferdetails.objects.filter(vendor=self.request.user.id,admin=32,campaign=campaignids).values_list("amount",flat=True)
+                    PaymentDetails.objects.filter(campaign=campaignids,admin=32,vendor=self.request.user.id).update(amountpaid=amount_Paid[0],salespaid=salesdone)
   
                     new_amount=int(amount_Paid[0])+int(transfer1["amount"])
                   
-                    amount_Paid=transferdetails.objects.filter(vendor=self.request.user.id,admin=admin,campaign=campaignids).update(amount=new_amount)
+                    amount_Paid=transferdetails.objects.filter(vendor=self.request.user.id,admin=32,campaign=campaignids).update(amount=new_amount)
 
           
             except stripe.error.StripeError as e:
