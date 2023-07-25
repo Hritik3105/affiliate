@@ -2048,12 +2048,8 @@ class InfluencerCampSale(APIView):
                     details_obj.account_id=i["account"]
                     details_obj.save()
                 
-            upd_data=PaymentDetails.objects.filter(vendor=self.request.user.id)
-            for i in upd_data:
-                print(i.influencer)
-                if i.influencer:
-                    
-                    print("0--00000",upd_data)
+            upd_data=PaymentDetails.objects.filter(vendor=self.request.user.id,influencer__isnull=False)
+        
             print("0000000000000000000",upd_data)
             
             upd_lst=[]
