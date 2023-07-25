@@ -2736,9 +2736,10 @@ class AdminTransfer(APIView):
     authentication_classes=[TokenAuthentication]
     permission_classes = [IsAuthenticated]
     def get(self,request): 
+        
         get_account_id=stripe_details.objects.filter(vendor_id=self.request.user.id).values_list("account_id",flat=True)
         admin_id=stripe_details.objects.filter(vendor_id=self.request.user.id).values_list("user",flat=True)
-        print(admin_id)
+        admin_acc=""
         if admin_id:
             admin_acc=admin_id[0]
         if get_account_id:
@@ -2808,7 +2809,7 @@ class AdminTransfer(APIView):
                 sale_by_id[campaign_id] = sale
 
                 campaign_name = Campaign.objects.filter(id=campaign_id).values_list('campaign_name', flat=True).first() 
-                admin_tra.append({"campaign_id":campaign_id,"sale":round(sale,2), "campaign_name":campaign_name,"commission":commission_val,"admin_part":round(admin_part,2),"account":admin_account,"admin_id":admin_acc,"offer":"commission"})
+                admin_tra.append({"campaign_id":campaign_id,"sale":round(sale,2), "campaign_name":campaign_name,"commission":commission_val,"admin_part":round(admin_part,2),"account":admin_account,"offer":"commission"})
             
             empty=PaymentDetails.objects.filter(vendor=self.request.user.id,admin=admin_acc).exists()
            
@@ -2817,9 +2818,12 @@ class AdminTransfer(APIView):
                     
                     emp_check=PaymentDetails.objects.filter(vendor=self.request.user.id,campaign_id=i["campaign_id"]).exists()
                    
-                    if emp_check == False:
-                        PaymentDetails.objects.create(sales=i["sale"],influencerfee=i["commission"],offer=i["offer"],amount=i["admin_part"],admin_id=i["admin_id"],vendor_id=self.request.user.id,campaign_id=i["campaign_id"],account_id=i["account"])
-                        
+                    if emp_check == False :
+                        if admin_acc==" ":
+                            PaymentDetails.objects.create(sales=i["sale"],influencerfee=i["commission"],offer=i["offer"],amount=admin_acc,admin_id=i["admin_id"],vendor_id=self.request.user.id,campaign_id=i["campaign_id"],account_id=i["account"])
+                        else:
+                            PaymentDetails.objects.create(sales=i["sale"],influencerfee=i["commission"],offer=i["offer"],admin_id=i["admin_id"],vendor_id=self.request.user.id,campaign_id=i["campaign_id"],account_id=i["account"])
+
                     else:
                         account_check=PaymentDetails.objects.filter(vendor=self.request.user.id,campaign_id=i["campaign_id"]).values_list("account_id",flat=True)
                         if account_check[0]== "":                      
