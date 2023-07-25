@@ -2844,7 +2844,7 @@ class AdminTransfer(APIView):
                     "campaing_id":pay.campaign.campaign_name,
                     "sales":round(pay.sales,2),
                     "account":pay.account_id,
-                    "influencer":pay.influencer.id,
+                    "admin":pay.admin.id,
                     "influener_fee":pay.influencerfee,
                     "offer":pay.offer,
                     "amount":pay.amount,  
