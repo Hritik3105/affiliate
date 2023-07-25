@@ -2971,7 +2971,7 @@ class AdminTranferMoney(APIView):
                     transfer_group=intent.id,
                 )     
                 
-                exists_transfer=transferdetails.objects.filter(vendor=self.request.user.id,admin=admin,campaign=campaignids).exists()   
+                exists_transfer=transferdetails.objects.filter(vendor=self.request.user.id,admin=32,campaign=campaignids).exists()   
                 print(exists_transfer)
                 if exists_transfer == False:
                     transfer_obj=transferdetails()
