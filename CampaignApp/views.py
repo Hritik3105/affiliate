@@ -2824,14 +2824,14 @@ class AdminTransfer(APIView):
                         
                         
                 sale_by_id[campaign_id] = sale
-
+                
                 campaign_name = Campaign.objects.filter(id=campaign_id).values_list('campaign_name', flat=True).first() 
-                print()
+           
                 if admin_account and admin_acc !="":
                     admin_tra.append({"campaign_id":campaign_id,"sale":round(sale,2), "campaign_name":campaign_name,"commission":commission_val,"admin_part":round(admin_part,2),"account":admin_account,"offer":"commission","admin_id":admin_acc})
                 else:
                     admin_tra.append({"campaign_id":campaign_id,"sale":round(sale,2), "campaign_name":campaign_name,"commission":commission_val,"admin_part":round(admin_part,2),"account":"","offer":"commission","admin_id":admin_acc})
-
+            print("sales",sale_by_id)
             empty=PaymentDetails.objects.filter(vendor=self.request.user.id,admin=admin_acc).exists()
            
             if empty == True:
