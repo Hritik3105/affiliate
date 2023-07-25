@@ -1709,6 +1709,10 @@ class VendorStripe(APIView):
     permission_classes = [IsAuthenticated] 
     
     def post(self,request):
+        
+        check=VendorStripeDetails.objects.filter(vendor=self.request.user.id).exists()
+        if check == True:
+            return Response({"error":"Account already exists"},status=status.HTTP_400_BAD_REQUEST)
         seri_obj=VendorStripeSerializer(data=request.data)
         if seri_obj.is_valid(raise_exception=True):
             seri_obj.save(vendor_id=self.request.user.id)
