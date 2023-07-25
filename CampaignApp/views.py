@@ -2857,7 +2857,7 @@ class AdminTransfer(APIView):
 
                         amount_transfered=transferdetails.objects.filter(vendor=self.request.user.id,admin=admin_acc,campaign=i["campaign_id"]).values_list("amount",flat=True)
                         
-                   
+                        print(amount_transfered)
                         amount_deduct=i["admin_part"]
                         if amount_transfered:
                             amount_deduct=int(i["admin_part"]-int(amount_transfered[0]))
@@ -2995,6 +2995,7 @@ class AdminTranferMoney(APIView):
                     PaymentDetails.objects.filter(campaign=campaignids,admin=32,vendor=self.request.user.id).update(amountpaid=amount_Paid[0],salespaid=salesdone)
   
                     new_amount=int(amount_Paid[0])+int(transfer1["amount"])
+                    
                   
                     amount_Paid=transferdetails.objects.filter(vendor=self.request.user.id,admin=32,campaign=campaignids).update(amount=new_amount)
 
