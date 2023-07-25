@@ -2049,6 +2049,9 @@ class InfluencerCampSale(APIView):
                     details_obj.save()
                 
             upd_data=PaymentDetails.objects.filter(vendor=self.request.user.id)
+            for i in upd_data:
+                if i.influencer:
+                    print("0--00000",upd_data)
             print("0000000000000000000",upd_data)
             
             upd_lst=[]
