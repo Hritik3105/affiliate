@@ -95,6 +95,7 @@ class VendorLogin(APIView):
                             user_key=Token.objects.filter(user_id=token_id).values_list("key",flat=True)[0]
                             if shop2:
                                 store_name=usr_ins.shopify_url.split(".")[0]
+                               
                                 return Response({'Success':"Login Successfully",'Token':str(user_key),"shop_url":usr_ins.shopify_url,"admin_dahboard":f"https://admin.shopify.com/store/{store_name}/apps/marketplace-54"}, status=status.HTTP_200_OK)
                             
                             return Response({'Success':"Login Successfully",'Token':str(user_key),"shop_url":usr_ins.shopify_url}, status=status.HTTP_200_OK)
@@ -2806,7 +2807,7 @@ class AdminTransfer(APIView):
                     emp_check=PaymentDetails.objects.filter(vendor=self.request.user.id,campaign_id=i["campaign_id"]).exists()
                    
                     if emp_check == False:
-                        PaymentDetails.objects.create(sales=i["sales"],influencerfee=i["influener_fee"],offer=i["offer"],amount=i["amount"],admin=i["admin_id"],vendor_id=self.request.user.id,campaign_id=i["campaign_id"],account_id=i["account"])
+                        PaymentDetails.objects.create(sales=i["sale"],influencerfee=i["commission"],offer=i["offer"],amount=i["amount"],admin=i["admin_id"],vendor_id=self.request.user.id,campaign_id=i["campaign_id"],account_id=i["account"])
                         
                     else:
                         account_check=PaymentDetails.objects.filter(vendor=self.request.user.id,campaign_id=i["campaign_id"]).values_list("account_id",flat=True)
@@ -2972,3 +2973,12 @@ class AdminTranferMoney(APIView):
             return Response({"data":transfer1,"message":"Money transfer Successfully"},status=status.HTTP_200_OK)
         return Response({"error":"not valid"},status=status.HTTP_400_BAD_REQUEST)
     
+    
+class CheckSubscription(API_VERSION):
+   authentication_classes=[TokenAuthentication]
+   permission_classes = [IsAuthenticated] 
+   
+   
+   def get(self,request):
+       sub_chek=StripeDetails.objects.filter(vendor=self.request.user.id).exists()
+       if sub_chek:

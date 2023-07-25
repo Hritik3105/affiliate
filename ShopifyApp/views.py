@@ -650,6 +650,7 @@ class ProductEditCodeView(APIView):
         infludb_id=request.data.get("influencer_id")
         influencer_id=request.data.get("influ_ids")
         
+        
         data = {
             "price_rule": {
                 "title": discount,
