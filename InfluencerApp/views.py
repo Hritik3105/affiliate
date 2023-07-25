@@ -1983,6 +1983,7 @@ class InfluencerSaledata(APIView):
     
     def get(self,request): 
         infl_ids=ModashInfluencer.objects.filter(influencerid=self.request.user.id).values_list("id",flat=True)
+        print(infl_ids)
         infl_main=infl_ids[0]
         
         particular_sales=PaymentDetails.objects.filter(influencer=infl_main)
