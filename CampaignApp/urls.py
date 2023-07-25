@@ -56,6 +56,7 @@ urlpatterns = [
     path("admintransfer/",AdminTransfer.as_view(),name="admintransfer"),
     path("adminmoney/",AdminTranferMoney.as_view(),name="adminmoney"),
     path("checksubscritpion/",CheckSubscription.as_view(),name="checksubscritpion"),
+    path("showstripe/",ShowStripe.as_view(),name="showstripe"),
    
    
     

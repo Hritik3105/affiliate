@@ -257,7 +257,6 @@ class ParticularProduct(APIView):
             # Create the price rule in Shopify
             url = f'https://{acc_tok[1]}/admin/api/{API_VERSION}/price_rules.json'
             response = requests.post(url, headers=headers, json=price_rule_payload)
-            print(response)
             if response.ok:
                 price_rule_id = response.json()['price_rule']['id']
                 price_create=json.loads(response.text)["price_rule"]["created_at"]

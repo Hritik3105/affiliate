@@ -215,7 +215,7 @@ class RequestCampaign(APIView):
                 coup_lst=[]
                 cup_lst=[]
                 dict1={}
-                print(val_lst2[0]["coupon_name"])
+               
                 if val_lst2[0]["coupon_name"] !=[None]:
                     
                     for i in  range (len(val_lst2)):
@@ -1018,7 +1018,7 @@ class RequestSents(APIView):
                             
                                 match_cop.append(j)
                                 dict3={str(match_cop):match_data}
-                                print(dict3)
+                               
                                
                                 cup_lst.append(dict3)
                                 coup_lst.append(match_data)
@@ -1693,7 +1693,7 @@ class CampaignSales(APIView):
                 
                 filtered_data = {key: value for key, value in sale_by_id.items() if value[0] > 0}
 
-                print(filtered_data)
+              
             
             return Response({"campaign_sales":filtered_data})
         else:
@@ -1721,15 +1721,14 @@ class VendorStripe(APIView):
         
     
     
-# class ShowStripe(APIView):
-#     authentication_classes=[TokenAuthentication]
-#     permission_classes = [IsAuthenticated] 
+class ShowStripe(APIView):
+    authentication_classes=[TokenAuthentication]
+    permission_classes = [IsAuthenticated] 
     
-#     def get(self,request):
-#         val=VendorStripeDetails.objects.filter(vendor=self.request.user.id).values("publishable_key","secret_key")
-#         if val:
-#             publish_key=val[0][]
-    
+    def get(self,request):
+        val=VendorStripeDetails.objects.filter(vendor=self.request.user.id).values("publishable_key","secret_key")
+        print(val)
+        return Response({"data":val},status=status.HTTP_200_OK)
     
     
 
@@ -1849,7 +1848,7 @@ class TranferMoney(APIView):
                     PaymentDetails.objects.filter(campaign=campaignids,influencer=influencer,vendor=self.request.user.id).update(amountpaid=amount_Paid[0],salespaid=salesdone)
   
                     new_amount=int(amount_Paid[0])+int(transfer1["amount"])
-                    print(new_amount)
+                  
                     amount_Paid=transferdetails.objects.filter(vendor=self.request.user.id,influencer=influencer,campaign=campaignids).update(amount=new_amount)
 
           
@@ -1919,7 +1918,7 @@ class InfluencerCampSale(APIView):
           
             influencer_sales_for_campaign = {}
             for coupon_name, sales in sales_by_coupon.items():
-                print("coupon_name",coupon_name)
+             
                 influencer_ids = influencer_coupon.objects.filter(coupon_name=coupon_name,vendor=self.request.user.id).values("influencer_id", "coupon_name")
                
                 for influencer in influencer_ids:
@@ -2017,7 +2016,7 @@ class InfluencerCampSale(APIView):
                 
                 data_max.append(sales_entry)   
           
-            print(data_max)
+ 
             
             empty=PaymentDetails.objects.all().exists()
            
@@ -2025,7 +2024,7 @@ class InfluencerCampSale(APIView):
                 for i in data_max:
                     
                     emp_check=PaymentDetails.objects.filter(vendor=self.request.user.id,campaign_id=i["campaign_detail"]).exists()
-                    print("emp_checkkkkk",emp_check)
+                  
                     if emp_check == False:
                         PaymentDetails.objects.create(sales=i["sales"],influencerfee=i["influener_fee"],offer=i["offer"],amount=i["amount"],influencer_id=i["influencer"],vendor_id=self.request.user.id,campaign_id=i["campaign_detail"],account_id=i["account"])
                         
@@ -2040,7 +2039,7 @@ class InfluencerCampSale(APIView):
                         amount_deduct=i["amount"]
                         if amount_transfered:
                             amount_deduct=int(i["amount"]-int(amount_transfered[0]))
-                        print(amount_deduct)
+                      
                         
                         PaymentDetails.objects.filter(vendor=self.request.user.id,campaign_id=i["campaign_detail"]).update(amount=amount_deduct,sales=i["sales"])
 
@@ -2357,18 +2356,18 @@ class MarketplaceAccept(APIView):
         try:
          
             coupon_name=request.data.get("coupon")
-            print(coupon_name)
+           
             amount=request.data.get("amount")
-            print(amount)
+         
             assign_coupon=Campaign.objects.filter(id=id).update(influencer_name=[pk])
-            print(assign_coupon)
+  
             influencer_cop=influencer_coupon.objects.create(coupon_name=coupon_name,amount=amount,vendor_id=self.request.user.id,influencer_id_id=pk)
-            print(influencer_cop)
+        
             cam_dec=VendorCampaign.objects.filter(campaignid_id=id,influencerid_id=pk,vendor_id=self.request.user.id).update(campaign_status=2)
             cam_dec=Notification.objects.filter(campaignid_id=id,influencerid_id=pk,vendor_id=self.request.user.id).update(send_notification=3)
             return Response({"message":"Campaign Accept"},status=status.HTTP_202_ACCEPTED)
         except Exception as e:
-            print(e)
+         
             return Response(status=status.HTTP_400_BAD_REQUEST)
         
         
@@ -2454,10 +2453,9 @@ class BuySubscription(APIView):
     def post(self,request):
         try:
             plan=request.query_params.get("plan")
-            
-            print(plan)
+          
             value=checkout(self,request,plan)
-            print(value)
+         
 
             return Response({"session_url":value.url,"id":value.id})
         except stripe.error.StripeError as e:
@@ -2558,7 +2556,7 @@ class Payout(APIView):
         account = stripe.Account.retrieve()
         stripe_account_id = account.id
         
-        print(stripe_account_id)
+        
 
         # maincustomer=stripe.Customer.create(
         # email="vendor@codenomad.net",
@@ -2798,7 +2796,7 @@ class AdminTransfer(APIView):
             coup_dict={} 
             for  i in sale:    
                 check=Product_information.objects.filter(coupon_name__contains=i,vendor_id=self.request.user.id).values("campaignid","coupon_name")
-                print(check)
+               
                 for z in check:
                     if "coupon_name" in z:
                         list_value = eval(z["coupon_name"])
@@ -2824,7 +2822,7 @@ class AdminTransfer(APIView):
                         
                         
                 sale_by_id[campaign_id] = sale
-                print(sale_by_id)
+             
                 # filtered_data = {key: value for key, value in sale_by_id.items() if int(value[0]) > 0}
 
                 # print(filtered_data)
@@ -2836,7 +2834,7 @@ class AdminTransfer(APIView):
                         admin_tra.append({"campaign_id":campaign_id,"sale":round(sale,2), "campaign_name":campaign_name,"commission":commission_val,"admin_part":round(admin_part,2),"account":admin_account,"offer":"commission","admin_id":admin_acc})
                     else:
                         admin_tra.append({"campaign_id":campaign_id,"sale":round(sale,2), "campaign_name":campaign_name,"commission":commission_val,"admin_part":round(admin_part,2),"account":"","offer":"commission","admin_id":admin_acc})
-            print(admin_tra)
+          
             empty=PaymentDetails.objects.filter(vendor=self.request.user.id,admin=admin_acc).exists()
            
             if empty == True:
@@ -2857,12 +2855,12 @@ class AdminTransfer(APIView):
 
                         amount_transfered=transferdetails.objects.filter(vendor=self.request.user.id,admin=admin_acc,campaign=i["campaign_id"]).values_list("amount",flat=True)
                         
-                        print("ppppppppppp",amount_transfered)
+                       
                         amount_deduct=i["admin_part"]
                         if amount_transfered:
-                            print("amounttttttttttt",amount_transfered)
+                         
                             amount_deduct=int(i["admin_part"]-int(amount_transfered[0]))
-                            print(amount_deduct)
+                            
                    
                         
                         PaymentDetails.objects.filter(vendor=self.request.user.id,campaign_id=i["campaign_id"]).update(amount=amount_deduct,sales=i["sale"])
@@ -2916,7 +2914,7 @@ class AdminTranferMoney(APIView):
         account=request.data.get("account_id")
         
         admin=request.data.get("admin")
-        print(admin)
+        
     
         amount=request.data.get("amount")
 
@@ -2974,7 +2972,7 @@ class AdminTranferMoney(APIView):
                 )     
                 
                 exists_transfer=transferdetails.objects.filter(vendor=self.request.user.id,admin=32,campaign=campaignids).exists()   
-                print(exists_transfer)
+                
                 if exists_transfer == False:
                     transfer_obj=transferdetails()
                     transfer_obj.vendor_id=self.request.user.id
