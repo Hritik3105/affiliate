@@ -2861,6 +2861,7 @@ class AdminTransfer(APIView):
                         amount_deduct=i["admin_part"]
                         if amount_transfered:
                             amount_deduct=int(i["admin_part"]-int(amount_transfered[0]))
+                            print(amount_deduct)
                    
                         
                         PaymentDetails.objects.filter(vendor=self.request.user.id,campaign_id=i["campaign_id"]).update(amount=amount_deduct,sales=i["sale"])
