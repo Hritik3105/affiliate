@@ -1991,7 +1991,9 @@ class InfluencerCampSale(APIView):
             for sales_entry in combined_sales_list:
                 
                 data_max.append(sales_entry)   
-            print("data",data_max)
+          
+            
+            
             empty=PaymentDetails.objects.all().exists()
            
             if empty == True:
