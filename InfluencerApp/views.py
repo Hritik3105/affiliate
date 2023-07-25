@@ -1977,7 +1977,7 @@ class InfluencerSale(APIView):
         
     
     
-class InfluencerSale(APIView):
+class InfluencerSaledata(APIView):
     permission_classes=[IsAuthenticated]
     authentication_classes=[TokenAuthentication]
     
