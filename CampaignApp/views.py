@@ -2825,9 +2825,9 @@ class AdminTransfer(APIView):
                         
                 sale_by_id[campaign_id] = sale
                 print(sale_by_id)
-                filtered_data = {key: value for key, value in sale_by_id.items() if int(value[0]) > 0}
+                # filtered_data = {key: value for key, value in sale_by_id.items() if int(value[0]) > 0}
 
-                print(filtered_data)
+                # print(filtered_data)
                 
                 campaign_name = Campaign.objects.filter(id=campaign_id).values_list('campaign_name', flat=True).first() 
            
