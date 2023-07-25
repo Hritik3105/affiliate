@@ -2974,11 +2974,13 @@ class AdminTranferMoney(APIView):
         return Response({"error":"not valid"},status=status.HTTP_400_BAD_REQUEST)
     
     
-# class CheckSubscription(API_VERSION):
-#    authentication_classes=[TokenAuthentication]
-#    permission_classes = [IsAuthenticated] 
+class CheckSubscription(API_VERSION):
+   authentication_classes=[TokenAuthentication]
+   permission_classes = [IsAuthenticated] 
    
    
-#    def get(self,request):
-#        sub_chek=StripeDetails.objects.filter(vendor=self.request.user.id).exists()
-#        if sub_chek:
+   def get(self,request):
+       sub_check=StripeDetails.objects.filter(vendor=self.request.user.id).exists()
+       if sub_check == True:
+           return Response({"message":"please buy subscription"},status=status.HTTP_200_OK)
+    

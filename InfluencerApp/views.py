@@ -1976,3 +1976,65 @@ class InfluencerSale(APIView):
             print("data",data_max)
         
     
+    
+class InfluencerSale(APIView):
+    permission_classes=[IsAuthenticated]
+    authentication_classes=[TokenAuthentication]
+    
+    def get(self,request): 
+        acc_tok=access_token(self,request)
+        store_url = acc_tok[1]
+      
+        api_token = acc_tok[0]
+        
+        headers= {"X-Shopify-Access-Token": api_token}  
+        url = f'https://{store_url}/admin/api/2022-10/orders.json?status=active'
+        response = requests.get(url,headers=headers)
+           
+        sales_by_coupon = {}
+
+        if response.status_code == 200:
+            orders_details = response.json().get('orders', [])
+            for order in orders_details:
+                line_items = order.get('discount_codes', [])
+                
+                
+                total_price = order.get('total_price')
+                    
+                if line_items:
+                    coupon_code = line_items[0].get('code')
+                    
+                    if coupon_code in sales_by_coupon:
+                        sales_by_coupon[coupon_code] += float(total_price)
+                        
+                    else:
+                        sales_by_coupon[coupon_code] = float(total_price)
+            
+            sale=list(sales_by_coupon.keys())
+            amount=list(sales_by_coupon.values())
+            
+
+            infl_ids=ModashInfluencer.objects.filter(influencerid=self.request.user.id).values_list("id",flat=True)
+            infl_main=infl_ids[0]
+            
+
+            campaign_ids =  Campaign.objects.filter(vendorid=self.request.user.id).values_list('id', flat=True) 
+          
+            influencer_sales_for_campaign = {}
+            for coupon_name, sales in sales_by_coupon.items():
+                
+                influencer_ids = influencer_coupon.objects.filter(coupon_name=coupon_name,vendor=self.request.user.id,influencerid=infl_main).values("coupon_name")
+               
+                for influencer in influencer_ids:
+                    influencer_id = influencer["influencer_id"]
+                    
+                    modash_data = Campaign.objects.filter(influencer_name__contains=infl_main, id__in=campaign_ids,vendorid=self.request.user.id).values_list("id",flat=True)
+                    pro_data=Product_information.objects.filter(coupon_name__contains=coupon_name,campaignid__in=modash_data,vendor=self.request.user.id).values("campaignid")
+                    for modash_entry in pro_data:
+                        campaign_id = modash_entry["campaignid"]
+                        if influencer_id in influencer_sales_for_campaign:
+                            influencer_sales_for_campaign[influencer_id].append({"campaign_id": campaign_id, "sales": sales})
+                        else:
+                            influencer_sales_for_campaign[influencer_id] = [{"campaign_id": campaign_id, "sales": sales}]
+
+        return Response({"data":influencer_sales_for_campaign},status=status.HTTP_200_OK)
