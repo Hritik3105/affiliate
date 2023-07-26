@@ -2504,7 +2504,8 @@ class Success(APIView):
         
         except Exception as e:
             print("Enrrrrr")
-            return Response((e),status=status.HTTP_400_BAD_REQUEST)
+            print(e)
+            return Response({"data":e}),status=status.HTTP_400_BAD_REQUEST)
     
     
     
