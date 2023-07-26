@@ -74,19 +74,20 @@ class CreateDiscountCodeView(APIView):
             if response.status_code == 422:
                 return Response({"message":" value must be between 0 and 100"},status=status.HTTP_400_BAD_REQUEST)
 
+            if response.ok:
+                price_id=json.loads(response.text)["price_rule"]["id"]
                 
-            price_id=json.loads(response.text)["price_rule"]["id"]
-            
-            price_create=json.loads(response.text)["price_rule"]["created_at"]
-            
-            discount_status=self.one_time_discount(price_id,acc_tok[1],headers,discount)
-            
-            if response.ok and discount_status == None:
-                return Response({"message":"coupon created successfully","title": discount,"created_at":price_create,"id":price_id,},status=status.HTTP_201_CREATED)
+                price_create=json.loads(response.text)["price_rule"]["created_at"]
+                
+                discount_status=self.one_time_discount(price_id,acc_tok[1],headers,discount)
+                
+                if discount_status == None:
+                    return Response({"message":"coupon created successfully","title": discount,"created_at":price_create,"id":price_id,},status=status.HTTP_201_CREATED)
+                else:
+                    return Response({"response":"Coupon name already taken"},status=status.HTTP_400_BAD_REQUEST)
             else:
-                return Response({"response":"Coupon name already taken"},status=status.HTTP_400_BAD_REQUEST)
-        else:
-            return Response({"error":"Admin Deactive your shop"},status=status.HTTP_401_UNAUTHORIZED)
+                return Response({"error":"Amount should be in positive"},status=status.HTTP_400_BAD_REQUEST)
+        return Response({"error":"Admin Deactive your shop"},status=status.HTTP_401_UNAUTHORIZED)
 
  
         
