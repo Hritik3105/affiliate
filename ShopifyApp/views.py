@@ -563,11 +563,11 @@ class SingleCoupon(APIView):
                 amount   = coupon_data["value"]   
                 id   = coupon_data["id"]   
                 infl_id=infl_data_id
-                print(infl_id[0])
+                main_id=infl_id[0]["influencer_id"]
                 entitle=coupon_data["entitled_product_ids"]
                 
                 if coupon_data["entitled_product_ids"]:
-                    return Response({'title': title,"discount_type":discount_type,'amount':amount,"id":id, "product_name":entitle,"status":2,"indb":infl_data[0]["id"],"infl_id":infl_id})
+                    return Response({'title': title,"discount_type":discount_type,'amount':amount,"id":id, "product_name":entitle,"status":2,"indb":infl_data[0]["id"],"infl_id":main_id})
                 else:
                     
                     return Response({'title': title,"discount_type":discount_type,'amount':amount,"id":id,"status":1})
