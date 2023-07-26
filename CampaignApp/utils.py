@@ -7,7 +7,6 @@ from CampaignApp.views import *
 from Affilate_Marketing.settings import SHOPIFY_API_KEY,SHOPIFY_API_SECRET,API_VERSION
 import requests
 import stripe
-i
 
 
 
