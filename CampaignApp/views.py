@@ -2503,6 +2503,7 @@ class Success(APIView):
             return Response({"success":"Subscription activated"},status=status.HTTP_200_OK)
         
         except Exception as e:
+            print("Enrrrrr")
             return Response((e),status=status.HTTP_400_BAD_REQUEST)
     
     
