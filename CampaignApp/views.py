@@ -2457,7 +2457,7 @@ class BuySubscription(APIView):
     permission_classes=[IsAuthenticated]
     def post(self,request):
         try:
-            plan=request.query_params.get("plan")
+            plan=request.data.get("plan")
             print(plan)
             value=checkout(self,request,plan)
          
