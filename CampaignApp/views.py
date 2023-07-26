@@ -2485,10 +2485,8 @@ class Success(APIView):
             end_date = datetime.datetime.fromtimestamp(current_period_end)
             start_date = datetime.datetime.fromtimestamp(current_period_start)
 
-        
             end_date = end_date.strftime('%Y-%m-%d')
             start_date = start_date.strftime('%Y-%m-%d')
-
             price_id = sub_retrieve["items"]["data"][0]["plan"]["id"]
             amount = sub_retrieve["items"]["data"][0]["plan"]["amount"]
             amount = str(amount)

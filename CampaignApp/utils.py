@@ -7,6 +7,9 @@ from CampaignApp.views import *
 from Affilate_Marketing.settings import SHOPIFY_API_KEY,SHOPIFY_API_SECRET,API_VERSION
 import requests
 import stripe
+i
+
+
 
 def product_details(self,request,val_lst,req_id):  
     for i in range(len(val_lst)):
@@ -127,8 +130,8 @@ def checkout(self,request,plan):
                             },
                         ],
                     mode='subscription',
-                    success_url='https://myrefera.com/success',
-                    cancel_url='https://myrefera.com/cancel',
+                    success_url='https://myrefera.com/thankyou',
+                    cancel_url='https://myrefera.com/payment-failed',
                     billing_address_collection='auto'
     )
     
@@ -144,7 +147,7 @@ def success(self,request,subscription_id,price_id,start_date,end_date,amount):
     subscription.start_date=start_date
     subscription.end_date=end_date
     subscription.save()
-    print(amount)    
+    
     credit=CampaignCredit()
     if amount == 100:
         credit.total_campaign=10
