@@ -2458,7 +2458,7 @@ class BuySubscription(APIView):
     def post(self,request):
         try:
             plan=request.query_params.get("plan")
-          
+            print(plan)
             value=checkout(self,request,plan)
          
 
