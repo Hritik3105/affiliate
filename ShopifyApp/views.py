@@ -557,12 +557,15 @@ class SingleCoupon(APIView):
                 coupon_data = get_response.json()["price_rule"]
                 infl_data=influencer_coupon.objects.filter(coupon_id=coupon_data["id"]).values("id")
                 infl_data_id=influencer_coupon.objects.filter(coupon_id=coupon_data["id"]).values("influencer_id")
+                print(infl_data_id)
+                print(infl_data)
                 
                 title = coupon_data["title"]
                 discount_type = coupon_data["value_type"]
                 amount   = coupon_data["value"]   
                 id   = coupon_data["id"]   
                 infl_id=infl_data_id
+                if 
                 main_id=infl_id[0]["influencer_id"]
                 entitle=coupon_data["entitled_product_ids"]
                 
