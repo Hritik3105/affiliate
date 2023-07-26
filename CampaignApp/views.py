@@ -762,7 +762,7 @@ class   MarketplaceList(APIView):
         final_lst=[]
         sliced=""
         
-        campaign_obj=Campaign.objects.filter(vendorid_id=self.request.user.id,status=1,draft_status=0,campaign_exp=1)
+        campaign_obj=Campaign.objects.filter(vendorid_id=self.request.user.id,status=1,draft_status=0,campaign_exp=1,campaign_status=0)
         if campaign_obj:
             z=(campaign_obj.values("id"))
             for i in z:

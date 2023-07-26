@@ -569,9 +569,7 @@ class SingleCoupon(APIView):
                 if coupon_data["entitled_product_ids"]:
                     return Response({'title': title,"discount_type":discount_type,'amount':amount,"id":id, "product_name":entitle,"status":2,"indb":infl_data[0]["id"],"infl_id":main_id})
                 else:
-                    
                     return Response({'title': title,"discount_type":discount_type,'amount':amount,"id":id,"status":1})
-
         else:
             return Response({'message': get_response.text}, status=400)
 

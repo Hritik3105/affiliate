@@ -1574,8 +1574,7 @@ class AppliedCampaign(APIView):
             
                 dict1={
                     "campaignid_id":camp[i]["campaignid_id"],
-                    "campaign_name": k.campaignid.campaign_name ,
-                    
+                    "campaign_name": k.campaignid.campaign_name,
                     "status":k.campaignid.campaign_status,
                     "product":[{
                     "product_name":camp[i]["product_name"],
