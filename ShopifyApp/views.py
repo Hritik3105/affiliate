@@ -559,20 +559,28 @@ class SingleCoupon(APIView):
                 infl_data_id=influencer_coupon.objects.filter(coupon_id=coupon_data["id"]).values("influencer_id")
                 print(infl_data_id)
                 print(infl_data)
+                if infl_data_id and infl_data:
+                    title = coupon_data["title"]
+                    discount_type = coupon_data["value_type"]
+                    amount   = coupon_data["value"]   
+                    id   = coupon_data["id"]   
+                    infl_id=infl_data_id
                 
-                title = coupon_data["title"]
-                discount_type = coupon_data["value_type"]
-                amount   = coupon_data["value"]   
-                id   = coupon_data["id"]   
-                infl_id=infl_data_id
-             
-                main_id=infl_id[0]["influencer_id"]
-                entitle=coupon_data["entitled_product_ids"]
-                
-                if coupon_data["entitled_product_ids"]:
-                    return Response({'title': title,"discount_type":discount_type,'amount':amount,"id":id, "product_name":entitle,"status":2,"indb":infl_data[0]["id"],"infl_id":main_id})
+                    main_id=infl_id[0]["influencer_id"]
+                    entitle=coupon_data["entitled_product_ids"]
+                    
+                    if coupon_data["entitled_product_ids"]:
+                        return Response({'title': title,"discount_type":discount_type,'amount':amount,"id":id, "product_name":entitle,"status":2,"indb":infl_data[0]["id"],"infl_id":main_id})
+                    else:
+                        return Response({'title': title,"discount_type":discount_type,'amount':amount,"id":id,"status":1})
                 else:
+                    title = coupon_data["title"]
+                    discount_type = coupon_data["value_type"]
+                    amount   = coupon_data["value"]   
+                    id  = coupon_data["id"]   
                     return Response({'title': title,"discount_type":discount_type,'amount':amount,"id":id,"status":1})
+
+                    
         else:
             return Response({'message': get_response.text}, status=400)
 
