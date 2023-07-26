@@ -1026,6 +1026,7 @@ class RequestSents(APIView):
                                 coup_lst.append(match_data)
                 
                             if True in coup_lst:
+                                print(coup_lst)
                                 cop=(list(dict3.keys())[0])
                                 cop_lst=ast.literal_eval(cop)
                                 
