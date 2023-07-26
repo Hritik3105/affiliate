@@ -129,7 +129,7 @@ def checkout(self,request,plan):
                             },
                         ],
                     mode='subscription',
-                    success_url='https://myrefera.com/thankyou',
+                    success_url='https://myrefera.com/frontend/#/thankyou?shop=marketplacee-app.myshopify.com',
                     cancel_url='https://myrefera.com/payment-failed',
                     billing_address_collection='auto'
     )
