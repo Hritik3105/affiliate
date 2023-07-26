@@ -3030,7 +3030,7 @@ class CheckSubscription(APIView):
    permission_classes = [IsAuthenticated] 
    
    def get(self,request):
-       sub_check=StripeDetails.objects.filter(vendor=self.request.user.id).exists()
+       sub_check=StripeSubscription.objects.filter(vendor=self.request.user.id).exists()
        if sub_check == True:
            return Response({"message":"please buy subscription"},status=status.HTTP_200_OK)
        else:
