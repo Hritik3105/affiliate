@@ -563,6 +563,7 @@ class SingleCoupon(APIView):
                 amount   = coupon_data["value"]   
                 id   = coupon_data["id"]   
                 infl_id=infl_data_id
+                print(infl_id)
                 entitle=coupon_data["entitled_product_ids"]
                 
                 if coupon_data["entitled_product_ids"]:
