@@ -1009,6 +1009,7 @@ class RequestSents(APIView):
                 dict1={}
                 match_cop=[]
                 if val_lst2:
+                    print(val_lst2)
                     for i in  range (len(val_lst2)):
                        
                         for j in val_lst2[i]["coupon_name"]:        
