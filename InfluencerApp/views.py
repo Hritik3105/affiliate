@@ -1751,6 +1751,7 @@ class MarketplaceDeclinelList(APIView):
         vendo_camp=vendor_codes.values_list("campaignid_id__id",flat=True)
         
         for data in vendo_camp:
+            print(data)
            
             camp=Product_information.objects.filter(campaignid_id=data).values()
          
