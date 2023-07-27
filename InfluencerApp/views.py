@@ -1639,8 +1639,17 @@ class MarketplaceAccept(APIView):
         vendor_codes=VendorCampaign.objects.filter(influencerid_id=value,campaign_status=2,campaignid__status=1)
         vendo_camp=vendor_codes.values_list("campaignid_id__id",flat=True)
         print("----------------",vendo_camp)
+        for data in vendo_camp:
+            camp=Product_information.objects.filter(campaignid_id=data.campaiginid).values()
+            print(camp)
+            campaign_obj59=Product_information.objects.filter(campaignid_id=data.campaiginid).select_related("campaignid")
+            print(campaign_obj59)
+            coupon_match=influencer_coupon.objects.filter(influencer_id=value).values_list("coupon_name",flat=True)
+            print(coupon_match)
+
+      
         campaign_obj1=Campaign_accept.objects.filter(Q(campaign_status=1)|Q(campaign_status=2),Q(influencerid_id=self.request.user.id,campaignid__status=2))
-     
+
         if campaign_obj1.exists():
             res.append(campaign_obj1)
         else:
