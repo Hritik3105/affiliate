@@ -2251,7 +2251,7 @@ class MarketplaceWebsiteList(APIView):
         final_lst=[]
    
         
-        campaign_obj=Campaign.objects.filter(status=1,draft_status=0,campaign_exp=1)
+        campaign_obj=Campaign.objects.filter(status=1,draft_status=0,campaign_exp=1,campaign_status=1)
         
         if campaign_obj:
             z=(campaign_obj.values("id"))
