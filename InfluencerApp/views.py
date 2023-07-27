@@ -1641,9 +1641,9 @@ class MarketplaceAccept(APIView):
         print("----------------",vendo_camp)
         for data in vendo_camp:
             print("dataaa",data)
-            camp=Product_information.objects.filter(campaignid_id=data.campaiginid).values()
+            camp=Product_information.objects.filter(campaignid_id=data).values()
             print(camp)
-            campaign_obj59=Product_information.objects.filter(campaignid_id=data.campaiginid).select_related("campaignid")
+            campaign_obj59=Product_information.objects.filter(campaignid_id=data).select_related("campaignid")
             print(campaign_obj59)
             coupon_match=influencer_coupon.objects.filter(influencer_id=value).values_list("coupon_name",flat=True)
             print(coupon_match)
