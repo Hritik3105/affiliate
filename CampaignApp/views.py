@@ -28,9 +28,9 @@ import datetime
 
 # Create your views here.
 
-# current_date= datetime.date.today()
+current_date= datetime.date.today()
 
-current_date=datetime.date(2023,8,27)
+# current_date=datetime.date(2023,8,27)
 #To get access token
             
 def access_token(self,request):
@@ -2252,6 +2252,7 @@ class MarketplaceWebsiteList(APIView):
    
         
         campaign_obj=Campaign.objects.filter(status=1,draft_status=0,campaign_exp=1)
+        
         if campaign_obj:
             z=(campaign_obj.values("id"))
             for i in z:
@@ -3032,7 +3033,6 @@ class CheckSubscription(APIView):
    
    def get(self,request):
         sub_check=StripeSubscription.objects.filter(vendor=self.request.user.id).exists()
-        print(sub_check)
         if sub_check:
             StripeSubscription_data=StripeSubscription.objects.filter(vendor=self.request.user.id).values()
             if current_date < StripeSubscription_data[0]["end_date"]:
