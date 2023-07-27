@@ -3036,7 +3036,7 @@ class CheckSubscription(APIView):
        if sub_check == False:
            return Response({"message":"please buy subscription"},status=status.HTTP_200_OK)
        else:
-           details=StripeSubscription.objects.filter(vendor=self.request.user.id,end_date__gt=current_date).exists()
+           details=StripeSubscription.objects.filter(vendor=self.request.user.id,end_date__gte=current_date).exists()
            print("details",details)
            if details == True:    
               return Response({"message":"Subscription already buyed"},status=status.HTTP_200_OK)
