@@ -3030,20 +3030,7 @@ class CheckSubscription(APIView):
    authentication_classes=[TokenAuthentication]
    permission_classes = [IsAuthenticated] 
    
-   def get(self,request):
-       
-    #    sub_check=StripeSubscription.objects.filter(vendor=self.request.user.id).exists()
-    #    if sub_check == False:
-    #        return Response({"message":"please buy subscription"},status=status.HTTP_200_OK)
-    #    else:
-    #        details=StripeSubscription.objects.filter(vendor=self.request.user.id,end_date__lt=current_date).exists()
-    #        print("details",details)
-    #        if details == True:    
-    #           return Response({"message":"Subscription already buyed"},status=status.HTTP_200_OK)
-    #        else:     
-    #           return Response({"message":"Subscription Expired"},status=status.HTTP_400_BAD_REQUEST)
-    
-
+   def get(self):
         sub_check=StripeSubscription.objects.filter(vendor=self.request.user.id).exists()
         if sub_check:
             StripeSubscription_data=StripeSubscription.objects.filter(vendor=self.request.user.id).values()
