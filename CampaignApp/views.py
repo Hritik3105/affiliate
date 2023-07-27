@@ -3040,3 +3040,20 @@ class CheckSubscription(APIView):
             else:     
                return Response({"message":"Subscription Expired"},status=status.HTTP_400_BAD_REQUEST)    
         return Response({"message":"please buy subscription"},status=status.HTTP_200_OK)
+    
+    
+class SubscriptionDetails(APIView):
+   authentication_classes=[TokenAuthentication]
+   permission_classes = [IsAuthenticated] 
+   
+   def get(self,request):
+        StripeSubscription_data=StripeSubscription.objects.filter(vendor=self.request.user.id).values()
+        
+        
+        if StripeSubscription_data:
+            dict={
+                "plan_amount":StripeSubscription_data
+            }
+
+       
+    

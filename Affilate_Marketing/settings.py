@@ -30,8 +30,9 @@ SECRET_KEY = 'django-insecure-5w&&1euej3vf@2r-s9p&+te=-4kjgkmx3wu!+t*0hv4qo$y8h3
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 from django.contrib.messages import constants as messages
-# ALLOWED_HOSTS = []
-ALLOWED_HOSTS = ["13.50.106.134","myrefera.com","api.myrefera.com","admin.myrefera.com"]
+
+ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = ["13.50.106.134","myrefera.com","api.myrefera.com","admin.myrefera.com"]
 
 
 # Application definition
@@ -129,28 +130,28 @@ MESSAGE_TAGS = {
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'marketing_db',
-#         'USER':'root',
-#         "HOST":"localhost",
-#         'PASSWORD':"",
-#         "PORT":"3306"
-#     }
-# }
-
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME':config("NAME"),
-        'USER':config("USER"),
-        "HOST":config("HOST"),
-        'PASSWORD':config("PASSWORD"),
-        "PORT":config("PORT")
+        'NAME': 'marketing_db',
+        'USER':'root',
+        "HOST":"localhost",
+        'PASSWORD':"",
+        "PORT":"3306"
     }
 }
+
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME':config("NAME"),
+#         'USER':config("USER"),
+#         "HOST":config("HOST"),
+#         'PASSWORD':config("PASSWORD"),
+#         "PORT":config("PORT")
+#     }
+# }
 
 
 REST_FRAMEWORK = {

@@ -145,6 +145,7 @@ def success(self,request,subscription_id,price_id,start_date,end_date,amount):
     subscription.price_id=price_id
     subscription.start_date=start_date
     subscription.end_date=end_date
+    subscription.amount=amount
     subscription.save()
     
     credit=CampaignCredit()

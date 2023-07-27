@@ -138,6 +138,7 @@ class StripeSubscription(models.Model):
   price_id=models.CharField(blank=True,null=True,max_length=255)
   start_date = models.DateField(blank=True, null=True)
   end_date = models.DateField(blank=True, null=True)
+  amount=models.CharField(blank=True,null=True,max_length=255)
   
   
 class CampaignCredit(models.Model):
