@@ -3032,16 +3032,15 @@ class CheckSubscription(APIView):
    
    def get(self,request):
        current_date= datetime.date.today()
-       print(current_date)
        sub_check=StripeSubscription.objects.filter(vendor=self.request.user.id).exists()
-       print(sub_check) 
        if sub_check == False:
            return Response({"message":"please buy subscription"},status=status.HTTP_200_OK)
        else:
            details=StripeSubscription.objects.filter(vendor=self.request.user.id,end_date__lt=current_date).exists()
-           print(details)
-               
-           return Response({"message":"Subscription already buyed"},status=status.HTTP_200_OK)
-               
+           print("details",details)
+           if details == False:    
+              return Response({"message":"Subscription already buyed"},status=status.HTTP_200_OK)
+           else:     
+              return Response({"message":"Subscription Expired"},status=status.HTTP_400_BAD_REQUEST)
     
     
