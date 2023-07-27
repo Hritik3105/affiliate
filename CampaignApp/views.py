@@ -3049,7 +3049,7 @@ class SubscriptionDetails(APIView):
    permission_classes = [IsAuthenticated] 
    
    def get(self,request):
-        StripeSubscription_data=StripeSubscription.objects.filter(vendor=self.request.user.id).values()
+        StripeSubscription_data=StripeSubscription.objects.filter(vendor=self.request.user.id,status=1).values()
         
         
         if StripeSubscription_data:
