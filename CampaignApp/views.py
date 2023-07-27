@@ -24,6 +24,7 @@ import stripe
 from Affilate_Marketing import settings
 from CampaignApp.utils import *
 from AdminApp.models import *
+import datetime
 
 # Create your views here.
 
@@ -3030,7 +3031,7 @@ class CheckSubscription(APIView):
    permission_classes = [IsAuthenticated] 
    
    def get(self,request):
-       current_date= datetime.today()
+       current_date= datetime.date.today()
        print(current_date)
        sub_check=StripeSubscription.objects.filter(vendor=self.request.user.id).exists()
        print(sub_check) 
@@ -3041,7 +3042,7 @@ class CheckSubscription(APIView):
            print(details)
            if details:
                details=details[0]
-               print(details)
+          
                
            return Response({"message":"Subscription already buyed"},status=status.HTTP_200_OK)
                
