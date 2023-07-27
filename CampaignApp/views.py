@@ -28,9 +28,9 @@ import datetime
 
 # Create your views here.
 
-current_date= datetime.date.today()
+# current_date= datetime.date.today()
 
-# current_date=datetime.date(2023,8,27)
+current_date=datetime.date(2023,8,27)
 #To get access token
             
 def access_token(self,request):
@@ -2478,6 +2478,8 @@ class Success(APIView):
     def get(self,request):
         
         try:
+            
+            StripeSubscription.objects.filter(vendor_id=self.request.user.id,status=0).delete()
             session_id=request.query_params.get("session_id")
             checkout_session = stripe.checkout.Session.retrieve(session_id)
             subscription_id = checkout_session.subscription
@@ -2993,8 +2995,6 @@ class AdminTranferMoney(APIView):
                     pay_value=PaymentDetails.objects.filter(campaign=campaignids,admin=admin,vendor=self.request.user.id).values("sales","amount")
                     remaining_amount=amount-transfer1["amount"] 
                    
-            
-                    
                     PaymentDetails.objects.filter(campaign=campaignids,admin=32,vendor=self.request.user.id).update(amountpaid=transfer1["amount"],salespaid=salesdone,amount=remaining_amount)
                 else:  
                    
@@ -3038,10 +3038,12 @@ class CheckSubscription(APIView):
             if current_date < StripeSubscription_data[0]["end_date"]:
                 return Response({"message":"Subscription already buyed"},status=status.HTTP_200_OK)
             else:     
+               StripeSubscription_data=StripeSubscription.objects.filter(vendor=self.request.user.id).update(status=0)
                return Response({"message":"Subscription Expired"},status=status.HTTP_400_BAD_REQUEST)    
         return Response({"message":"please buy subscription"},status=status.HTTP_200_OK)
     
     
+
 class SubscriptionDetails(APIView):
    authentication_classes=[TokenAuthentication]
    permission_classes = [IsAuthenticated] 
