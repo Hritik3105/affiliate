@@ -3032,6 +3032,7 @@ class CheckSubscription(APIView):
    
    def get(self,request):
         sub_check=StripeSubscription.objects.filter(vendor=self.request.user.id).exists()
+        print(sub_check)
         if sub_check:
             StripeSubscription_data=StripeSubscription.objects.filter(vendor=self.request.user.id).values()
             if current_date < StripeSubscription_data[0]["end_date"]:
