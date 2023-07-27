@@ -3030,7 +3030,7 @@ class CheckSubscription(APIView):
    permission_classes = [IsAuthenticated] 
    
    def get(self,request):
-       current_date= datetime.date.today()
+       current_date= datetime.today()
        print(current_date)
        sub_check=StripeSubscription.objects.filter(vendor=self.request.user.id).exists()
        print(sub_check) 
