@@ -2366,7 +2366,7 @@ class MarketplaceAccept(APIView):
            
             amount=request.data.get("amount")
          
-            assign_coupon=Campaign.objects.filter(id=id).update(influencer_name=[pk])
+            assign_coupon=Campaign.objects.filter(id=id).update(influencer_name=[pk],campaign_status=2)
   
             influencer_cop=influencer_coupon.objects.create(coupon_name=coupon_name,amount=amount,vendor_id=self.request.user.id,influencer_id_id=pk)
         
