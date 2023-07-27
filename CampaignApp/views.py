@@ -2484,8 +2484,8 @@ class Success(APIView):
             sub_retrieve=stripe.Subscription.retrieve(subscription_id)
             current_period_end = sub_retrieve["current_period_end"]
             current_period_start = sub_retrieve["current_period_start"]
-            end_date = datetime.fromtimestamp(current_period_end)
-            start_date = datetime.fromtimestamp(current_period_start)
+            end_date = datetime.datetime.fromtimestamp(current_period_end)
+            start_date = datetime.datetime.fromtimestamp(current_period_start)
 
             end_date = end_date.strftime('%Y-%m-%d')
             start_date = start_date.strftime('%Y-%m-%d')
