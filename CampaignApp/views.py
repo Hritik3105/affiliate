@@ -3052,8 +3052,18 @@ class SubscriptionDetails(APIView):
         
         if StripeSubscription_data:
             dict={
-                "plan_amount":StripeSubscription_data
+                "plan_amount":StripeSubscription_data[0]["amount"],
+                "start_date":StripeSubscription_data[0]["end_date"],
+                "end_date":StripeSubscription_data[0]["start_date"],
             }
 
        
-    
+            return Response({"data":dict},status=status.HTTP_200_OK)
+        
+        else:
+            dict={
+                "plan_amount":0,
+                "start_date":"------",
+                "end_date":"-------",
+            }
+            return Response({"data":dict},status=status.HTTP_200_OK)
