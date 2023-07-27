@@ -3030,7 +3030,7 @@ class CheckSubscription(APIView):
    authentication_classes=[TokenAuthentication]
    permission_classes = [IsAuthenticated] 
    
-   def get(self):
+   def get(self,request):
         sub_check=StripeSubscription.objects.filter(vendor=self.request.user.id).exists()
         if sub_check:
             StripeSubscription_data=StripeSubscription.objects.filter(vendor=self.request.user.id).values()
