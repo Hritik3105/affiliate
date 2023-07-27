@@ -1640,6 +1640,7 @@ class MarketplaceAccept(APIView):
         vendo_camp=vendor_codes.values_list("campaignid_id__id",flat=True)
         print("----------------",vendo_camp)
         for data in vendo_camp:
+            print("dataaa",data)
             camp=Product_information.objects.filter(campaignid_id=data.campaiginid).values()
             print(camp)
             campaign_obj59=Product_information.objects.filter(campaignid_id=data.campaiginid).select_related("campaignid")
