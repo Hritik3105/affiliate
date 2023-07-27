@@ -28,9 +28,9 @@ import datetime
 
 # Create your views here.
 
+# current_date= datetime.date.today()
 
-
-
+current_dates=datetime.date(2023,8,26)
 #To get access token
             
 def access_token(self,request):
@@ -3031,7 +3031,7 @@ class CheckSubscription(APIView):
    permission_classes = [IsAuthenticated] 
    
    def get(self,request):
-       current_date= datetime.date.today()
+       
        sub_check=StripeSubscription.objects.filter(vendor=self.request.user.id).exists()
        if sub_check == False:
            return Response({"message":"please buy subscription"},status=status.HTTP_200_OK)
