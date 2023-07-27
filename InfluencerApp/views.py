@@ -1628,120 +1628,128 @@ class InfluencerProfile(APIView):
 #API TO SHOW MARKETPLACE  ACCEPT CAMPAIGN
 class MarketplaceAccept(APIView):
     authentication_classes=[TokenAuthentication]
-    permission_classes = [IsAuthenticated] 
-    
+    permission_classes = [IsAuthenticated]
     def get(self,request):
-        try:
-            lst=[]
-            final_lst=[]
-            res=[]
-            res2=[]  
+        lst=[]
+        final_lst=[]
+        res=[]
+        res2=[]  
+     
+        value=ModashInfluencer.objects.filter(influencerid_id=request.user.id).values_list("id",flat=True)[0]
+        vendor_codes=VendorCampaign.objects.filter(influencerid_id=value,campaign_status=2,campaignid__status=1)
+        vendo_camp=vendor_codes.values_list("campaignid_id__id",flat=True)
+        print("----------------",vendo_camp)
+        campaign_obj1=Campaign_accept.objects.filter(Q(campaign_status=1)|Q(campaign_status=2),Q(influencerid_id=self.request.user.id,campaignid__status=2))
+     
+        if campaign_obj1.exists():
+            res.append(campaign_obj1)
+        else:
+            res=""
         
-            value=ModashInfluencer.objects.filter(influencerid_id=request.user.id).values_list("id",flat=True)[0]
-            vendor_codes=VendorCampaign.objects.filter(influencerid_id=value,campaign_status=2,campaignid__status=1)
-            vendo_camp=vendor_codes.values_list("campaignid_id__id",flat=True)
-            campaign_obj1=Campaign_accept.objects.filter(Q(campaign_status=1)|Q(campaign_status=2),Q(influencerid_id=self.request.user.id,campaignid__status=1))
+        if res:
+            
+            for i in res:
+                z=(i.values("campaignid"))
+                res2.append(z)
         
-            if campaign_obj1.exists():
-                res.append(campaign_obj1)
-            else:
-                res=""
-            
-            if res:
-                
-                for i in res:
-                    z=(i.values("campaignid"))
-                    res2.append(z)
-            
-    
-                for i in res2:
-                    ids = [q['campaignid'] for q in i]
-                    for id in ids:
-                        lst.append(id)
-                        
-            set_data=set(lst)
-            
-            fin_value=set_data
-            for i in fin_value:
-            
-                camp=Product_information.objects.filter(campaignid_id=i).values()
-                campaign_obj59=Product_information.objects.filter(campaignid_id=i).select_related("campaignid")
-                coupon_match=influencer_coupon.objects.filter(influencer_id=value).values_list("coupon_name",flat=True)
+  
+            for i in res2:
+                ids = [q['campaignid'] for q in i]
+                for id in ids:
+                    lst.append(id)
+                    
+        set_data=set(lst)
         
-            
-                for k in campaign_obj59:
-                    pass
+        fin_value=set_data
+        for i in fin_value:
+         
+            camp=Product_information.objects.filter(campaignid_id=i).values()
+            campaign_obj59=Product_information.objects.filter(campaignid_id=i).select_related("campaignid")
+            coupon_match=influencer_coupon.objects.filter(influencer_id=value).values_list("coupon_name",flat=True)
+      
+           
+            for k in campaign_obj59:
+               pass
 
+        
+            for i in range(len(camp)):
+                cop=(camp[i]["coupon_name"])
+              
+                amt=(camp[i]["amount"])
+
+                disc_type=(camp[i]["discount_type"])
             
-                for i in range(len(camp)):
-                    cop=(camp[i]["coupon_name"])
-                
-                    amt=(camp[i]["amount"])
-                
-                    if cop:
-                    
-                        couponlst=ast.literal_eval(cop)
-                        
-                        for cop in couponlst:
-                            
-                            if cop  not in coupon_match:
-                                couponlst.remove(cop)
-                                
-            
-                    else:
-                        couponlst=cop
-                    
-                        
-                    if amt:
-                        
-                        amtlst=ast.literal_eval(amt)
-                    else:
-                        amtlst=amt
-                        
-                
-                
-                    
-                    if camp[i]["campaignid_id"] in vendo_camp:
-                        dict1={
-                            "campaignid_id":camp[i]["campaignid_id"],
-                            "campaign_name": k.campaignid.campaign_name ,
-                            "status":k.campaignid.campaign_status,
-                            "product":[{
-                            "product_name":camp[i]["product_name"],
-                            "coupon_name":couponlst,
-                            "amount":amtlst,
-                            "product_id": camp[i]["product_id"],
-                            
-                        }]
-                        }
-                        final_lst.append(dict1)
-                        
-                    else:
-                        dict1={
-                            "campaignid_id":camp[i]["campaignid_id"],
-                            "campaign_name": k.campaignid.campaign_name ,
-                            "status":k.campaignid.campaign_status,
-                            "product":[{
-                            "product_name":camp[i]["product_name"],
-                            "product_id": camp[i]["product_id"],
-                            
-                        }]
-                        }
-                        final_lst.append(dict1)
-                
-            result={}
-            for i, record in enumerate(final_lst):
-            
-                if record["campaignid_id"] in result:
-                    result[record["campaignid_id"]]["product"].append(record["product"][0])
+                if disc_type:
+                    discc_type=ast.literal_eval(disc_type)
                 else:
+                    
+                    discc_type=disc_type
                 
-                    result[record["campaignid_id"]] = record
-                    result[record["campaignid_id"]]["product"] = record["product"]
-            val=list(result.values())
-            return Response({"data":val},status=status.HTTP_200_OK)  
-        except Exception as e:
-            return Response({"error":e},status=status.HTTP_400_BAD_REQUEST)
+                if cop:
+                  
+                    couponlst=ast.literal_eval(cop)
+                    
+                    for cop in couponlst:
+                        
+                        if cop  not in coupon_match:
+                            couponlst.remove(cop)
+                            
+        
+                else:
+                    couponlst=cop
+                 
+                    
+                if amt:
+                    
+                    amtlst=ast.literal_eval(amt)
+                else:
+                    amtlst=amt
+                    
+               
+               
+                
+                if camp[i]["campaignid_id"] in vendo_camp:
+                    dict1={
+                        "campaignid_id":camp[i]["campaignid_id"],
+                        "campaign_name": k.campaignid.campaign_name ,
+                        "status":k.campaignid.campaign_status,
+                        "product":[{
+                        "product_name":camp[i]["product_name"],
+                        "coupon_name":couponlst,
+                        "amount":amtlst,
+                        "product_id": camp[i]["product_id"],
+                        "discount_type":discc_type, 
+                        
+                        
+                    }]
+                    }
+                    final_lst.append(dict1)
+                    
+                else:
+                     dict1={
+                        "campaignid_id":camp[i]["campaignid_id"],
+                        "campaign_name": k.campaignid.campaign_name ,
+                        "status":k.campaignid.campaign_status,
+                        "product":[{
+                        "product_name":camp[i]["product_name"],
+                        "product_id": camp[i]["product_id"],
+                        
+                    }]
+                    }
+                     final_lst.append(dict1)
+               
+        result={}
+        for i, record in enumerate(final_lst):
+         
+            if record["campaignid_id"] in result:
+                result[record["campaignid_id"]]["product"].append(record["product"][0])
+            else:
+               
+                result[record["campaignid_id"]] = record
+                result[record["campaignid_id"]]["product"] = record["product"]
+        val=list(result.values())
+        return Response({"data":val},status=status.HTTP_200_OK)  
+    
         
         
     
