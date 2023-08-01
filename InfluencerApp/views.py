@@ -1623,7 +1623,8 @@ class InfluencerProfile(APIView):
             infl_dict={
                 "name":infl_details.username,
                 "email":infl_details.email,
-                "country":infl_details.country
+                "country":infl_details.country,
+                "user_handle":infl_details.user_handle
             }
 
             return Response({"details":infl_dict},status=status.HTTP_200_OK)
