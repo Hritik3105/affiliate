@@ -492,7 +492,7 @@ class ApprovalList(APIView):
          
             camp=Product_information.objects.filter(campaignid_id=i).values()
             campaign_obj59=Product_information.objects.filter(campaignid_id=i).select_related("campaignid")
-            # campaign_obj595=Product_information.objects.filter(campaignid_id=i).prefetch_related("campaign_set")
+            campaign_obj595=Product_information.objects.filter(campaignid_id=i).prefetch_related("product_information_set")
             print("dataaa",campaign_obj595)
             coupon_match=influencer_coupon.objects.filter(influencer_id=value).values_list("coupon_name",flat=True)
             
