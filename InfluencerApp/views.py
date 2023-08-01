@@ -467,7 +467,7 @@ class ApprovalList(APIView):
         vendo_camp=vendor_codes.values_list("campaignid_id__id",flat=True)
 
         campaign_obj1=Campaign_accept.objects.filter(Q(campaign_status=1)|Q(campaign_status=2),Q(influencerid_id=self.request.user.id,campaignid__status=2))
-     
+        print("-------------",campaign_obj1)
         if campaign_obj1.exists():
             res.append(campaign_obj1)
         else:
