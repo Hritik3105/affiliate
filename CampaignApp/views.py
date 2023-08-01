@@ -1519,6 +1519,51 @@ class ChangeNotifinflStatus(APIView):
         return Response(dict,status=status.HTTP_200_OK)  
     
     
+#Coupon order count
+class CouponOrderCountView(APIView):
+    def get(self, request, coupon_code=None):
+        acc_tok = access_token(self, request)
+        store_url = acc_tok[1]
+        api_token = acc_tok[0]
+        
+        headers = {"X-Shopify-Access-Token": api_token}  
+        url = f'https://{store_url}/admin/api/2022-10/orders.json?status=active'
+        response = requests.get(url, headers=headers)
+           
+        sales_by_coupon = {}
+        orders_with_coupon = []
+
+        if response.status_code == 200:
+            orders_details = response.json().get('orders', [])
+            for order in orders_details:
+                line_items = order.get('discount_codes', [])
+                total_price = order.get('total_price')
+                    
+                if line_items:
+                    order_coupon_code = line_items[0].get('code')
+                    
+                    if order_coupon_code in sales_by_coupon:
+                        sales_by_coupon[order_coupon_code] += float(total_price)
+                    else:
+                        sales_by_coupon[order_coupon_code] = float(total_price)
+
+                    # Check if the order used the particular coupon
+                    if coupon_code and order_coupon_code == coupon_code:
+                        orders_with_coupon.append(order)
+            
+            sale = list(sales_by_coupon.keys())
+            amount = list(sales_by_coupon.values())
+
+            if coupon_code:
+                return Response({'coupon_code': coupon_code, 'order_count': len(orders_with_coupon), 'orders': orders_with_coupon}, status=HTTP_200_OK)
+            else:
+                return Response({'sales_by_coupon': sales_by_coupon}, status=status.HTTP_200_OK)
+
+        return Response({'error': 'Failed to fetch data from Shopify'}, status=status.HTTP_404_NOT_FOUND)    
+
+
+
+    
 #ANALYTIC API
 """API TO SHOW TOTAL SALRS AND ORDERS"""
 class Analytics(APIView):

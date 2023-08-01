@@ -58,6 +58,7 @@ urlpatterns = [
     path("checksubscritpion/",CheckSubscription.as_view(),name="checksubscritpion"),
     path("showstripe/",ShowStripe.as_view(),name="showstripe"),
     path("subscriptiondetails/",SubscriptionDetails.as_view(),name="subscriptiondetails"),
+    path("couponorder/",CouponOrderCountView.as_view(),name="couponorder"),
    
    
     
