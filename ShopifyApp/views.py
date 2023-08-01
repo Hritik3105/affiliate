@@ -685,6 +685,8 @@ class ProductEditCodeView(APIView):
                 print(discount)
                 print(influencer_id)
                 print(type(amount))
+                print(amount)
+                print(int(amount))
                 upt_data=influencer_coupon.objects.filter(id=infludb_id).update(influencer_id_id=influencer_id,amount=int(amount),coupon_name=discount,vendor_id=self.request.user.id)
 
                 return Response({'message': 'Discount Edit successfully','title': discount,"discount_type":discount_type,'amount':amt,"id":price_rule,"influencer":influencer_id})
