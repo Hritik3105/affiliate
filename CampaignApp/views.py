@@ -914,6 +914,8 @@ class InfluencerList(APIView):
     
     def get(self,request):
         influ_list = ModashInfluencer.objects.filter(admin_approved=1).values() 
+        print("ddd",influ_list)
+        
        
         return Response({"data":influ_list},status=status.HTTP_200_OK) 
     
