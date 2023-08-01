@@ -1613,7 +1613,7 @@ class SalesRecord(APIView):
             sales_year = 0
 
             for order in data['orders']:
-                created_at = datetime.strptime(order['created_at'], "%Y-%m-%dT%H:%M:%S%z").date()
+                created_at = datetime.datetime.strptime(order['created_at'], "%Y-%m-%dT%H:%M:%S%z").date()
                 if start_date_7_days_ago <= created_at <= end_date:
                     sales_7_days += float(order['total_price'])
                 if start_date_30_days_ago <= created_at <= end_date:
