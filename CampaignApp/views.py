@@ -1544,7 +1544,9 @@ class CouponOrderCountView(APIView):
                     
                     if coupon_code in sales_by_coupon:
                         sales_by_coupon[coupon_code]['order_count'] += 1
-            
+                        print(sales_by_coupon)
+                    
+                        
                     else:
                         sales_by_coupon[coupon_code] = {
                             'order_count': 1,
