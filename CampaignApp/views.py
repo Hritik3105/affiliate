@@ -1017,8 +1017,7 @@ class RequestSents(APIView):
                             
                             match_data=Product_information.objects.filter(coupon_name__contains=j,vendor_id=self.request.user.id).exists()
                             match_data222=Product_information.objects.filter(coupon_name__in=j,vendor_id=self.request.user.id)
-                            print(match_data222)
-                            print(match_data)
+                            
                             if match_data == True:
                             
                                 match_cop.append(j)
@@ -1574,6 +1573,7 @@ class Analytics(APIView):
         
         
         
+        
 class SalesRecord(APIView):
     authentication_classes=[TokenAuthentication]
     permission_classes = [IsAuthenticated]
@@ -1583,7 +1583,7 @@ class SalesRecord(APIView):
         store_url = acc_tok[1]
         api_token = acc_tok[0]
 
-        end_date = datetime.now().date()
+        end_date = datetime.datetime.now().date()
         start_date_7_days_ago = end_date - timedelta(days=7)
         start_date_30_days_ago = end_date - timedelta(days=30)
         start_date_year_ago = end_date.replace(year=end_date.year-1, month=1, day=1)
@@ -1733,7 +1733,7 @@ class ShowStripe(APIView):
     
     def get(self,request):
         val=VendorStripeDetails.objects.filter(vendor=self.request.user.id).values("publishable_key","secret_key")
-        print(val)
+        
         return Response({"data":val},status=status.HTTP_200_OK)
     
     
@@ -2059,16 +2059,16 @@ class InfluencerCampSale(APIView):
                         
                 # if emp_check:
                 #     for i in data_max:
-                #         PaymentDetails.objects.filter(vendor=self.request.user.id,campaign=i["campaign_detail"],influencer=i["influencer"]).update(sales=i["sales"],influencerfee=i["influener_fee"],offer=i["offer"],amount=i["amount"])
-                    
+                #         PaymentDetails.objects.filter(vendor=self.request.user.id,campaign=i["campaign_detail"],influencer=i["influencer"]).update(sales=i["sales"],influencerfee=i["influener_fee"],offer=i["offer"],amount=i["amount"])  
                 # for data in data_max:
                 #     emp_check=PaymentDetails.objects.filter(influencer=data["influencer"],campaign=data["campaign_detail"])
                 #     print("emp_checkkkkkkkkkkkkk",emp_check)
                 #     if emp_check:
                 #         for i in data_max:
                 #             PaymentDetails.objects.filter(vendor=self.request.user.id,campaign=i["campaign_detail"],influencer=i["influencer"]).update(sales=i["sales"],influencerfee=i["influener_fee"],offer=i["offer"],amount=i["amount"])     
+           
+           
             else:     
-         
                 for i in data_max:
                     details_obj=PaymentDetails()
                     details_obj.amount=i["amount"]
@@ -2079,8 +2079,7 @@ class InfluencerCampSale(APIView):
                     details_obj.offer=i["offer"]
                     details_obj.campaign_id=i["campaign_detail"]
                     details_obj.account_id=i["account"]
-                    details_obj.save()
-                
+                    details_obj.save()     
             upd_data=PaymentDetails.objects.filter(vendor=self.request.user.id,influencer__isnull=False)
         
             
@@ -2182,8 +2181,6 @@ class MarketplaceExpList(APIView):
     def get(self,request):
         lst=[]
         final_lst=[]
-   
-        
         campaign_obj=Campaign.objects.filter(vendorid_id=self.request.user.id,status=1,campaign_exp=0)
         if campaign_obj:
             z=(campaign_obj.values("id"))
@@ -2191,7 +2188,6 @@ class MarketplaceExpList(APIView):
               
                 lst.append(i['id'])
         set_data=set(lst)
-     
         fin_value=set_data
         for i in fin_value:
             camp=Product_information.objects.filter(vendor_id=self.request.user.id,campaignid_id=i).values()
@@ -2199,7 +2195,6 @@ class MarketplaceExpList(APIView):
             for k in campaign_obj59:
               pass
 
-        
             for i in range(len(camp)):
                 cop=(camp[i]["coupon_name"])
                 amt=(camp[i]["amount"])
@@ -2228,8 +2223,7 @@ class MarketplaceExpList(APIView):
                 }]
                 }
     
-                final_lst.append(dict1)
-                
+                final_lst.append(dict1)        
         result={}
         for i, record in enumerate(final_lst):
          
@@ -2307,6 +2301,7 @@ class MarketplaceWebsiteList(APIView):
                 }
     
                 final_lst.append(dict1)
+                
                 
         result={}
         for i, record in enumerate(final_lst):
@@ -2460,7 +2455,7 @@ class BuySubscription(APIView):
     def post(self,request):
         try:
             plan=request.data.get("plan")
-            print(plan)
+         
             value=checkout(self,request,plan)
          
 
@@ -2507,8 +2502,7 @@ class Success(APIView):
             return Response({"success":"Subscription activated"},status=status.HTTP_200_OK)
         
         except Exception as e:
-            print("Enrrrrr")
-            print(e)
+            
             return Response({"message":"error"},status=status.HTTP_400_BAD_REQUEST)
     
     
@@ -3069,3 +3063,5 @@ class SubscriptionDetails(APIView):
                 "end_date":"-------",
             }
             return Response({"data":dict},status=status.HTTP_200_OK)
+        
+        
