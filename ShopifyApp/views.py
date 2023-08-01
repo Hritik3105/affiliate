@@ -658,7 +658,9 @@ class ProductEditCodeView(APIView):
             amount=amount
             
         infludb_id=request.data.get("influencer_id")
+        print(infludb_id)
         influencer_id=request.data.get("influ_ids")
+        print(influencer_id)
         
         
         data = {
