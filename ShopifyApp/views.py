@@ -680,6 +680,8 @@ class ProductEditCodeView(APIView):
         if zzx.status_code == 200:
             response = requests.put(url,headers=headers,json=data)
             if  response.status_code==200:
+                print(discount)
+                print(influencer_id)
                 upt_data=influencer_coupon.objects.filter(id=infludb_id).update(influencer_id_id=influencer_id,amount=int(amount),coupon_name=discount,vendor_id=self.request.user.id)
 
                 return Response({'message': 'Discount Edit successfully','title': discount,"discount_type":discount_type,'amount':amt,"id":price_rule,"influencer":influencer_id})
