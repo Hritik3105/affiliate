@@ -1150,7 +1150,7 @@ class GetCampaign(APIView):
                         "coupon_name":couponlst,
                         "amount":amtlst,
                         "product_id": camp[i]["product_id"],
-                        "discout_type":camp[i]["discount_type"]
+                        "discout_type":ast.literal_eval(camp[i]["discount_type"])
                     }]
                 }
 
