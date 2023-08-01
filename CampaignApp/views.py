@@ -1544,17 +1544,17 @@ class CouponOrderCountView(APIView):
                     
                     if coupon_code in sales_by_coupon:
                         sales_by_coupon[coupon_code]['order_count'] += 1
-                        print(sales_by_coupon)
-                    
-                        
+                   
                     else:
                         sales_by_coupon[coupon_code] = {
                             'order_count': 1,
-                      
-                            
+                          
                         }
 
-        return Response(sales_by_coupon, status=status.HTTP_200_OK)
+        # Create a list of dictionaries in the format ["coupon_name": count]
+        response_list = [{"coupon_name": coupon_code, "count": data["order_count"]} for coupon_code, data in sales_by_coupon.items()]
+        
+        return Response(response_list, status=status.HTTP_200_OK)
 
 
 
