@@ -1544,13 +1544,12 @@ class CouponOrderCountView(APIView):
                     
                     if coupon_code in sales_by_coupon:
                         sales_by_coupon[coupon_code]['order_count'] += 1
-                        sales_by_coupon[coupon_code]['total_sales'] += float(total_price)
-                        sales_by_coupon[coupon_code]['orders'].append(order)
+            
                     else:
                         sales_by_coupon[coupon_code] = {
                             'order_count': 1,
-                            'total_sales': float(total_price),
-                            'orders': [order],
+                      
+                            
                         }
 
         return Response(sales_by_coupon, status=status.HTTP_200_OK)
