@@ -467,7 +467,7 @@ class ApprovalList(APIView):
         vendo_camp=vendor_codes.values_list("campaignid_id__id",flat=True)
 
         campaign_obj1=Campaign_accept.objects.filter(Q(campaign_status=1)|Q(campaign_status=2),Q(influencerid_id=self.request.user.id,campaignid__status=2))
-        print("-------------",campaign_obj1)
+        
         if campaign_obj1.exists():
             res.append(campaign_obj1)
         else:
@@ -492,7 +492,11 @@ class ApprovalList(APIView):
          
             camp=Product_information.objects.filter(campaignid_id=i).values()
             campaign_obj59=Product_information.objects.filter(campaignid_id=i).select_related("campaignid")
+            campaign_obj595=Product_information.objects.filter(campaignid_id=i).prefetch_related("Campaign_set")
+            print("dataaa",campaign_obj595)
             coupon_match=influencer_coupon.objects.filter(influencer_id=value).values_list("coupon_name",flat=True)
+            
+            print("coupon_match",coupon_match)
       
            
             for k in campaign_obj59:
