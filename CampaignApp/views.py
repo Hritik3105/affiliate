@@ -652,8 +652,8 @@ class PendingList(APIView):
     
     
 # API TO GET LIST OF ACTIVE CAMPAIGN    
-
 """API TO GET LIST OF  ACTIVE CAMPAIGN OF INFLUENCER"""
+
 class  ActiveList(APIView):
     authentication_classes=[TokenAuthentication]
     permission_classes = [IsAuthenticated]
@@ -671,8 +671,6 @@ class  ActiveList(APIView):
                     "influencer_name":i.influencerid.id,
                   
                 }
-            
-            
                 final_lst1.append(dict1)
           
         return Response({"data":final_lst1},status=status.HTTP_200_OK)  
@@ -836,7 +834,6 @@ class   MarketplaceList(APIView):
     
     
 #API TO GET MARKETPLACE DRAFT    
-
 """API GET LIST OF MARKETPLACE  DRAFT CAMPAIGN SHOWN IN MARKETPLACE TAB"""
 class  MarketplaceDraftList(APIView):
     authentication_classes=[TokenAuthentication]
@@ -2387,6 +2384,7 @@ class MarketplaceApprovalList(APIView):
         
         for i in campaign_obj2:
             cop_names=Product_information.objects.get(campaignid=i.campaignid.id)
+            print(cop_names.coupon_name)
             dict1={
                 "campaignid_id":i.campaignid.id,
                 "campaign_name": i.campaignid.campaign_name,
