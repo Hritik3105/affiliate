@@ -891,7 +891,7 @@ class  MarketplaceDraftList(APIView):
 
         
             for i in range(len(camp)):
-                print(camp)
+                print("-------------------------------",camp)
                 cop=(camp[i]["coupon_name"])
                 amt=(camp[i]["amount"])
                 discount=(camp[i]["discount_type"])
