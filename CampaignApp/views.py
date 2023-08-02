@@ -2294,7 +2294,7 @@ class MarketplaceWebsiteList(APIView):
         final_lst=[]
    
         
-        campaign_obj=Campaign.objects.filter(status=1,draft_status=0,campaign_exp=1,campaign_status=0)
+        campaign_obj=Campaign.objects.filter(Q(campaign_status=0)|Q(campaign_status=2),status=1,draft_status=0,campaign_exp=1)
         
         if campaign_obj:
             z=(campaign_obj.values("id"))
@@ -2422,7 +2422,7 @@ class MarketplaceAccept(APIView):
            
             amount=request.data.get("amount")
          
-            assign_coupon=Campaign.objects.filter(id=id).update(influencer_name=[pk],campaign_status=2)
+            assign_coupon=Campaign.objects.filter(id=id).update(influencer_name=[pk],campaign_status=1)
   
             influencer_cop=influencer_coupon.objects.create(coupon_name=coupon_name,amount=amount,vendor_id=self.request.user.id,influencer_id_id=pk)
         
