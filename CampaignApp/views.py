@@ -212,9 +212,11 @@ class RequestCampaign(APIView):
         vendor_status1=User.objects.filter(id=self.request.user.id).values("vendor_status")
         val_lst22=(request.data["product_discount"])
         coupon_name=(request.data["coupon"])
-        print("fgdgdfgdfgfd",coupon_name)
-        print("val_lst222",val_lst22)
-      
+        if coupon_name == "":
+            return Response({"error":"This field may not be blank."})
+        if val_lst22[0]["product_name"]== "":
+            return Response({"error":"This field may not be blank."})
+            
         if vendor_status1[0]["vendor_status"] == True:
             serializer=CampaignSerializer(data=request.data)
             if serializer.is_valid(raise_exception=True):
