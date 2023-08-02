@@ -208,16 +208,18 @@ class RequestCampaign(APIView):
     authentication_classes=[TokenAuthentication]
     permission_classes = [IsAuthenticated]   
     def post(self,request):
+        
         vendor_status1=User.objects.filter(id=self.request.user.id).values("vendor_status")
+        coupon_name=(request.data["coupon"])
+        print("fgdgdfgdfgfd",coupon_name)
+        print("val_lst222",val_lst2)
+      
         if vendor_status1[0]["vendor_status"] == True:
             serializer=CampaignSerializer(data=request.data)
             if serializer.is_valid(raise_exception=True):
                 val_lst2=(request.data["product_discount"])
-                coupon_name=(request.data["coupon"])
-                print("fgdgdfgdfgfd",coupon_name)
-                print("val_lst222",val_lst2)
-                if val_lst2=="":
-                    print()
+               
+                    
                 coup_lst=[]
                 cup_lst=[]
                 dict1={}
