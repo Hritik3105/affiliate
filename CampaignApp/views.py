@@ -213,9 +213,9 @@ class RequestCampaign(APIView):
         val_lst22=(request.data["product_discount"])
         coupon_name=(request.data["coupon"])
         if coupon_name == "":
-            return Response({"error":"This field may not be blank."})
+            return Response({"error":"This field may not be blank."},status=status.HTTP_400_BAD_REQUEST)
         if val_lst22[0]["product_name"]== "":
-            return Response({"error":"This field may not be blank."})
+            return Response({"error":"This field may not be blank."},status=status.HTTP_400_BAD_REQUEST)
             
         if vendor_status1[0]["vendor_status"] == True:
             serializer=CampaignSerializer(data=request.data)
