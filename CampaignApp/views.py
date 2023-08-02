@@ -448,6 +448,9 @@ class DraftStatusUpdate(APIView):
 
         except Campaign.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
+
+        
+        
         serializer=CampaignUpdateSerializer(campaign_get,data=request.data)
         if serializer.is_valid():
             val_lst2=(request.data["product_discount"])
