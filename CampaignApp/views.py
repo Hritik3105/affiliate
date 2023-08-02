@@ -150,7 +150,7 @@ class CreateCampaign(APIView):
        
         vendor_status1=User.objects.filter(id=self.request.user.id).values("vendor_status")
         val_lst22=(request.data["product_discount"])
-        coupon_name=(request.data["coupon"])
+       
       
         if val_lst22[0]["product_name"]== "":
             return Response({"error":"Product field may not be blank."},status=status.HTTP_417_EXPECTATION_FAILED)
@@ -313,7 +313,7 @@ class UpdateCampaign(APIView):
         except Campaign.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)  
         val_lst22=(request.data["product_discount"])
-        coupon_name=(request.data["coupon"])
+        
       
         if val_lst22[0]["product_name"]== "":
             return Response({"error":"Product field may not be blank."},status=status.HTTP_417_EXPECTATION_FAILED)
