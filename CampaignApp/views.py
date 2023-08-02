@@ -210,9 +210,10 @@ class RequestCampaign(APIView):
     def post(self,request):
         
         vendor_status1=User.objects.filter(id=self.request.user.id).values("vendor_status")
+        val_lst22=(request.data["product_discount"])
         coupon_name=(request.data["coupon"])
         print("fgdgdfgdfgfd",coupon_name)
-        print("val_lst222",val_lst2)
+        print("val_lst222",val_lst22)
       
         if vendor_status1[0]["vendor_status"] == True:
             serializer=CampaignSerializer(data=request.data)
