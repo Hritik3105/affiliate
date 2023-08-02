@@ -1019,9 +1019,9 @@ class RequestSents(APIView):
                             print(j)
                             match_data=Product_information.objects.filter(coupon_name__contains=j,vendor_id=self.request.user.id).first()
                             print(match_data)
-                            match_data222=Product_information.objects.filter(coupon_name__in=j,vendor_id=self.request.user.id)
-                            
-                            if match_data == True:
+                            match_data222=Product_information.objects.filter(coupon_name__in=j,vendor_id=self.request.user.id).exists()
+                            print(match_data222)
+                            if match_data222 == True:
                             
                                 match_cop.append(j)
                                 dict3={str(match_cop):match_data}
