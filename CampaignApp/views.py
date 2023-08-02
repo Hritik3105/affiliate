@@ -2385,13 +2385,13 @@ class MarketplaceApprovalList(APIView):
         for i in campaign_obj2:
             cop_names=Product_information.objects.get(campaignid=i.campaignid.id)
             print(cop_names.coupon_name)
-            if cop_names.coupon_name == None:
+            if cop_names.coupon_name == None and cop_names.amount== None:
                 dict1={
                     "campaignid_id":i.campaignid.id,
                     "campaign_name": i.campaignid.campaign_name,
                     "username":i.influencerid.id,
                     "coupon_name":"",
-                    "amount":ast.literal_eval(cop_names.amount)
+                    "amount":""
                 
                 }
             else:
@@ -2399,7 +2399,7 @@ class MarketplaceApprovalList(APIView):
                     "campaignid_id":i.campaignid.id,
                     "campaign_name": i.campaignid.campaign_name,
                     "username":i.influencerid.id,
-                    "coupon_name":ast.literal_eval(cop_names.coupon_name),
+                    "coupon_name":ast.literal_eval(cop_names.amount),
                     "amount":ast.literal_eval(cop_names.amount)
                 
                 }
