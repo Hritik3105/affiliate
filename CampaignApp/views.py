@@ -1018,6 +1018,7 @@ class RequestSents(APIView):
                         for j in val_lst2[i]["coupon_name"]:        
                             
                             match_data=Product_information.objects.filter(coupon_name__contains=j,vendor_id=self.request.user.id).exists()
+                            print(match_data)
                             match_data222=Product_information.objects.filter(coupon_name__in=j,vendor_id=self.request.user.id)
                             
                             if match_data == True:
