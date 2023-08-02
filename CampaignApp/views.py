@@ -2385,6 +2385,7 @@ class MarketplaceApprovalList(APIView):
         for i in campaign_obj2:
             cop_names=Product_information.objects.get(campaignid=i.campaignid.id)
             print(cop_names.coupon_name)
+            print(cop_names.amount)
             if cop_names.coupon_name == None and cop_names.amount== None:
                 dict1={
                     "campaignid_id":i.campaignid.id,
