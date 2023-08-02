@@ -170,7 +170,7 @@ class CreateCampaign(APIView):
                     final_err=coupon_check(self,request,val_lst2,cup_lst,coup_lst)
                   
                     if final_err:        
-                            return Response({"error": final_err},status=status.HTTP_410_GONE)
+                            return Response({"error": ast.literal_eval(final_err)},status=status.HTTP_410_GONE)
                     req_id=serializer.save(draft_status=1,vendorid_id=self.request.user.id,status=1)
                     val_lst=(request.data["product_discount"])
                     
