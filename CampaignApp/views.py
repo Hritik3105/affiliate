@@ -213,6 +213,11 @@ class RequestCampaign(APIView):
             serializer=CampaignSerializer(data=request.data)
             if serializer.is_valid(raise_exception=True):
                 val_lst2=(request.data["product_discount"])
+                coupon_name=(request.data["coupon"])
+                print("fgdgdfgdfgfd",coupon_name)
+                print("val_lst222",val_lst2)
+                if val_lst2=="":
+                    print()
                 coup_lst=[]
                 cup_lst=[]
                 dict1={}
