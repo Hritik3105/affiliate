@@ -212,11 +212,12 @@ class RequestCampaign(APIView):
         vendor_status1=User.objects.filter(id=self.request.user.id).values("vendor_status")
         val_lst22=(request.data["product_discount"])
         coupon_name=(request.data["coupon"])
-        print(val_lst22[0]["coupon_name"])
-        if val_lst22[0]["coupon_name"] == None:
-            return Response({"error":"Coupon field may not be blank."},status=status.HTTP_417_EXPECTATION_FAILED)
+      
         if val_lst22[0]["product_name"]== "":
             return Response({"error":"Product field may not be blank."},status=status.HTTP_417_EXPECTATION_FAILED)
+        if val_lst22[0]["coupon_name"] == [None]:
+            return Response({"error":"Coupon field may not be blank."},status=status.HTTP_417_EXPECTATION_FAILED)
+       
             
         if vendor_status1[0]["vendor_status"] == True:
             serializer=CampaignSerializer(data=request.data)
