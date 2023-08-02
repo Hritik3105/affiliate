@@ -149,6 +149,14 @@ class CreateCampaign(APIView):
     def post(self,request):
        
         vendor_status1=User.objects.filter(id=self.request.user.id).values("vendor_status")
+        val_lst22=(request.data["product_discount"])
+        coupon_name=(request.data["coupon"])
+      
+        if val_lst22[0]["product_name"]== "":
+            return Response({"error":"Product field may not be blank."},status=status.HTTP_417_EXPECTATION_FAILED)
+        if val_lst22[0]["coupon_name"] == [None]:
+            return Response({"error":"Coupon field may not be blank."},status=status.HTTP_417_EXPECTATION_FAILED)
+       
         if vendor_status1[0]["vendor_status"] == True:
             serializer=CampaignSerializer(data=request.data)
             if serializer.is_valid(raise_exception=True):
@@ -156,6 +164,7 @@ class CreateCampaign(APIView):
                 val_lst2=(request.data["product_discount"])
                 coup_lst=[]
                 cup_lst=[]
+                
               
                 if val_lst2[0]["coupon_name"] !=[None]:
                     final_err=coupon_check(self,request,val_lst2,cup_lst,coup_lst)
@@ -303,6 +312,14 @@ class UpdateCampaign(APIView):
             campaign_get = Campaign.objects.get(Q(pk = pk,status=1)|Q(pk=pk,status=2),vendorid_id=self.request.user.id)  
         except Campaign.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)  
+        val_lst22=(request.data["product_discount"])
+        coupon_name=(request.data["coupon"])
+      
+        if val_lst22[0]["product_name"]== "":
+            return Response({"error":"Product field may not be blank."},status=status.HTTP_417_EXPECTATION_FAILED)
+        if val_lst22[0]["coupon_name"] == [None]:
+            return Response({"error":"Coupon field may not be blank."},status=status.HTTP_417_EXPECTATION_FAILED)
+       
         serializer=CampaignUpdateSerializer(campaign_get,data=request.data)
        
         if serializer.is_valid():
