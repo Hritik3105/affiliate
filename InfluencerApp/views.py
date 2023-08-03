@@ -587,8 +587,8 @@ class ApprovalList(APIView):
 
         
         sorted_val = sorted(val, key=lambda x: x['campaignid_id'], reverse=True)
-        print(sorted_val)
-        return Response({"data":val},status=status.HTTP_200_OK)  
+        # print(sorted_val)
+        return Response({"data":sorted_val},status=status.HTTP_200_OK)  
     
     
     
