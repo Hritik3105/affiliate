@@ -493,7 +493,7 @@ class ApprovalList(APIView):
             camp=Product_information.objects.filter(campaignid_id=i).values()
             campaign_obj59=Product_information.objects.filter(campaignid_id=i).select_related("campaignid")
             campaign_obj595=Campaign.objects.prefetch_related("product_information_set").last()
-            print("dataaa",campaign_obj595)
+           
             
             coupon_match=influencer_coupon.objects.filter(influencer_id=value).values_list("coupon_name",flat=True)
             
@@ -581,6 +581,8 @@ class ApprovalList(APIView):
                 result[record["campaignid_id"]] = record
                 result[record["campaignid_id"]]["product"] = record["product"]
         val=list(result.values())
+        
+        print(val)
         return Response({"data":val},status=status.HTTP_200_OK)  
     
     

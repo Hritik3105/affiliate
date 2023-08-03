@@ -558,8 +558,7 @@ class SingleCoupon(APIView):
                 coupon_data = get_response.json()["price_rule"]
                 infl_data=influencer_coupon.objects.filter(coupon_id=coupon_data["id"]).values("id")
                 infl_data_id=influencer_coupon.objects.filter(coupon_id=coupon_data["id"]).values("influencer_id")
-                print(infl_data_id)
-                print(infl_data)
+               
                 if infl_data_id and infl_data:
                     title = coupon_data["title"]
                     discount_type = coupon_data["value_type"]
@@ -659,9 +658,9 @@ class ProductEditCodeView(APIView):
             amount=amount
             
         infludb_id=request.data.get("influencer_id")
-        print(infludb_id)
+    
         influencer_id=request.data.get("influ_ids")
-        print(influencer_id)
+     
         
         
         data = {
@@ -683,9 +682,7 @@ class ProductEditCodeView(APIView):
         if zzx.status_code == 200:
             response = requests.put(url,headers=headers,json=data)
             if  response.status_code==200:
-                print(discount)
-                print(influencer_id)
-                print(type(amount))
+                
                
                 upt_data=influencer_coupon.objects.filter(id=infludb_id).update(influencer_id_id=influencer_id,amount=float(amount),coupon_name=discount,vendor_id=self.request.user.id)
 
