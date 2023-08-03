@@ -572,7 +572,7 @@ class ApprovalList(APIView):
                      final_lst.append(dict1)
                
                
-        print("-------------",final_lst)
+      
         result={}
         for i, record in enumerate(final_lst):
          
@@ -585,7 +585,9 @@ class ApprovalList(APIView):
         val=list(result.values())
         
 
-        print(val)
+        
+        sorted_val = sorted(val, key=lambda x: x['campaignid_id'], reverse=True)
+        print(sorted_val)
         return Response({"data":val},status=status.HTTP_200_OK)  
     
     
