@@ -571,6 +571,8 @@ class ApprovalList(APIView):
                     }
                      final_lst.append(dict1)
                
+               
+        print(final_lst)
         result={}
         for i, record in enumerate(final_lst):
          
@@ -582,6 +584,7 @@ class ApprovalList(APIView):
                 result[record["campaignid_id"]]["product"] = record["product"]
         val=list(result.values())
         
+
         print(val)
         return Response({"data":val},status=status.HTTP_200_OK)  
     
