@@ -446,7 +446,9 @@ class PendingList(APIView):
                 result[record["campaignid_id"]] = record
                 result[record["campaignid_id"]]["product"] = record["product"]
         val=list(result.values())
-        return Response({"data":val},status=status.HTTP_200_OK)  
+        sorted_val = sorted(val, key=lambda x: x['campaignid_id'], reverse=True)
+        print(sorted_val)
+        return Response({"data":sorted_val},status=status.HTTP_200_OK)  
     
 
     
