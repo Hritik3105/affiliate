@@ -2959,7 +2959,7 @@ class AdminTransfer(APIView):
             if empty == True:
                 print("hello")
                 for i in admin_tra:
-                    
+                    print(i["campaign_id"])
                     emp_check=PaymentDetails.objects.filter(vendor=self.request.user.id,campaign_id=i["campaign_id"]).exists()
                     print("hell333o",emp_check)
                     if emp_check == False :
