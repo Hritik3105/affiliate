@@ -2957,12 +2957,14 @@ class AdminTransfer(APIView):
             empty=PaymentDetails.objects.filter(vendor=self.request.user.id,admin=admin_acc).exists()
            
             if empty == True:
+                print("hello")
                 for i in admin_tra:
                     
                     emp_check=PaymentDetails.objects.filter(vendor=self.request.user.id,campaign_id=i["campaign_id"]).exists()
-                   
+                    print("hell333o",emp_check)
                     if emp_check == False :
                         if admin_acc==" ":
+                            print("Enterrrr")
                             PaymentDetails.objects.create(sales=i["sale"],influencerfee=i["commission"],offer=i["offer"],amount=admin_acc,admin_id=admin_acc,vendor_id=self.request.user.id,campaign_id=i["campaign_id"],account_id=i["account"])
                         else:
                             PaymentDetails.objects.create(sales=i["sale"],influencerfee=i["commission"],offer=i["offer"],admin_id=admin_acc,vendor_id=self.request.user.id,campaign_id=i["campaign_id"],account_id=i["account"])
