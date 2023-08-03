@@ -562,7 +562,7 @@ class ApprovalList(APIView):
                      dict1={
                         "campaignid_id":camp[i]["campaignid_id"],
                         "campaign_name": k.campaignid.campaign_name ,
-                        "status":k.campaignid.campaign_status,
+                        "status":4,
                         "product":[{
                         "product_name":camp[i]["product_name"],
                         "product_id": camp[i]["product_id"],
