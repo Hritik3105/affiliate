@@ -2553,6 +2553,7 @@ class MarketDeclineList(APIView):
                 "campaignid_id":i.campaignid.id,
                 "campaign_name": i.campaignid.campaign_name,
                 "influencer_name":i.influencerid.id,
+                "infl_name":i.influencerid.username,
             }
             
     
