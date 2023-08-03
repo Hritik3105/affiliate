@@ -762,20 +762,20 @@ class VendorNotification(APIView):
             
             if i.send_notification==1:
                 dict={
-                    "message": i.vendor.username + "send you request for"  +  i.campaignid.campaign_name
+                    "message": i.vendor.username + " " + "send you request for" + " " +  i.campaignid.campaign_name
                 }
             
                 notify_list.append(dict)
             elif i.send_notification==3:
                 dict={
-                    "message": i.vendor.username + "Approved your request for"  +  i.campaignid.campaign_name
+                    "message": i.vendor.username +  " " + "Approved your request for"  + " " +  i.campaignid.campaign_name
                 }
             
                 notify_list.append(dict)
             else:
                 
                 dict={
-                    "message": i.vendor.username + "deline your request for"  +  i.campaignid.campaign_name
+                    "message": i.vendor.username + " " + "deline your request for"  + " " +  i.campaignid.campaign_name
                 }
             
                 notify_list.append(dict)
