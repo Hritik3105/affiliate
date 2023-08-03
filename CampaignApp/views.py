@@ -2962,7 +2962,7 @@ class AdminTransfer(APIView):
                     print(i["campaign_id"])
                     emp_check=PaymentDetails.objects.filter(vendor=self.request.user.id,campaign_id=i["campaign_id"]).exists()
                     print("hell333o",emp_check)
-                    if emp_check == False :
+                    if emp_check == True:
                         account_check=PaymentDetails.objects.filter(vendor=self.request.user.id,campaign_id=i["campaign_id"]).values_list("account_id",flat=True)
                         if account_check[0]== "":                      
                             amount_transfered=PaymentDetails.objects.filter(vendor=self.request.user.id,campaign_id=i["campaign_id"]).update(account_id=i["account"])
