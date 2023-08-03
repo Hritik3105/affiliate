@@ -2287,6 +2287,8 @@ class MarketplaceExpList(APIView):
             for i in range(len(camp)):
                 cop=(camp[i]["coupon_name"])
                 amt=(camp[i]["amount"])
+                discount=(camp[i]["discount_type"])
+                
              
                 if cop:
                    
@@ -2300,6 +2302,13 @@ class MarketplaceExpList(APIView):
                 else:
                     amtlst=amt
                     
+                     
+                if discount:
+                    
+                    disc_type=ast.literal_eval(discount)
+                else:
+                    disc_type=discount
+                    
                     
                 dict1={
                     "campaignid_id":camp[i]["campaignid_id"],
@@ -2307,6 +2316,7 @@ class MarketplaceExpList(APIView):
                     "product":[{
                     "product_name":camp[i]["product_name"],
                     "coupon_name":couponlst,
+                    "discount_type":disc_type,
                     "amount":amtlst,
                     "product_id": camp[i]["product_id"],
                 }]
