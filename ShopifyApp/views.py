@@ -366,7 +366,7 @@ class DiscountCodeView(APIView):
                 }
                 discount_list.append(discount_data)
               
-            print
+            print(discount_list)
             return Response({'coupon': discount_list},status=status.HTTP_200_OK)
         else:
                
