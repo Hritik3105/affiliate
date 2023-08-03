@@ -2442,7 +2442,8 @@ class MarketplaceApprovalList(APIView):
                 dict1={
                     "campaignid_id":i.campaignid.id,
                     "campaign_name": i.campaignid.campaign_name,
-                    "username":i.influencerid.username,
+                    "username":i.influencerid.id,
+                    "infl_name":i.influencerid.username,
                     "coupon_name":"",
                     "amount":""
                 
@@ -2451,7 +2452,8 @@ class MarketplaceApprovalList(APIView):
                 dict1={
                     "campaignid_id":i.campaignid.id,
                     "campaign_name": i.campaignid.campaign_name,
-                    "username":i.influencerid.username,
+                    "username":i.influencerid.id,
+                    "infl_name":i.influencerid.username,
                     "coupon_name":ast.literal_eval(cop_names.coupon_name),
                     "amount":ast.literal_eval(cop_names.amount)
                 
