@@ -447,7 +447,7 @@ class PendingList(APIView):
                 result[record["campaignid_id"]]["product"] = record["product"]
         val=list(result.values())
         sorted_val = sorted(val, key=lambda x: x['campaignid_id'], reverse=True)
-        print(sorted_val)
+     
         return Response({"data":sorted_val},status=status.HTTP_200_OK)  
     
 
@@ -589,7 +589,7 @@ class ApprovalList(APIView):
 
         
         sorted_val = sorted(val, key=lambda x: x['campaignid_id'], reverse=True)
-        # print(sorted_val)
+       
         return Response({"data":sorted_val},status=status.HTTP_200_OK)  
     
     
@@ -1615,8 +1615,9 @@ class AppliedCampaign(APIView):
                 result[record["campaignid_id"]] = record
                 result[record["campaignid_id"]]["product"] = record["product"]
         val=list(result.values())
-        
-        return Response({"data":val},status=status.HTTP_200_OK)   
+        sorted_val = sorted(val, key=lambda x: x['campaignid_id'], reverse=True)
+
+        return Response({"data":sorted_val},status=status.HTTP_200_OK)   
 
       
         
@@ -1748,7 +1749,9 @@ class MarketplaceAccept(APIView):
                 result[record["campaignid_id"]] = record
                 result[record["campaignid_id"]]["product"] = record["product"]
         val=list(result.values())
-        return Response({"data":val},status=status.HTTP_200_OK)  
+        sorted_val = sorted(val, key=lambda x: x['campaignid_id'], reverse=True)
+   
+        return Response({"data":sorted_val},status=status.HTTP_200_OK)  
 
     
     
@@ -1771,7 +1774,7 @@ class MarketplaceDeclinelList(APIView):
         vendo_camp=vendor_codes.values_list("campaignid_id__id",flat=True)
         
         for data in vendo_camp:
-            print(data)
+           
            
             camp=Product_information.objects.filter(campaignid_id=data).values()
          
@@ -1861,7 +1864,9 @@ class MarketplaceDeclinelList(APIView):
                 result[record["campaignid_id"]] = record
                 result[record["campaignid_id"]]["product"] = record["product"]
         val=list(result.values())
-        return Response({"data":val},status=status.HTTP_200_OK)  
+        sorted_val = sorted(val, key=lambda x: x['campaignid_id'], reverse=True)
+       
+        return Response({"data":sorted_val},status=status.HTTP_200_OK)  
 
             
             
