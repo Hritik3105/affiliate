@@ -366,8 +366,10 @@ class DiscountCodeView(APIView):
                 }
                 discount_list.append(discount_data)
               
-            print(discount_list)
-            return Response({'coupon': discount_list},status=status.HTTP_200_OK)
+   
+            sorted_data = sorted(discount_list, key=lambda x: x['created_at'], reverse=True)
+           
+            return Response({'coupon': sorted_data},status=status.HTTP_200_OK)
         else:
                
             return Response({'error': 'Failed to fetch discounts'}, status=500)
