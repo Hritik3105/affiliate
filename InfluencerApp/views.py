@@ -572,7 +572,7 @@ class ApprovalList(APIView):
                      final_lst.append(dict1)
                
                
-        print(final_lst)
+        print("-------------",final_lst)
         result={}
         for i, record in enumerate(final_lst):
          
