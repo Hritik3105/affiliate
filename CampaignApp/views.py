@@ -2963,18 +2963,28 @@ class AdminTransfer(APIView):
                     emp_check=PaymentDetails.objects.filter(vendor=self.request.user.id,campaign_id=i["campaign_id"]).exists()
                     print("hell333o",emp_check)
                     if emp_check == False :
-                        if admin_acc==" ":
-                            print("Enterrrr")
-                            PaymentDetails.objects.create(sales=i["sale"],influencerfee=i["commission"],offer=i["offer"],amount=admin_acc,admin_id=admin_acc,vendor_id=self.request.user.id,campaign_id=i["campaign_id"],account_id=i["account"])
-                        else:
-                            PaymentDetails.objects.create(sales=i["sale"],influencerfee=i["commission"],offer=i["offer"],admin_id=admin_acc,vendor_id=self.request.user.id,campaign_id=i["campaign_id"],account_id=i["account"])
-
-                    else:
                         account_check=PaymentDetails.objects.filter(vendor=self.request.user.id,campaign_id=i["campaign_id"]).values_list("account_id",flat=True)
                         if account_check[0]== "":                      
                             amount_transfered=PaymentDetails.objects.filter(vendor=self.request.user.id,campaign_id=i["campaign_id"]).update(account_id=i["account"])
 
                         amount_transfered=transferdetails.objects.filter(vendor=self.request.user.id,admin=admin_acc,campaign=i["campaign_id"]).values_list("amount",flat=True)
+                        # if admin_acc==" ":
+                        #     print("Enterrrr")
+                        #     PaymentDetails.objects.create(sales=i["sale"],influencerfee=i["commission"],offer=i["offer"],amount=admin_acc,admin_id=admin_acc,vendor_id=self.request.user.id,campaign_id=i["campaign_id"],account_id=i["account"])
+                        # else:
+                        #     PaymentDetails.objects.create(sales=i["sale"],influencerfee=i["commission"],offer=i["offer"],admin_id=admin_acc,vendor_id=self.request.user.id,campaign_id=i["campaign_id"],account_id=i["account"])
+
+                    else:
+                        if admin_acc==" ":
+                            print("Enterrrr")
+                            PaymentDetails.objects.create(sales=i["sale"],influencerfee=i["commission"],offer=i["offer"],amount=admin_acc,admin_id=admin_acc,vendor_id=self.request.user.id,campaign_id=i["campaign_id"],account_id=i["account"])
+                        else:
+                            PaymentDetails.objects.create(sales=i["sale"],influencerfee=i["commission"],offer=i["offer"],admin_id=admin_acc,vendor_id=self.request.user.id,campaign_id=i["campaign_id"],account_id=i["account"])
+                        # account_check=PaymentDetails.objects.filter(vendor=self.request.user.id,campaign_id=i["campaign_id"]).values_list("account_id",flat=True)
+                        # if account_check[0]== "":                      
+                        #     amount_transfered=PaymentDetails.objects.filter(vendor=self.request.user.id,campaign_id=i["campaign_id"]).update(account_id=i["account"])
+
+                        # amount_transfered=transferdetails.objects.filter(vendor=self.request.user.id,admin=admin_acc,campaign=i["campaign_id"]).values_list("amount",flat=True)
                         
                        
                         amount_deduct=i["admin_part"]
