@@ -193,6 +193,7 @@ def coupon_update(self,request,price_rule,coupon_name):
     }
         
     response = requests.put(url,headers=headers,json=data)
+    print(response.json())
     if  response.status_code==200:
         return "Done"
                 
