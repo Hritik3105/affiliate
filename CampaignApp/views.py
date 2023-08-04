@@ -2025,6 +2025,9 @@ class InfluencerCampSale(APIView):
                     print("ddddd",influencer_id)
                     modash_data = Campaign.objects.filter(influencer_name__contains=influencer_id, id__in=campaign_ids,vendorid=self.request.user.id).values_list("id",flat=True)
                     print("copuponfdfg",coupon_name)
+                    pro_dataqq=Product_information.objects.filter(coupon_name__contains=coupon_name,campaignid__in=modash_data,vendor=self.request.user.id).first()
+                    print("proood",pro_dataqq)
+
                     pro_data=Product_information.objects.filter(coupon_name__contains=coupon_name,campaignid__in=modash_data,vendor=self.request.user.id).values("campaignid")
                     data=pro_data.first()["campaignid"]
                     print("data",data)
