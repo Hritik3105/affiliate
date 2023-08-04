@@ -258,10 +258,10 @@ class RequestCampaign(APIView):
                             
                                 if data_check == True:
                                     match_cop.append(j)
-                                    dict3={str(match_cop):data_check}
+                                    dict1={str(match_cop):data_check}
                                     
                                     
-                                    cup_lst.append(dict3)
+                                    cup_lst.append(dict1)
                                     coup_lst.append(data_check)
                                     
 
