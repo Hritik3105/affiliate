@@ -2019,20 +2019,20 @@ class InfluencerCampSale(APIView):
             for coupon_name, sales in sales_by_coupon.items():
                
                 influencer_ids = influencer_coupon.objects.filter(coupon_name=coupon_name,vendor=self.request.user.id).values("influencer_id", "coupon_name")
-                print("influencerrr",influencer_ids)
+            
                 for influencer in influencer_ids:
                     influencer_id = influencer["influencer_id"]
-                    print("ddddd",influencer_id)
+                
                     modash_data = Campaign.objects.filter(influencer_name__contains=influencer_id, id__in=campaign_ids,vendorid=self.request.user.id).values_list("id",flat=True)
-                    print("copuponfdfg",coupon_name)
+                   
                     pro_dataqq=Product_information.objects.filter(coupon_name__contains=coupon_name,campaignid__in=modash_data,vendor=self.request.user.id)
-                    print("proood",pro_dataqq)
+                  
                     for product in pro_dataqq:
                         if product.coupon_name == coupon_name:
                             print("---------------",product.campaignid)
                     pro_data=Product_information.objects.filter(coupon_name__contains=coupon_name,campaignid__in=modash_data,vendor=self.request.user.id).values("campaignid")
                     data=pro_data.first()["campaignid"]
-                    print("data",data)
+                    print("data----------",data)
                     if influencer_id in influencer_sales_for_campaign:
                             influencer_sales_for_campaign[influencer_id].append({"campaign_id": data, "sales": sales})
                     else:
@@ -2044,18 +2044,17 @@ class InfluencerCampSale(APIView):
                     #     else:
                     #         influencer_sales_for_campaign[influencer_id] = [{"campaign_id": campaign_id, "sales": sales}]
 
-            print(influencer_sales_for_campaign)                  
+                         
             lst_data=[]
             
             for key in influencer_sales_for_campaign: 
-                
-                print("jkk",key)
+             
                 for i in influencer_sales_for_campaign[key]:
                   
                     str_detail=StripeDetails.objects.filter(influencer=key,vendor=self.request.user.id).values("account_id")
-                    print("000000000",i["campaign_id"])
+                   
                     check=Campaign.objects.filter(id=i["campaign_id"]).values("influencer_fee","offer","campaign_name")
-                    print("------------------",check)
+                   
                     if str_detail:
                         if  check[0]["offer"] == "percentage":
                             amount=i["sales"] * check[0]["influencer_fee"] /100
@@ -2100,7 +2099,7 @@ class InfluencerCampSale(APIView):
                         }
                         
                         lst_data.append(infl_dict)  
-            print("lst",lst_data)
+           
             campaign_totals = {}
             
         
@@ -2124,16 +2123,16 @@ class InfluencerCampSale(APIView):
                 data_max.append(sales_entry)   
           
  
-            print(data_max)
+        
             empty=PaymentDetails.objects.all().exists()
            
             if empty == True:
                 for i in data_max:
                     
                     emp_check=PaymentDetails.objects.filter(vendor=self.request.user.id,campaign_id=i["campaign_detail"]).exists()
-                    print("pppppppppppp",emp_check)
+                
                     if emp_check == False:
-                        print("hekkkkiiiiiiiiiii")
+                       
                         PaymentDetails.objects.create(sales=i["sales"],influencerfee=i["influener_fee"],offer=i["offer"],amount=i["amount"],influencer_id=i["influencer"],vendor_id=self.request.user.id,campaign_id=i["campaign_detail"],account_id=i["account"])
                         
                     else:
