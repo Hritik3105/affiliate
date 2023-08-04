@@ -2047,7 +2047,7 @@ class InfluencerCampSale(APIView):
                     #         influencer_sales_for_campaign[influencer_id].append({"campaign_id": campaign_id, "sales": sales})
                     #     else:
                     #         influencer_sales_for_campaign[influencer_id] = [{"campaign_id": campaign_id, "sales": sales}]
-            print("[p[[[[[[[[[[[",influencer_sales_for_campaign)
+            
             lst_data=[]
             
             for key in influencer_sales_for_campaign: 
@@ -2135,10 +2135,12 @@ class InfluencerCampSale(APIView):
                     emp_check=PaymentDetails.objects.filter(vendor=self.request.user.id,campaign_id=i["campaign_detail"]).exists()
                 
                     if emp_check == False:
-                       
+                        print(emp_check)
+                        print("entrtt")
                         PaymentDetails.objects.create(sales=i["sales"],influencerfee=i["influener_fee"],offer=i["offer"],amount=i["amount"],influencer_id=i["influencer"],vendor_id=self.request.user.id,campaign_id=i["campaign_detail"],account_id=i["account"])
                         
                     else:
+                        print("nott")
                         account_check=PaymentDetails.objects.filter(vendor=self.request.user.id,campaign_id=i["campaign_detail"]).values_list("account_id",flat=True)
                         if account_check[0]== "":                      
                             amount_transfered=PaymentDetails.objects.filter(vendor=self.request.user.id,campaign_id=i["campaign_detail"]).update(account_id=i["account"])
