@@ -63,20 +63,48 @@ def coupon_check(self,request,val_lst2,cup_lst,coup_lst):
     
         for i in  range (len(val_lst2)):
           
-            for j in val_lst2[i]["coupon_name"]:         
-                match_data=Product_information.objects.filter(coupon_name__contains=j,vendor_id=self.request.user.id).exists()
+            for j in val_lst2[i]["coupon_name"]: 
+                match_data=Product_information.objects.filter(coupon_name__contains=j,vendor_id=self.request.user.id)
+                for i in match_data:
+                    if j in ast.literal_eval(i.coupon_name):
+            
+                        
+                        data_check=True
+                    else:
+                        data_check=False     
+                
+                    if data_check == True:
+                        cup_lst.append(j)
+                        dict1={str(cup_lst):data_check}
+                        
+                        
+                        cup_lst.append(dict1)
+                        coup_lst.append(data_check)
+                        
+
+                    if True in coup_lst:
+                        cop=(list(dict1.keys())[0])
+                    
+                        cop_lst=ast.literal_eval(cop)
+    
+    
+                
+                    return cop
+                
+                        
+                # match_data=Product_information.objects.filter(coupon_name__contains=j,vendor_id=self.request.user.id).exists()
                 
             
-                dict1={str(val_lst2[i]["coupon_name"]):match_data}
+                # dict1={str(val_lst2[i]["coupon_name"]):match_data}
                 
-                cup_lst.append(dict1)
-                coup_lst.append(match_data)
+                # cup_lst.append(dict1)
+                # coup_lst.append(match_data)
                 
 
-                if True in coup_lst:
-                    cop=(list(dict1.keys())[0])
+                # if True in coup_lst:
+                #     cop=(list(dict1.keys())[0])
                     
-                    cop_lst=ast.literal_eval(cop)
+                #     cop_lst=ast.literal_eval(cop)
                     
                     return cop
 

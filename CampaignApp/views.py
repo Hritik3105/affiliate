@@ -254,7 +254,6 @@ class RequestCampaign(APIView):
                                         data_check=True
                                     else:
                                         data_check=False     
-                                # match_data=Product_information.objects.filter(coupon_name__contains=j,vendor_id=self.request.user.id).exists()
                             
                                 if data_check == True:
                                     match_cop.append(j)
