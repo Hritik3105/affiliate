@@ -280,7 +280,7 @@ class RequestCampaign(APIView):
                     if val_lst:
                   
                         product_details(self,request,val_lst,req_id)
-                        coupon_update(request,self,price_rule,coupon_name)      
+                        coupon_update(self,request,price_rule,coupon_name)      
                                             
                     else:
                      
