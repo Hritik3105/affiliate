@@ -2978,14 +2978,15 @@ class AdminTransfer(APIView):
             for sales in sale_by_id.keys():
                 
                 ids_arr.append(sales)
+                print(ids_arr)
             empty=PaymentDetails.objects.filter(vendor=self.request.user.id,admin=admin_acc,campaign_id__in=ids_arr).exists()
-            print(empty)
+            print("sdsdf",empty)
             if empty == True:
-                print("hello")
+               
                 for i in admin_tra:
-                    print(i["campaign_id"])
+                  
                     emp_check=PaymentDetails.objects.filter(vendor=self.request.user.id,campaign_id=i["campaign_id"]).exists()
-                    print("hell333o",emp_check)
+                   
                     if emp_check == True:
                         account_check=PaymentDetails.objects.filter(vendor=self.request.user.id,campaign_id=i["campaign_id"]).values_list("account_id",flat=True)
                         if account_check[0]== "":                      
