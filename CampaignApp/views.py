@@ -2046,7 +2046,7 @@ class InfluencerCampSale(APIView):
                 for i in influencer_sales_for_campaign[key]:
                   
                     str_detail=StripeDetails.objects.filter(influencer=key,vendor=self.request.user.id).values("account_id")
-               
+                    print("000000000",i["campaign_id"])
                     check=Campaign.objects.filter(id=i["campaign_id"]).values("influencer_fee","offer","campaign_name")
                     print("------------------",check)
                     if str_detail:
