@@ -2978,8 +2978,8 @@ class AdminTransfer(APIView):
             for sales in sale_by_id.keys():
                 print(type(sales))
                 ids_arr.append(sales)
-                print(ids_arr)
-            print(admin_acc)
+                
+           
             empty1=PaymentDetails.objects.filter(vendor=self.request.user.id,admin=admin_acc,campaign_id__in=ids_arr)
             print("----",empty1)
             empty=PaymentDetails.objects.filter(vendor=self.request.user.id,admin=admin_acc,campaign_id__in=ids_arr).exists()
@@ -2987,7 +2987,7 @@ class AdminTransfer(APIView):
             if empty == True:
                
                 for i in admin_tra:
-                  
+                    print("rrrr")
                     emp_check=PaymentDetails.objects.filter(vendor=self.request.user.id,campaign_id=i["campaign_id"]).exists()
                    
                     if emp_check == True:
