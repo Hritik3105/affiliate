@@ -2124,8 +2124,9 @@ class InfluencerCampSale(APIView):
                 for i in data_max:
                     
                     emp_check=PaymentDetails.objects.filter(vendor=self.request.user.id,campaign_id=i["campaign_detail"]).exists()
-                  
+                    print("pppppppppppp",emp_check)
                     if emp_check == False:
+                        print("hekkkkiiiiiiiiiii")
                         PaymentDetails.objects.create(sales=i["sales"],influencerfee=i["influener_fee"],offer=i["offer"],amount=i["amount"],influencer_id=i["influencer"],vendor_id=self.request.user.id,campaign_id=i["campaign_detail"],account_id=i["account"])
                         
                     else:
