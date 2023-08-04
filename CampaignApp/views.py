@@ -242,15 +242,25 @@ class RequestCampaign(APIView):
                     
                     for i in  range (len(val_lst2)):
                         if val_lst2[i]["coupon_name"]:
-                            for j in val_lst2[i]["coupon_name"]:         
-                                match_data=Product_information.objects.filter(coupon_name__contains=j,vendor_id=self.request.user.id).exists()
+                            for j in val_lst2[i]["coupon_name"]:    
+                                match_data=Product_information.objects.filter(coupon_name__contains=j,vendor_id=self.request.user.id)
+                                for i in match_data:
+                                    if j in ast.literal_eval(i.coupon_name):
+                          
                             
+                                       
+                                      
+                                        data_check=True
+                                    else:
+                                        data_check=False     
+                                # match_data=Product_information.objects.filter(coupon_name__contains=j,vendor_id=self.request.user.id).exists()
                             
-                                dict1={str(val_lst2[i]["coupon_name"]):match_data}
-                                
-                                cup_lst.append(dict1)
-                                coup_lst.append(match_data)
-                                
+                                if data_check == True:
+                                    dict1={str(val_lst2[i]["coupon_name"]):match_data}
+                                    
+                                    cup_lst.append(dict1)
+                                    coup_lst.append(match_data)
+                                    
 
                                 if True in coup_lst:
                                     cop=(list(dict1.keys())[0])
@@ -1060,8 +1070,6 @@ class RequestSents(APIView):
                                 if j in ast.literal_eval(i.coupon_name):
                           
                             
-                                    print("Entrreee")
-                                    print(j)
                                     data_check=True
                                 else:
                                     data_check=False
@@ -1667,35 +1675,30 @@ class SalesRecord(APIView):
     authentication_classes=[TokenAuthentication]
     permission_classes = [IsAuthenticated]
         
-    def get(self,request):
-        acc_tok=access_token(self,request)
+    def get(self, request):
+        acc_tok = access_token(self, request)
         store_url = acc_tok[1]
         api_token = acc_tok[0]
 
-        end_date = datetime.datetime.now().date()
+        end_date = datetime.datetime.now().date() + timedelta(days=1)  # Adjust to include today
         start_date_7_days_ago = end_date - timedelta(days=7)
         start_date_30_days_ago = end_date - timedelta(days=30)
-        start_date_year_ago = end_date.replace(year=end_date.year-1, month=1, day=1)
-
+        start_date_year_ago = end_date.replace(year=end_date.year - 1, month=1, day=1)
 
         start_date_7_days_ago_str = start_date_7_days_ago.isoformat()
         start_date_30_days_ago_str = start_date_30_days_ago.isoformat()
         start_date_year_ago_str = start_date_year_ago.isoformat()
         end_date_str = end_date.isoformat()
 
-        
         url = f"https://{store_url}/admin/api/2022-10/orders.json?status=active&created_at_min={start_date_year_ago_str}&created_at_max={end_date_str}"
-
 
         headers = {
             'X-Shopify-Access-Token': api_token
         }
         response = requests.get(url, headers=headers)
 
-        
         if response.status_code == 200:
             data = response.json()
-          
 
             sales_7_days = 0
             sales_30_days = 0
@@ -1703,16 +1706,16 @@ class SalesRecord(APIView):
 
             for order in data['orders']:
                 created_at = datetime.datetime.strptime(order['created_at'], "%Y-%m-%dT%H:%M:%S%z").date()
-                if start_date_7_days_ago <= created_at <= end_date:
+                if start_date_7_days_ago <= created_at < end_date:  
                     sales_7_days += float(order['total_price'])
-                if start_date_30_days_ago <= created_at <= end_date:
+                if start_date_30_days_ago <= created_at < end_date: 
                     sales_30_days += float(order['total_price'])
-                if start_date_year_ago <= created_at <= end_date:
+                if start_date_year_ago <= created_at < end_date:  
                     sales_year += float(order['total_price'])
 
-            return Response({"seven_days":sales_7_days,"thirty_days":sales_30_days,"year":sales_year})
+            return Response({"seven_days": sales_7_days, "thirty_days": sales_30_days, "year": sales_year})
         else:
-            return Response({"error":response.text})
+            return Response({"error": response.text})
 
 
 

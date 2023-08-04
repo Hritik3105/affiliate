@@ -9,7 +9,7 @@ from Affilate_Marketing.settings import base_url ,headers ,SHOPIFY_API_KEY,SHOPI
 today = date.today()
 def update_campaign_status():
     
-    campaigns = Campaign.objects.filter(end_date=today).update(campaign_exp=0)
+    campaigns = Campaign.objects.filter(end_date__lt=today).update(campaign_exp=0)
     # product_info=Product_information.objects.filter(campaignid_id__campaign_exp=0).values_list("coupon_name")
     # for coup in product_info:
         
