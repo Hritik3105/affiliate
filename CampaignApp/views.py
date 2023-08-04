@@ -2930,11 +2930,11 @@ class AdminTransfer(APIView):
             print("sdfffffff",sale)
             coup_dict={} 
             for  i in sale:    
-                check=Product_information.objects.filter(coupon_name__contains=i,vendor_id=self.request.user.id)
-                for cupon in check:
-                    data_cop=ast.literal_eval(cupon.coupon_name)
-                    if data_cop[0] == i:
-                        print(cupon.campaignid.id)
+                check=Product_information.objects.filter(coupon_name__contains=i,vendor_id=self.request.user.id).values("coupon_name","campaignid")
+                # for cupon in check:
+                #     data_cop=ast.literal_eval(cupon.coupon_name)
+                #     if data_cop[0] == i:
+                #         print(cupon.campaignid.id)
                         
                
 
