@@ -2033,16 +2033,16 @@ class InfluencerCampSale(APIView):
                         if product.coupon_name:
                             data1=ast.literal_eval(product.coupon_name)
                             if data1[0] == coupon_name:
-                                print("---------------",product.campaignid)
-                                product_ids.append(product.campaignid)
+                                print("---------------",product.campaignid.id)
+                                product_ids.append(product.campaignid.id)
                  
                     # pro_data=Product_information.objects.filter(coupon_name__contains=coupon_name,campaignid__in=modash_data,vendor=self.request.user.id).values("campaignid")
                     # data=pro_data.first()["campaignid"]
                     # print("data----------",data)
                         if influencer_id in influencer_sales_for_campaign:
-                                influencer_sales_for_campaign[influencer_id].append({"campaign_id": product.campaignid, "sales": sales})
+                                influencer_sales_for_campaign[influencer_id].append({"campaign_id": product.campaignid.id, "sales": sales})
                         else:
-                            influencer_sales_for_campaign[influencer_id] = [{"campaign_id": product.campaignid, "sales": sales}]
+                            influencer_sales_for_campaign[influencer_id] = [{"campaign_id": product.campaignid.id, "sales": sales}]
                     # for modash_entry in pro_data:
                     #     campaign_id = modash_entry["campaignid"]
                     #     if influencer_id in influencer_sales_for_campaign:
