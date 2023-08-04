@@ -217,6 +217,7 @@ class RequestCampaign(APIView):
     authentication_classes=[TokenAuthentication]
     permission_classes = [IsAuthenticated]   
     def post(self,request):
+        match_cop=[]
         
         vendor_status1=User.objects.filter(id=self.request.user.id).values("vendor_status")
         val_lst22=(request.data["product_discount"])
@@ -256,9 +257,11 @@ class RequestCampaign(APIView):
                                 # match_data=Product_information.objects.filter(coupon_name__contains=j,vendor_id=self.request.user.id).exists()
                             
                                 if data_check == True:
-                                    dict1={str(val_lst2[i]["coupon_name"]):data_check}
+                                    match_cop.append(j)
+                                    dict3={str(match_cop):data_check}
                                     
-                                    cup_lst.append(dict1)
+                                    
+                                    cup_lst.append(dict3)
                                     coup_lst.append(data_check)
                                     
 
