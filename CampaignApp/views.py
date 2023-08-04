@@ -2927,7 +2927,7 @@ class AdminTransfer(APIView):
                         sales_by_coupon[coupon_code] = float(total_price)
                         
             sale=list(sales_by_coupon.keys())
-            print("sdfffffff",sale)
+         
             coup_dict={} 
             for  i in sale:    
                 check=Product_information.objects.filter(coupon_name__contains=i,vendor_id=self.request.user.id).values("coupon_name","campaignid")
@@ -2980,7 +2980,7 @@ class AdminTransfer(APIView):
                 ids_arr.append(sales)
                 
            
-            empty1=PaymentDetails.objects.filter(vendor=self.request.user.id,admin=admin_acc,campaign_id__in=ids_arr)
+            empty1=PaymentDetails.objects.filter(vendor=self.request.user.id,admin=admin_acc,campaign_id__in=ids_arr,influencer_id=None)
             print("----",empty1)
             empty=PaymentDetails.objects.filter(vendor=self.request.user.id,admin=admin_acc,influencer_id=None).exists()
             print("sdsdf",empty)
