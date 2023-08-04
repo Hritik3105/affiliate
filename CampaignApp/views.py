@@ -1981,6 +1981,7 @@ class InfluencerCampSale(APIView):
     
     
     def get(self,request): 
+        product_ids=[]
         acc_tok=access_token(self,request)
         store_url = acc_tok[1]
       
@@ -2033,13 +2034,15 @@ class InfluencerCampSale(APIView):
                             data1=ast.literal_eval(product.coupon_name)
                             if data1[0] == coupon_name:
                                 print("---------------",product.campaignid)
-                    pro_data=Product_information.objects.filter(coupon_name__contains=coupon_name,campaignid__in=modash_data,vendor=self.request.user.id).values("campaignid")
-                    data=pro_data.first()["campaignid"]
-                    print("data----------",data)
-                    if influencer_id in influencer_sales_for_campaign:
-                            influencer_sales_for_campaign[influencer_id].append({"campaign_id": data, "sales": sales})
-                    else:
-                        influencer_sales_for_campaign[influencer_id] = [{"campaign_id": data, "sales": sales}]
+                                product_ids.append(product.campaignid)
+                 
+                    # pro_data=Product_information.objects.filter(coupon_name__contains=coupon_name,campaignid__in=modash_data,vendor=self.request.user.id).values("campaignid")
+                    # data=pro_data.first()["campaignid"]
+                    # print("data----------",data)
+                        if influencer_id in influencer_sales_for_campaign:
+                                influencer_sales_for_campaign[influencer_id].append({"campaign_id": product.campaignid, "sales": sales})
+                        else:
+                            influencer_sales_for_campaign[influencer_id] = [{"campaign_id": product.campaignid, "sales": sales}]
                     # for modash_entry in pro_data:
                     #     campaign_id = modash_entry["campaignid"]
                     #     if influencer_id in influencer_sales_for_campaign:
@@ -2047,7 +2050,7 @@ class InfluencerCampSale(APIView):
                     #     else:
                     #         influencer_sales_for_campaign[influencer_id] = [{"campaign_id": campaign_id, "sales": sales}]
 
-                         
+            print(influencer_sales_for_campaign)      
             lst_data=[]
             
             for key in influencer_sales_for_campaign: 
