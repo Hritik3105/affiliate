@@ -2011,7 +2011,7 @@ class InfluencerCampSale(APIView):
             sale=list(sales_by_coupon.keys())
             amount=list(sales_by_coupon.values())
     
-
+            print("ssssssssss",sales_by_coupon)
             campaign_ids =  Campaign.objects.filter(vendorid=self.request.user.id).values_list('id', flat=True) 
           
             influencer_sales_for_campaign = {}
@@ -2033,14 +2033,14 @@ class InfluencerCampSale(APIView):
                             if data1[0] == coupon_name:
                                 print("---------------",product.campaignid.id)
                                 product_ids.append(product.campaignid.id)
-                 
+
                     # pro_data=Product_information.objects.filter(coupon_name__contains=coupon_name,campaignid__in=modash_data,vendor=self.request.user.id).values("campaignid")
                     # data=pro_data.first()["campaignid"]
                     # print("data----------",data)
-                        if influencer_id in influencer_sales_for_campaign:
-                                influencer_sales_for_campaign[influencer_id].append({"campaign_id": product.campaignid.id, "sales": sales})
-                        else:
-                            influencer_sales_for_campaign[influencer_id] = [{"campaign_id": product.campaignid.id, "sales": sales}]
+                                if influencer_id in influencer_sales_for_campaign:
+                                        influencer_sales_for_campaign[influencer_id].append({"campaign_id": product.campaignid.id, "sales": sales})
+                                else:
+                                    influencer_sales_for_campaign[influencer_id] = [{"campaign_id": product.campaignid.id, "sales": sales}]
                     # for modash_entry in pro_data:
                     #     campaign_id = modash_entry["campaignid"]
                     #     if influencer_id in influencer_sales_for_campaign:
