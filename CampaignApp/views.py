@@ -2975,7 +2975,7 @@ class AdminTransfer(APIView):
                         admin_tra.append({"campaign_id":campaign_id,"sale":round(sale,2), "campaign_name":campaign_name,"commission":commission_val,"admin_part":round(admin_part,2),"account":admin_account,"offer":"commission","admin_id":admin_acc})
                     else:
                         admin_tra.append({"campaign_id":campaign_id,"sale":round(sale,2), "campaign_name":campaign_name,"commission":commission_val,"admin_part":round(admin_part,2),"account":"","offer":"commission","admin_id":admin_acc})
-            print(campaign_id)
+            print("salesss",sale_by_id[campaign_id])
             empty=PaymentDetails.objects.filter(vendor=self.request.user.id,admin=admin_acc).exists()
            
             if empty == True:
