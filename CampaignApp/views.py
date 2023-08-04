@@ -2980,6 +2980,8 @@ class AdminTransfer(APIView):
                 ids_arr.append(sales)
                 print(ids_arr)
             print(admin_acc)
+            empty1=PaymentDetails.objects.filter(vendor=self.request.user.id,admin=admin_acc,campaign_id__in=ids_arr)
+            print("----",empty1)
             empty=PaymentDetails.objects.filter(vendor=self.request.user.id,admin=admin_acc,campaign_id__in=ids_arr).exists()
             print("sdsdf",empty)
             if empty == True:
