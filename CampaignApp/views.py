@@ -2093,7 +2093,7 @@ class InfluencerCampSale(APIView):
                         }
                         
                         lst_data.append(infl_dict)  
- 
+            print("lst",lst_data)
             campaign_totals = {}
             
         
