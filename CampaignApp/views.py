@@ -2043,6 +2043,8 @@ class InfluencerCampSale(APIView):
             lst_data=[]
             
             for key in influencer_sales_for_campaign: 
+                
+                print("jkk",key)
                 for i in influencer_sales_for_campaign[key]:
                   
                     str_detail=StripeDetails.objects.filter(influencer=key,vendor=self.request.user.id).values("account_id")
