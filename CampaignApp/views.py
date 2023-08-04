@@ -256,10 +256,10 @@ class RequestCampaign(APIView):
                                 # match_data=Product_information.objects.filter(coupon_name__contains=j,vendor_id=self.request.user.id).exists()
                             
                                 if data_check == True:
-                                    dict1={str(val_lst2[i]["coupon_name"]):match_data}
+                                    dict1={str(val_lst2[i]["coupon_name"]):data_check}
                                     
                                     cup_lst.append(dict1)
-                                    coup_lst.append(match_data)
+                                    coup_lst.append(data_check)
                                     
 
                                 if True in coup_lst:
