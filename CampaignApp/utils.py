@@ -177,3 +177,15 @@ def success(self,request,subscription_id,price_id,start_date,end_date,amount):
     
     return "Created"
     
+# def coupon_update(request,acc_tok[1],price_rule):
+#     url =f'https://{SHOPIFY_API_KEY}:{SHOPIFY_API_SECRET}@{acc_tok[1]}/admin/api/{API_VERSION}/price_rules/{price_rule}.json'
+   
+#     data = {
+#             "price_rule": {
+#                 "entitled_product_ids": my_list,
+           
+          
+#             }
+#     }
+        
+       

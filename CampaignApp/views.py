@@ -286,6 +286,7 @@ class RequestCampaign(APIView):
                             arg_id=request.data["product"]
                             
                             product_name(self,request,req_id,arg,arg_id)  
+                            
                         else:
                            
                             product=Product_information()
@@ -294,7 +295,7 @@ class RequestCampaign(APIView):
                             product.save()
    
 
-                    
+
                         return Response({"success":"Campaign create successfully","product_details":serializer.data},status=status.HTTP_200_OK)
                     return Response({"success":"Campaign create successfully","product_details":serializer.data},status=status.HTTP_200_OK)
                 req_id=serializer.save(vendorid_id=self.request.user.id,status=1)
