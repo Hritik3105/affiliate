@@ -2980,88 +2980,88 @@ class AdminTransfer(APIView):
                 ids_arr.append(sales)
                 
            
-            # empty1=PaymentDetails.objects.filter(vendor=self.request.user.id,admin=admin_acc,campaign_id__in=ids_arr)
-            # print("----",empty1)
-                empty=PaymentDetails.objects.filter(vendor=self.request.user.id,admin=admin_acc,campaign_id=sales).exists()
-                print("sdsdf",empty)
-                if empty == True:
-                
-                    for i in admin_tra:
-                        
-                        emp_check=PaymentDetails.objects.filter(vendor=self.request.user.id,campaign_id=i["campaign_id"]).exists()
-                    
-                        if emp_check == True:
-                            account_check=PaymentDetails.objects.filter(vendor=self.request.user.id,campaign_id=i["campaign_id"]).values_list("account_id",flat=True)
-                            if account_check[0]== "":                      
-                                amount_transfered=PaymentDetails.objects.filter(vendor=self.request.user.id,campaign_id=i["campaign_id"]).update(account_id=i["account"])
-
-                            amount_transfered=transferdetails.objects.filter(vendor=self.request.user.id,admin=admin_acc,campaign=i["campaign_id"]).values_list("amount",flat=True)
-                            
-                            
-                            amount_deduct=i["admin_part"]
-                            if amount_transfered:
-                            
-                                amount_deduct=int(i["admin_part"]-int(amount_transfered[0]))
-                                
-                            PaymentDetails.objects.filter(vendor=self.request.user.id,campaign_id=i["campaign_id"]).update(amount=amount_deduct,sales=i["sale"])
-
-
-                        else:
-                            print(empty)
-                            print(i)
-                            if admin_acc==" ":
-                            
-                                PaymentDetails.objects.create(sales=i["sale"],influencerfee=i["commission"],offer=i["offer"],amount=admin_acc,admin_id=admin_acc,vendor_id=self.request.user.id,campaign_id=i["campaign_id"],account_id=i["account"])
-                            else:
-                                PaymentDetails.objects.create(sales=i["sale"],influencerfee=i["commission"],offer=i["offer"],admin_id=admin_acc,vendor_id=self.request.user.id,campaign_id=i["campaign_id"],account_id=i["account"])
-
-                            # account_check=PaymentDetails.objects.filter(vendor=self.request.user.id,campaign_id=i["campaign_id"]).values_list("account_id",flat=True)
-                            # if account_check[0]== "":                      
-                            #     amount_transfered=PaymentDetails.objects.filter(vendor=self.request.user.id,campaign_id=i["campaign_id"]).update(account_id=i["account"])
-
-                            # amount_transfered=transferdetails.objects.filter(vendor=self.request.user.id,admin=admin_acc,campaign=i["campaign_id"]).values_list("amount",flat=True)
-                            
-                        
-                            # amount_deduct=i["admin_part"]
-                            # if amount_transfered:
-                            
-                            #     amount_deduct=int(i["admin_part"]-int(amount_transfered[0]))
-                                
-                    
-                            
-                            # PaymentDetails.objects.filter(vendor=self.request.user.id,campaign_id=i["campaign_id"]).update(amount=amount_deduct,sales=i["sale"])
-                else:
-                
-                    for  i in admin_tra:
-                        details_obj=PaymentDetails()
-                        details_obj.amount=i["admin_part"]
-                        details_obj.admin_id=i["admin_id"]
-                        details_obj.vendor_id=self.request.user.id
-                        details_obj.sales=i["sale"]
-                        # details_obj.influencerfee=i["influener_fee"]
-                        details_obj.offer=i["offer"]
-                        details_obj.campaign_id=i["campaign_id"]
-                        details_obj.account_id=i["account"]
-                        details_obj.save()
-                        
-                upd_data=PaymentDetails.objects.filter(vendor=self.request.user.id,influencer__isnull=True)
-          
+            empty1=PaymentDetails.objects.filter(vendor=self.request.user.id,admin=admin_acc,campaign_id__in=ids_arr)
+            print("----",empty1)
+            empty=PaymentDetails.objects.filter(vendor=self.request.user.id,admin=admin_acc,influencer_id=None).exists()
+            print("sdsdf",empty)
+            if empty == True:
             
-            upd_lst=[]
-            for pay in upd_data:
-                upd_dict={
-                    "campaing_id":pay.campaign.campaign_name,
-                    "sales":round(pay.sales,2),
-                    "account":pay.account_id,
-                    "admin":pay.admin.id,
-                    "admin_fee":commission_val,
-                    "offer":pay.offer,
-                    "amount":pay.amount,  
-                    "amount_paid":pay.amountpaid,
-                    "campaign_detail":pay.campaign.id      
+                for i in admin_tra:
                     
-                }
-                upd_lst.append(upd_dict)
+                    emp_check=PaymentDetails.objects.filter(vendor=self.request.user.id,campaign_id=i["campaign_id"]).exists()
+                
+                    if emp_check == True:
+                        account_check=PaymentDetails.objects.filter(vendor=self.request.user.id,campaign_id=i["campaign_id"]).values_list("account_id",flat=True)
+                        if account_check[0]== "":                      
+                            amount_transfered=PaymentDetails.objects.filter(vendor=self.request.user.id,campaign_id=i["campaign_id"]).update(account_id=i["account"])
+
+                        amount_transfered=transferdetails.objects.filter(vendor=self.request.user.id,admin=admin_acc,campaign=i["campaign_id"]).values_list("amount",flat=True)
+                        
+                        
+                        amount_deduct=i["admin_part"]
+                        if amount_transfered:
+                        
+                            amount_deduct=int(i["admin_part"]-int(amount_transfered[0]))
+                            
+                        PaymentDetails.objects.filter(vendor=self.request.user.id,campaign_id=i["campaign_id"]).update(amount=amount_deduct,sales=i["sale"])
+
+
+                    else:
+                        print(empty)
+                        print(i)
+                        if admin_acc==" ":
+                        
+                            PaymentDetails.objects.create(sales=i["sale"],influencerfee=i["commission"],offer=i["offer"],amount=admin_acc,admin_id=admin_acc,vendor_id=self.request.user.id,campaign_id=i["campaign_id"],account_id=i["account"])
+                        else:
+                            PaymentDetails.objects.create(sales=i["sale"],influencerfee=i["commission"],offer=i["offer"],admin_id=admin_acc,vendor_id=self.request.user.id,campaign_id=i["campaign_id"],account_id=i["account"])
+
+                        # account_check=PaymentDetails.objects.filter(vendor=self.request.user.id,campaign_id=i["campaign_id"]).values_list("account_id",flat=True)
+                        # if account_check[0]== "":                      
+                        #     amount_transfered=PaymentDetails.objects.filter(vendor=self.request.user.id,campaign_id=i["campaign_id"]).update(account_id=i["account"])
+
+                        # amount_transfered=transferdetails.objects.filter(vendor=self.request.user.id,admin=admin_acc,campaign=i["campaign_id"]).values_list("amount",flat=True)
+                        
+                    
+                        # amount_deduct=i["admin_part"]
+                        # if amount_transfered:
+                        
+                        #     amount_deduct=int(i["admin_part"]-int(amount_transfered[0]))
+                            
+                
+                        
+                        # PaymentDetails.objects.filter(vendor=self.request.user.id,campaign_id=i["campaign_id"]).update(amount=amount_deduct,sales=i["sale"])
+            else:
+            
+                for  i in admin_tra:
+                    details_obj=PaymentDetails()
+                    details_obj.amount=i["admin_part"]
+                    details_obj.admin_id=i["admin_id"]
+                    details_obj.vendor_id=self.request.user.id
+                    details_obj.sales=i["sale"]
+                    # details_obj.influencerfee=i["influener_fee"]
+                    details_obj.offer=i["offer"]
+                    details_obj.campaign_id=i["campaign_id"]
+                    details_obj.account_id=i["account"]
+                    details_obj.save()
+                    
+            upd_data=PaymentDetails.objects.filter(vendor=self.request.user.id,influencer__isnull=True)
+        
+        
+        upd_lst=[]
+        for pay in upd_data:
+            upd_dict={
+                "campaing_id":pay.campaign.campaign_name,
+                "sales":round(pay.sales,2),
+                "account":pay.account_id,
+                "admin":pay.admin.id,
+                "admin_fee":commission_val,
+                "offer":pay.offer,
+                "amount":pay.amount,  
+                "amount_paid":pay.amountpaid,
+                "campaign_detail":pay.campaign.id      
+                
+            }
+            upd_lst.append(upd_dict)
                 
             return Response({"sale_details":upd_lst},status=status.HTTP_200_OK)
         else:
