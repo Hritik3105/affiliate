@@ -2931,6 +2931,7 @@ class AdminTransfer(APIView):
             coup_dict={} 
             for  i in sale:    
                 check=Product_information.objects.filter(coupon_name__contains=i,vendor_id=self.request.user.id).values("campaignid","coupon_name")
+                print("ddddddddd",check)
                
                 for z in check:
                     if "coupon_name" in z:
