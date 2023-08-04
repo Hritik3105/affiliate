@@ -2016,16 +2016,16 @@ class InfluencerCampSale(APIView):
           
             influencer_sales_for_campaign = {}
             for coupon_name, sales in sales_by_coupon.items():
-                print("dsfdsfdsf",coupon_name)
+              
                 influencer_ids = influencer_coupon.objects.filter(coupon_name=coupon_name,vendor=self.request.user.id).values("influencer_id", "coupon_name")
-                print("influenceriddd",influencer_ids)
+                
                 for influencer in influencer_ids:
                     influencer_id = influencer["influencer_id"]
                 
                     modash_data = Campaign.objects.filter(influencer_name__contains=influencer_id, id__in=campaign_ids,vendorid=self.request.user.id).values_list("id",flat=True)
-                    print("ccvbvcb",coupon_name)
+                   
                     pro_dataqq=Product_information.objects.filter(coupon_name__contains=coupon_name,campaignid__in=modash_data,vendor=self.request.user.id)
-                    print("ssss",pro_dataqq)
+                   
                     for product in pro_dataqq:
                    
                         if product.coupon_name:
@@ -2126,14 +2126,13 @@ class InfluencerCampSale(APIView):
                 data_max.append(sales_entry)   
           
  
-            print(data_max)
             empty=PaymentDetails.objects.all().exists()
            
             if empty == True:
                 for i in data_max:
                     print(i["campaign_detail"])
                     emp_check=PaymentDetails.objects.filter(vendor=self.request.user.id,campaign_id=i["campaign_detail"]).exists()
-
+                    print(emp_check)
                     if emp_check == False:
                         print(emp_check)
                         print("entrtt")
