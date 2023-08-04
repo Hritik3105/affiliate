@@ -2949,7 +2949,7 @@ class AdminTransfer(APIView):
                             coup_dict[campaign_id] = list_value
 
             dict_lst = [coup_dict]
-         
+            ids_arr=[]
             sale_by_id = {}
             admin_tra=[]
             for campaign_id, coupon_names in coup_dict.items():
@@ -2976,8 +2976,9 @@ class AdminTransfer(APIView):
                     else:
                         admin_tra.append({"campaign_id":campaign_id,"sale":round(sale,2), "campaign_name":campaign_name,"commission":commission_val,"admin_part":round(admin_part,2),"account":"","offer":"commission","admin_id":admin_acc})
             for sales in sale_by_id.keys():
-                print(sales)
-            empty=PaymentDetails.objects.filter(vendor=self.request.user.id,admin=admin_acc).exists()
+                
+                ids_arr.append(sales)
+            empty=PaymentDetails.objects.filter(vendor=self.request.user.id,admin=admin_acc,campaign_id__in=ids_arr).exists()
            
             if empty == True:
                 print("hello")
