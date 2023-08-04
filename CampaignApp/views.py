@@ -2030,7 +2030,8 @@ class InfluencerCampSale(APIView):
                     for product in pro_dataqq:
                    
                         if product.coupon_name:
-                            if ast.literal_eval(product.coupon_name[0]) == coupon_name:
+                            data1=ast.literal_eval(product.coupon_name)
+                            if data1 == coupon_name:
                                 print("---------------",product.campaignid)
                     pro_data=Product_information.objects.filter(coupon_name__contains=coupon_name,campaignid__in=modash_data,vendor=self.request.user.id).values("campaignid")
                     data=pro_data.first()["campaignid"]
