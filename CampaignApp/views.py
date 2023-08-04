@@ -2930,9 +2930,14 @@ class AdminTransfer(APIView):
             print("sdfffffff",sale)
             coup_dict={} 
             for  i in sale:    
-                check=Product_information.objects.filter(coupon_name__contains=i,vendor_id=self.request.user.id).values("campaignid","coupon_name")
-                print("ddddddddd",check)
+                check=Product_information.objects.filter(coupon_name__contains=i,vendor_id=self.request.user.id)
+                for cupon in check:
+                    data_cop=ast.literal_eval(cupon.coupon_name)
+                    if data_cop[0] == i:
+                        print(cupon.campaignid.id)
+                        
                
+
                 for z in check:
                     if "coupon_name" in z:
                         list_value = eval(z["coupon_name"])
@@ -2944,7 +2949,7 @@ class AdminTransfer(APIView):
                             coup_dict[campaign_id] = list_value
 
             dict_lst = [coup_dict]
-            
+            print(coup_dict)
             sale_by_id = {}
             admin_tra=[]
             for campaign_id, coupon_names in coup_dict.items():
