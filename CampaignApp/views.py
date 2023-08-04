@@ -247,21 +247,19 @@ class RequestCampaign(APIView):
                                 match_data=Product_information.objects.filter(coupon_name__contains=j,vendor_id=self.request.user.id)
                                 for i in match_data:
                                     if j in ast.literal_eval(i.coupon_name):
-                          
-                            
-                                       
+                              
                                       
                                         data_check=True
                                     else:
                                         data_check=False     
                             
-                                if data_check == True:
-                                    match_cop.append(j)
-                                    dict1={str(match_cop):data_check}
-                                    
-                                    
-                                    cup_lst.append(dict1)
-                                    coup_lst.append(data_check)
+                                    if data_check == True:
+                                        match_cop.append(j)
+                                        dict1={str(match_cop):data_check}
+                                        
+                                        
+                                        cup_lst.append(dict1)
+                                        coup_lst.append(data_check)
                                     
 
                                 if True in coup_lst:
@@ -2049,8 +2047,7 @@ class InfluencerCampSale(APIView):
                     #         influencer_sales_for_campaign[influencer_id].append({"campaign_id": campaign_id, "sales": sales})
                     #     else:
                     #         influencer_sales_for_campaign[influencer_id] = [{"campaign_id": campaign_id, "sales": sales}]
-
-            print(influencer_sales_for_campaign)      
+   
             lst_data=[]
             
             for key in influencer_sales_for_campaign: 
