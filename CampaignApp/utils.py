@@ -89,7 +89,7 @@ def coupon_check(self,request,val_lst2,cup_lst,coup_lst):
     
     
                 
-                    return cop
+                        return cop
                 
                         
                 # match_data=Product_information.objects.filter(coupon_name__contains=j,vendor_id=self.request.user.id).exists()
@@ -106,7 +106,7 @@ def coupon_check(self,request,val_lst2,cup_lst,coup_lst):
                     
                 #     cop_lst=ast.literal_eval(cop)
                     
-                    return cop
+                    # return cop
 
 
 
