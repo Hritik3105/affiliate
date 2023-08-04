@@ -3007,7 +3007,7 @@ class AdminTransfer(APIView):
 
 
                     else:
-                        
+                        print("dddddddd")
                         if admin_acc==" ":
                          
                             PaymentDetails.objects.create(sales=i["sale"],influencerfee=i["commission"],offer=i["offer"],amount=admin_acc,admin_id=admin_acc,vendor_id=self.request.user.id,campaign_id=i["campaign_id"],account_id=i["account"])
