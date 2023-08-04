@@ -2927,6 +2927,7 @@ class AdminTransfer(APIView):
                         sales_by_coupon[coupon_code] = float(total_price)
                         
             sale=list(sales_by_coupon.keys())
+            print("sdfffffff",sale)
             coup_dict={} 
             for  i in sale:    
                 check=Product_information.objects.filter(coupon_name__contains=i,vendor_id=self.request.user.id).values("campaignid","coupon_name")
@@ -2996,7 +2997,7 @@ class AdminTransfer(APIView):
                     else:
                         
                         if admin_acc==" ":
-                            print("Enterrrr")
+                         
                             PaymentDetails.objects.create(sales=i["sale"],influencerfee=i["commission"],offer=i["offer"],amount=admin_acc,admin_id=admin_acc,vendor_id=self.request.user.id,campaign_id=i["campaign_id"],account_id=i["account"])
                         else:
                             PaymentDetails.objects.create(sales=i["sale"],influencerfee=i["commission"],offer=i["offer"],admin_id=admin_acc,vendor_id=self.request.user.id,campaign_id=i["campaign_id"],account_id=i["account"])
