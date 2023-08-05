@@ -270,9 +270,7 @@ class RequestCampaign(APIView):
                                     return Response({"error": cop_lst},status=status.HTTP_410_GONE)
                     req_id=serializer.save(vendorid_id=self.request.user.id,status=1)
                     val_lst=(request.data["product_discount"])
-                    price_rule=request.data["coupon_id"]
-                
-
+                  
                     if {} in val_lst:
                         z=val_lst.remove({})
                     else:
@@ -280,7 +278,7 @@ class RequestCampaign(APIView):
                     if val_lst:
                   
                         product_details(self,request,val_lst,req_id)
-                        coupon_update(self,request,price_rule,coupon_name)      
+                           
                                             
                     else:
                      
@@ -3334,6 +3332,6 @@ class MarketplacetUrl(APIView):
                         "amount": "",
                         "discout_type":"",
                         # "influencer_id":"",
-                            })
+                        })
             
         return Response({'product_details':new_list,"product_url":handle_lst,"title_list":title_list},status=status.HTTP_200_OK)       

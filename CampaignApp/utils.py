@@ -178,22 +178,5 @@ def success(self,request,subscription_id,price_id,start_date,end_date,amount):
     return "Created"
     
     
-def coupon_update(self,request,price_rule,coupon_name):
-    acc_tok=access_token(self,request)    
-    headers= {"X-Shopify-Access-Token": acc_tok[0]}
-   
-    url =f'https://{SHOPIFY_API_KEY}:{SHOPIFY_API_SECRET}@{acc_tok[1]}/admin/api/{API_VERSION}/price_rules/{price_rule}.json'
-   
-    data = {
-            "price_rule": {
-                "entitled_product_ids": [coupon_name],
-           
-          
-            }
-    }
-        
-    response = requests.put(url,headers=headers,json=data)
-    print(response.json())
-    if  response.status_code==200:
-        return "Done"
+
                 
