@@ -59,7 +59,7 @@ class CreateDiscountCodeView(APIView):
             "price_rule": {
                     "title": discount,
                     "target_type": "line_item",
-                    "target_selection": "all",
+                    "target_selection": "entitled",
                     "allocation_method": "across",
                     "value_type":discount_type ,
                     "value": amt_val, 
@@ -71,6 +71,7 @@ class CreateDiscountCodeView(APIView):
             }
 
             response = requests.post(f"{base_url}/price_rules.json", headers=headers, json=data)
+            print(response.text)
             if response.status_code == 422:
                 return Response({"message":" value must be between 0 and 100"},status=status.HTTP_400_BAD_REQUEST)
 
