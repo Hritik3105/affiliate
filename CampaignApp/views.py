@@ -3276,7 +3276,7 @@ class MarketplacetUrl(APIView):
                     get_influencer=Marketplace_coupon.objects.filter(vendor_id=self.request.user.id,coupon_id=price_rules_id).values("influencer_id")
                     
                     influ_id=get_influencer
-                    
+                    #eeee
                     if influ_id:
                     
                         price_rules_codes=price_rule.json()['price_rules'][i]["title"]
