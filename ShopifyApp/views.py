@@ -40,6 +40,14 @@ class CreateDiscountCodeView(APIView):
             acc_tok=access_token(self,request)
             headers= {"X-Shopify-Access-Token": acc_tok[0]}
             base_url = f'https://{acc_tok[1]}/admin/api/{API_VERSION}'
+            
+            product_name=request.data.get("product_id")
+            if not product_name:     
+                return Response({'error': 'Product  field is required'}, status=status.HTTP_400_BAD_REQUEST)
+            my_list = list(map(int, product_name.split(",")))
+            print(my_list)
+            
+            
             discount = request.data.get('discount_code')
             if not discount:
                 return Response({'error': 'Coupon field is required'}, status=status.HTTP_400_BAD_REQUEST)
@@ -67,11 +75,7 @@ class CreateDiscountCodeView(APIView):
                     "once_per_customer": True, 
                     'starts_at': '2023-04-06T00:00:00Z',
                     'ends_at': '2023-08-30T23:59:59Z',
-                    "entitlements": [
-                        {
-                            "product_ids": []
-                        }
-                     ]
+                    "entitled_product_ids": my_list,
                 }
             }
 

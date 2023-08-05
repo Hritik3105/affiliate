@@ -2138,12 +2138,11 @@ class InfluencerCampSale(APIView):
                     emp_check=PaymentDetails.objects.filter(vendor=self.request.user.id,campaign_id=i["campaign_detail"],admin=None).exists()
                     print(emp_check)
                     if emp_check == False:
-                        print(emp_check)
-                        print("entrtt")
+                       
                         PaymentDetails.objects.create(sales=i["sales"],influencerfee=i["influener_fee"],offer=i["offer"],amount=i["amount"],influencer_id=i["influencer"],vendor_id=self.request.user.id,campaign_id=i["campaign_detail"],account_id=i["account"])
                         
                     else:
-                        print("nott")
+                  
                         account_check=PaymentDetails.objects.filter(vendor=self.request.user.id,campaign_id=i["campaign_detail"]).values_list("account_id",flat=True)
                         if account_check[0]== "":                      
                             amount_transfered=PaymentDetails.objects.filter(vendor=self.request.user.id,campaign_id=i["campaign_detail"]).update(account_id=i["account"])
@@ -2932,7 +2931,7 @@ class AdminTransfer(APIView):
                         sales_by_coupon[coupon_code] = float(total_price)
                         
             sale=list(sales_by_coupon.keys())
-            print("sdfffffff",sale)
+            
             coup_dict={} 
             for  i in sale:    
                 check=Product_information.objects.filter(coupon_name__contains=i,vendor_id=self.request.user.id).values("coupon_name","campaignid")
@@ -2987,7 +2986,7 @@ class AdminTransfer(APIView):
            
             # empty1=PaymentDetails.objects.filter(vendor=self.request.user.id,admin=admin_acc,campaign_id__in=ids_arr)
             # print("----",empty1)
-                empty=PaymentDetails.objects.filter(vendor=self.request.user.id,admin=admin_acc,campaign_id=sales).exists()
+                empty=PaymentDetails.objects.filter(vendor=self.request.user.id,admin=admin_acc,campaign_id=sales,influencer_id=None).exists()
                 print("sdsdf",empty)
                 if empty == True:
                 
