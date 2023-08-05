@@ -597,7 +597,7 @@ class SingleCoupon(APIView):
                     discount_type = coupon_data["value_type"]
                     amount   = coupon_data["value"]   
                     id  = coupon_data["id"]   
-                    return Response({'title': title,"discount_type":discount_type,'amount':amount,"id":id,"status":1})
+                    return Response({'title': title,"discount_type":discount_type,'amount':amount,"id":id,"status":1,"product_name":entitle})
 
                     
         else:
