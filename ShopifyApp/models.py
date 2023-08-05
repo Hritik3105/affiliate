@@ -11,3 +11,9 @@ class influencer_coupon(models.Model):
     coupon_name=models.CharField(max_length=255,blank=True,null=True)
     amount=models.FloatField(blank=True,null=True)
     coupon_id=models.CharField(max_length=255,blank=True,null=True)
+    
+class Marketplace_coupon(models.Model):
+    vendor=models.ForeignKey(User,on_delete=models.CASCADE,blank=True,null=True)
+    coupon_name=models.CharField(max_length=255,blank=True,null=True)
+    amount=models.FloatField(blank=True,null=True)
+    coupon_id=models.CharField(max_length=255,blank=True,null=True)

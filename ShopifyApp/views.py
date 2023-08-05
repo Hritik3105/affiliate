@@ -91,7 +91,13 @@ class CreateDiscountCodeView(APIView):
                 
                 discount_status=self.one_time_discount(price_id,acc_tok[1],headers,discount)
                 
-                if discount_status == None:
+                if discount_status.status_code==201:
+                    inf_obj=Marketplace_coupon()
+                    inf_obj.coupon_name=discount
+                    inf_obj.amount=amount
+                    inf_obj.coupon_id=discount_status.json()["discount_code"]["price_rule_id"]
+                    inf_obj.vendor_id=self.request.user.id
+                    inf_obj.save()
                     return Response({"message":"coupon created successfully","title": discount,"created_at":price_create,"id":price_id,},status=status.HTTP_201_CREATED)
                 else:
                     return Response({"response":"Coupon name already taken"},status=status.HTTP_400_BAD_REQUEST)
@@ -120,10 +126,11 @@ class CreateDiscountCodeView(APIView):
         discount_code_response = requests.post(discount_code_endpoint, json=discount_code_data,headers=headers)
     
         if discount_code_response.status_code == 201:
-            print('Discount code created successfully!')
+            return discount_code_response
         else:
-           
-            return Response({"error":f'Error creating discount code: {discount_code_response.text}'},status=status.HTTP_400_BAD_REQUEST) 
+    
+            pp=delete_price_rule(price_id,shop, headers)
+            return discount_code_response
         
     
 
