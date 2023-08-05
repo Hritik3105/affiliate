@@ -59,7 +59,7 @@ class CreateDiscountCodeView(APIView):
             "price_rule": {
                     "title": discount,
                     "target_type": "line_item",
-                    "target_selection": "all",
+                    "target_selection": "entitled",
                     "allocation_method": "across",
                     "value_type":discount_type ,
                     "value": amt_val, 
