@@ -2986,7 +2986,9 @@ class AdminTransfer(APIView):
            
             # empty1=PaymentDetails.objects.filter(vendor=self.request.user.id,admin=admin_acc,campaign_id__in=ids_arr)
             # print("----",empty1)
-            empty=PaymentDetails.objects.filter(vendor=self.request.user.id,admin=admin_acc,influencer_id=None).exists()
+            empty=PaymentDetails.objects.all().exists()            
+            empty2=PaymentDetails.objects.filter(vendor=self.request.user.id,admin=admin_acc,influencer_id=None).all()
+            print(empty2)
             print("------------------------------------",empty)
             if empty == True:
             
