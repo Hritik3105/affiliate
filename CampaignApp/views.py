@@ -2994,7 +2994,7 @@ class AdminTransfer(APIView):
             
                 for i in admin_tra:
                     
-                    emp_check=PaymentDetails.objects.filter(vendor=self.request.user.id,campaign_id=i["campaign_id"]).exists()
+                    emp_check=PaymentDetails.objects.filter(vendor=self.request.user.id,campaign_id=i["campaign_id"],influencer_id=None).exists()
                 
                     if emp_check == True:
                         account_check=PaymentDetails.objects.filter(vendor=self.request.user.id,campaign_id=i["campaign_id"]).values_list("account_id",flat=True)
