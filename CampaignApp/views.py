@@ -3273,7 +3273,7 @@ class MarketplacetUrl(APIView):
          
                 if z in  lst:
                     price_rules_id=price_rule.json()['price_rules'][i]["id"]
-                    get_influencer=Marketplace_coupon.objects.filter(vendor_id=self.request.user.id,coupon_id=price_rules_id).values("influencer_id")
+                    get_influencer=Marketplace_coupon.objects.filter(vendor_id=self.request.user.id,coupon_id=price_rules_id).values("coupon_id")
                     
                     influ_id=get_influencer
                     #eeee
@@ -3290,7 +3290,7 @@ class MarketplacetUrl(APIView):
                             "coupon_id":price_rules_ids,
                             "amount":price_rule_value,   
                             "discout_type":price_rule_value_type,
-                            "influencer_id":influ_id[0]["influencer_id"]
+                            # "influencer_id":influ_id[0]["influencer_id"]
                         }    
                         dataList.append(product_dict)
         
@@ -3306,7 +3306,7 @@ class MarketplacetUrl(APIView):
                     product_dict[product_id]["coupon_id"].append(product["coupon_id"])
                     product_dict[product_id]["amount"].append(product["amount"])
                     product_dict[product_id]["discout_type"].append(product["discout_type"])
-                    product_dict[product_id]["influencer_id"].append(product["influencer_id"])
+                    # product_dict[product_id]["influencer_id"].append(product["influencer_id"])
                 
                 else:
              
@@ -3317,7 +3317,7 @@ class MarketplacetUrl(APIView):
                         "coupon_id": [product["coupon_id"]],
                         "amount": [product["amount"]],
                         "discout_type":[product["discout_type"]],
-                        "influencer_id":[product["influencer_id"]]
+                        # "influencer_id":[product["influencer_id"]]
                         }
                              
         for i in lst:
@@ -3333,7 +3333,7 @@ class MarketplacetUrl(APIView):
                         "coupon_id":"",
                         "amount": "",
                         "discout_type":"",
-                        "influencer_id":"",
+                        # "influencer_id":"",
                             })
             
         return Response({'product_details':new_list,"product_url":handle_lst,"title_list":title_list},status=status.HTTP_200_OK)       
