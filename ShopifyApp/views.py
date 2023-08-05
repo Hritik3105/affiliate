@@ -67,7 +67,11 @@ class CreateDiscountCodeView(APIView):
                     "once_per_customer": True, 
                     'starts_at': '2023-04-06T00:00:00Z',
                     'ends_at': '2023-08-30T23:59:59Z',
-                    "entitled_product_ids":[],
+                    "entitlements": [
+                        {
+                            "product_ids": []
+                        }
+                     ]
                 }
             }
 
