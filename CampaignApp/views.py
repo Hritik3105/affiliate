@@ -377,6 +377,7 @@ class UpdateCampaign(APIView):
                     product=Product_information.objects.filter(campaignid_id =req_id.id,vendor_id=self.request.user.id).delete()
            
                 for i in range(len(val_lst)):
+                    print("hekllooo")
                     product=Product_information()
                     product.vendor_id=self.request.user.id
                     product.campaignid_id=req_id.id
