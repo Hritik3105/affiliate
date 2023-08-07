@@ -19,6 +19,7 @@ def product_details(self,request,val_lst,req_id):
             product.product_name=val_lst[i]["product_name"]
             product.product_id=val_lst[i]["product_id"]
             product.coupon_name=val_lst[i]["coupon_name"]
+            product.coupon_id=val_lst[i]["coupon_id"]
             product.amount=val_lst[i]["amount"]
             product.discount_type=val_lst[i]["discout_type"]
             product.save()

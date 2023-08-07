@@ -1205,6 +1205,7 @@ class GetCampaign(APIView):
                     "product":[{
                         "product_name":camp[i]["product_name"],
                         "coupon_name":couponlst,
+                        # "coupon_id":price_rules_ids,
                         "amount":amtlst,
                         "product_id": camp[i]["product_id"],
                         "discout_type":camp[i]["discount_type"]
