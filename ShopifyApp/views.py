@@ -660,6 +660,10 @@ class ProductEditCodeView(APIView):
             
             
         discount = request.data.get('discount_code')
+        if discount:
+                if len(discount)<3:
+                    return Response({'error': 'discount code must be three or more than three character long'}, status=status.HTTP_400_BAD_REQUEST)
+
         
         if discount == None:
             discount=old_title
