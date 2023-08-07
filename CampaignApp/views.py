@@ -1182,9 +1182,9 @@ class GetCampaign(APIView):
                 
             if cop_id:
                 
-                couponlstid=ast.literal_eval(cop)
+                couponlstid=ast.literal_eval(cop_id)
             else:
-                couponlstid=cop
+                couponlstid=cop_id
                 
             if amt:
     
