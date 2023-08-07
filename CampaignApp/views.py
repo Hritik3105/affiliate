@@ -857,7 +857,7 @@ class   MarketplaceList(APIView):
                     "product_name":camp[i]["product_name"],
                     "coupon_name":couponlst,
                     "amount":[sliced],
-                    "discout_type":disc_type,
+                    "discount_type":disc_type,
                     "product_id": camp[i]["product_id"],
                 }]
                 }
