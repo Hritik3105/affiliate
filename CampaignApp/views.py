@@ -1172,12 +1172,19 @@ class GetCampaign(APIView):
         for i in range(len(camp)):
             cop=(camp[i]["coupon_name"])
             amt=(camp[i]["amount"])
+            cop_id=(camp[i]["coupon_id"])
             
             if cop:
                 
                 couponlst=ast.literal_eval(cop)
             else:
                 couponlst=cop
+                
+            if cop_id:
+                
+                couponlstid=ast.literal_eval(cop)
+            else:
+                couponlstid=cop
                 
             if amt:
     
@@ -1205,7 +1212,7 @@ class GetCampaign(APIView):
                     "product":[{
                         "product_name":camp[i]["product_name"],
                         "coupon_name":couponlst,
-                        # "coupon_id":price_rules_ids,
+                        "coupon_id":couponlstid,
                         "amount":amtlst,
                         "product_id": camp[i]["product_id"],
                         "discout_type":camp[i]["discount_type"]
