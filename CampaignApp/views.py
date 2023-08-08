@@ -3355,7 +3355,7 @@ class CommisssionFilter(APIView):
     def get(self,request):
         commission=request.data.get("commission")
         product=request.data.get("product")
-        match_data=Product_information.objects.filter(campaignid__status=1,campaiginid__offer=commission,product_id=product)
+        match_data=Product_information.objects.filter(Q(campaiginid__offer = commission)|Q(product_id=product),campaignid__status=1)
         camp_list=[]
         for i in match_data:
             dict1={
