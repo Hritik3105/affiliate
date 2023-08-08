@@ -3380,9 +3380,6 @@ class CommisssionFilter(APIView):
                     "offer":i.campaignid.offer,
                     "product":[{
                     "product_name":i.product_name,
-                    "coupon_name":ast.literal_eval(i.coupon_name),
-                    "amount":ast.literal_eval(i.amount),
-                    "discount_type":ast.literal_eval(i.discount_type),
                     "product_id":i.product_id,
                 }]
                         
