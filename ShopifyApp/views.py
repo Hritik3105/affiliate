@@ -1,8 +1,5 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from django.shortcuts import redirect
-import requests
-import calendar
 import json
 from Affilate_Marketing.settings import base_url ,headers ,SHOPIFY_API_KEY,SHOPIFY_API_SECRET,API_VERSION
 from rest_framework import status
@@ -13,17 +10,14 @@ from StoreApp.models import *
 from ShopifyApp.models import *
 from ShopifyApp.serializers import *
 from CampaignApp.models import *
-
+import requests
+from datetime import datetime, timedelta
+from datetime import date
+from utils import *
 # Create your views here.
 
 #FUNCTION TO GET ACCESS TOKEN
-def access_token(self,request):
-    user_obj=User.objects.filter(id=self.request.user.id)
-    shop=user_obj.values("shopify_url")[0]["shopify_url"]
-    acc_tok=Store.objects.filter(store_name=shop).values("access_token")[0]["access_token"]
-   
-    return acc_tok,shop
-    
+
     
 
 
@@ -45,7 +39,7 @@ class CreateDiscountCodeView(APIView):
             if not product_name:     
                 return Response({'error': 'Product  field is required'}, status=status.HTTP_400_BAD_REQUEST)
             my_list = list(map(int, product_name.split(",")))
-            print(my_list)
+           
             
             
             discount = request.data.get('discount_code')
@@ -85,7 +79,7 @@ class CreateDiscountCodeView(APIView):
             }
 
             response = requests.post(f"{base_url}/price_rules.json", headers=headers, json=data)
-            print(response.text)
+          
             if response.status_code == 422:
                 return Response({"message":" value must be between 0 and 100"},status=status.HTTP_400_BAD_REQUEST)
 
@@ -94,7 +88,7 @@ class CreateDiscountCodeView(APIView):
                 
                 price_create=json.loads(response.text)["price_rule"]["created_at"]
                 
-                discount_status=self.one_time_discount(price_id,acc_tok[1],headers,discount)
+                discount_status=one_time_discount(price_id,acc_tok[1],headers,discount)
                 
                 if discount_status.status_code==201:
                     inf_obj=Marketplace_coupon()
@@ -112,30 +106,30 @@ class CreateDiscountCodeView(APIView):
 
  
         
-    def one_time_discount(self,price_id,shop,headers,discount_code):
+    # def one_time_discount(self,price_id,shop,headers,discount_code):
     
-        discount_code_endpoint = f'https://{SHOPIFY_API_KEY}:{SHOPIFY_API_SECRET}@{shop}/admin/api/{API_VERSION}/price_rules/{price_id}/discount_codes.json'
+    #     discount_code_endpoint = f'https://{SHOPIFY_API_KEY}:{SHOPIFY_API_SECRET}@{shop}/admin/api/{API_VERSION}/price_rules/{price_id}/discount_codes.json'
 
-        discount_code_data = {
-            'discount_code': {
-                'code': discount_code,
-                'usage_limit': None,
-                'customer_selection': 'all',
-                "once_per_customer": True, 
-                'starts_at': '2023-04-06T00:00:00Z',
-                'ends_at': '2023-04-30T23:59:59Z'
-            }
-        }
+    #     discount_code_data = {
+    #         'discount_code': {
+    #             'code': discount_code,
+    #             'usage_limit': None,
+    #             'customer_selection': 'all',
+    #             "once_per_customer": True, 
+    #             'starts_at': '2023-04-06T00:00:00Z',
+    #             'ends_at': '2023-04-30T23:59:59Z'
+    #         }
+    #     }
 
 
-        discount_code_response = requests.post(discount_code_endpoint, json=discount_code_data,headers=headers)
+    #     discount_code_response = requests.post(discount_code_endpoint, json=discount_code_data,headers=headers)
     
-        if discount_code_response.status_code == 201:
-            return discount_code_response
-        else:
+    #     if discount_code_response.status_code == 201:
+    #         return discount_code_response
+    #     else:
     
-            pp=delete_price_rule(price_id,shop, headers)
-            return discount_code_response
+    #         pp=delete_price_rule(price_id,shop, headers)
+    #         return discount_code_response
         
     
 
@@ -348,16 +342,16 @@ def discount_code1(price_id,shop,headers,discount_code):
         return discount_code_response
       
       
-def delete_price_rule(price_rule_id, shop, headers):
+# def delete_price_rule(price_rule_id, shop, headers):
    
     
-    delete_url = f'https://{shop}/admin/api/{API_VERSION}/price_rules/{price_rule_id}.json'
-    response = requests.delete(delete_url, headers=headers)
+#     delete_url = f'https://{shop}/admin/api/{API_VERSION}/price_rules/{price_rule_id}.json'
+#     response = requests.delete(delete_url, headers=headers)
 
-    if response.status_code == 200:
-        return True  # Price rule deleted successfully
-    else:
-        return False  # Failed to delete price rule
+#     if response.status_code == 200:
+#         return True  # Price rule deleted successfully
+#     else:
+#         return False  # Failed to delete price rule
 
         
 
@@ -487,7 +481,7 @@ class EditCodeView(APIView):
             old_discount_type = coupon_data["value_type"]
             old_amount = coupon_data["value"]   
             old_entitled_product_ids = coupon_data['entitled_product_ids']
-            print("ooooooooooooo",old_entitled_product_ids)
+            
             
         else:
             return Response({'message':get_response.text})
@@ -534,7 +528,7 @@ class EditCodeView(APIView):
        
     
         influencer_id=request.data.get("influ_ids")
-        print("sss",my_list)
+        
             
         data = {
             "price_rule": {
@@ -548,11 +542,11 @@ class EditCodeView(APIView):
     }
       
         cop_res=discount_code5(price_rule,acc_tok[1],headers,discount)
-        print("cop",cop_res)
+        
         if cop_res.status_code == 200:
 
             response = requests.put(url,headers=headers,json=data)
-            print(":simple",response)
+            
             if response.status_code == 200: 
                 return Response({'message': 'Discount Edit successfully','title': discount,"discount_type":discount_type,'amount':amt,"id":price_rule},status=status.HTTP_200_OK)
             if response.status_code== 422:
@@ -582,7 +576,7 @@ def discount_code5(price_rule,shop,headers,discount_code):
     }
 }
     discount_code_response = requests.patch(patch_url, json=data,headers=headers)
-    print("discount",discount_code_response)
+
     if discount_code_response.status_code == 200:
         return Response({"success":discount_code_response.json()},status=status.HTTP_200_OK)
     else:
@@ -716,7 +710,7 @@ class ProductEditCodeView(APIView):
         infludb_id=request.data.get("influencer_id")
     
         influencer_id=request.data.get("influ_ids")
-        print("sss",my_list)
+       
         
         
         data = {
@@ -781,10 +775,7 @@ def discount_code9(price_rule,shop,headers,discount_code):
         
     
 
-import requests
-from datetime import datetime, timedelta
-from django.http import JsonResponse
-from datetime import date
+
 
 
 class Analytics(APIView):
@@ -835,79 +826,6 @@ class Analytics(APIView):
             return Response({'error': 'Failed to fetch total sales'}, status=500)
 
 
-
-
-
-# class SalesReportAPIView(APIView):
-#     def get(self, request):
-#         # Shopify API credentials
-#         shopify_store = 'marketplacee-app.myshopify.com'  
-#         headers= {"X-Shopify-Access-Token": "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"}
-
-#         # Make API request to retrieve sales data
-#         url = f"https://{shopify_store}/admin/api/2023-01/orders.json?status=any"
-      
-#         response = requests.get(url, headers=headers)
-#         print(response.json())
-
-#         if response.status_code == 200:
-#             sales_data = response.json()['orders']
-#             sales_report = {}
-
-#             for order in sales_data:
-#                 created_at = order['created_at']
-#                 month = created_at.split('-')[1]
-#                 total_price = float(order['total_price'])
-                
-#                 if month in sales_report:
-#                     sales_report[month] += total_price
-#                 else:
-#                     sales_report[month] = total_price
-
-#             return Response(sales_report)
-#         else:
-#             # Handle API request error
-#             return Response({"error": "Failed to retrieve sales data."}, status=response.status_code)
-
-
-
-
-
-# class SalesReportAPIView(APIView):
-#     authentication_classes=[TokenAuthentication]
-#     permission_classes = [IsAuthenticated] 
-#     def get(self, request):
-#         acc_tok=access_token(self,request)
-        
-#         headers= {"X-Shopify-Access-Token": acc_tok[0]}
-
-    
-#         url = f"https://{acc_tok[1]}/admin/api/2023-01/orders.json?status=any"
-   
-#         response = requests.get(url, headers=headers)
-
-#         if response.status_code == 200:
-#             sales_data = response.json()['orders']
-#             sales_report = {}
-            
-#             for month_number in range(1, 13):
-#                 month_name = calendar.month_name[month_number]
-#                 sales_report[month_name] = 0
-
-#             for order in sales_data:
-#                 created_at = order['created_at']
-#                 month_number = int(created_at.split('-')[1])
-#                 month_name = calendar.month_name[month_number]
-#                 total_price = float(order['total_price'])
-#                 sales_report[month_name] += total_price
-                
-               
-
-#             return Response(sales_report)
-#         else:
-
-        
-#             return Response({"error": "Failed to retrieve sales data."}, status=response.status_code)
 
 
 
