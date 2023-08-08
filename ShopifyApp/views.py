@@ -13,7 +13,7 @@ from CampaignApp.models import *
 import requests
 from datetime import datetime, timedelta
 from datetime import date
-from utils import *
+from ShopifyApp.utils import *
 # Create your views here.
 
 #FUNCTION TO GET ACCESS TOKEN
