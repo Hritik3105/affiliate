@@ -1002,8 +1002,8 @@ class ProductList(APIView):
             print(response)
             for data in response.json():
                 print(data)
-                id=data["products"]["id"]
-                title=data["products"]["title"]
+                id=data["products"][0]["id"]
+                title=data["products"][0]["title"]
                 dict={
                     "id":id,
                     "title":title
