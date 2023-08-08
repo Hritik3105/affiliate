@@ -994,7 +994,7 @@ class ProductList(APIView):
     def get(self,request):
         code=Store.objects.all()
         for i in code:
-            acc_tok=access_token(self,request)
+      
             headers= {"X-Shopify-Access-Token": i.access_token}
             url=f"https://{i.store_name}/admin/api/{API_VERSION}/products.json?status=active"
             response = requests.get(url, headers=headers)
