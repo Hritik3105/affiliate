@@ -664,5 +664,3 @@ class ShopifyCouponView(APIView):
     
     
     
-
-    

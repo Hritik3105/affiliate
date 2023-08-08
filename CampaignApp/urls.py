@@ -60,6 +60,7 @@ urlpatterns = [
     path("subscriptiondetails/",SubscriptionDetails.as_view(),name="subscriptiondetails"),
     path("couponorder/",CouponOrderCountView.as_view(),name="couponorder"),
     path('marketplace/url/',MarketplacetUrl.as_view(),name="marketplaceurl"),
+    path('commission/filter/',CommisssionFilter.as_view(),name="filter"),
    
     
 ]

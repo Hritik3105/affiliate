@@ -2056,6 +2056,3 @@ class AmountTransfer(APIView):
         return Response({"data":sale},status=status.HTTP_200_OK)
     
     
-
-    
-        

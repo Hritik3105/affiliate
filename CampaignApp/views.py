@@ -988,8 +988,7 @@ class DeleteCampaign(APIView):
 # API TO GET Product list
 """API TO GET LIST OF PRODUCT"""
 class ProductList(APIView):
-    authentication_classes=[TokenAuthentication]
-    permission_classes = [IsAuthenticated]      
+ 
     def get(self,request):
         acc_tok=access_token(self,request)
         headers= {"X-Shopify-Access-Token": acc_tok[0]}
@@ -3349,3 +3348,31 @@ class MarketplacetUrl(APIView):
                         })
             
         return Response({'product_details':new_list,"product_url":handle_lst,"title_list":title_list},status=status.HTTP_200_OK)       
+    
+    
+    
+class CommisssionFilter(APIView):
+    def get(self,request):
+        commission=request.data.get("commission")
+        product=request.data.get("product")
+        match_data=Product_information.objects.filter(campaignid__status=1,campaiginid__offer=commission,product_id=product)
+        camp_list=[]
+        for i in match_data:
+            dict1={
+                    "campaignid_id":i.campaignid.id,
+                    "campaign_name": i.campaignid.campaign_name ,
+                    "influencer_fee":i.campaignid.influencer_fee,
+                    "offer":i.campaignid.offer,
+                    "product":[{
+                    "product_name":i.product_name,
+                    "coupon_name":ast.literal_eval(i.coupon_name),
+                    "amount":ast.literal_eval(i.amount),
+                    "discount_type":ast.literal_eval(i.discount_type),
+                    "product_id":i.product_id,
+                }]
+                        
+                    }
+            camp_list.append(dict1)
+        return Response({"data":camp_list},status=status.HTTP_200_OK)
+        
+        
