@@ -993,13 +993,22 @@ class ProductList(APIView):
     
     def get(self,request):
         code=Store.objects.all()
+        product_list=[]
         for i in code:
       
             headers= {"X-Shopify-Access-Token": i.access_token}
             url=f"https://{i.store_name}/admin/api/{API_VERSION}/products.json?status=active"
             response = requests.get(url, headers=headers)
             print(response)
-        return Response({"success":json.loads(response.text)})    
+            for data in response:
+                id=data["success"]["products"]["id"]
+                title=data["success"]["products"]["title"]
+                dict={
+                    "id":id,
+                    "title":title
+                }
+                product_list.append(dict)
+        return Response({"success":product_list},status=status.HTTP_200_OK)    
 
 
 
