@@ -43,6 +43,7 @@ class CreateDiscountCodeView(APIView):
             
             
             discount = request.data.get('discount_code')
+            print(discount)
             
             if discount:
                 if len(discount)<3:
