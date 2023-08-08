@@ -487,6 +487,7 @@ class EditCodeView(APIView):
             old_discount_type = coupon_data["value_type"]
             old_amount = coupon_data["value"]   
             old_entitled_product_ids = coupon_data['entitled_product_ids']
+            print("ooooooooooooo",old_entitled_product_ids)
             
         else:
             return Response({'message':get_response.text})
@@ -547,10 +548,11 @@ class EditCodeView(APIView):
     }
       
         cop_res=discount_code5(price_rule,acc_tok[1],headers,discount)
-        print(cop_res)
+        print("cop",cop_res)
         if cop_res.status_code == 200:
 
             response = requests.put(url,headers=headers,json=data)
+            print(":simple",response)
             if response.status_code == 200: 
                 return Response({'message': 'Discount Edit successfully','title': discount,"discount_type":discount_type,'amount':amt,"id":price_rule},status=status.HTTP_200_OK)
             if response.status_code== 422:
@@ -580,7 +582,7 @@ def discount_code5(price_rule,shop,headers,discount_code):
     }
 }
     discount_code_response = requests.patch(patch_url, json=data,headers=headers)
-    
+    print("discount",discount_code_response)
     if discount_code_response.status_code == 200:
         return Response({"success":discount_code_response.json()},status=status.HTTP_200_OK)
     else:
