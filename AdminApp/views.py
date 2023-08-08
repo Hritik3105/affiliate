@@ -75,6 +75,7 @@ def show(request):
                         order_count += 1  
                 
                 sales_reports1.append({"store_name": store_name, "sales_report": sales_report,"order_count":order_count})
+    print(sales_reports1)
     for i in sales_reports1:
         if i["sales_report"]:
             total_order_count+=i["order_count"]
