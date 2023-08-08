@@ -12,7 +12,7 @@ def access_token(self,request):
     return acc_tok,shop
 
 
-def one_time_discount(self,price_id,shop,headers,discount_code):
+def one_time_discount(price_id,shop,headers,discount_code):
     
         discount_code_endpoint = f'https://{SHOPIFY_API_KEY}:{SHOPIFY_API_SECRET}@{shop}/admin/api/{API_VERSION}/price_rules/{price_id}/discount_codes.json'
 
