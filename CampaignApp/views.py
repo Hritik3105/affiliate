@@ -1002,8 +1002,8 @@ class ProductList(APIView):
     
             for i in response.json()["products"]:
                 
-                id=i[0]["id"]
-                title=i[0]["title"]
+                id=i["id"]
+                title=i["title"]
                 dict={
                     "id":id,
                     "title":title
