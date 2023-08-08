@@ -3054,7 +3054,7 @@ class AdminTransfer(APIView):
                     "sales":round(pay.sales,2),
                     "account":pay.account_id,
                     "admin":pay.admin.id,
-                    "admin_name":pay.admin.name,
+                    "admin_name":pay.admin.username,
                     "admin_fee":commission_val,
                     "offer":pay.offer,
                     "amount":pay.amount,  
