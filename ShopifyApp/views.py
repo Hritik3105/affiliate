@@ -576,6 +576,60 @@ class ProductEditCodeView(APIView):
         
         
 
+      
+
+        
+        
+class Analytics(APIView):
+    authentication_classes=[TokenAuthentication]
+    permission_classes = [IsAuthenticated] 
+    def get(self,request):
+        acc_tok=access_token(self,request)
+        
+       
+        end_date = datetime.now().strftime('%Y-%m-%d')
+        start_date = (datetime.now() - timedelta(days=7)).strftime('%Y-%m-%d')
+
+        url = f"https://{acc_tok[1]}/admin/api/{API_VERSION}/reports.json"
+        headers= {"X-Shopify-Access-Token": acc_tok[0]}
+
+        
+        now = datetime.now()
+        year = now.year
+        month = now.month
+       
+
+      
+        start_date = date(2023, 1, 1)
+        end_date = date(2023, 1, 31)
+        payload = {
+            "query": {
+                "sales": {
+                    "metric": {
+                        "field": "total_sales",
+                        "sum": {}
+                    },
+                    "time_range": {
+                        "start": start_date.isoformat(),
+                        "end": end_date.isoformat()
+                    }
+                }
+            }
+        }
+    
+        response = requests.post(url, headers=headers, json=payload)
+        if response.status_code == 200:
+            data = response.json()
+            total_sales = data.get('results', {}).get('sales_over_time', {}).get('rows', [{}])[0].get('total_sales', 0)
+
+            return Response({'total_sales': total_sales})
+        else:
+          
+            return Response({'error': 'Failed to fetch total sales'}, status=500)
+
+
+
+
 
 class ShopifyCouponView(APIView):
     authentication_classes=[TokenAuthentication]
