@@ -43,8 +43,7 @@ class CreateDiscountCodeView(APIView):
             
             
             discount = request.data.get('discount_code')
-            print(":sssssss",discount)
-            
+          
             if discount:
                 if len(discount)<3:
                     return Response({'error': 'discount code must be three or more than three character long'}, status=status.HTTP_400_BAD_REQUEST)
@@ -104,105 +103,8 @@ class CreateDiscountCodeView(APIView):
             else:
                 return Response({"error":"Amount should be in positive"},status=status.HTTP_400_BAD_REQUEST)
         return Response({"error":"Admin Deactive your shop"},status=status.HTTP_401_UNAUTHORIZED)
-
- 
-        
-    # def one_time_discount(self,price_id,shop,headers,discount_code):
-    
-    #     discount_code_endpoint = f'https://{SHOPIFY_API_KEY}:{SHOPIFY_API_SECRET}@{shop}/admin/api/{API_VERSION}/price_rules/{price_id}/discount_codes.json'
-
-    #     discount_code_data = {
-    #         'discount_code': {
-    #             'code': discount_code,
-    #             'usage_limit': None,
-    #             'customer_selection': 'all',
-    #             "once_per_customer": True, 
-    #             'starts_at': '2023-04-06T00:00:00Z',
-    #             'ends_at': '2023-04-30T23:59:59Z'
-    #         }
-    #     }
-
-
-    #     discount_code_response = requests.post(discount_code_endpoint, json=discount_code_data,headers=headers)
-    
-    #     if discount_code_response.status_code == 201:
-    #         return discount_code_response
-    #     else:
-    
-    #         pp=delete_price_rule(price_id,shop, headers)
-    #         return discount_code_response
-        
-    
-
-#API TO CREATE DISCOUNT
-class DiscountCodeMultiple(APIView):
-    authentication_classes=[TokenAuthentication]
-    permission_classes = [IsAuthenticated]  
-    def post(self, request):
-      
-        acc_tok=access_token(self,request)
-        headers= {"X-Shopify-Access-Token": acc_tok[0]}
-        base_url = f'https://{acc_tok[1]}/admin/api/{API_VERSION}'
    
-        discount = request.data.get('discount_code')
-        discount_type=request.data.get("discount_type")
-        amount=request.data.get("amount")
-  
-        data = {
-          "price_rule": {
-                "title": discount,
-                "target_type": "line_item",
-                "target_selection": "all",
-                "allocation_method": "across",
-                "value_type": discount_type,
-                "value":amount,
-                "customer_selection": "all",
-                "once_per_customer": True, 
-                'starts_at': '2023-04-06T00:00:00Z',
-                'ends_at': '2023-04-30T23:59:59Z'
 
-            }
-        }
-        
-    
-        response = requests.post(f"{base_url}/price_rules.json", headers=headers, json=data)
-        price_id=json.loads(response.text)["price_rule"]["id"]
-        discount_value=self.multiple_discount_code(price_id,acc_tok[1],headers,discount)
-        if response.ok and discount_value == None:
-            return Response({"coupon": discount},status=status.HTTP_201_CREATED)
-        else:
-            return Response({"error":"Coupon name already taken"},status=status.HTTP_400_BAD_REQUEST)
-        
-        
-    def multiple_discount_code(self,price_id,shop,headers,discount_code):
-        
-        discount_code_endpoint = f'https://{SHOPIFY_API_KEY}:{SHOPIFY_API_SECRET}@{shop}/admin/api/{API_VERSION}/price_rules/{price_id}/discount_codes.json'
-
-        # Set up the data for the discount code
-        discount_code_data = {
-            'discount_code': {
-                'code': discount_code,
-                'usage_limit': None,
-                'customer_selection': 'all',
-                "once_per_customer": True, 
-                'starts_at': '2023-04-06T00:00:00Z',
-                'ends_at': '2023-04-30T23:59:59Z'
-            }
-        }
-
-        
-        discount_code_response = requests.post(discount_code_endpoint, json=discount_code_data,headers=headers)
-        
-        
-     
-        if discount_code_response.status_code == 201:
-            print('Discount code created successfully!')
-        else:
-            print(f'Error creating discount code: {discount_code_response.text}')
-        
-
-
-    
 
 
 #API TO CREATE DISCOUNT
@@ -305,55 +207,6 @@ class ParticularProduct(APIView):
         else:
             return Response({"error":"Admin Deactivate your shop"},status=status.HTTP_401_UNAUTHORIZED)
         
-        
-
-
-            
-
-    
-#API for particular product
-def discount_code1(price_id,shop,headers,discount_code):
-    
-    
-    discount_code_endpoint = f'https://{SHOPIFY_API_KEY}:{SHOPIFY_API_SECRET}@{shop}/admin/api/{API_VERSION}/price_rules/{price_id}/discount_codes.json'
-
-    # Set up the data for the discount code
-    discount_code_data = {
-        'discount_code': {
-            'code': discount_code,
-            'usage_limit': None,
-            'customer_selection': 'all',
-            "once_per_customer": True, 
-            'starts_at': '2023-04-06T00:00:00Z',
-            'ends_at': '2023-04-30T23:59:59Z',
-            
-
-        }
-    }
-
-
-    discount_code_response = requests.post(discount_code_endpoint, json=discount_code_data,headers=headers)
-   
-    
-    if discount_code_response.status_code == 201:
-        return discount_code_response
-    else:
-    
-        pp=delete_price_rule(price_id,shop, headers)
-        return discount_code_response
-      
-      
-# def delete_price_rule(price_rule_id, shop, headers):
-   
-    
-#     delete_url = f'https://{shop}/admin/api/{API_VERSION}/price_rules/{price_rule_id}.json'
-#     response = requests.delete(delete_url, headers=headers)
-
-#     if response.status_code == 200:
-#         return True  # Price rule deleted successfully
-#     else:
-#         return False  # Failed to delete price rule
-
         
 
 # API TO GET LIST OF DISCOUNT
@@ -557,32 +410,7 @@ class EditCodeView(APIView):
                 return Response({'message': "Coupon already exists"}, status=status.HTTP_400_BAD_REQUEST)
         
         
-        
-
-      
-def discount_code5(price_rule,shop,headers,discount_code):
-    discount_code_endpoint = f'https://{SHOPIFY_API_KEY}:{SHOPIFY_API_SECRET}@{shop}/admin/api/{API_VERSION}/price_rules/{price_rule}/discount_codes.json'
     
-    get_response = requests.get(discount_code_endpoint, headers=headers)
-    discount_code_id=get_response.json()["discount_codes"][0]['id']
-
-    patch_url = f"https://{shop}/admin/api/2021-10/price_rules/{price_rule}/discount_codes/{discount_code_id}.json"
-    
-
-    data = {
-    "discount_code": {
-        "id": discount_code_id,
-        "code": discount_code,
-      
-    }
-}
-    discount_code_response = requests.patch(patch_url, json=data,headers=headers)
-
-    if discount_code_response.status_code == 200:
-        return Response({"success":discount_code_response.json()},status=status.HTTP_200_OK)
-    else:
-        return Response({"error":discount_code_response.json()},status=status.HTTP_400_BAD_REQUEST)
-        
 
 
 #API TO GET SINGLE COUPON DATA

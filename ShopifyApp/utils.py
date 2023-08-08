@@ -48,3 +48,61 @@ def delete_price_rule(price_rule_id, shop, headers):
         return True  # Price rule deleted successfully
     else:
         return False  # Failed to delete price rule
+    
+    
+    
+#API for particular product
+def discount_code1(price_id,shop,headers,discount_code):
+    
+    
+    discount_code_endpoint = f'https://{SHOPIFY_API_KEY}:{SHOPIFY_API_SECRET}@{shop}/admin/api/{API_VERSION}/price_rules/{price_id}/discount_codes.json'
+
+    # Set up the data for the discount code
+    discount_code_data = {
+        'discount_code': {
+            'code': discount_code,
+            'usage_limit': None,
+            'customer_selection': 'all',
+            "once_per_customer": True, 
+            'starts_at': '2023-04-06T00:00:00Z',
+            'ends_at': '2023-04-30T23:59:59Z',
+            
+
+        }
+    }
+
+
+    discount_code_response = requests.post(discount_code_endpoint, json=discount_code_data,headers=headers)
+   
+    
+    if discount_code_response.status_code == 201:
+        return discount_code_response
+    else:
+    
+        pp=delete_price_rule(price_id,shop, headers)
+        return discount_code_response
+      
+      
+def discount_code5(price_rule,shop,headers,discount_code):
+    discount_code_endpoint = f'https://{SHOPIFY_API_KEY}:{SHOPIFY_API_SECRET}@{shop}/admin/api/{API_VERSION}/price_rules/{price_rule}/discount_codes.json'
+    
+    get_response = requests.get(discount_code_endpoint, headers=headers)
+    discount_code_id=get_response.json()["discount_codes"][0]['id']
+
+    patch_url = f"https://{shop}/admin/api/2021-10/price_rules/{price_rule}/discount_codes/{discount_code_id}.json"
+    
+
+    data = {
+    "discount_code": {
+        "id": discount_code_id,
+        "code": discount_code,
+      
+    }
+}
+    discount_code_response = requests.patch(patch_url, json=data,headers=headers)
+
+    if discount_code_response.status_code == 200:
+        return Response({"success":discount_code_response.json()},status=status.HTTP_200_OK)
+    else:
+        return Response({"error":discount_code_response.json()},status=status.HTTP_400_BAD_REQUEST)
+        
