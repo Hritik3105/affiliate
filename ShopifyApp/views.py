@@ -529,6 +529,12 @@ class EditCodeView(APIView):
             amt="-"+str(amount)
             amount=amount
             
+            
+       
+    
+        influencer_id=request.data.get("influ_ids")
+        print("sss",my_list)
+            
         data = {
             "price_rule": {
                 "title": discount,
@@ -540,11 +546,10 @@ class EditCodeView(APIView):
             }
     }
       
-
         cop_res=discount_code5(price_rule,acc_tok[1],headers,discount)
-
-      
+        print(cop_res)
         if cop_res.status_code == 200:
+
             response = requests.put(url,headers=headers,json=data)
             if response.status_code == 200: 
                 return Response({'message': 'Discount Edit successfully','title': discount,"discount_type":discount_type,'amount':amt,"id":price_rule},status=status.HTTP_200_OK)
