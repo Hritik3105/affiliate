@@ -1510,6 +1510,10 @@ class InfluencerApplied(APIView):
     
     def post(self,request):
        
+        check=VendorCampaign.objects.filter(campaign_status=1,campaignid_id=camp_id,influencerid_id=infl_ids.id,vendor_id=vendors_id.vendorid.id).exists()
+        if check==True:
+            return Response({"success":"Already Applied"},status=status.HTTP_200_OK)   
+
 
         camp_id=request.query_params.get('value')        
         infl_ids=ModashInfluencer.objects.get(influencerid=self.request.user.id)
@@ -2055,4 +2059,25 @@ class AmountTransfer(APIView):
         
         return Response({"data":sale},status=status.HTTP_200_OK)
     
-    
+ 
+ 
+class UpdateProfile(APIView):   
+    authentication_classes=[TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    def put(self,request,id):
+        try:
+            influencer = User.objects.get(id = id,user_type=3)
+        except User.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        serializer=UpdateProfileSerializer(influencer,data=request.data)
+        if serializer.is_valid():
+            serializer.save(user_type=3)
+            get_value=User.objects.filter(id=self.request.user.id).values("image")
+            image_val=get_value[0]["image"]
+            url_path=request.get_host()+"/static/image/"+ str(image_val)
+            profile_val={
+                "data":serializer.data,
+                "url":url_path
+            }
+            return Response(profile_val,status=status.HTTP_200_OK)
+        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
