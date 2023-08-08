@@ -3367,7 +3367,7 @@ class MarketplacetUrl(APIView):
     
     
 class CommisssionFilter(APIView):
-    def get(self,request):
+    def post(self,request):
         commission=request.data.get("commission")
         product=request.data.get("product")
         match_data=Product_information.objects.filter(Q(campaiginid__offer = commission)|Q(product_id=product),campaignid__status=1)
