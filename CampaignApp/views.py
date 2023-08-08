@@ -1003,12 +1003,12 @@ class ProductList(APIView):
             print(response.json()["products"])
             for i in response.json()["products"]:
                 print("----------",i)
-                id=i[0]["id"]
-                title=i[0]["title"]
-                dict={
-                    "id":id,
-                    "title":title
-                }
+                # id=i[0]["id"]
+                # title=i[0]["title"]
+                # dict={
+                #     "id":id,
+                #     "title":title
+                # }
                 # product_list.append(dict)
         return Response({"success":product_list},status=status.HTTP_200_OK)    
 
