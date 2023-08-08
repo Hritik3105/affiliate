@@ -1000,8 +1000,8 @@ class ProductList(APIView):
             url=f"https://{i.store_name}/admin/api/{API_VERSION}/products.json?status=active"
             response = requests.get(url, headers=headers)
             print(response.json()["product"])
-            # for data in response.json:
-            #     print(data)
+            for data in response.json():
+                print(data)
                 # id=data["products"][0]["id"]
                 # title=data["products"][0]["title"]
                 # dict={
