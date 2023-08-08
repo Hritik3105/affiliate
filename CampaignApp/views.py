@@ -1001,6 +1001,7 @@ class ProductList(APIView):
             response = requests.get(url, headers=headers)
             print(response)
             for data in response:
+                print(data)
                 id=data["success"]["products"]["id"]
                 title=data["success"]["products"]["title"]
                 dict={
