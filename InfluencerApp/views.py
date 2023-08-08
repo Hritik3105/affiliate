@@ -1510,14 +1510,15 @@ class InfluencerApplied(APIView):
     
     def post(self,request):
        
-        check=VendorCampaign.objects.filter(campaign_status=1,campaignid_id=camp_id,influencerid_id=infl_ids.id,vendor_id=vendors_id.vendorid.id).exists()
-        if check==True:
-            return Response({"success":"Already Applied"},status=status.HTTP_200_OK)   
+        
 
 
         camp_id=request.query_params.get('value')        
         infl_ids=ModashInfluencer.objects.get(influencerid=self.request.user.id)
         vendors_id=Campaign.objects.get(id=camp_id)
+        check=VendorCampaign.objects.filter(campaign_status=1,campaignid_id=camp_id,influencerid_id=infl_ids.id,vendor_id=vendors_id.vendorid.id).exists()
+        if check==True:
+            return Response({"success":"Already Applied"},status=status.HTTP_200_OK)   
         
         camp_accept=Campaign.objects.filter(id=camp_id).update(campaign_status=1)
         infl_accept=Notification.objects.create(campaignid_id=camp_id,influencerid_id=infl_ids.id,send_notification=2,vendor_id=vendors_id.vendorid.id)
