@@ -1519,7 +1519,7 @@ class InfluencerApplied(APIView):
         check=VendorCampaign.objects.filter(campaign_status=1,campaignid_id=camp_id,influencerid_id=infl_ids.id,vendor_id=vendors_id.vendorid.id).exists()
         print("------------",check)
         if check==True:
-            return Response({"success":"Already Applied"},status=status.HTTP_200_OK)   
+            return Response({"success":"Already Applied"},status=status.HTTP_400_BAD_REQUEST)   
         
         camp_accept=Campaign.objects.filter(id=camp_id).update(campaign_status=1)
         infl_accept=Notification.objects.create(campaignid_id=camp_id,influencerid_id=infl_ids.id,send_notification=2,vendor_id=vendors_id.vendorid.id)
