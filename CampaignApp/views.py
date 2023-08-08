@@ -25,6 +25,7 @@ from Affilate_Marketing import settings
 from CampaignApp.utils import *
 from AdminApp.models import *
 import datetime
+from StoreApp.models import *
 
 # Create your views here.
 
@@ -988,12 +989,16 @@ class DeleteCampaign(APIView):
 # API TO GET Product list
 """API TO GET LIST OF PRODUCT"""
 class ProductList(APIView):
- 
+   
+    
     def get(self,request):
-        acc_tok=access_token(self,request)
-        headers= {"X-Shopify-Access-Token": acc_tok[0]}
-        url=f"https://{acc_tok[1]}/admin/api/{API_VERSION}/products.json?status=active"
-        response = requests.get(url, headers=headers)
+        code=Store.objects.all()
+        for i in code:
+            acc_tok=access_token(self,request)
+            headers= {"X-Shopify-Access-Token": i.access_token}
+            url=f"https://{i.store_name}/admin/api/{API_VERSION}/products.json?status=active"
+            response = requests.get(url, headers=headers)
+            print(response)
         return Response({"success":json.loads(response.text)})    
 
 
