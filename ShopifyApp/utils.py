@@ -108,3 +108,27 @@ def discount_code5(price_rule,shop,headers,discount_code):
     else:
         return Response({"error":discount_code_response.json()},status=status.HTTP_400_BAD_REQUEST)
         
+        
+        
+def discount_code9(price_rule,shop,headers,discount_code):
+    discount_code_endpoint = f'https://{SHOPIFY_API_KEY}:{SHOPIFY_API_SECRET}@{shop}/admin/api/{API_VERSION}/price_rules/{price_rule}/discount_codes.json'
+
+    get_response = requests.get(discount_code_endpoint, headers=headers)
+  
+    discount_code_id=get_response.json()["discount_codes"][0]['id']
+
+    patch_url = f"https://{shop}/admin/api/{API_VERSION}/price_rules/{price_rule}/discount_codes/{discount_code_id}.json"
+    
+
+    data = {
+    "discount_code": {
+        "id": discount_code_id,
+        "code": discount_code,
+      
+    }
+}
+    discount_code_response = requests.patch(patch_url, json=data,headers=headers)
+    if discount_code_response.status_code == 200:
+        return Response({"success":discount_code_response.json()},status=status.HTTP_200_OK)
+    else:
+        return Response({"error":discount_code_response.json()},status=status.HTTP_400_BAD_REQUEST)
