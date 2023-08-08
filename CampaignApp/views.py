@@ -999,7 +999,7 @@ class ProductList(APIView):
             headers= {"X-Shopify-Access-Token": i.access_token}
             url=f"https://{i.store_name}/admin/api/{API_VERSION}/products.json?status=active"
             response = requests.get(url, headers=headers)
-            print(response.json())["product"]
+            print(response.json()["product"])
             # for data in response.json:
             #     print(data)
                 # id=data["products"][0]["id"]
