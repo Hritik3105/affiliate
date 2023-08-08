@@ -482,17 +482,26 @@ class EditCodeView(APIView):
         if get_response.status_code == 200:
             coupon_data = get_response.json()["price_rule"]
 
-        
+
             old_title = coupon_data["title"]
             old_discount_type = coupon_data["value_type"]
             old_amount = coupon_data["value"]   
+            old_entitled_product_ids = coupon_data['entitled_product_ids']
+            
         else:
             return Response({'message':get_response.text})
         url =f'https://{SHOPIFY_API_KEY}:{SHOPIFY_API_SECRET}@{acc_tok[1]}/admin/api/{API_VERSION}/price_rules/{price_rule}.json'
-      
-      
-    
-            
+         
+         
+          
+        product_name = request.data.get('product_id')
+        if product_name == None:
+           
+            my_list=old_entitled_product_ids
+           
+        else:    
+            my_list = list(map(int, product_name.split(","))) 
+         
         discount = request.data.get('discount_code')
         if discount:
             if len(discount)<3:
@@ -521,14 +530,15 @@ class EditCodeView(APIView):
             amount=amount
             
         data = {
-          "price_rule": {
+            "price_rule": {
                 "title": discount,
                 "value_type": discount_type,
-                "value":amt,
-             
-
+                "value": amt,
+                "entitled_product_ids": my_list,
+           
+          
             }
-        }
+    }
       
 
         cop_res=discount_code5(price_rule,acc_tok[1],headers,discount)
