@@ -1011,7 +1011,7 @@ class ProductList(APIView):
                 product_list.append(dict)
         unique_items = []
         title = set()
-
+        print("--------",title)
         for item in product_list:
             title = item['title']
             if title not in title:
