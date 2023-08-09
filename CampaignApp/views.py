@@ -990,7 +990,6 @@ class DeleteCampaign(APIView):
 """API TO GET LIST OF PRODUCT"""
 class ProductList(APIView):
    
-    
     def get(self,request):
         code=Store.objects.all()
         product_list=[]
@@ -1008,7 +1007,9 @@ class ProductList(APIView):
                     "id":id,
                     "title":title
                 }
+                
                 product_list.append(dict)
+                print(product_list)
         return Response({"success":product_list},status=status.HTTP_200_OK)    
 
 
