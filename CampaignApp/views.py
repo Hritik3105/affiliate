@@ -3374,7 +3374,7 @@ class CommisssionFilter(APIView):
         print(product)
         if commission and product:
             print("enterrrrr")
-            match_data=Product_information.objects.filter(Q(campaignid__campaign_status=0)|Q(campaignid__campaign_status=1),campaignid__offer =commission,product_id=product,draft_status=0,campaign_exp=1)
+            match_data=Product_information.objects.filter(Q(campaignid__campaign_status=0)|Q(campaignid__campaign_status=1),campaignid__offer =commission,product_id=product,campaignid__draft_status=0,campaignid__campaign_exp=1)
             print("00000000000",match_data)
         if commission:
             match_data=Product_information.objects.filter(Q(campaignid__campaign_status=0)|Q(campaignid__campaign_status=1),campaignid__offer = commission,draft_status=0,campaign_exp=1)
