@@ -1010,15 +1010,15 @@ class ProductList(APIView):
                 
                 product_list.append(dict)
         unique_items = []
-        title = set()
+        titles = set()
         print("--------",title)
         for item in product_list:
             title = item['title']
             print(title)
-            if title not in title:
+            if title not in titles:
                 print(item)
                 unique_items.append(item)
-                title.add(title)
+                titles.add(title)
 
         print(unique_items)
                 
