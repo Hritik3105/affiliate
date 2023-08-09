@@ -989,6 +989,19 @@ class DeleteCampaign(APIView):
 # API TO GET Product list
 """API TO GET LIST OF PRODUCT"""
 class ProductList(APIView):
+    authentication_classes=[TokenAuthentication]
+    permission_classes = [IsAuthenticated]      
+    def get(self,request):
+        acc_tok=access_token(self,request)
+        headers= {"X-Shopify-Access-Token": acc_tok[0]}
+        url=f"https://{acc_tok[1]}/admin/api/{API_VERSION}/products.json?status=active"
+        response = requests.get(url, headers=headers)
+        return Response({"success":json.loads(response.text)})    
+
+        
+# API TO GET Marketplace Product list
+"""API TO GET LIST OF PRODUCT"""
+class MarketProductList(APIView):
    
     def get(self,request):
         code=Store.objects.all()
