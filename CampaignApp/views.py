@@ -1015,6 +1015,7 @@ class ProductList(APIView):
         for item in product_list:
             title = item['title']
             if title not in title:
+                print(item)
                 unique_items.append(item)
                 title.add(title)
 
