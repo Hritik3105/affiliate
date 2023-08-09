@@ -1010,9 +1010,12 @@ class ProductList(APIView):
                 
                 product_list.append(dict)
         print(product_list)
+        ltt=[]
         for i in product_list:
-          
-            print(set(i["title"]))
+            ltt.append(i["title"])
+            z=set(ltt)
+            print(list(z))
+         
            
           
         return Response({"success":product_list},status=status.HTTP_200_OK)    
