@@ -1013,7 +1013,7 @@ class ProductList(APIView):
         for i in product_list:
             print(i["title"])
             if i["title"]==i["title"]:
-                print(len(i["title"]))
+                print((i["title"]))
         return Response({"success":product_list},status=status.HTTP_200_OK)    
 
 
