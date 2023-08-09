@@ -1010,20 +1010,20 @@ class ProductList(APIView):
                 product_list.append(dict)
         unique_items = []
         titles = set()
-        print("--------",title)
+       
         for item in product_list:
             title = item['title']
-            print(title)
+         
             if title not in titles:
-                print(item)
+             
                 unique_items.append(item)
                 titles.add(title)
 
-        print(unique_items)
+  
                 
            
           
-        return Response({"success":product_list},status=status.HTTP_200_OK)    
+        return Response({"success":unique_items},status=status.HTTP_200_OK)    
 
 
 
