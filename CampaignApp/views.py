@@ -1004,7 +1004,6 @@ class ProductList(APIView):
                 id=i["id"]
                 title=i["title"]
                 dict={
-                    "id":id,
                     "title":title
                 }
                 
