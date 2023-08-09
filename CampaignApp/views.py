@@ -3377,10 +3377,10 @@ class CommisssionFilter(APIView):
             match_data=Product_information.objects.filter(Q(campaignid__campaign_status=0)|Q(campaignid__campaign_status=1),campaignid__offer =commission,product_id=product,campaignid__draft_status=0,campaignid__campaign_exp=1)
             print("00000000000",match_data)
         if commission:
-            match_data=Product_information.objects.filter(Q(campaignid__campaign_status=0)|Q(campaignid__campaign_status=1),campaignid__offer = commission,draft_status=0,campaignid__draft_status=0,campaignid__campaign_exp=1)
+            match_data=Product_information.objects.filter(Q(campaignid__campaign_status=0)|Q(campaignid__campaign_status=1),campaignid__offer = commission,campaignid__draft_status=0,campaignid__campaign_exp=1)
             print("000000044440000",match_data)
         else:
-            match_data=Product_information.objects.filter(Q(campaignid__campaign_status=0)|Q(campaignid__campaign_status=1),product_id=product,draft_status=0,campaignid__draft_status=0,campaignid__campaign_exp=1)
+            match_data=Product_information.objects.filter(Q(campaignid__campaign_status=0)|Q(campaignid__campaign_status=1),product_id=product,campaignid__draft_status=0,campaignid__campaign_exp=1)
             print("000000000444565700",match_data)
             
         camp_list=[]
