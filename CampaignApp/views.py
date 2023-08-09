@@ -1009,7 +1009,7 @@ class ProductList(APIView):
                 }
                 
                 product_list.append(dict)
-        print(set(product_list))
+        print(product_list)
         return Response({"success":product_list},status=status.HTTP_200_OK)    
 
 
