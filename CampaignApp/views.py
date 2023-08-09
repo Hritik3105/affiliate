@@ -3384,18 +3384,18 @@ class CommisssionFilter(APIView):
     def post(self,request):
         commission=request.data.get("commission")
         product=request.data.get("product")
-        print(commission)
-        print(product)
+
+        
         if commission and product:
-            print("enterrrrr")
+           
             match_data=Product_information.objects.filter(Q(campaignid__campaign_status=0) | Q(campaignid__campaign_status=1),campaignid__offer =commission,product_name=product,campaignid__draft_status=0,campaignid__campaign_exp=1,campaignid__status=1)
-            print("00000000000",match_data)
+        
         elif commission:
             match_data=Product_information.objects.filter(Q(campaignid__campaign_status=0)|Q(campaignid__campaign_status=1),campaignid__offer = commission,campaignid__draft_status=0,campaignid__campaign_exp=1,campaignid__status=1)
-            print("000000044440000",match_data)
-        else:
+           
+        elif product:
             match_data=Product_information.objects.filter(Q(campaignid__campaign_status=0)|Q(campaignid__campaign_status=1),product_name=product,campaignid__draft_status=0,campaignid__campaign_exp=1,campaignid__status=1)
-            print("000000000444565700",match_data)
+       
             
         camp_list=[]
         for i in match_data:
