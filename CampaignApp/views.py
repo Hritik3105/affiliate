@@ -1011,9 +1011,10 @@ class ProductList(APIView):
                 product_list.append(dict)
         print(product_list)
         for i in product_list:
-            print(i["title"])
-            if i["title"]==i["title"]:
-                print((i["title"]))
+          
+            print(set(i["title"]))
+           
+          
         return Response({"success":product_list},status=status.HTTP_200_OK)    
 
 
