@@ -578,13 +578,15 @@ class ProductEditCodeView(APIView):
                             edit_index=ss.index(int(price_rule))
                            
                           
-                            val=ast.literal_eval(k.coupon_name)[edit_index]=discount
-
+                            cop_name=ast.literal_eval(k.coupon_name)
+                            cop_name[edit_index] = discount
+                            k.coupon_name=str(cop_name)
+                            print(k.coupon_name)
                             # print(val)
                             # upd_val=ast.literal_eval(k.coupon_name)[edit_index]=val
                             # print("ddd",ast.literal_eval(k.coupon_name))
                             
-                            Product_information.objects.filter(coupon_id=k.coupon_id).update(coupon_name=(k.coupon_name))
+                           # Product_information.objects.filter(coupon_id=k.coupon_id).update(coupon_name=(k.coupon_name))
                 influencer_coupon.objects.filter(id=infludb_id).update(influencer_id_id=influencer_id,amount=float(amount),coupon_name=discount,vendor_id=self.request.user.id)
             
                 return Response({'message': 'Discount Edit successfully','title': discount,"discount_type":discount_type,'amount':amt,"id":price_rule,"influencer":influencer_id})
