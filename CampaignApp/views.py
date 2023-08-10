@@ -731,7 +731,7 @@ class  ActiveList(APIView):
 # API TO GET LIST OF DRAFT CAMPAIGN    
 
 """API TO GET LIST OF DRAFT CAMPAIGN OF INFLUENCER"""
-class  DraftList(APIView):
+class DraftList(APIView):
     authentication_classes=[TokenAuthentication]
     permission_classes = [IsAuthenticated]
     def get(self,request):
@@ -2555,7 +2555,6 @@ class MarketplaceAccept(APIView):
             cam_dec=Notification.objects.filter(campaignid_id=id,influencerid_id=pk,vendor_id=self.request.user.id).update(send_notification=3)
             return Response({"message":"Campaign Accept"},status=status.HTTP_202_ACCEPTED)
         except Exception as e:
-         
             return Response(status=status.HTTP_400_BAD_REQUEST)
         
         
