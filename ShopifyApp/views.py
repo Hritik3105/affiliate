@@ -565,7 +565,8 @@ class ProductEditCodeView(APIView):
                 
                 print("price rullleee",[price_rule])
                 cccc=Product_information.objects.last()
-                print(cccc)
+                print(cccc.coupon_id)
+                print(type(cccc.coupon_id))
                 influencer_coupon.objects.filter(id=infludb_id).update(influencer_id_id=influencer_id,amount=float(amount),coupon_name=discount,vendor_id=self.request.user.id)
                 vall=Product_information.objects.filter(coupon_id=[price_rule]).update(coupon_name=[discount],amount=[float(amount)])
                 print("ssssssssss",vall)
