@@ -2131,7 +2131,7 @@ class InfluencerCampSale(APIView):
                             amount=round(amount,2)
                             
                         else:
-                            amount=check[0]["influencer_fee"] 
+                            amount= i["sales"] -  check[0]["influencer_fee"] 
                         
                         
                         infl_dict={
