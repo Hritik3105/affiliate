@@ -574,13 +574,11 @@ class ProductEditCodeView(APIView):
                         if int(price_rule) in ast.literal_eval(k.coupon_id):
                             print(type(k.coupon_id))
                             ss=ast.literal_eval(k.coupon_id)
-                            print(type(ss))
-                            print("00000000000000000",ss.index(int(price_rule)))
-                            print("ppppppp",k.coupon_id)
-                            vall=Product_information.objects.get(coupon_id=k.coupon_id)
                             
-                            print("pppppppppppp2",vall.coupon_name)
-                            print("-----------",vall.amount)
+                            edit_index=ss.index(int(price_rule))
+                           
+                          
+                            print(k.coupon_name[edit_index])
 
                             
                 influencer_coupon.objects.filter(id=infludb_id).update(influencer_id_id=influencer_id,amount=float(amount),coupon_name=discount,vendor_id=self.request.user.id)
