@@ -563,19 +563,19 @@ class ProductEditCodeView(APIView):
         if zzx.status_code == 200:
             response = requests.put(url,headers=headers,json=data)
             if  response.status_code==200:
-                
-                print(type((price_rule)))
+               
                 cccc=Product_information.objects.all()
             
                 
                 for k in cccc:
                    
                     if k.coupon_id:
-                        print(type(ast.literal_eval(k.coupon_id)[0]))
-                        print(type(ast.literal_eval(k.coupon_id)))
-                        if price_rule in ast.literal_eval(k.coupon_id):
+                       
+                        if int(price_rule) in ast.literal_eval(k.coupon_id):
                             print(type(k.coupon_id))
-                            print("00000000000000000",k.coupon_id.index((price_rule)))
+                            ss=ast.literal_eval(k.coupon_id)
+                            print(type(ss))
+                            print("00000000000000000",ss.index(int(price_rule)))
                             print("ppppppp",k.coupon_id)
                             vall=Product_information.objects.get(coupon_id=k.coupon_id)
                             
