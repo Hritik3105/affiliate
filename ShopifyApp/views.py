@@ -507,12 +507,11 @@ class ProductEditCodeView(APIView):
         coupon_value=VendorCampaign.objects.filter(vendor=self.request.user.id,campaign_status=2).values("campaignid")
       
         for ids in coupon_value:
-            print(ids["campaignid"])
+          
             pre_val=Campaign.objects.filter(id=ids["campaignid"]).prefetch_related("product_information_set").all()
             for campaign in pre_val:
-                print("Campaign:", campaign.campaign_name)
                 for product in campaign.product_information_set.all():
-                    print("Product:", product.product_name)
+                    print("Product:", product.coupon_id)
         acc_tok=access_token(self,request)
         
         headers= {"X-Shopify-Access-Token": acc_tok[0]}
