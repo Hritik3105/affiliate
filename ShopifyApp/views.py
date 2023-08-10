@@ -14,6 +14,7 @@ import requests
 from datetime import datetime, timedelta
 from datetime import date
 from ShopifyApp.utils import *
+import ast  
 # Create your views here.
 
 #FUNCTION TO GET ACCESS TOKEN
@@ -568,7 +569,7 @@ class ProductEditCodeView(APIView):
                 for k in cccc:
                   
                     if k.coupon_id:
-                        if str(price_rule) in k.coupon_id:
+                        if str(price_rule) in ast.literal_eval(k.coupon_id):
                             print(type(k.coupon_id))
                             print("00000000000000000",k.coupon_id.index(str(price_rule)))
                             print("ppppppp",k.coupon_id)
