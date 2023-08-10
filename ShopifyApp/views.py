@@ -504,7 +504,7 @@ class ProductEditCodeView(APIView):
     permission_classes = [IsAuthenticated] 
     def post(self, request, format=None):
         
-        coupon_value=VendorCampaign.objects.filter(vendor=self.request.user.id,status=2).values("campaignid")
+        coupon_value=VendorCampaign.objects.filter(vendor=self.request.user.id,campaign_status=2).values("campaignid")
         print(coupon_value)
         acc_tok=access_token(self,request)
         
