@@ -517,10 +517,10 @@ class ProductEditCodeView(APIView):
                 for product in campaign.product_information_set.all():
                   
                     if product.coupon_id:
-                        print(int(price_rule))
-                        print(ast.literal_eval(product.coupon_id))
+                       
                         if int(price_rule) in ast.literal_eval(product.coupon_id):
-                            print(price_rule)
+                            print("hello")
+                            break
      
         
         get_url = f'https://{SHOPIFY_API_KEY}:{SHOPIFY_API_SECRET}@{acc_tok[1]}/admin/api/{API_VERSION}/price_rules/{price_rule}.json'
