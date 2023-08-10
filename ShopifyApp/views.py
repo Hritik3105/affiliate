@@ -571,7 +571,8 @@ class ProductEditCodeView(APIView):
                         if str(price_rule) in k.coupon_id:
                             print("ppppppp",k.coupon_id)
                             vall=Product_information.objects.get(coupon_id=k.coupon_id)
-                            print("pppppppppppp2",vall)
+                            print("pppppppppppp2",vall.coupon_name)
+                            print("-----------",vall.amount)
 
                             
                 influencer_coupon.objects.filter(id=infludb_id).update(influencer_id_id=influencer_id,amount=float(amount),coupon_name=discount,vendor_id=self.request.user.id)
