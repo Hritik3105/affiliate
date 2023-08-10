@@ -2125,6 +2125,7 @@ class InfluencerCampSale(APIView):
                     check=Campaign.objects.filter(id=i["campaign_id"]).values("influencer_fee","offer","campaign_name")
                    
                     if str_detail:
+                        print(check[0]["offer"])
                         if  check[0]["offer"] == "percentage":
                             amount=i["sales"] * check[0]["influencer_fee"] /100
                             amount=round(amount,2)
