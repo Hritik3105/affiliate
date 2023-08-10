@@ -3428,3 +3428,10 @@ class CommisssionFilter(APIView):
         return Response({"data":camp_list},status=status.HTTP_200_OK)
         
         
+        
+class ActiveCoupon(APIView):
+    authentication_classes=[TokenAuthentication]
+    permission_classes = [IsAuthenticated] 
+    
+    def get(self,request):
+        coupon_value=VendorCampaign.objects.filter(vendor=self.request.user.id,status=2)
