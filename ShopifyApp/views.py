@@ -503,7 +503,11 @@ class ProductEditCodeView(APIView):
     authentication_classes=[TokenAuthentication]
     permission_classes = [IsAuthenticated] 
     def post(self, request, format=None):
+        acc_tok=access_token(self,request)
         
+        headers= {"X-Shopify-Access-Token": acc_tok[0]}
+        price_rule=request.query_params.get('price')
+        print(type(price_rule))
         coupon_value=VendorCampaign.objects.filter(vendor=self.request.user.id,campaign_status=2).values("campaignid")
       
         for ids in coupon_value:
@@ -514,11 +518,9 @@ class ProductEditCodeView(APIView):
                     print("Product:", product.coupon_id)
                     if product.coupon_id:
                         print(type(product.coupon_id))
-        acc_tok=access_token(self,request)
-        
-        headers= {"X-Shopify-Access-Token": acc_tok[0]}
-        price_rule=request.query_params.get('price')
-        
+                        if price_rule in ast.literal_eval(product.coupon_id):
+                            print(price_rule)
+     
         
         get_url = f'https://{SHOPIFY_API_KEY}:{SHOPIFY_API_SECRET}@{acc_tok[1]}/admin/api/{API_VERSION}/price_rules/{price_rule}.json'
             
