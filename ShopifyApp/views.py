@@ -568,7 +568,8 @@ class ProductEditCodeView(APIView):
                 for k in cccc:
                   
                     if k.coupon_id:
-                        if str(1395373146394) in k.coupon_id:
+                        if str(price_rule) in k.coupon_id:
+                            print(type(k.coupon_id))
                             print("00000000000000000",k.coupon_id.index(str(price_rule)))
                             print("ppppppp",k.coupon_id)
                             vall=Product_information.objects.get(coupon_id=k.coupon_id)
