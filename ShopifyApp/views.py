@@ -589,7 +589,7 @@ class ProductEditCodeView(APIView):
                             
                             cop_type=ast.literal_eval(k.discount_type)   
                            
-                            cop_type[edit_index] = str(cop_type)
+                            cop_type[edit_index] = str(discount_type)
                             k.discount_type=str(cop_type)
                             
     
