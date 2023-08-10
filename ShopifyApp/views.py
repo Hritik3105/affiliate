@@ -512,6 +512,8 @@ class ProductEditCodeView(APIView):
             for campaign in pre_val:
                 for product in campaign.product_information_set.all():
                     print("Product:", product.coupon_id)
+                    if product.coupon_id:
+                        print(type(product.coupon_id))
         acc_tok=access_token(self,request)
         
         headers= {"X-Shopify-Access-Token": acc_tok[0]}
