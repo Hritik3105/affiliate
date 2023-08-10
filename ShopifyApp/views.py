@@ -587,9 +587,14 @@ class ProductEditCodeView(APIView):
                             cop_amount[edit_index] = str(flt_val)
                             k.amount=str(cop_amount)
                             
+                            cop_type=ast.literal_eval(k.discount_type)   
+                           
+                            cop_type[edit_index] = str(cop_type)
+                            k.discount_type=str(cop_type)
+                            
     
                             
-                            Product_information.objects.filter(coupon_id=k.coupon_id).update(coupon_name=k.coupon_name,amount= k.amount)
+                            Product_information.objects.filter(coupon_id=k.coupon_id).update(coupon_name=k.coupon_name,amount= k.amount.discount_type=k.discount_type)
                 influencer_coupon.objects.filter(id=infludb_id).update(influencer_id_id=influencer_id,amount=float(amount),coupon_name=discount,vendor_id=self.request.user.id)
             
                 return Response({'message': 'Discount Edit successfully','title': discount,"discount_type":discount_type,'amount':amt,"id":price_rule,"influencer":influencer_id})
