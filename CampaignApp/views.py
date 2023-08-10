@@ -379,6 +379,7 @@ class UpdateCampaign(APIView):
            
                 for i in range(len(val_lst)):
                     print("hekllooo")
+                    print(val_lst[i]["discout_type"])
                     product=Product_information()
                     product.vendor_id=self.request.user.id
                     product.campaignid_id=req_id.id
