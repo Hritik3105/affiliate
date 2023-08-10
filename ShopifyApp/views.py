@@ -507,7 +507,7 @@ class ProductEditCodeView(APIView):
         
         headers= {"X-Shopify-Access-Token": acc_tok[0]}
         price_rule=request.query_params.get('price')
-        print(type(price_rule))
+        
         coupon_value=VendorCampaign.objects.filter(vendor=self.request.user.id,campaign_status=2).values("campaignid")
       
         for ids in coupon_value:
@@ -515,10 +515,11 @@ class ProductEditCodeView(APIView):
             pre_val=Campaign.objects.filter(id=ids["campaignid"]).prefetch_related("product_information_set").all()
             for campaign in pre_val:
                 for product in campaign.product_information_set.all():
-                    print("Product:", product.coupon_id)
+                  
                     if product.coupon_id:
-                        print(type(product.coupon_id))
-                        if price_rule in ast.literal_eval(product.coupon_id):
+                        
+                        print(ast.literal_eval(product.coupon_id))
+                        if int(price_rule) in ast.literal_eval(product.coupon_id):
                             print(price_rule)
      
         
