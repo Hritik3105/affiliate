@@ -569,9 +569,10 @@ class ProductEditCodeView(APIView):
             
                 
                 for k in cccc:
-                    print(ast.literal_eval(k.coupon_id))
-                    print(type(ast.literal_eval(k.coupon_id)))
+                   
                     if k.coupon_id:
+                        print(ast.literal_eval(k.coupon_id))
+                        print(type(ast.literal_eval(k.coupon_id)))
                         if (price_rule) in ast.literal_eval(k.coupon_id):
                             print(type(k.coupon_id))
                             print("00000000000000000",k.coupon_id.index((price_rule)))
