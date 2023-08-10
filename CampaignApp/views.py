@@ -1270,7 +1270,7 @@ class GetCampaign(APIView):
                         "amount":amtlst,
                         "influencer_id": ast.literal_eval(k.campaignid.influencer_name),
                         "product_id": camp[i]["product_id"],
-                        "discout_type":camp[i]["discount_type"]
+                        "discout_type":ast.literal_eval(camp[i]["discount_type"])
                     }]
                 }
 
