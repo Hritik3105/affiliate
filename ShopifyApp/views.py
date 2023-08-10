@@ -567,7 +567,8 @@ class ProductEditCodeView(APIView):
                 print(str(price_rule))
                 cccc=Product_information.objects.all()
                 for k in cccc:
-                  
+                    print(k.coupon_id)
+                    print(type((k.coupon_id)))
                     if k.coupon_id:
                         if str(price_rule) in ast.literal_eval(k.coupon_id):
                             print(type(k.coupon_id))
