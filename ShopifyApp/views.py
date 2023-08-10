@@ -563,7 +563,7 @@ class ProductEditCodeView(APIView):
             response = requests.put(url,headers=headers,json=data)
             if  response.status_code==200:
                 
-     
+                print(str(price_rule))
                 cccc=Product_information.objects.all()
                 for k in cccc:
                   
