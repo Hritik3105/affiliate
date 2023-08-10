@@ -222,11 +222,12 @@ class RequestCampaign(APIView):
         
         vendor_status1=User.objects.filter(id=self.request.user.id).values("vendor_status")
         val_lst22=(request.data["product_discount"])
+        produc_data=request.data["product_name"]
         coupon_name=(request.data["coupon"])
-      
-        if val_lst22[0]["product_name"]== "":
-            return Response({"error":"Product field may not be blank."},status=status.HTTP_417_EXPECTATION_FAILED)
-        if val_lst22[0]["coupon_name"] == [None]:
+        if val_lst22==[]:
+            if produc_data== []:
+                return Response({"error":"Product field may not be blank."},status=status.HTTP_417_EXPECTATION_FAILED)
+        if coupon_name == "":
             return Response({"error":"Coupon field may not be blank."},status=status.HTTP_417_EXPECTATION_FAILED)
        
             
