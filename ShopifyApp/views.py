@@ -564,9 +564,9 @@ class ProductEditCodeView(APIView):
             if  response.status_code==200:
                 
                
-                upt_data=influencer_coupon.objects.filter(id=infludb_id).update(influencer_id_id=influencer_id,amount=float(amount),coupon_name=discount,vendor_id=self.request.user.id)
-                upt_data=Product_information.objects.filter(coupon_id__in=price_rule).update(coupon_name=[discount],amount=[float(amount)])
-
+                influencer_coupon.objects.filter(id=infludb_id).update(influencer_id_id=influencer_id,amount=float(amount),coupon_name=discount,vendor_id=self.request.user.id)
+                vall=Product_information.objects.filter(coupon_id__in=price_rule).update(coupon_name=[discount],amount=[float(amount)])
+                print(vall)
                 return Response({'message': 'Discount Edit successfully','title': discount,"discount_type":discount_type,'amount':amt,"id":price_rule,"influencer":influencer_id})
             if response.status_code== 422:
                
