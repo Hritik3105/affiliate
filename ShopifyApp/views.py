@@ -403,6 +403,37 @@ class EditCodeView(APIView):
             response = requests.put(url,headers=headers,json=data)
             
             if response.status_code == 200: 
+                cop_data=Product_information.objects.all()
+            
+                
+                for k in cop_data:
+                   
+                    if k.coupon_id:
+                       
+                        if int(price_rule) in ast.literal_eval(k.coupon_id):
+                         
+                            cop_id=ast.literal_eval(k.coupon_id)
+                            
+                            edit_index=cop_id.index(int(price_rule))
+                           
+                          
+                            cop_name=ast.literal_eval(k.coupon_name)
+                            cop_name[edit_index] = discount
+                            k.coupon_name=str(cop_name)
+                           
+                            cop_amount=ast.literal_eval(k.amount)   
+                            flt_val=float(amount)
+                            cop_amount[edit_index] = str(flt_val)
+                            k.amount=str(cop_amount)
+                            
+                            cop_type=ast.literal_eval(k.discount_type)   
+                           
+                            cop_type[edit_index] = str(discount_type)
+                            k.discount_type=str(cop_type)
+                            
+    
+                            
+                            Product_information.objects.filter(coupon_id=k.coupon_id).update(coupon_name=k.coupon_name,amount= k.amount,discount_type=k.discount_type)
                 
                 return Response({'message': 'Discount Edit successfully','title': discount,"discount_type":discount_type,'amount':amt,"id":price_rule},status=status.HTTP_200_OK)
             if response.status_code== 422:
