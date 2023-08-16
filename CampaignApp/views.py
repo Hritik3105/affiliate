@@ -2100,10 +2100,10 @@ class InfluencerCampSale(APIView):
                                 coup_dict[campaign_id].extend(list_value)
                             else:
                                 coup_dict[campaign_id] = list_value
-                    print(coup_dict)
+                   
                     for campaign_id, coupon_names in coup_dict.items():
                         if coupon_name in coupon_names:
-                            print(coupon_name)
+                            print("[[[[[[[[[[",coupon_name)
                     pro_dataqq=Product_information.objects.filter(coupon_name__contains=coupon_name,campaignid__in=modash_data,vendor=self.request.user.id)
                     
                     
