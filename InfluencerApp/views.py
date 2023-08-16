@@ -466,7 +466,7 @@ class ApprovalList(APIView):
         value=ModashInfluencer.objects.filter(influencerid_id=request.user.id).values_list("id",flat=True)[0]
         vendor_codes=VendorCampaign.objects.filter(Q(campaign_status=2)|Q(campaign_status=1),influencerid_id=value,campaignid__status=2)
         vendo_camp=vendor_codes.values_list("campaignid_id__id",flat=True)
-        vendo_camp_status=vendor_codes.values_list("campaign_status",flat=True)
+        vendo_camp_status=vendor_codes.values_list("campaign_status",flat=True).order_by("-campaign_status")
         print(vendo_camp_status)
         campaign_obj1=Campaign_accept.objects.filter(Q(campaign_status=1)|Q(campaign_status=2),Q(influencerid_id=self.request.user.id,campaignid__status=2))
         
