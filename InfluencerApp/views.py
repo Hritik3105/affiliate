@@ -543,13 +543,13 @@ class ApprovalList(APIView):
                
                 
                 if camp[i]["campaignid_id"] in vendo_camp:
-                    print(vendo_camp_status[i])
+                    
                     dict1={
                         "campaignid_id":camp[i]["campaignid_id"],
                         "campaign_name": k.campaignid.campaign_name ,
                         "status":k.campaignid.campaign_status,
                         "vendor_name":k.vendor.username,
-                        "camp_status":vendo_camp_status[i],
+                        "camp_status":vendo_camp_status,
                         "product":[{
                         "product_name":camp[i]["product_name"],
                         "coupon_name":couponlst,
