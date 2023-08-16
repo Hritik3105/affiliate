@@ -1500,7 +1500,7 @@ class VendorAccept(APIView):
     permission_classes = [IsAuthenticated]    
     def post(self,request,id,pk):
         try:
-           
+            
             cam_dec=VendorCampaign.objects.filter(campaignid_id=id,influencerid_id=pk,vendor_id=self.request.user.id).update(campaign_status=2)
             cam_dec=Notification.objects.filter(campaignid_id=id,influencerid_id=pk,vendor_id=self.request.user.id).update(send_notification=3)
             return Response({"message":"Campaign Accept"},status=status.HTTP_200_OK)

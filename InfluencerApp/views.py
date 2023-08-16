@@ -466,6 +466,7 @@ class ApprovalList(APIView):
         value=ModashInfluencer.objects.filter(influencerid_id=request.user.id).values_list("id",flat=True)[0]
         vendor_codes=VendorCampaign.objects.filter(influencerid_id=value,campaign_status=2,campaignid__status=2)
         vendo_camp=vendor_codes.values_list("campaignid_id__id",flat=True)
+        vendo_camp_status=vendor_codes.values_list("campaign_status",flat=True)
 
         campaign_obj1=Campaign_accept.objects.filter(Q(campaign_status=1)|Q(campaign_status=2),Q(influencerid_id=self.request.user.id,campaignid__status=2))
         
@@ -547,7 +548,7 @@ class ApprovalList(APIView):
                         "campaign_name": k.campaignid.campaign_name ,
                         "status":k.campaignid.campaign_status,
                         "vendor_name":k.vendor.username,
-                        "camp_status":vendo_camp,
+                        "camp_status":vendo_camp_status,
                         "product":[{
                         "product_name":camp[i]["product_name"],
                         "coupon_name":couponlst,
