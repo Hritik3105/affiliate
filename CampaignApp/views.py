@@ -2090,7 +2090,7 @@ class InfluencerCampSale(APIView):
                 
                     modash_data = Campaign.objects.filter(influencer_name__contains=influencer_id, id__in=campaign_ids,vendorid=self.request.user.id).values_list("id",flat=True)
                     check=Product_information.objects.filter(coupon_name__contains=coupon_name,campaignid__in=modash_data,vendor=self.request.user.id).values("coupon_name","campaignid")
-                    print(check)
+                  
                     for z in check:
                         if "coupon_name" in z:
                             list_value = eval(z["coupon_name"])
@@ -2101,6 +2101,7 @@ class InfluencerCampSale(APIView):
                             else:
                                 coup_dict[campaign_id] = list_value
                     print(coup_dict)
+                   
                     pro_dataqq=Product_information.objects.filter(coupon_name__contains=coupon_name,campaignid__in=modash_data,vendor=self.request.user.id)
                     
                     
