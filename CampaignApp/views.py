@@ -2131,7 +2131,7 @@ class InfluencerCampSale(APIView):
                     #     else:
                     #         influencer_sales_for_campaign[influencer_id] = [{"campaign_id": campaign_id, "sales": sales}]
             
-        
+            print("oooooooooooooo",influencer_sales_for_campaign)
             lst_data=[]
             
             for key in influencer_sales_for_campaign: 
