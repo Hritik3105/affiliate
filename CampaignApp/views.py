@@ -2104,7 +2104,7 @@ class InfluencerCampSale(APIView):
                     # data=pro_data.first()["campaignid"]
                     # print("data----------",data)
                         print("------sswws",influencer_sales_for_campaign)
-                        print("------sss",influencer_id)
+                        # print("------sss",influencer_id)
                         if influencer_id in influencer_sales_for_campaign:
                                
                               
