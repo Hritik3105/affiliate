@@ -467,7 +467,7 @@ class ApprovalList(APIView):
         vendor_codes=VendorCampaign.objects.filter(Q(campaign_status=2)|Q(campaign_status=1),influencerid_id=value,campaignid__status=2)
         vendo_camp=vendor_codes.values_list("campaignid_id__id",flat=True)
         vendo_camp_status=vendor_codes.values_list("campaign_status",flat=True)
-
+        print(vendo_camp_status)
         campaign_obj1=Campaign_accept.objects.filter(Q(campaign_status=1)|Q(campaign_status=2),Q(influencerid_id=self.request.user.id,campaignid__status=2))
         
         if campaign_obj1.exists():
@@ -543,7 +543,7 @@ class ApprovalList(APIView):
                
                 
                 if camp[i]["campaignid_id"] in vendo_camp:
-                    print()
+                    print(vendo_camp_status[i])
                     dict1={
                         "campaignid_id":camp[i]["campaignid_id"],
                         "campaign_name": k.campaignid.campaign_name ,
