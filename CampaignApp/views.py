@@ -2103,10 +2103,11 @@ class InfluencerCampSale(APIView):
                     # pro_data=Product_information.objects.filter(coupon_name__contains=coupon_name,campaignid__in=modash_data,vendor=self.request.user.id).values("campaignid")
                     # data=pro_data.first()["campaignid"]
                     # print("data----------",data)
-                
+                        print("------sswws",influencer_sales_for_campaign)
+                        print("------sss",influencer_id)
                         if influencer_id in influencer_sales_for_campaign:
-                                print("------sss",influencer_id)
-                                print("------sswws",influencer_sales_for_campaign)
+                               
+                              
                                 influencer_sales_for_campaign[influencer_id].append({"campaign_id": product.campaignid.id, "sales": sales})
                         else:
                             influencer_sales_for_campaign[influencer_id] = [{"campaign_id": product.campaignid.id, "sales": sales}]
@@ -2202,9 +2203,9 @@ class InfluencerCampSale(APIView):
                 for i in data_max:
                     
                     emp_check=PaymentDetails.objects.filter(vendor=self.request.user.id,campaign_id=i["campaign_detail"],admin=None).exists()
-                    print(emp_check)
+                  
                     if emp_check == False:
-                        print(emp_check)
+                       
                         PaymentDetails.objects.create(sales=i["sales"],influencerfee=i["influener_fee"],offer=i["offer"],amount=i["amount"],influencer_id=i["influencer"],vendor_id=self.request.user.id,campaign_id=i["campaign_detail"],account_id=i["account"])
                         
                     else:
