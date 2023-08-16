@@ -2099,10 +2099,11 @@ class InfluencerCampSale(APIView):
                             if data1[0] == coupon_name:
                                
                                 product_ids.append(product.campaignid.id)
-                    print("ddddddsssssssdddddddddd",product_ids)
+                  
                     # pro_data=Product_information.objects.filter(coupon_name__contains=coupon_name,campaignid__in=modash_data,vendor=self.request.user.id).values("campaignid")
                     # data=pro_data.first()["campaignid"]
                     # print("data----------",data)
+                        print("ddddddsssssssdddddddddd",product_ids)
                         if influencer_id in influencer_sales_for_campaign:
                                 influencer_sales_for_campaign[influencer_id].append({"campaign_id": product.campaignid.id, "sales": sales})
                         else:
