@@ -547,7 +547,7 @@ class ApprovalList(APIView):
                         "campaign_name": k.campaignid.campaign_name ,
                         "status":k.campaignid.campaign_status,
                         "vendor_name":k.vendor.username,
-                        "camp_status":camp[i]["campaign_status"],
+                        "camp_status":vendo_camp[i]["campaign_status"],
                         "product":[{
                         "product_name":camp[i]["product_name"],
                         "coupon_name":couponlst,
