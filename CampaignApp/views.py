@@ -2105,6 +2105,8 @@ class InfluencerCampSale(APIView):
                     # print("data----------",data)
                         print("ddddddsssssssdddddddddd",product_ids)
                         if influencer_id in influencer_sales_for_campaign:
+                                print("------sss",influencer_id)
+                                print("------sswws",influencer_sales_for_campaign)
                                 influencer_sales_for_campaign[influencer_id].append({"campaign_id": product.campaignid.id, "sales": sales})
                         else:
                             influencer_sales_for_campaign[influencer_id] = [{"campaign_id": product.campaignid.id, "sales": sales}]
