@@ -2084,7 +2084,7 @@ class InfluencerCampSale(APIView):
             for coupon_name, sales in sales_by_coupon.items():
               
                 influencer_ids = influencer_coupon.objects.filter(coupon_name=coupon_name,vendor=self.request.user.id).values("influencer_id", "coupon_name")
-                
+                print("dddddddddd",influencer_ids)
                 for influencer in influencer_ids:
                     influencer_id = influencer["influencer_id"]
                 
