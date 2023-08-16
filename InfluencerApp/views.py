@@ -785,7 +785,7 @@ class VendorNotification(APIView):
             else:
                 
                 dict={
-                    "message": i.vendor.username + " " + "deline your request for"  + " " +  i.campaignid.campaign_name
+                    "message": i.vendor.username + " " + "Decline your request for"  + " " +  i.campaignid.campaign_name
                 }
             
                 notify_list.append(dict)

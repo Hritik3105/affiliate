@@ -2082,7 +2082,7 @@ class InfluencerCampSale(APIView):
           
             influencer_sales_for_campaign = {}
             for coupon_name, sales in sales_by_coupon.items():
-                print("cffffffffff",coupon_name)
+            
                 influencer_ids = influencer_coupon.objects.filter(coupon_name=coupon_name,vendor=self.request.user.id).values("influencer_id", "coupon_name")
             
                 for influencer in influencer_ids:
@@ -2103,7 +2103,7 @@ class InfluencerCampSale(APIView):
                    
                     for campaign_id, coupon_names in coup_dict.items():
                         if coupon_name in coupon_names:
-                            print("[[[[[[[[[[",campaign_id)
+                        
                             pro_dataqq=Product_information.objects.filter(campaignid=campaign_id,vendor=self.request.user.id)
                     
                     
@@ -2115,23 +2115,11 @@ class InfluencerCampSale(APIView):
                                     
                                         product_ids.append(product.campaignid.id)
                   
-                    # pro_data=Product_information.objects.filter(coupon_name__contains=coupon_name,campaignid__in=modash_data,vendor=self.request.user.id).values("campaignid")
-                    # data=pro_data.first()["campaignid"]
-                    # print("data----------",data)
-                     
-                            # print("------sss",influencer_id)
                             if influencer_id in influencer_sales_for_campaign:
                                 influencer_sales_for_campaign[influencer_id].append({"campaign_id": product.campaignid.id, "sales": sales})
                             else:
                                 influencer_sales_for_campaign[influencer_id] = [{"campaign_id": product.campaignid.id, "sales": sales}]
-            # for modash_entry in pro_data:
-                    #     campaign_id = modash_entry["campaignid"]
-                    #     if influencer_id in influencer_sales_for_campaign:
-                    #         influencer_sales_for_campaign[influencer_id].append({"campaign_id": campaign_id, "sales": sales})
-                    #     else:
-                    #         influencer_sales_for_campaign[influencer_id] = [{"campaign_id": campaign_id, "sales": sales}]
-            
-            print("oooooooooooooo",influencer_sales_for_campaign)
+     
             lst_data=[]
             
             for key in influencer_sales_for_campaign: 
