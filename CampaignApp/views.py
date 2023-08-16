@@ -2091,7 +2091,7 @@ class InfluencerCampSale(APIView):
                     modash_data = Campaign.objects.filter(influencer_name__contains=influencer_id, id__in=campaign_ids,vendorid=self.request.user.id).values_list("id",flat=True)
                    
                     pro_dataqq=Product_information.objects.filter(coupon_name__contains=coupon_name,campaignid__in=modash_data,vendor=self.request.user.id)
-                   
+                    print("dddddddddddd",pro_dataqq)
                     for product in pro_dataqq:
                    
                         if product.coupon_name:
@@ -2103,7 +2103,7 @@ class InfluencerCampSale(APIView):
                     # pro_data=Product_information.objects.filter(coupon_name__contains=coupon_name,campaignid__in=modash_data,vendor=self.request.user.id).values("campaignid")
                     # data=pro_data.first()["campaignid"]
                     # print("data----------",data)
-                        print("------sswws",influencer_sales_for_campaign)
+                     
                         # print("------sss",influencer_id)
                         if influencer_id in influencer_sales_for_campaign:
                                
