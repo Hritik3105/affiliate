@@ -2197,11 +2197,12 @@ class InfluencerCampSale(APIView):
            
             if empty == True:
                 for i in data_max:
-                    print(i["campaign_detail"])
+                    
                     emp_check=PaymentDetails.objects.filter(vendor=self.request.user.id,campaign_id=i["campaign_detail"],admin=None).exists()
                     print(emp_check)
                     if emp_check == False:
-                       
+                        print(i["campaign_detail"])
+                        print(emp_check)
                         PaymentDetails.objects.create(sales=i["sales"],influencerfee=i["influener_fee"],offer=i["offer"],amount=i["amount"],influencer_id=i["influencer"],vendor_id=self.request.user.id,campaign_id=i["campaign_detail"],account_id=i["account"])
                         
                     else:
