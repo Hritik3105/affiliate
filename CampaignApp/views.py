@@ -2103,29 +2103,27 @@ class InfluencerCampSale(APIView):
                    
                     for campaign_id, coupon_names in coup_dict.items():
                         if coupon_name in coupon_names:
-                            print("[[[[[[[[[[",coupon_name)
-                    pro_dataqq=Product_information.objects.filter(coupon_name__contains=coupon_name,campaignid__in=modash_data,vendor=self.request.user.id)
+                            print("[[[[[[[[[[",campaign_id)
+                            pro_dataqq=Product_information.objects.filter(campaignid__in=campaign_id,vendor=self.request.user.id)
                     
                     
-                    for product in pro_dataqq:
-                   
-                        if product.coupon_name:
-                            data1=ast.literal_eval(product.coupon_name)
-                            if data1[0] == coupon_name:
-                               
-                                product_ids.append(product.campaignid.id)
+                            for product in pro_dataqq:
+                        
+                                if product.coupon_name:
+                                    data1=ast.literal_eval(product.coupon_name)
+                                    if data1[0] == coupon_name:
+                                    
+                                        product_ids.append(product.campaignid.id)
                   
                     # pro_data=Product_information.objects.filter(coupon_name__contains=coupon_name,campaignid__in=modash_data,vendor=self.request.user.id).values("campaignid")
                     # data=pro_data.first()["campaignid"]
                     # print("data----------",data)
                      
-                        # print("------sss",influencer_id)
-                        if influencer_id in influencer_sales_for_campaign:
-                               
-                              
+                            # print("------sss",influencer_id)
+                            if influencer_id in influencer_sales_for_campaign:
                                 influencer_sales_for_campaign[influencer_id].append({"campaign_id": product.campaignid.id, "sales": sales})
-                        else:
-                            influencer_sales_for_campaign[influencer_id] = [{"campaign_id": product.campaignid.id, "sales": sales}]
+                            else:
+                                influencer_sales_for_campaign[influencer_id] = [{"campaign_id": product.campaignid.id, "sales": sales}]
             # for modash_entry in pro_data:
                     #     campaign_id = modash_entry["campaignid"]
                     #     if influencer_id in influencer_sales_for_campaign:
