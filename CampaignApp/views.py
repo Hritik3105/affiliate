@@ -2103,7 +2103,7 @@ class InfluencerCampSale(APIView):
                     # pro_data=Product_information.objects.filter(coupon_name__contains=coupon_name,campaignid__in=modash_data,vendor=self.request.user.id).values("campaignid")
                     # data=pro_data.first()["campaignid"]
                     # print("data----------",data)
-                        print("ddddddsssssssdddddddddd",product_ids)
+                
                         if influencer_id in influencer_sales_for_campaign:
                                 print("------sss",influencer_id)
                                 print("------sswws",influencer_sales_for_campaign)
@@ -2117,8 +2117,7 @@ class InfluencerCampSale(APIView):
                     #     else:
                     #         influencer_sales_for_campaign[influencer_id] = [{"campaign_id": campaign_id, "sales": sales}]
             
-            
-            print("oooooooooooooo",influencer_sales_for_campaign)
+        
             lst_data=[]
             
             for key in influencer_sales_for_campaign: 
@@ -2130,7 +2129,7 @@ class InfluencerCampSale(APIView):
                     check=Campaign.objects.filter(id=i["campaign_id"]).values("influencer_fee","offer","campaign_name")
                    
                     if str_detail:
-                        print(check[0]["offer"])
+                     
                         if  check[0]["offer"] == "percentage":
                             amount=i["sales"] * check[0]["influencer_fee"] /100
                             amount=round(amount,2)
@@ -2197,7 +2196,6 @@ class InfluencerCampSale(APIView):
                 
                 data_max.append(sales_entry)   
           
-            print("0000000000000000000000",data_max)
             empty=PaymentDetails.objects.all().exists()
            
             if empty == True:
