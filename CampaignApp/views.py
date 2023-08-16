@@ -2104,7 +2104,7 @@ class InfluencerCampSale(APIView):
                     for campaign_id, coupon_names in coup_dict.items():
                         if coupon_name in coupon_names:
                             print("[[[[[[[[[[",campaign_id)
-                            pro_dataqq=Product_information.objects.filter(campaignid__in=campaign_id,vendor=self.request.user.id)
+                            pro_dataqq=Product_information.objects.filter(campaignid=campaign_id,vendor=self.request.user.id)
                     
                     
                             for product in pro_dataqq:
