@@ -464,10 +464,11 @@ class ApprovalList(APIView):
         res2=[]  
      
         value=ModashInfluencer.objects.filter(influencerid_id=request.user.id).values_list("id",flat=True)[0]
-        vendor_codes=VendorCampaign.objects.filter(Q(campaign_status=2)|Q(campaign_status=1),influencerid_id=value,campaignid__status=2)
+        vendor_codes=VendorCampaign.objects.filter(campaign_status=1,influencerid_id=value,campaignid__status=2)
+        vendor_codes2=VendorCampaign.objects.filter(campaign_status=2,influencerid_id=value,campaignid__status=2)
+        vendor_acc=vendor_codes2.values_list("campaignid_id__id",flat=True)
         vendo_camp=vendor_codes.values_list("campaignid_id__id",flat=True)
-        vendo_camp_status=vendor_codes.values_list("campaign_status",flat=True).order_by("-campaign_status")
-        print(vendo_camp_status)
+  
         campaign_obj1=Campaign_accept.objects.filter(Q(campaign_status=1)|Q(campaign_status=2),Q(influencerid_id=self.request.user.id,campaignid__status=2))
         
         if campaign_obj1.exists():
@@ -547,9 +548,8 @@ class ApprovalList(APIView):
                     dict1={
                         "campaignid_id":camp[i]["campaignid_id"],
                         "campaign_name": k.campaignid.campaign_name ,
-                        "status":k.campaignid.campaign_status,
+                        "status":1,
                         "vendor_name":k.vendor.username,
-                        "camp_status":vendo_camp_status,
                         "product":[{
                         "product_name":camp[i]["product_name"],
                         "coupon_name":couponlst,
@@ -562,6 +562,25 @@ class ApprovalList(APIView):
                     }
                     final_lst.append(dict1)
                     
+                    
+                elif camp[i]["campaignid_id"] in vendor_acc:
+                    
+                    dict1={
+                        "campaignid_id":camp[i]["campaignid_id"],
+                        "campaign_name": k.campaignid.campaign_name ,
+                        "status":1,
+                        "vendor_name":k.vendor.username,
+                        "product":[{
+                        "product_name":camp[i]["product_name"],
+                        "coupon_name":couponlst,
+                        "amount":amtlst,
+                        "product_id": camp[i]["product_id"],
+                        "discount_type":discc_type, 
+                        
+                        
+                    }]
+                    }
+                    final_lst.append(dict1)
                 else:
                      dict1={
                         "campaignid_id":camp[i]["campaignid_id"],
