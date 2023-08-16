@@ -2094,7 +2094,7 @@ class InfluencerCampSale(APIView):
                     for z in check:
                         if "coupon_name" in z:
                             list_value = eval(z["coupon_name"])
-                
+                            print(list_value)
                             campaign_id = z["campaignid"]
                             if campaign_id in coup_dict:
                                 coup_dict[campaign_id].extend(list_value)
