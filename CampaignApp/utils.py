@@ -7,6 +7,7 @@ from CampaignApp.views import *
 from Affilate_Marketing.settings import SHOPIFY_API_KEY,SHOPIFY_API_SECRET,API_VERSION
 import requests
 import stripe
+from rest_framework import  status
 
 
 
@@ -182,6 +183,14 @@ def success(self,request,subscription_id,price_id,start_date,end_date,amount):
 
 
     
-    
+def customer(request):
+   
+        global stripe_customer_id
+        value=User.objects.get(id=request.user.id)
+        customer_data=stripe.Customer.create(name=value.username, email=value.email)
+        stripe_customer_id = customer_data['id'] 
+        
+        
+        return customer_data
 
-                
+      

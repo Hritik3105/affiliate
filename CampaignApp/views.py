@@ -3484,11 +3484,22 @@ class CreateCustomer(APIView):
     permission_classes=[IsAuthenticated]
     def post(self,request):
         try:
-            value=User.objects.get(id=request.user.id)
-            customer_data=stripe.Customer.create(name=value.username, email=value.email)
-            stripe_customer_id = customer_data['id'] 
-
-            
+            val=customer()
+            print(val)
+            return Response({"data":val},status=status.HTTP_200_OK)
+        except stripe.error.StripeError as e:
+            return Response(message=e.user_message,status=status.HTTP_400_BAD_REQUEST)
+    
+        
+        
+class CreteMethod(APIView):
+    authentication_classes=[TokenAuthentication]
+    permission_classes=[IsAuthenticated]
+    
+    
+    def post(self,request):
+        try:
+            global payment
             payment_method=stripe.PaymentMethod.create(
             type="card",
             card={
@@ -3499,14 +3510,26 @@ class CreateCustomer(APIView):
             },
             
             )
+            payment=payment_method["id"]
+            return Response({"data":payment_method},status=status.HTTP_200_OK)
+
+        except stripe.error.StripeError as e:
+            return Response(message=e.user_message)
+        
             
-            print("-00000000000",payment_method)
+class PaymentIntent(APIView):
+    authentication_classes=[TokenAuthentication]
+    permission_classes=[IsAuthenticated]
+    
+    
+    def post(self,request):
+        try:
             
             intent = stripe.PaymentIntent.create(
             amount=1000,
             currency='usd',
             payment_method_types=['card'],
-            payment_method=payment_method["id"],
+            payment_method=payment["id"],
         
             )
             
@@ -3515,9 +3538,8 @@ class CreateCustomer(APIView):
             intent["id"],
             payment_method="pm_card_visa",
             )
-  
+            
             return Response({"data":confim},status=status.HTTP_200_OK)
+
         except stripe.error.StripeError as e:
             return Response(message=e.user_message)
-        
-        
