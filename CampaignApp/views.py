@@ -1300,6 +1300,7 @@ class GetCampaign(APIView):
                         "discout_type":(camp[i]["discount_type"])
                     }]
                 }
+                value_lst.append(dict1)
 
             else:
                 dict1={
