@@ -228,6 +228,7 @@ def confirm(request):
     amount_val=request.data.get("amount")
     intent = stripe.PaymentIntent.create(
     amount=amount_val,
+    customer=stripe_customer_id,
     currency='usd',
     payment_method_types=['card'],
     payment_method=payment,
