@@ -213,6 +213,7 @@ def method(request):
     
 
 def confirm(request):
+    print(")0000000000000",payment)
     intent = stripe.PaymentIntent.create(
     amount=1000,
     currency='usd',
