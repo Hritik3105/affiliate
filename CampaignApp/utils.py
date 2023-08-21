@@ -227,19 +227,19 @@ def method(request):
 
 def confirm(request):
     amount_val=request.data.get("amount")
-    intent = stripe.Charge.create(
+    intent = stripe.PaymentIntent.create(
     amount=amount_val,
     customer=stripe_customer_id,
     currency='usd',
     payment_method_types=['card'],
-    source=payment,
+    payment_method=payment,
     )     
     
-    # confirm=stripe.PaymentIntent.confirm(
-    # intent["id"],
-    # payment_method=payment,
-    # )  
+    confirm=stripe.PaymentIntent.confirm(
+    intent["id"],
+    payment_method=payment,
+    )  
       
-    return intent
+    return confirm
 
 
