@@ -13,7 +13,6 @@ from rest_framework import  status
 
 def product_details(self,request,val_lst,req_id):  
     for i in range(len(val_lst)):
-            
             product=Product_information()
             product.vendor_id=self.request.user.id
             product.campaignid_id=req_id.id
@@ -28,7 +27,6 @@ def product_details(self,request,val_lst,req_id):
        
                     
 def product_name(self,request,req_id,arg,arg_id):
-    
     for i in  range(len(arg)):
         product=Product_information()
         product.vendor_id=self.request.user.id
@@ -39,7 +37,6 @@ def product_name(self,request,req_id,arg,arg_id):
 
 
 def influencer_details(self,request,int_list,req_id):
-
     for i in int_list:
             vendor_obj=VendorCampaign()
             vendor_obj.influencerid_id=i
@@ -62,9 +59,7 @@ def coupon_check(self,request,val_lst2,cup_lst,coup_lst):
     cup_lst=[]
     dict1={}
     if val_lst2:
-    
         for i in  range (len(val_lst2)):
-          
             for j in val_lst2[i]["coupon_name"]: 
                 match_data=Product_information.objects.filter(coupon_name__contains=j,vendor_id=self.request.user.id)
                 for i in match_data:
@@ -184,22 +179,27 @@ def success(self,request,subscription_id,price_id,start_date,end_date,amount):
 
     
 def customer(request):
-   
         global stripe_customer_id
         value=User.objects.get(id=request.user.id)
+        # if value.customer_id:
+        #     stripe_customer_id=value.customer_id
+              #return "Customer Already Exists"
         customer_data=stripe.Customer.create(name=value.username, email=value.email)
         stripe_customer_id = customer_data['id']     
         return customer_data
     
+ 
     
 def method(request):
-    
     global payment
-    
+    value=User.objects.get(id=request.user.id)
+    #if value.customer_id and value.card_number:
+        #return "Already Exists"
     card_number=request.data.get("card")
     expiry_month=request.data.get("exp_month")
     expiry_year=request.data.get("expiry_year")
     csv=request.data.get("cvc")
+    
     
     payment_method=stripe.PaymentMethod.create(
             type="card",
@@ -212,32 +212,34 @@ def method(request):
             
             )
     payment=payment_method["id"]
-    print("dsfsdf",payment)
+  
     
     attach_payment=stripe.PaymentMethod.attach(
             payment, 
             customer=stripe_customer_id,
         )
     
-    print("fdddddd",attach_payment)
     
     return payment_method
     
+    
+
 
 def confirm(request):
     amount_val=request.data.get("amount")
-    intent = stripe.PaymentIntent.create(
+    intent = stripe.Charge.create(
     amount=amount_val,
     customer=stripe_customer_id,
     currency='usd',
     payment_method_types=['card'],
     payment_method=payment,
-
-    )
-        
-    confim=stripe.PaymentIntent.confirm(
-    intent["id"],
-    payment_method=payment,
-    )
+    )     
     
-    return confim
+    # confirm=stripe.PaymentIntent.confirm(
+    # intent["id"],
+    # payment_method=payment,
+    # )  
+      
+    return intent
+
+

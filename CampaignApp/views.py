@@ -3511,12 +3511,10 @@ class CreateMethod(APIView):
 """API to tranfer money to super admin"""
 class PaymentIntent(APIView):
     authentication_classes=[TokenAuthentication]
-    permission_classes=[IsAuthenticated]
-    
+    permission_classes=[IsAuthenticated] 
     def post(self,request):
         try:         
             confirm_data=confirm(request)
             return Response({"data":confirm_data},status=status.HTTP_200_OK)
-
         except stripe.error.StripeError as e:
             return Response({"message":e.user_message},status=status.HTTP_400_BAD_REQUEST)
