@@ -148,8 +148,9 @@ def checkout(self,request,plan):
                     cancel_url='https://myrefera.com/payment-failed',
                     billing_address_collection='auto'
     )
-    
-    return session
+
+    return session          
+
 
 
 def success(self,request,subscription_id,price_id,start_date,end_date,amount):
@@ -177,6 +178,8 @@ def success(self,request,subscription_id,price_id,start_date,end_date,amount):
     credit.end_date=end_date
     
     return "Created"
+
+
     
     
 

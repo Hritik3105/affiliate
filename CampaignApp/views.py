@@ -89,8 +89,6 @@ class VendorLogin(APIView):
                         usr=Token.objects.filter(user_id=token_id)
                         if not usr:
                             token = Token.objects.create(user=usr_ins)
-                            
-                         
                             return Response({'Success':"Login Successfully",'Token':str(token),"shop_url":usr_ins.shopify_url}, status=status.HTTP_200_OK)
                            
                         else:
@@ -1249,6 +1247,7 @@ class GetCampaign(APIView):
            
           
             if k.campaignid.influencer_name:
+                print(k.campaignid.influencer_name)
                 dict1={
                     "campaignid_id":camp[i]["campaignid_id"],
                     "product_name":camp[i]["product_name"],

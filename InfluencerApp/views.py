@@ -456,13 +456,13 @@ class PendingList(APIView):
 """API TO GET APPROVAL LIST"""
 class ApprovalList(APIView):
     authentication_classes=[TokenAuthentication]
-    permission_classes = [IsAuthenticated]
+    permission_classes = []
     def get(self,request):
         lst=[]
         final_lst=[]
-        res=[]
+        res=[]                                                                   
         res2=[]  
-     
+
         value=ModashInfluencer.objects.filter(influencerid_id=request.user.id).values_list("id",flat=True)[0]
         vendor_codes=VendorCampaign.objects.filter(campaign_status=1,influencerid_id=value,campaignid__status=2)
         vendor_codes2=VendorCampaign.objects.filter(campaign_status=2,influencerid_id=value,campaignid__status=2)
@@ -496,13 +496,8 @@ class ApprovalList(APIView):
             camp=Product_information.objects.filter(campaignid_id=i).values()
             campaign_obj59=Product_information.objects.filter(campaignid_id=i).select_related("campaignid")
             campaign_obj595=Campaign.objects.prefetch_related("product_information_set").last()
-           
-            
             coupon_match=influencer_coupon.objects.filter(influencer_id=value).values_list("coupon_name",flat=True)
             
-           
-      
-           
             for k in campaign_obj59:
                pass
 
