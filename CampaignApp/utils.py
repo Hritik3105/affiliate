@@ -209,7 +209,7 @@ def method(request):
             )
     payment=payment_method["id"]
     
-    return 
+    return payment_method
     
 
 def confirm(request):
