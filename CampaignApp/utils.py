@@ -218,13 +218,13 @@ def confirm(request):
     amount=1000,
     currency='usd',
     payment_method_types=['card'],
-    payment_method=payment["id"],
+    payment_method=payment,
 
     )
         
     confim=stripe.PaymentIntent.confirm(
     intent["id"],
-    payment_method=payment["id"],
+    payment_method=payment,
     )
     
     return confim
