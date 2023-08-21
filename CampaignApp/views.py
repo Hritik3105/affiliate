@@ -2327,8 +2327,8 @@ class CampaignExpList(APIView):
      
         fin_value=list(set_data)
         for i in fin_value:
-            camp=Product_information.objects.filter(vendor_id=self.request.user.id,campaignid_id=i).values()
-            campaign_obj59=Product_information.objects.filter(vendor_id=self.request.user.id,campaignid_id=i).select_related("campaignid")
+            camp=Product_information.objects.filter(vendor_id=self.request.user.id,campaignid_id=i).values().order_by("-end_date")
+            campaign_obj59=Product_information.objects.filter(vendor_id=self.request.user.id,campaignid_id=i).select_related("campaignid").order_by("-end_date")
             for k in campaign_obj59:
                pass
        
