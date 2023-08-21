@@ -3484,7 +3484,7 @@ class CreateCustomer(APIView):
     permission_classes=[IsAuthenticated]
     def post(self,request):
         try:
-            val=customer()
+            val=customer(request)
             print(val)
             return Response({"data":val},status=status.HTTP_200_OK)
         except stripe.error.StripeError as e:
