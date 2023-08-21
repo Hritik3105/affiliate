@@ -3487,7 +3487,37 @@ class CreateCustomer(APIView):
             value=User.objects.get(id=request.user.id)
             customer_data=stripe.Customer.create(name=value.username, email=value.email)
             stripe_customer_id = customer_data['id'] 
+
             
-            return Response({"data":stripe_customer_id},status=status.HTTP_200_OK)
+            payment_method=stripe.PaymentMethod.create(
+            type="card",
+            card={
+                "number": "4242424242424242",
+                "exp_month": 8,
+                "exp_year": 2024,
+                "cvc": "314",
+            },
+            
+            )
+            
+            print("-00000000000",payment_method)
+            
+            intent = stripe.PaymentIntent.create(
+            amount=1000,
+            currency='usd',
+            payment_method_types=['card'],
+            payment_method=payment_method["id"],
+        
+            )
+            
+            
+            confim=stripe.PaymentIntent.confirm(
+            intent["id"],
+            payment_method="pm_card_visa",
+            )
+  
+            return Response({"data":confim},status=status.HTTP_200_OK)
         except stripe.error.StripeError as e:
             return Response(message=e.user_message)
+        
+        
