@@ -232,7 +232,7 @@ def confirm(request):
     customer=stripe_customer_id,
     currency='usd',
     payment_method_types=['card'],
-    payment_method=payment,
+    source=payment,
     )     
     
     # confirm=stripe.PaymentIntent.confirm(
