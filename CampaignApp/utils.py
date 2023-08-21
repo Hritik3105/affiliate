@@ -223,7 +223,7 @@ def confirm(request):
         
     confim=stripe.PaymentIntent.confirm(
     intent["id"],
-    payment_method="pm_card_visa",
+    payment_method=payment["id"],
     )
     
     return confim
