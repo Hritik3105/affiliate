@@ -212,13 +212,14 @@ def method(request):
             
             )
     payment=payment_method["id"]
+    print("dsfsdf",payment)
     
     attach_payment=stripe.PaymentMethod.attach(
             payment, 
             customer=stripe_customer_id,
         )
     
-    print("pppp",attach_payment)
+    print("fdddddd",attach_payment)
     
     return payment_method
     
