@@ -188,34 +188,43 @@ def customer(request):
         global stripe_customer_id
         value=User.objects.get(id=request.user.id)
         customer_data=stripe.Customer.create(name=value.username, email=value.email)
-        stripe_customer_id = customer_data['id'] 
-        
-        
+        stripe_customer_id = customer_data['id']     
         return customer_data
     
     
 def method(request):
     
     global payment
+    
+    card_number=request.data.get("card")
+    expiry_month=request.data.get("exp_month")
+    expiry_year=request.data.get("expiry_year")
+    csv=request.data.get("cvc")
+    
     payment_method=stripe.PaymentMethod.create(
             type="card",
             card={
-                "number": "4242424242424242",
-                "exp_month": 8,
-                "exp_year": 2024,
-                "cvc": "314",
+                "number": card_number,
+                "exp_month":expiry_month,
+                "exp_year": expiry_year,
+                "cvc":csv,
             },
             
             )
     payment=payment_method["id"]
     
+    attach_payment=stripe.PaymentMethod.attach(
+            payment, 
+            customer=stripe_customer_id,
+        )
+    
     return payment_method
     
 
 def confirm(request):
-    print(")0000000000000",payment)
+    amount_val=request.data.get("amount")
     intent = stripe.PaymentIntent.create(
-    amount=1000,
+    amount=amount_val,
     currency='usd',
     payment_method_types=['card'],
     payment_method=payment,

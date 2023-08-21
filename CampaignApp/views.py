@@ -3479,6 +3479,8 @@ class ActiveCoupon(APIView):
         
         
         
+#API TO CREATE CUSTOMER
+"""Api to create vendor as a customer in stripe"""   
 class CreateCustomer(APIView):
     authentication_classes=[TokenAuthentication]
     permission_classes=[IsAuthenticated]
@@ -3490,11 +3492,12 @@ class CreateCustomer(APIView):
             return Response(message=e.user_message,status=status.HTTP_400_BAD_REQUEST)
     
         
-        
+      
+#API TO CREATE PAYMENT INTENT
+"""API to create payment intent for a customer"""    
 class CreateMethod(APIView):
     authentication_classes=[TokenAuthentication]
     permission_classes=[IsAuthenticated]
-    
     def post(self,request):
         try: 
             method_value=method(request)
@@ -3504,7 +3507,8 @@ class CreateMethod(APIView):
         
             
             
-            
+#API TO TRANSFER MONEY
+"""API to tranfer money to super admin"""
 class PaymentIntent(APIView):
     authentication_classes=[TokenAuthentication]
     permission_classes=[IsAuthenticated]
