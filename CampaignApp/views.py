@@ -1248,6 +1248,7 @@ class GetCampaign(APIView):
           
             if k.campaignid.influencer_name:
                 print(k.campaignid.influencer_name)
+                print("------",camp[i]["discount_type"])
                 dict1={
                     "campaignid_id":camp[i]["campaignid_id"],
                     "product_name":camp[i]["product_name"],
