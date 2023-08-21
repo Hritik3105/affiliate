@@ -3485,61 +3485,34 @@ class CreateCustomer(APIView):
     def post(self,request):
         try:
             val=customer(request)
-            print(val)
             return Response({"data":val},status=status.HTTP_200_OK)
         except stripe.error.StripeError as e:
             return Response(message=e.user_message,status=status.HTTP_400_BAD_REQUEST)
     
         
         
-class CreteMethod(APIView):
+class CreateMethod(APIView):
     authentication_classes=[TokenAuthentication]
     permission_classes=[IsAuthenticated]
     
-    
     def post(self,request):
-        try:
-            global payment
-            payment_method=stripe.PaymentMethod.create(
-            type="card",
-            card={
-                "number": "4242424242424242",
-                "exp_month": 8,
-                "exp_year": 2024,
-                "cvc": "314",
-            },
-            
-            )
-            payment=payment_method["id"]
-            return Response({"data":payment_method},status=status.HTTP_200_OK)
-
+        try: 
+            method_value=method(request)
+            return Response({"data":method_value},status=status.HTTP_200_OK)
         except stripe.error.StripeError as e:
             return Response(message=e.user_message)
         
+            
+            
             
 class PaymentIntent(APIView):
     authentication_classes=[TokenAuthentication]
     permission_classes=[IsAuthenticated]
     
-    
     def post(self,request):
-        try:
-            
-            intent = stripe.PaymentIntent.create(
-            amount=1000,
-            currency='usd',
-            payment_method_types=['card'],
-            payment_method=payment["id"],
-        
-            )
-            
-            
-            confim=stripe.PaymentIntent.confirm(
-            intent["id"],
-            payment_method="pm_card_visa",
-            )
-            
-            return Response({"data":confim},status=status.HTTP_200_OK)
+        try:         
+            confirm_data=confirm(request)
+            return Response({"data":confirm_data},status=status.HTTP_200_OK)
 
         except stripe.error.StripeError as e:
             return Response(message=e.user_message)

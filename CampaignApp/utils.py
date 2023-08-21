@@ -192,5 +192,38 @@ def customer(request):
         
         
         return customer_data
+    
+    
+def method(request):
+    
+    global payment
+    payment_method=stripe.PaymentMethod.create(
+            type="card",
+            card={
+                "number": "4242424242424242",
+                "exp_month": 8,
+                "exp_year": 2024,
+                "cvc": "314",
+            },
+            
+            )
+    payment=payment_method["id"]
+    
+    return 
+    
 
-      
+def confirm(request):
+    intent = stripe.PaymentIntent.create(
+    amount=1000,
+    currency='usd',
+    payment_method_types=['card'],
+    payment_method=payment["id"],
+
+    )
+        
+    confim=stripe.PaymentIntent.confirm(
+    intent["id"],
+    payment_method="pm_card_visa",
+    )
+    
+    return confim

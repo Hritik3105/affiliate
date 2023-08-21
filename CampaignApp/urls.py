@@ -63,7 +63,7 @@ urlpatterns = [
     path('commission/filter/',CommisssionFilter.as_view(),name="filter"),
     path('marketproduct/list/',MarketProductList.as_view(),name="marketproduct"),
     path('create_customer/',CreateCustomer.as_view(),name="create_customer"),
-    path('createmethod/',CreteMethod.as_view(),name="createmethod"),
+    path('createmethod/',CreateMethod.as_view(),name="createmethod"),
     path('PaymentIntent/',PaymentIntent.as_view(),name="PaymentIntent"),
    
     
