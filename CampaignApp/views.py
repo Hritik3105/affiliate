@@ -1246,9 +1246,8 @@ class GetCampaign(APIView):
 
            
           
-            if k.campaignid.influencer_name:
-                print(k.campaignid.influencer_name)
-                print("------",camp[i]["discount_type"])
+            if k.campaignid.influencer_name  and camp[i]["discount_type"]:
+         
                 dict1={
                     "campaignid_id":camp[i]["campaignid_id"],
                     "product_name":camp[i]["product_name"],
@@ -1275,6 +1274,33 @@ class GetCampaign(APIView):
                 }
 
                 value_lst.append(dict1)
+                
+            elif k.campaignid.influencer_name:
+                dict1={
+                    "campaignid_id":camp[i]["campaignid_id"],
+                    "product_name":camp[i]["product_name"],
+                    "product_id": camp[i]["product_id"],
+                    "campaign_name": k.campaignid.campaign_name ,
+                    "influencer_visit": k.campaignid.influencer_visit ,
+                    "influencer_name": ast.literal_eval(k.campaignid.influencer_name ),
+                    "offer": k.campaignid.offer ,
+                    "date": k.campaignid.date ,
+                    "end_data":k.campaignid.end_date,
+                    "description": k.campaignid.description,
+                    "influencer_fee": k.campaignid.influencer_fee,
+                    "campaign_status":k.campaignid.campaign_status,
+                    "draft_status":k.campaignid.draft_status,
+                    "product":[{
+                        "product_name":camp[i]["product_name"],
+                        "coupon_name":couponlst,
+                        "coupon_id":couponlstid,
+                        "amount":amtlst,
+                        "influencer_id": ast.literal_eval(k.campaignid.influencer_name),
+                        "product_id": camp[i]["product_id"],
+                        "discout_type":(camp[i]["discount_type"])
+                    }]
+                }
+
             else:
                 dict1={
                     "campaignid_id":camp[i]["campaignid_id"],
