@@ -218,6 +218,8 @@ def method(request):
             customer=stripe_customer_id,
         )
     
+    print("pppp",attach_payment)
+    
     return payment_method
     
 
