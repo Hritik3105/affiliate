@@ -1302,6 +1302,7 @@ class GetCampaign(APIView):
                 }
                 value_lst.append(dict1)
 
+
             else:
                 dict1={
                     "campaignid_id":camp[i]["campaignid_id"],
@@ -1311,7 +1312,7 @@ class GetCampaign(APIView):
                     "influencer_visit": k.campaignid.influencer_visit ,
                     "offer": k.campaignid.offer ,
                     "date": k.campaignid.date ,
-                    "end_data":k.campaignid.end_date,
+                   "end_data":k.campaignid.end_date,
                     "description": k.campaignid.description,
                     "influencer_fee": k.campaignid.influencer_fee,
                     "campaign_status":k.campaignid.campaign_status,
@@ -1325,7 +1326,6 @@ class GetCampaign(APIView):
                         "discout_type":ast.literal_eval(camp[i]["discount_type"])
                     }]
                 }
-
                 value_lst.append(dict1)
                 
                             
@@ -2327,8 +2327,8 @@ class CampaignExpList(APIView):
      
         fin_value=list(set_data)
         for i in fin_value:
-            camp=Product_information.objects.filter(vendor_id=self.request.user.id,campaignid_id=i).values().order_by("-end_date")
-            campaign_obj59=Product_information.objects.filter(vendor_id=self.request.user.id,campaignid_id=i).select_related("campaignid").order_by("-end_date")
+            camp=Product_information.objects.filter(vendor_id=self.request.user.id,campaignid_id=i).values()
+            campaign_obj59=Product_information.objects.filter(vendor_id=self.request.user.id,campaignid_id=i).select_related("campaignid")
             for k in campaign_obj59:
                pass
        
@@ -3476,3 +3476,18 @@ class ActiveCoupon(APIView):
     
     def get(self,request):
         coupon_value=VendorCampaign.objects.filter(vendor=self.request.user.id,status=2)
+        
+        
+        
+class CreateCustomer(APIView):
+    authentication_classes=[TokenAuthentication]
+    permission_classes=[IsAuthenticated]
+    def post(self,request):
+        try:
+            value=User.objects.get(id=request.user.id)
+            customer_data=stripe.Customer.create(name=value.username, email=value.email)
+            stripe_customer_id = customer_data['id'] 
+            
+            return Response({"data":stripe_customer_id},status=status.HTTP_200_OK)
+        except stripe.error.StripeError as e:
+            return Response(message=e.user_message)

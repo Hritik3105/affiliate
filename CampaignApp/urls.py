@@ -62,6 +62,7 @@ urlpatterns = [
     path('marketplace/url/',MarketplacetUrl.as_view(),name="marketplaceurl"),
     path('commission/filter/',CommisssionFilter.as_view(),name="filter"),
     path('marketproduct/list/',MarketProductList.as_view(),name="marketproduct"),
+    path('create_customer/',CreateCustomer.as_view(),name="create_customer"),
    
     
 ]
