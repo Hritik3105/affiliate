@@ -258,13 +258,3 @@ def register(request,serializer):
     return "Successfully Registered"
     
     
-    
-def login(request,user_objects,shop_url):
-    user_obj=User.objects.filter(email=user_objects[0]["email"],password=user_objects[0]["password"])
-    email1=user_objects[0]["email"]
-    token_id=user_obj.values_list("id",flat=True)[0]
-    user_base = get_user_model()
-    usr_ins=user_base.objects.get(email=email1)
-    shop2=Store.objects.filter(store_name=shop_url)
-    
-    return user_obj,token_id,usr_ins
