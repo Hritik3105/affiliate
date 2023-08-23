@@ -51,24 +51,23 @@ def access_token(self,request):
 """API TO REGISTER VENOR AND ASSIGN USER TYPE STAUTS = 3"""
 class Register(APIView):
     def post(self,request):
-        try: 
-            serializer=RegisterSerializer(data=request.data)
-            if serializer.is_valid(raise_exception=True):
-                register(request,serializer)
-                # serializer.save(user_type=3)
-                # mail_subject = 'Vendor Register'  
-                # email_body= "HI"  +  " "  +  serializer.data["username"] + " " + "your Shop Register Successfully"
-            
-                # to_email =serializer.data["email"]  
-                # email = EmailMessage(  
-                #             mail_subject, email_body, to=[to_email]  
-                # )  
+        
+        serializer=RegisterSerializer(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            register(request,serializer)
+            # serializer.save(user_type=3)
+            # mail_subject = 'Vendor Register'  
+            # email_body= "HI"  +  " "  +  serializer.data["username"] + " " + "your Shop Register Successfully"
+        
+            # to_email =serializer.data["email"]  
+            # email = EmailMessage(  
+            #             mail_subject, email_body, to=[to_email]  
+            # )  
 
-                # email.send()  
-                return Response({"Success": "Vendor Register Successfully"},status=status.HTTP_201_CREATED)
-            return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
-        except Exception as e:
-            return Response(e,status=status.HTTP_400_BAD_REQUEST)
+            # email.send()  
+            return Response({"Success": "Vendor Register Successfully"},status=status.HTTP_201_CREATED)
+        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+        
 
     
      
