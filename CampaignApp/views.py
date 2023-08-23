@@ -1102,6 +1102,7 @@ class RequestSents(APIView):
     authentication_classes=[TokenAuthentication]
     permission_classes = [IsAuthenticated]  
     def post(self,request):
+        print("fgggggggg------------------------------")
         vendor_status1=User.objects.filter(id=self.request.user.id).values("vendor_status")
         if vendor_status1[0]["vendor_status"] == True:
             serializer=InflCampSerializer(data=request.data)
