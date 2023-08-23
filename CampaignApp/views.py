@@ -1119,12 +1119,12 @@ class RequestSents(APIView):
                     for i in  range (len(val_lst2)):
                        
                         for j in val_lst2[i]["coupon_name"]:        
-                            print("ddddddd",val_lst2[i]["coupon_name"])
+                   
                             match_data=Product_information.objects.filter(coupon_name__contains=j,vendor_id=self.request.user.id)
                             for i in match_data:
                                 if j in ast.literal_eval(i.coupon_name):
                           
-                            
+                                    print("dddddd",j)
                                     data_check=True
                                     true_list.append(data_check)
                                     
