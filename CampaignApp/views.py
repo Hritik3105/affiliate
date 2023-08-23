@@ -1194,11 +1194,13 @@ class RequestSents(APIView):
                         product.vendor_id=self.request.user.id
                         product.campaignid_id=req_id.id
                         product.save()
-                
+                        print("sgfgdfg")
                         return Response({"success":"Campaign create successfully","product_details":serializer.data},status=status.HTTP_200_OK)
-                    print('vbhgggggggggggg')
+                    
                     return Response({"success":"Campaign create successfully","product_details":serializer.data},status=status.HTTP_200_OK)        
+            print("sgfgdfg==")
         else:
+            
             return Response({"error":"Admin Deactive your shop"},status=status.HTTP_401_UNAUTHORIZED)
         return Response({"error":"Campaign not created"},status=status.HTTP_400_BAD_REQUEST)
     
