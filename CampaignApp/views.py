@@ -1196,6 +1196,7 @@ class RequestSents(APIView):
                         product.save()
                 
                         return Response({"success":"Campaign create successfully","product_details":serializer.data},status=status.HTTP_200_OK)
+                    print('vbhgggggggggggg')
                     return Response({"success":"Campaign create successfully","product_details":serializer.data},status=status.HTTP_200_OK)        
         else:
             return Response({"error":"Admin Deactive your shop"},status=status.HTTP_401_UNAUTHORIZED)
