@@ -1134,23 +1134,23 @@ class RequestSents(APIView):
                             #match_data222=Product_information.objects.filter(coupon_name__in=j,vendor_id=self.request.user.id).exists()
                             
                             #if data_check == True:
-                            print(true_list)
-                            if True in true_list:
-                                print(j)
-                                match_cop.append(j)
-                                dict3={str(match_cop):data_check}
-                               
-                               
-                                cup_lst.append(dict3)
-                                coup_lst.append(data_check)
-                                
-                                print(coup_lst)
-                            if True in coup_lst:
-                                
-                                cop=(list(dict3.keys())[0])
-                                cop_lst=ast.literal_eval(cop)
-                                
-                                return Response({"error": cop_lst},status=status.HTTP_410_GONE)
+                        print(true_list)
+                        if True in true_list:
+                            print(j)
+                            match_cop.append(j)
+                            dict3={str(match_cop):data_check}
+                            
+                            
+                            cup_lst.append(dict3)
+                            coup_lst.append(data_check)
+                            
+                            print(coup_lst)
+                        if True in coup_lst:
+                            
+                            cop=(list(dict3.keys())[0])
+                            cop_lst=ast.literal_eval(cop)
+                            
+                            return Response({"error": cop_lst},status=status.HTTP_410_GONE)
 
                     req_id=serializer.save(status=2,vendorid_id=self.request.user.id)
                     infll=serializer.data["influencer_name"]
