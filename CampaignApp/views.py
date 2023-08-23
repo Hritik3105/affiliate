@@ -1133,7 +1133,7 @@ class RequestSents(APIView):
                             #match_data222=Product_information.objects.filter(coupon_name__in=j,vendor_id=self.request.user.id).exists()
                             
                             #if data_check == True:
-                            if True in data_check:
+                            if True in true_list:
                                 print(j)
                                 match_cop.append(j)
                                 dict3={str(match_cop):data_check}
