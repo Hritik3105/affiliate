@@ -1108,7 +1108,7 @@ class RequestSents(APIView):
             serializer=InflCampSerializer(data=request.data)
             serializer2=ProductSerializer(data=request.data)
             if serializer.is_valid(raise_exception=True) and serializer2.is_valid(raise_exception=True):
-                print("effffffffffff")
+
                 val_lst2=(request.data["product_discount"])
                 coup_lst=[]
                 cup_lst=[]
@@ -1201,7 +1201,8 @@ class RequestSents(APIView):
                         return Response({"success":"Campaign create successfully","product_details":serializer.data},status=status.HTTP_200_OK)
                     
                     return Response({"success":"Campaign create successfully","product_details":serializer.data},status=status.HTTP_200_OK)        
-           
+            print("my naneeeeeee")
+            return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
         else: 
             return Response({"error":"Admin Deactive your shop"},status=status.HTTP_401_UNAUTHORIZED)
        
