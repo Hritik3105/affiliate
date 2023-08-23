@@ -195,7 +195,7 @@ def method(request):
     value=User.objects.get(id=request.user.id)
     #if value.customer_id and value.card_number:
         #return "Already Exists"
-    card_number=request.data.get("card")
+    card_number=request .data.get("card")
     expiry_month=request.data.get("exp_month")
     expiry_year=request.data.get("expiry_year")
     csv=request.data.get("cvc")
@@ -233,7 +233,7 @@ def confirm(request):
     currency='usd',
     payment_method_types=['card'],
     payment_method=payment,
-    )     
+    )       
     
     confirm=stripe.PaymentIntent.confirm(
     intent["id"],

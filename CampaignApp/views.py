@@ -1118,7 +1118,7 @@ class RequestSents(APIView):
                     for i in  range (len(val_lst2)):
                        
                         for j in val_lst2[i]["coupon_name"]:        
-                            
+                            print("ddddddd",j)
                             match_data=Product_information.objects.filter(coupon_name__contains=j,vendor_id=self.request.user.id)
                             for i in match_data:
                                 if j in ast.literal_eval(i.coupon_name):
@@ -1137,7 +1137,8 @@ class RequestSents(APIView):
                                
                                 cup_lst.append(dict3)
                                 coup_lst.append(data_check)
-                
+                                
+                            print(coup_lst)
                             if True in coup_lst:
                                 
                                 cop=(list(dict3.keys())[0])
