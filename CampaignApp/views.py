@@ -1200,14 +1200,11 @@ class RequestSents(APIView):
                         return Response({"success":"Campaign create successfully","product_details":serializer.data},status=status.HTTP_200_OK)
                     
                     return Response({"success":"Campaign create successfully","product_details":serializer.data},status=status.HTTP_200_OK)        
-            print("sgfgdfg==")
-            return Response(serializer.data,serializer2.data,status=status.HTTP_400_BAD_REQUEST)
-
-        else:
-            
+           
+        else: 
             return Response({"error":"Admin Deactive your shop"},status=status.HTTP_401_UNAUTHORIZED)
-        print("eeeeeeeeeeeee222222e")
-        return Response({"error":"Campaign not created"},status=status.HTTP_400_BAD_REQUEST)
+       
+        #return Response({"error":"Campaign not created"},status=status.HTTP_400_BAD_REQUEST)
     
     
     
