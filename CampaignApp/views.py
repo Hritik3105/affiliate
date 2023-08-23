@@ -1161,7 +1161,7 @@ class RequestSents(APIView):
                     int_list = [int(num) for num in data_list]
                 
                     influencer_details(self,request,int_list,req_id)
-                    print("fgggggggggggggggggggggggg----------")
+              
                     return Response({"success":"Campaign create successfully","product_details":serializer.data},status=status.HTTP_200_OK)
                    
                                     
@@ -1203,6 +1203,7 @@ class RequestSents(APIView):
         else:
             
             return Response({"error":"Admin Deactive your shop"},status=status.HTTP_401_UNAUTHORIZED)
+        print("eeeeeeeeeeeee222222e")
         return Response({"error":"Campaign not created"},status=status.HTTP_400_BAD_REQUEST)
     
     
