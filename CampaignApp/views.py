@@ -242,7 +242,8 @@ class RequestCampaign(APIView):
             if serializer.is_valid(raise_exception=True):
                 val_lst2=(request.data["product_discount"])
                
-                    
+                true_value=[]
+                true_lst=[]
                 coup_lst=[]
                 cup_lst=[]
                 dict1={}
@@ -258,24 +259,26 @@ class RequestCampaign(APIView):
                               
                                       
                                         data_check=True
+                                        true_value.append(j)
+                                        true_lst.append(data_check)
                                     else:
                                         data_check=False     
                             
                                     if data_check == True:
-                                        match_cop.append(j)
-                                        dict1={str(match_cop):data_check}
+                                       
+                                        dict1={str(true_value):data_check}
                                         
                                         
                                         cup_lst.append(dict1)
                                         coup_lst.append(data_check)
                                     
 
-                                if True in coup_lst:
-                                    cop=(list(dict1.keys())[0])
+                            if True in coup_lst:
+                                cop=(list(dict1.keys())[0])
+                            
+                                cop_lst=ast.literal_eval(cop)
                                 
-                                    cop_lst=ast.literal_eval(cop)
-                                    
-                                    return Response({"error": cop_lst},status=status.HTTP_410_GONE)
+                                return Response({"error": cop_lst},status=status.HTTP_410_GONE)
                     req_id=serializer.save(vendorid_id=self.request.user.id,status=1)
                     val_lst=(request.data["product_discount"])
                   
@@ -1110,7 +1113,6 @@ class RequestSents(APIView):
                 val_lst2=(request.data["product_discount"])
                 coup_lst=[]
                 cup_lst=[]
-                dict1={}
                 true_value=[]
                 match_cop=[]
                 true_list=[]
@@ -1123,10 +1125,7 @@ class RequestSents(APIView):
                    
                             match_data=Product_information.objects.filter(coupon_name__contains=j,vendor_id=self.request.user.id)
                             for i in match_data:
-                                print(i)
                                 if j in ast.literal_eval(i.coupon_name):
-                          
-                                    print("dddddd",j)
                                     data_check=True
                                     true_list.append(data_check)
                                     
@@ -1134,19 +1133,14 @@ class RequestSents(APIView):
                                     
                                 else:
                                     data_check=False
-                           
-                        
                         if True in true_list:
                             
                             match_cop.append(j)
-                            print(true_value)
                             dict3={str(true_value):data_check}
                             
                             
                             cup_lst.append(dict3)
                             coup_lst.append(data_check)
-                            
-                            print(coup_lst)
                         if True in coup_lst:
                             
                             cop=(list(dict3.keys())[0])
