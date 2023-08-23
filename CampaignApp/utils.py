@@ -7,6 +7,8 @@ from CampaignApp.views import *
 from Affilate_Marketing.settings import SHOPIFY_API_KEY,SHOPIFY_API_SECRET,API_VERSION
 import requests
 import stripe
+from django.core.mail import EmailMessage 
+
 from rest_framework import  status
 
 
@@ -243,3 +245,17 @@ def confirm(request):
     return confirm
 
 
+def register(request,serializer):
+ 
+    serializer.save(user_type=3)
+    mail_subject = 'Vendor Register'  
+    email_body= "HI"  +  " "  +  serializer.data["username"] + " " + "your Shop Register Successfully"
+
+    to_email =serializer.data["email"]  
+    email = EmailMessage(  
+                mail_subject, email_body, to=[to_email]  
+    )  
+
+    email.send()  
+    return "Successfully Registered"
+    

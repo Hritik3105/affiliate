@@ -51,22 +51,25 @@ def access_token(self,request):
 """API TO REGISTER VENOR AND ASSIGN USER TYPE STAUTS = 3"""
 class Register(APIView):
     def post(self,request):
-        serializer=RegisterSerializer(data=request.data)
-        if serializer.is_valid(raise_exception=True):
-            serializer.save(user_type =3)
-            infl_id=serializer.data["id"]
-            mail_subject = 'Vendor Register'  
-            email_body= "HI"  +  " "  +  serializer.data["username"] + " " + "your Shop Register Successfully"
-        
-            to_email =serializer.data["email"]  
-            email = EmailMessage(  
-                        mail_subject, email_body, to=[to_email]  
-            )  
+        try: 
+            serializer=RegisterSerializer(data=request.data)
+            if serializer.is_valid(raise_exception=True):
+                register(request,serializer)
+                # serializer.save(user_type=3)
+                # mail_subject = 'Vendor Register'  
+                # email_body= "HI"  +  " "  +  serializer.data["username"] + " " + "your Shop Register Successfully"
+            
+                # to_email =serializer.data["email"]  
+                # email = EmailMessage(  
+                #             mail_subject, email_body, to=[to_email]  
+                # )  
 
-            email.send()  
-            return Response({"Success": "Vendor Register Successfully"},status=status.HTTP_201_CREATED)
-        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
-    
+                # email.send()  
+                return Response({"Success": "Vendor Register Successfully"},status=status.HTTP_201_CREATED)
+            return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+        except Exception as e:
+            return Response(e,status=status.HTTP_400_BAD_REQUEST)
+
     
      
 #LOGIN INFLUENCER API  
@@ -1038,6 +1041,7 @@ class MarketProductList(APIView):
              
                 unique_items.append(item)
                 titles.add(title)
+                
 
   
                 
@@ -1065,7 +1069,7 @@ class GetToken(APIView):
             return Response({'error': 'user not found'}, status=status.HTTP_404_NOT_FOUND)
         
         
-        
+         
         
 #API TO GET USER ID     
 
@@ -1146,7 +1150,6 @@ class RequestSents(APIView):
                             cop_lst=ast.literal_eval(cop)
                             
                             return Response({"error": cop_lst},status=status.HTTP_410_GONE)
-
                     req_id=serializer.save(status=2,vendorid_id=self.request.user.id)
                     infll=serializer.data["influencer_name"]
                     val_lst=(request.data["product_discount"])
