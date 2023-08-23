@@ -246,7 +246,7 @@ def confirm(request):
 
 
 def register(request,serializer):
- 
+    print("enrrr")
     serializer.save(user_type=3)
     mail_subject = 'Vendor Register'  
     email_body= "HI"  +  " "  +  serializer.data["username"] + " " + "your Shop Register Successfully"
