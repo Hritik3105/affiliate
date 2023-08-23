@@ -1112,6 +1112,7 @@ class RequestSents(APIView):
                 cup_lst=[]
                 dict1={}
                 match_cop=[]
+                true_list=[]
                 data_check=""
                 if val_lst2:
                    
@@ -1125,12 +1126,15 @@ class RequestSents(APIView):
                           
                             
                                     data_check=True
+                                    true_list.append(data_check)
+                                    
                                 else:
                                     data_check=False
-                            match_data222=Product_information.objects.filter(coupon_name__in=j,vendor_id=self.request.user.id).exists()
+                            #match_data222=Product_information.objects.filter(coupon_name__in=j,vendor_id=self.request.user.id).exists()
                             
-                            if data_check == True:
-                            
+                            #if data_check == True:
+                            if True in data_check:
+                                print(j)
                                 match_cop.append(j)
                                 dict3={str(match_cop):data_check}
                                
@@ -1138,7 +1142,7 @@ class RequestSents(APIView):
                                 cup_lst.append(dict3)
                                 coup_lst.append(data_check)
                                 
-                            print(coup_lst)
+                                print(coup_lst)
                             if True in coup_lst:
                                 
                                 cop=(list(dict3.keys())[0])
