@@ -15,7 +15,7 @@ from StoreApp.models import *
 from django.contrib.auth import get_user_model
 from django.db.models import Q
 from .utils import *
-from django.core.mail import EmailMessage 
+
 from ShopifyApp.models import *
 import calendar
 from datetime import datetime, timedelta
@@ -50,27 +50,13 @@ def access_token(self,request):
 
 """API TO REGISTER VENOR AND ASSIGN USER TYPE STAUTS = 3"""
 class Register(APIView):
-    def post(self,request):
-        
+    def post(self,request):     
         serializer=RegisterSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
             register(request,serializer)
-            # serializer.save(user_type=3)
-            # mail_subject = 'Vendor Register'  
-            # email_body= "HI"  +  " "  +  serializer.data["username"] + " " + "your Shop Register Successfully"
-        
-            # to_email =serializer.data["email"]  
-            # email = EmailMessage(  
-            #             mail_subject, email_body, to=[to_email]  
-            # )  
-
-            # email.send()  
             return Response({"Success": "Vendor Register Successfully"},status=status.HTTP_201_CREATED)
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
-        
-
-    
-     
+           
 #LOGIN INFLUENCER API  
 
 """API TO VENDOR LOGIN THROUGH SHOP URL OR USERNAME AND PASSWORD"""
@@ -80,27 +66,25 @@ class VendorLogin(APIView):
             if shop_url:
                 user_objects=User.objects.filter(shopify_url=shop_url).values("email","password")
                 if user_objects:
-                    user_obj=User.objects.filter(email=user_objects[0]["email"],password=user_objects[0]["password"])
-                    email1=user_objects[0]["email"]
-                    token_id=user_obj.values_list("id",flat=True)[0]
-                    user_base = get_user_model()
-                    usr_ins=user_base.objects.get(email=email1)
-                    shop2=Store.objects.filter(store_name=shop_url)
-
-                    if user_obj:
-                        usr=Token.objects.filter(user_id=token_id)
+                    # user_obj=User.objects.filter(email=user_objects[0]["email"],password=user_objects[0]["password"])
+                    # email1=user_objects[0]["email"]
+                    # token_id=user_obj.values_list("id",flat=True)[0]
+                    # user_base = get_user_model()
+                    # usr_ins=user_base.objects.get(email=email1)
+                    # shop2=Store.objects.filter(store_name=shop_url)
+                    data_value=login(request,user_objects,shop_url)
+                    if data_value[0]:
+                        usr=Token.objects.filter(user_id=data_value[1])
                         if not usr:
-                            token = Token.objects.create(user=usr_ins)
-                            return Response({'Success':"Login Successfully",'Token':str(token),"shop_url":usr_ins.shopify_url}, status=status.HTTP_200_OK)
+                            token = Token.objects.create(user=data_value[2])
+                            return Response({'Success':"Login Successfully",'Token':str(token),"shop_url":data_value[2].shopify_url}, status=status.HTTP_200_OK)
                            
                         else:
-                            user_key=Token.objects.filter(user_id=token_id).values_list("key",flat=True)[0]
+                            user_key=Token.objects.filter(user_id=data_value[1]).values_list("key",flat=True)[0]
                             if shop2:
-                                store_name=usr_ins.shopify_url.split(".")[0]
-                               
-                                return Response({'Success':"Login Successfully",'Token':str(user_key),"shop_url":usr_ins.shopify_url,"admin_dahboard":f"https://admin.shopify.com/store/{store_name}/apps/marketplace-54"}, status=status.HTTP_200_OK)
-                            
-                            return Response({'Success':"Login Successfully",'Token':str(user_key),"shop_url":usr_ins.shopify_url}, status=status.HTTP_200_OK)
+                                store_name=data_value[2].shopify_url.split(".")[0]
+                                return Response({'Success':"Login Successfully",'Token':str(user_key),"shop_url":data_value[2].shopify_url,"admin_dahboard":f"https://admin.shopify.com/store/{store_name}/apps/marketplace-54"}, status=status.HTTP_200_OK)  
+                            return Response({'Success':"Login Successfully",'Token':str(user_key),"shop_url":data_value[2].shopify_url}, status=status.HTTP_200_OK)
                     else:
                         return Response({'error': 'Invalid credentials'}, status=status.HTTP_400_BAD_REQUEST)
                 else:
