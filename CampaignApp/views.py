@@ -1102,12 +1102,13 @@ class RequestSents(APIView):
     authentication_classes=[TokenAuthentication]
     permission_classes = [IsAuthenticated]  
     def post(self,request):
-        print("fgggggggg------------------------------")
+      
         vendor_status1=User.objects.filter(id=self.request.user.id).values("vendor_status")
         if vendor_status1[0]["vendor_status"] == True:
             serializer=InflCampSerializer(data=request.data)
             serializer2=ProductSerializer(data=request.data)
             if serializer.is_valid(raise_exception=True) and serializer2.is_valid(raise_exception=True):
+                print("effffffffffff")
                 val_lst2=(request.data["product_discount"])
                 coup_lst=[]
                 cup_lst=[]
@@ -1204,7 +1205,7 @@ class RequestSents(APIView):
         else: 
             return Response({"error":"Admin Deactive your shop"},status=status.HTTP_401_UNAUTHORIZED)
        
-        #return Response({"error":"Campaign not created"},status=status.HTTP_400_BAD_REQUEST)
+        return Response({"error":"Campaign not created"},status=status.HTTP_400_BAD_REQUEST)
     
     
     
