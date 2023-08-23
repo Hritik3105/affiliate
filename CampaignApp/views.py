@@ -1107,7 +1107,7 @@ class RequestSents(APIView):
         if vendor_status1[0]["vendor_status"] == True:
             serializer=InflCampSerializer(data=request.data)
             serializer2=ProductSerializer(data=request.data)
-            if serializer.is_valid(raise_exception=True) and serializer2.is_valid(raise_exception=True):
+            if serializer.is_valid():
 
                 val_lst2=(request.data["product_discount"])
                 coup_lst=[]
