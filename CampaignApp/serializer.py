@@ -178,6 +178,17 @@ class CampaignUpdateSerializer(serializers.ModelSerializer):
 
 
 
+class ProductSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Productdetails()
+        fields = ["coupon_name","product_name"]
+        extra_kwargs={
+            "coupon_name":{"required":True},
+            "product_name":{"required":True}
+        }
+
+            
+
 class GETSerializer(serializers.ModelSerializer):
    
    product = CommaSeparatedField()

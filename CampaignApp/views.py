@@ -256,16 +256,12 @@ class RequestCampaign(APIView):
                                 match_data=Product_information.objects.filter(coupon_name__contains=j,vendor_id=self.request.user.id)
                                 for i in match_data:
                                     if j in ast.literal_eval(i.coupon_name):
-                              
-                                      
                                         data_check=True
                                         true_value.append(j)
                                         true_lst.append(data_check)
                                     else:
                                         data_check=False     
-                            
-                                    if data_check == True:
-                                       
+                                    if data_check == True:       
                                         dict1={str(true_value):data_check}
                                         
                                         
@@ -1109,7 +1105,8 @@ class RequestSents(APIView):
         vendor_status1=User.objects.filter(id=self.request.user.id).values("vendor_status")
         if vendor_status1[0]["vendor_status"] == True:
             serializer=InflCampSerializer(data=request.data)
-            if serializer.is_valid(raise_exception=True):
+            serializer2=ProductSerializer(data=request.data)
+            if serializer.is_valid(raise_exception=True) and serializer2.is_valid(raise_exception=True):
                 val_lst2=(request.data["product_discount"])
                 coup_lst=[]
                 cup_lst=[]
