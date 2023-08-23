@@ -1161,6 +1161,7 @@ class RequestSents(APIView):
                     int_list = [int(num) for num in data_list]
                 
                     influencer_details(self,request,int_list,req_id)
+                    print("fgggggggggggggggggggggggg----------")
                     return Response({"success":"Campaign create successfully","product_details":serializer.data},status=status.HTTP_200_OK)
                    
                                     
