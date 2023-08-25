@@ -31,6 +31,8 @@ SECRET_KEY = 'django-insecure-5w&&1euej3vf@2r-s9p&+te=-4kjgkmx3wu!+t*0hv4qo$y8h3
 DEBUG = True
 from django.contrib.messages import constants as messages
 # ALLOWED_HOSTS = []
+
+print("changes")
 ALLOWED_HOSTS = ["13.50.106.134","myrefera.com","api.myrefera.com","admin.myrefera.com"]
 
 
