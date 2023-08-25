@@ -141,6 +141,8 @@ MESSAGE_TAGS = {
 # }
 
 
+
+#@dfdg
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
