@@ -53,7 +53,7 @@ INSTALLED_APPS = [
     'AdminApp',
     'InfluencerApp',
     'CampaignApp',
-    'ShopifyApp',
+    'ShopifyApp',   
     'StoreApp',
 ]
 
@@ -131,30 +131,30 @@ MESSAGE_TAGS = {
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'marketing_db',
-        'USER':'root',
-        "HOST":"localhost",
-        'PASSWORD':"AdMiN@1234",
-        "PORT":"3306"
-    }
-}
-
-
-
-#@dfdg
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.mysql',
-#         'NAME':config("NAME"),
-#         'USER':config("USER"),
-#         "HOST":config("HOST"),
-#         'PASSWORD':config("PASSWORD"),
-#         "PORT":config("PORT")
+#         'NAME': 'marketing_db',
+#         'USER':'root',
+#         "HOST":"localhost",
+#         'PASSWORD':"AdMiN@1234",
+#         "PORT":"3306"
 #     }
 # }
+
+
+
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME':config("NAME"),
+        'USER':config("USER"),
+        "HOST":config("HOST"),
+        'PASSWORD':config("PASSWORD"),
+        "PORT":config("PORT")
+    }
+}
 
 
 REST_FRAMEWORK = {
